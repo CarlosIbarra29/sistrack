@@ -1,0 +1,59 @@
+<?php
+
+namespace App\Models\Custodio;
+
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * @property integer $id
+ * @property integer $siaf_status
+ * @property string $nombre_custodio
+ * @property string $numero_telefono
+ * @property string $correo_electronico
+ * @property string $rfc
+ * @property string $base
+ * @property string $fotografia_custodio
+ * @property string $observaciones
+ * @property integer $iduserCreated
+ * @property string $created_at
+ * @property integer $iduserUpdated
+ * @property string $updated_at
+ * @property User $user
+ * @property SiafStatus $siafStatus
+ * @property User $user
+ * @property CustodioDocumento[] $custodioDocumentos
+ */
+class Custodio extends Model
+{
+    /**
+     * The table associated with the model.
+     * 
+     * @var string
+     */
+    protected $table = 'custodio';
+
+    /**
+     * @var array
+     */
+    protected $fillable = ['siaf_status', 'nombre_custodio', 'numero_telefono', 'correo_electronico', 'curp' ,'rfc', 'base', 'fotografia_custodio', 'observaciones', 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at', 'op_vehiculo', 'op_arma'];
+
+    public function siafStatus()
+    {
+        return $this->belongsTo('App\Models\SiafStatus', 'siaf_status');
+    }
+
+    public function userCreated()
+    {
+        return $this->belongsTo('App\Models\User', 'iduserCreated');
+    }
+    
+    public function userUpdated()
+    {
+        return $this->belongsTo('App\Models\User', 'iduserUpdated');
+    }
+    
+    public function custodioDocumentos()
+    {
+        return $this->hasMany('App\Models\Custodio\CustodioDocumento');
+    }
+}

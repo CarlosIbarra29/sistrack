@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>{{ config('app.name', 'Gestion de riesgos') }} login</title>
+    <title>{{ config('app.name', 'Sistrack for SISPROTEC Sistema de Administración') }} login</title>
     <meta name="description" content="Sistrack for SISPROTEC Sistema de Administración" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -47,7 +47,7 @@
                 <div class="d-flex flex-column-fluid flex-column justify-content-between py-9 px-6 py-lg-13 px-lg-12">
                     <!--begin::Logo-->
                     <a href="javascript:;" class="text-center pt-10">
-                        {{-- <img src="{{ asset('img/logos/LogoSis.png') }}" class="max-h-110px" alt="" /> --}}
+                        <img src="{{ asset('img/logos/LogoSis.png') }}" class="max-h-110px" alt="" />
                     </a>
                     <!--end::Logo-->
 

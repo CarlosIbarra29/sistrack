@@ -45,11 +45,9 @@
                                 <thead>
                                 <tr>
                                   <th>No.</th>
-                                  <th>Organización</th>
-                                  <th>Nombre comercial</th>
-                                  <th>Contacto</th>
-                                  <th>Telefono</th>
-                                  <th>Email</th>
+                                  <th>Razon social</th>
+                                  <th>Nombre cliente</th>
+                                  <th>Grupo</th>
                                   <th class="text-center">Acciones</th>
                                 </tr>
                                 </thead>
@@ -58,14 +56,12 @@
                                   @foreach($data as $unid)
                                     <tr>
                                       <td>{{ $unid->id }}</td>
-                                      <td>{{ $unid->organizacion }}</td>
-                                      <td>{{ $unid->nombre_comercial }}</td>
-                                      <td>{{ $unid->contacto_principal }}</td>
-                                      <td>{{ $unid->telefono }}</td>
-                                      <td>{{ $unid->mail }}</td>
+                                      <td>{{ $unid->razon_social }}</td>
+                                      <td>{{ $unid->nombre_cliente }}</td>
+                                      <td>{{ $unid->grupo }}</td>
 
                                       <td class="text-center">
-                                        <button class="btn btn-clean btn-icon btn-outline-success mt-1 activar-cliente" data-id="{{ $unid->id }}" data-nombre="{{ $unid->organizacion }}" data-toggle="tooltip" data-theme="dark" title="Activar Cliente" ><i class="flaticon2-reply "></i></button>
+                                        <button class="btn btn-clean btn-icon btn-outline-success mt-1 activar-cliente" data-id="{{ $unid->id }}" data-nombre="{{ $unid->razon_social }}" data-toggle="tooltip" data-theme="dark" title="Activar Cliente" ><i class="flaticon2-reply "></i></button>
                                       </td>
                                     </tr>
                                   @endforeach
@@ -74,11 +70,9 @@
                                 <tfoot>
                                 <tr>
                                   <th>No.</th>
-                                  <th>Organización</th>
-                                  <th>Nombre comercial</th>
-                                  <th>Contacto</th>
-                                  <th>Telefono</th>
-                                  <th>Email</th>
+                                  <th>Razon social</th>
+                                  <th>Nombre cliente</th>
+                                  <th>Grupo</th>
                                   <th class="text-center">Acciones</th>
                                 </tr>
                                 </tfoot>
