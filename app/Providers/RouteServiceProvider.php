@@ -27,8 +27,9 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapArchivoRoutes();
         $this->mapPerfilRoutes();
         $this->mapClienteRoutes();
-        $this->mapLibroRoutes();
-        $this->mapHdRoutes();
+        $this->mapCustodioRoutes();
+        $this->mapTarifarioRoutes();
+        $this->mapProgramacionRoutes();
 
     }
 
@@ -90,20 +91,28 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/cliente.php'));
     }
 
-    protected function mapLibroRoutes()
+    protected function mapCustodioRoutes()
     {
         Route::middleware('web')
-            ->prefix('libro')
-            ->namespace($this->namespace . '\Libro')
-            ->group(base_path('routes/libro.php'));
+            ->prefix('custodio')
+            ->namespace($this->namespace . '\Custodio')
+            ->group(base_path('routes/custodio.php'));
     }
 
-    protected function mapHdRoutes()
+    protected function mapTarifarioRoutes()
     {
         Route::middleware('web')
-            ->prefix('hd')
-            ->namespace($this->namespace . '\hd')
-            ->group(base_path('routes/hd.php'));        
+            ->prefix('tarifario')
+            ->namespace($this->namespace . '\Tarifario')
+            ->group(base_path('routes/tarifario.php'));
+    }
+
+    protected function mapProgramacionRoutes()
+    {
+        Route::middleware('web')
+            ->prefix('programacion')
+            ->namespace($this->namespace . '\Programacion')
+            ->group(base_path('routes/programacion.php'));
     }
     
 

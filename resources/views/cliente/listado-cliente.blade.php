@@ -136,22 +136,18 @@
                                 <thead>
                                 <tr>
                                   <th>No.</th>
-                                  <th>Organización</th>
-                                  <th>Nombre comercial</th>
-                                  <th>Contacto</th>
-                                  <th>Telefono</th>
-                                  <th>Email</th>
+                                  <th>Razon social</th>
+                                  <th>Nombre cliente</th>
+                                  <th>Grupo</th>
                                   <th class="text-center">Opciones</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
                                   <th>No.</th>
-                                  <th>Organización</th>
-                                  <th>Nombre comercial</th>
-                                  <th>Contacto</th>
-                                  <th>Email</th>
-                                  <th>Telefono</th>
+                                  <th>Razon social</th>
+                                  <th>Nombre cliente</th>
+                                  <th>Grupo</th>
                                   <th class="text-center">Opciones</th>
                                 </tr>
                                 </tfoot>
@@ -176,7 +172,7 @@
 </div>
 
 {{-- M O D A L S --}}
-  <form method="post" id="cliente_delete_form" action="{{ route('cliente.desactivarcliente') }}" enctype="multipart/form-data">
+  <form method="post" id="cliente_delete_form" action="{{ route('cliente.desactivarclientelistado') }}" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="id" id="id_cliente_delete" value="">
   </form>

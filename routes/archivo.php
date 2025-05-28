@@ -22,3 +22,6 @@
 
      //Fotografia Arma
     Route::get('/fotografia-arma/{id}', [App\Http\Controllers\Archivo\ArchivoController::class, 'fotografiaarma'])->name('archivo.fotografiaarma');
+
+    //Documento cliente
+    Route::get('/documento-cliente/{id}', [App\Http\Controllers\Archivo\ArchivoController::class, 'documentoCliente'])->name('archivo.documentoCliente');

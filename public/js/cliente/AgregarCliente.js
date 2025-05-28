@@ -63,7 +63,7 @@ var Modulo = function() {
             numericInput: true
         });
 
-        // lista = construyeElementosLista
+        lista = construyeElementosLista();
         //botón agregar otro archivo
         $( ".hrefAgregarOtro" ).on( "click", function(event) {
             event.preventDefault();
@@ -77,21 +77,26 @@ var Modulo = function() {
         });
         delArchivo1();
 
+        $( ".hrefAgregarOtro2" ).on( "click", function(event) {
+            event.preventDefault();
+            addArchivo2();
+        });
+        delArchivo2();
 
     };
 
-    // //construye  elementos de la lista
-    // var construyeElementosLista = function () {
-    //     var tipoArchivo = $("#tipoArchivo").val();
-    //     var colTipoArchivo = JSON.parse(tipoArchivo);
-    //     var opcion ="";
+    //construye  elementos de la lista
+    var construyeElementosLista = function () {
+        var tipoArchivo = $("#tipoArchivo").val();
+        var colTipoArchivo = JSON.parse(tipoArchivo);
+        var opcion ="";
 
-    //     $.each(colTipoArchivo, function(i, item) {
-    //         opcion += "<option value='"+i+"' >"+item+"</option>";
-    //     });
+        $.each(colTipoArchivo, function(i, item) {
+            opcion += "<option value='"+i+"' >"+item+"</option>";
+        });
 
-    //     return opcion;
-    // };
+        return opcion;
+    };
 
     //validador de elementos agregados para archivo
     const archivoValidador = {
@@ -220,6 +225,56 @@ var Modulo = function() {
         });
     };
 
+    //agrega el elemento archivo y lista desplegable
+    var addArchivo2 = function () {
+        contadorDocumentos++;
+        var html = '';
+        html += ([    "",
+            "<tr id='trDocumento2"+contadorDocumentos+"'>",
+            "    <td>",
+            "        <div class='form-group mb-0'>",
+            "           <div class='custom-file'>",
+            "               <input type='file' class='custom-file-input' id='archivo"+contadorDocumentos+"' name='archivo["+contadorDocumentos+"]' required />",
+            "               <label class='custom-file-label' for='archivo"+contadorDocumentos+"'>Selecciona un archivo</label>",
+            "           </div>",
+            "        </div>",
+            "    </td>",
+            "    <td>" +
+            "       <div class='form-group mb-0'>" +
+            "          <select class='form-control' name='id_documento["+contadorDocumentos+"]' id='id_documento"+contadorDocumentos+"' required>",
+            "              <option value=''>Selecciona un opción</option>",
+            lista,
+            "          </select>",
+            "       </div>" +
+            "    </td>",
+            "    <td>",
+            "       <a href='#' class='btn btn-sm btn-clean btn-hover-icon-success btn-icon hrefEliminar2' data-id='"+contadorDocumentos+"' data-toggle='tooltip' data-theme='dark' title='Eliminar'>",
+            "           <i class='flaticon-delete'></i>",
+            "       </a>",
+            "    </td>",
+            "</tr>",
+
+            ""].join(""));
+        $("#tblDocumentos2 tbody").append(html); //agrega el html creado
+        //agrega validación del elemento creado
+        validador.addField('archivo[' + contadorDocumentos + ']', archivoValidador);
+        validador.addField('id_documento[' + contadorDocumentos + ']', tipoArchivoValidador);
+        KTApp.initTooltips(); //inicia tooltip del elemento creado
+        KTApp.initFileInput(); //inicia el elemento archivo del elemento creado
+    };
+
+    //elimina un elemento
+    var delArchivo2 = function () {
+        jQuery(document).on("click", ".hrefEliminar2" , function(e) {
+            e.preventDefault();
+            var idDocumento = $(this).attr("data-id"); //indice del elemento
+            KTApp.hideTooltips(); //oculta tooltip
+            //elimina la validación del elemento
+            validador.removeField('archivo[' + idDocumento + ']');
+            validador.removeField('id_documento[' + idDocumento + ']');
+            $('#trDocumento2'+idDocumento).remove();//elimina el elemento
+        });
+    };
 
 
     var eventosEspeciales = function () {

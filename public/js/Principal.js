@@ -57,142 +57,118 @@ var Principal = (function () {
             }
         }
 
-
-        //activar menu de Libro de Riesgos
-        function activeMenuLibro() {
-            $("#menuLibro").addClass("menu-item-active");
-            $("#menuLibro").addClass("menu-item-open");
+        //activar menu de SERVICIOS
+        function activeMenuServicios() {
+            $("#menuServicios").addClass("menu-item-active");
+            $("#menuServicios").addClass("menu-item-open");
         }
 
         //rutas para el menu de clientes
-        if (routeName.includes("libro")) {
-            activeMenuLibro();
+        if (routeName.includes("cliente")) {
+            activeMenuServicios();
             //we addd the active class to the menuUsuarios parent item
-            $("#menuRiesgos").addClass("menu-item-active");
-            $("#menuRiesgos").addClass("menu-item-open");
+            $("#menuClientes").addClass("menu-item-active");
+            $("#menuClientes").addClass("menu-item-open");
 
             switch (routeName) {
-                case "libro.listadolibroriesgos":
-                    $("#menuListadoRiesgos").addClass("menu-item-open");
+                case "cliente.listadocliente":
+                    //we add the class 'menu-item-open' to id menuListadoUsuarios
+                    $("#menuListadoClientes").addClass("menu-item-open");
                     break;
-                case "libro.riesgosocialid":
-                    $("#menuListadoRiesgos").addClass("menu-item-open");
+                case "cliente.agregarcliente":
+                    $("#menuNuevoUsuario").addClass("menu-item-open");
                     break;
-                case "libro.crearriesgosocial":
-                    $("#menuListadoRiesgos").addClass("menu-item-open");
-                    break;
-                case "libro.editarriesgosocial":
-                    $("#menuListadoRiesgos").addClass("menu-item-open");
-                    break;
-                case "libro.riesgosocialidinactivos":
-                    $("#menuListadoRiesgos").addClass("menu-item-open");
-                    break;
-
             }
         }
 
 
         //rutas para el menu de clientes
-        if (routeName.includes("librotec")) {
-            activeMenuLibro();
+        if (routeName.includes("tarifario")) {
+            activeMenuServicios();
             //we addd the active class to the menuUsuarios parent item
-            $("#menuRiesgos").addClass("menu-item-active");
-            $("#menuRiesgos").addClass("menu-item-open");
+            $("#menuTarifario").addClass("menu-item-active");
+            $("#menuTarifario").addClass("menu-item-open");
 
             switch (routeName) {
-                case "librotec.listadolibroriesgostec":
-                    $("#menuListadoRiesgosTecnologicos").addClass("menu-item-open");
+                case "tarifario.listadotarifario":
+                    //we add the class 'menu-item-open' to id menuListadoUsuarios
+                    $("#menuListadoTarifario").addClass("menu-item-open");
                     break;
-                case "librotec.riesgotecnologicoid":
-                    $("#menuListadoRiesgosTecnologicos").addClass("menu-item-open");
-                    break;
-                case "librotec.crearriesgotec":
-                    $("#menuListadoRiesgosTecnologicos").addClass("menu-item-open");
-                    break;  
-                case "librotec.editarriesgotecnologico":
-                    $("#menuListadoRiesgosTecnologicos").addClass("menu-item-open");
-                    break; 
-                case "librotec.riesgotecnologicoidinactivos":
-                    $("#menuListadoRiesgosTecnologicos").addClass("menu-item-open");
-                    break;  
-                          
-            }
-        }
-
-        if (routeName.includes("libronat")) {
-            activeMenuLibro();
-            //we addd the active class to the menuUsuarios parent item
-            $("#menuRiesgos").addClass("menu-item-active");
-            $("#menuRiesgos").addClass("menu-item-open");
-
-            switch (routeName) {
-                case "libronat.listadolibroriesgosnat":
-                    $("#menuListadoRiesgosNaturales").addClass("menu-item-open");
-                    break;
-                 case "libronat.riesgonaturalid":
-                    $("#menuListadoRiesgosNaturales").addClass("menu-item-open");
-                    break;
-                 case "libronat.crearriesgonat":
-                    $("#menuListadoRiesgosNaturales").addClass("menu-item-open");
-                    break;
-                 case "libronat.editarriesgonaturales":
-                    $("#menuListadoRiesgosNaturales").addClass("menu-item-open");
-                    break;
-                 case "libronat.riesgonaturalidinactivos  ":
-                    $("#menuListadoRiesgosNaturales").addClass("menu-item-open");
-                    break;         
-            }
-        }
-
-        if (routeName.includes("librootr")) {
-            activeMenuLibro();
-            //we addd the active class to the menuUsuarios parent item
-            $("#menuRiesgos").addClass("menu-item-active");
-            $("#menuRiesgos").addClass("menu-item-open");
-
-            switch (routeName) {
-                case "librootr.listadolibroriesgosotros":
-                    $("#menuListadoRiesgosOtros").addClass("menu-item-open");
-                    break;
-                case "librootr.riesgootroid":
-                    $("#menuListadoRiesgosOtros").addClass("menu-item-open");
-                    break;
-                case "librootr.crearriesgootro":
-                    $("#menuListadoRiesgosOtros").addClass("menu-item-open");
-                    break;
-                case "librootr.editarriesgootro":
-                    $("#menuListadoRiesgosOtros").addClass("menu-item-open");
-                    break;
-                case "librootr.riesgootrosidinactivos":
-                    $("#menuListadoRiesgosOtros").addClass("menu-item-open");
-                    break;
-                case "librootr.listadonuevosriesgos":
-                    $("#menuListadoRiesgosOtros").addClass("menu-item-open");
-                    break;
-                
             }
         }
 
 
-
-        function activeMenuHdNivControl() {
-            $("#menuHd").addClass("menu-item-active");
-            $("#menuHd").addClass("menu-item-open");
+        //activar menu de CUSTODIOS
+        function activeMenuCustodios() {
+            $("#menuCustodios").addClass("menu-item-active");
+            $("#menuCustodios").addClass("menu-item-open");
         }
 
         //rutas para el menu de clientes
-        if (routeName.includes("hd")) {
-            activeMenuHdNivControl();
+        if (routeName.includes("custodio")) {
+            activeMenuCustodios();
             //we addd the active class to the menuUsuarios parent item
-            $("#menuNivelcontrol").addClass("menu-item-active");
-            $("#menuNivelcontrol").addClass("menu-item-open");
+            $("#menuRegistroCustodios").addClass("menu-item-active");
+            $("#menuRegistroCustodios").addClass("menu-item-open");
 
             switch (routeName) {
-                case "hd.catalogonivelcontrol":
-                    $("#menuListadoNivelcontrol").addClass("menu-item-open");
+                case "custodio.listadocustodio":
+                    //we add the class 'menu-item-open' to id menuListadoUsuarios
+                    $("#menuListadoCustodios").addClass("menu-item-open");
+                    break;
+                case "cliente.agregarcliente":
+                    $("#menuNuevoUsuario").addClass("menu-item-open");
                     break;
             }
         }
+
+
+        //activar menu de Programacion
+        function activeMenuProgramacion() {
+            $("#menuProgramacion").addClass("menu-item-active");
+            $("#menuProgramacion").addClass("menu-item-open");
+        }
+
+        //rutas para el menu de clientes
+        if (routeName.includes("programacion")) {
+            activeMenuProgramacion();
+            //we addd the active class to the menuUsuarios parent item
+            $("#menuRegistroProgramacion").addClass("menu-item-active");
+            $("#menuRegistroProgramacion").addClass("menu-item-open");
+
+            switch (routeName) {
+                case "programacion.listadoprogramacion":
+                    //we add the class 'menu-item-open' to id menuListadoUsuarios
+                    $("#menuListadoProgramacion").addClass("menu-item-open");
+                    break;
+
+            }
+        }
+
+
+        //activar menu de Monitoreo
+        function activeMenuMonitoreo() {
+            $("#menuMonitoreo").addClass("menu-item-active");
+            $("#menuMonitoreo").addClass("menu-item-open");
+        }
+
+        //rutas para el menu de clientes
+        if (routeName.includes("monitoreo")) {
+            activeMenuMonitoreo();
+            //we addd the active class to the menuUsuarios parent item
+            $("#menuRegistroMonitoreo").addClass("menu-item-active");
+            $("#menuRegistroMonitoreo").addClass("menu-item-open");
+
+            switch (routeName) {
+                case "monitoreo.listamonitoreo":
+                    //we add the class 'menu-item-open' to id menuListadoUsuarios
+                    $("#menuListadoMonitoreo").addClass("menu-item-open");
+                    break;
+
+            }
+        }
+
+
 
         //activar menu de CATALOGOS
         function activeMenuCatalogos() {
@@ -211,6 +187,36 @@ var Principal = (function () {
                 case "area.listadoarea":
                     //we add the class 'menu-item-open' to id menuListadoUsuarios
                     $("#menuListadoareapersonal").addClass("menu-item-open");
+                    break;
+            }
+        }
+
+        //rutas para el menu de clientes
+        if (routeName.includes("doccustodio")) {
+            activeMenuCatalogos();
+            //we addd the active class to the menuUsuarios parent item
+            $("#menuCatalogoDocumentacionCustodio").addClass("menu-item-active");
+            $("#menuCatalogoDocumentacionCustodio").addClass("menu-item-open");
+
+            switch (routeName) {
+                case "doccustodio.listadodoccustodio":
+                    //we add the class 'menu-item-open' to id menuListadoUsuarios
+                    $("#menuListadodoccustodio").addClass("menu-item-open");
+                    break;
+            }
+        }
+
+        //rutas para el menu de clientes
+        if (routeName.includes("docvehiculo")) {
+            activeMenuCatalogos();
+            //we addd the active class to the menuUsuarios parent item
+            $("#menuCatalogoDocumentacionVehiculo").addClass("menu-item-active");
+            $("#menuCatalogoDocumentacionVehiculo").addClass("menu-item-open");
+
+            switch (routeName) {
+                case "docvehiculo.listadodocvehiculo":
+                    //we add the class 'menu-item-open' to id menuListadoUsuarios
+                    $("#menuListadodocvehiculo").addClass("menu-item-open");
                     break;
             }
         }

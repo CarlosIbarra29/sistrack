@@ -34,17 +34,15 @@ var Tabla = function() {
                 },
                 data: {
                     columnsDef: [
-                        'id', 'organizacion', 'nombre_comercial', 'contacto_principal','telefono','mail', 'permisos' ,'acciones'],
+                        'id', 'razon_social', 'nombre_cliente', 'grupo','permisos' ,'acciones'],
                 },
 
             },
             columns: [
                 { data: 'id' },
-                { data: 'organizacion' },
-                { data: 'nombre_comercial'},
-                { data: 'contacto_principal' },
-                { data: 'telefono' },
-                { data: 'mail' },
+                { data: 'razon_social' },
+                { data: 'nombre_cliente'},
+                { data: 'grupo' },
                 {data: 'acciones', responsivePriority: -1},
             ],
 

@@ -9,8 +9,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Storage;
 use App\Services\Money;
 use App\Models\Cliente\Cliente;
+use App\Models\Cliente\ClienteContactoFacturacion;
+use App\Models\Cliente\ClienteContactoOperativo;
+use App\Models\Cliente\TipoDocumentoC;
+use App\Models\Cliente\DocumentoCliente;
 
 use App\Models\User;
 use App\Models\Rol;
@@ -29,7 +34,7 @@ class ClienteController extends Controller
 
     public function listadocliente()
     {
-        $data = Cliente::where('status_delete', 1)->get();
+        $data = Cliente::where('siaf_status', 1)->get();
 
         return view('cliente.listado-cliente', compact('data'));
     }
@@ -74,8 +79,8 @@ class ClienteController extends Controller
 
         // Fetch records
 
-        $records = Cliente::select('cliente.id', 'cliente.organizacion', 'cliente.nombre_comercial', 'cliente.contacto_principal', 'cliente.telefono', 'cliente.mail')
-            ->where('cliente.status_delete', 1)
+        $records = Cliente::select('cliente.id', 'cliente.razon_social', 'cliente.nombre_cliente', 'cliente.grupo', 'cliente.dias_credito', 'cliente.costo_estadia', 'cliente.costo_km', 'cliente.observaciones')
+            ->where('cliente.siaf_status', 1)
             ->orderBy($order_column_name, $order_column_dir)
             ->skip($start)
             ->take($rowperpage)
@@ -84,13 +89,13 @@ class ClienteController extends Controller
         $valor = "No";   
         // Bandera para varlidar si no hay filtros   $valor = "No";
         foreach ($columnName_arr as $indice => $columna){
-            if($columna['data']=='nombre_comercial'){
+            if($columna['data']=='nombre_cliente'){
                 if (!empty($columna['search']['value'])){
                     $valor = trim($columna['search']['value']);
 
-                    $records = Cliente::select('cliente.id', 'cliente.organizacion', 'cliente.nombre_comercial', 'cliente.contacto_principal', 'cliente.telefono', 'cliente.mail')
-                    ->where('cliente.status_delete', 1)
-                    ->where("cliente.nombre_comercial", '=' , $valor)
+                    $records = Cliente::select('cliente.id', 'cliente.razon_social', 'cliente.nombre_cliente', 'cliente.grupo', 'cliente.dias_credito', 'cliente.costo_estadia', 'cliente.costo_km', 'cliente.observaciones')
+                    ->where('cliente.siaf_status', 1)
+                    ->where("cliente.nombre_cliente", '=' , $valor)
                     ->orderBy($order_column_name, $order_column_dir)
                     ->skip($start)
                     ->take($rowperpage)
@@ -100,8 +105,8 @@ class ClienteController extends Controller
         }
 
         if($valor == "No"){
-            $records = Cliente::select('cliente.id', 'cliente.organizacion', 'cliente.nombre_comercial', 'cliente.contacto_principal', 'cliente.telefono', 'cliente.mail')
-            ->where('cliente.status_delete', 1)
+            $records = Cliente::select('cliente.id', 'cliente.razon_social', 'cliente.nombre_cliente', 'cliente.grupo', 'cliente.dias_credito', 'cliente.costo_estadia', 'cliente.costo_km', 'cliente.observaciones')
+            ->where('cliente.siaf_status', 1)
             ->orderBy($order_column_name, $order_column_dir)
             ->skip($start)
             ->take($rowperpage)
@@ -117,11 +122,9 @@ class ClienteController extends Controller
 
             $data_arr[] = array(
                 "id" => $record->id,
-                "organizacion" => $record->organizacion,
-                "nombre_comercial" => $record->nombre_comercial,
-                "contacto_principal" => $record->contacto_principal,
-                "telefono" => $record->telefono,
-                "mail" => $record->mail,
+                "razon_social" => $record->razon_social,
+                "nombre_cliente" => $record->nombre_cliente,
+                "grupo" => $record->grupo,
                 "permisos" => $permiso_array,
                 'acciones'=>null,
             );
@@ -141,30 +144,30 @@ class ClienteController extends Controller
     {
         $data= 1;
 
-        return view('cliente.agregar-cliente', compact('data'));
+        $documentos = TipoDocumentoC::where('siaf_status_id',1)->get();
+        // dd($documentos);
+        //tipo de documentos en formato json
+        $cadenaTipoDocumento = "";
+        foreach($documentos as $documento){
+            $cadenaTipoDocumento .= '"'.$documento->id.'":"'.$documento->nombre_documento.'",';
+        }
+        $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
+
+        return view('cliente.agregar-cliente', compact('data','cadenaTipoDocumento'));
     }
 
     public function guardarcliente(Request $request)
     {
+
         $data = [
-            'organizacion' => $request->organizacion,
-            'nombre_comercial' => $request->nombre_comercial,
-            'calle' => $request->calle,
-            'no_exterior' => $request->no_exterior,
-            'no_interior' => $request->no_interior,
-            'delegacion' => $request->delegacion,
-            'giro_comercial' => $request->giro_comercial,
-            'sector' => $request->sector,
-            'no_personal' => $request->no_personal,
-            'contacto_principal' => $request->contacto_principal,
-            'cargo' => $request->cargo,
-            'telefono' => $request->telefono,
-            'mail' => $request->mail,
-            'persona_atiende' => $request->persona_atiende,
-            'cargo_atiende' => $request->cargo_atiende,
-            'telefono_atiende' => $request->telefono_atiende,
-            'mail_atiende' => $request->mail_atiende,
-            'status_delete' => 1,
+            'razon_social' => $request->razon_social,
+            'nombre_cliente'  => $request->cliente,
+            'grupo'  => $request->grupo,
+            'dias_credito'  => $request->dias_credito,
+            'costo_estadia' => $request->costo_estadia ? $this->money_format->clearFormat($request->costo_estadia):null,
+            'costo_km' => $request->costo_km ? $this->money_format->clearFormat($request->costo_km):null,
+            'observaciones' => $request->observaciones,
+            'siaf_status' => 1,
             'created_at' =>date('Y-m-d H:i:s'),
             'updated_at' =>date('Y-m-d H:i:s'),
             'iduserCreated' =>auth()->user()->id,
@@ -172,6 +175,91 @@ class ClienteController extends Controller
         ];
         $id_cliente = Cliente::insertGetId($data);
         // dd($request);
+
+        if($request->nombre){
+            for($i = 1; $i <= count($request->nombre); $i++){
+                $data = [
+                    'cliente_id' => $id_cliente,
+                    'nombre_operativo' =>$request->nombre[$i],
+                    'telefono_operativo' =>$request->telefono[$i],
+                    'email_operativo' =>$request->email[$i],
+                    'siaf_status' => 1,
+                    'created_at' =>date('Y-m-d H:i:s'),
+                    'updated_at' =>date('Y-m-d H:i:s'),
+                    'iduserCreated' => auth()->user()->id,
+                    'iduserUpdated' => auth()->user()->id,
+                ];
+
+                ClienteContactoOperativo::insert($data);
+            }
+        }
+
+        if($request->nombre_fac){
+            for($f = 1; $f <= count($request->nombre_fac); $f++){
+                
+                $data = [
+                    'cliente_id' => $id_cliente,
+                    'nombre_contacto' =>$request->nombre_fac[$f],
+                    'telefono_contacto' =>$request->telefono_fac[$f],
+                    'email_contacto' =>$request->email_fac[$f],
+                    'siaf_status' => 1,
+                    'created_at' =>date('Y-m-d H:i:s'),
+                    'updated_at' =>date('Y-m-d H:i:s'),
+                    'iduserCreated' => auth()->user()->id,
+                    'iduserUpdated' => auth()->user()->id,
+                ];
+                ClienteContactoFacturacion::insert($data);
+            }
+        }
+
+
+        $colIdDocumento = $request->id_documento;
+        if($request->hasfile('archivo')){
+            $archivos = $request->file('archivo');
+            foreach($archivos as $indice => $archivo)
+            {
+                $archivoNombre = $archivo->hashName();
+                $mimeType = $archivo->getMimeType();
+                Storage::putFileAs('cliente/'.$id_cliente, $archivo, $archivoNombre);
+                $data = [
+                    'cliente_id' => $id_cliente,
+                    'cliente_tipo_documento_id' =>$colIdDocumento[$indice],
+                    'documento' => $archivoNombre,
+                    'mime_type' => $mimeType,
+                    'created_at' =>date('Y-m-d H:i:s'),
+                    'updated_at' =>date('Y-m-d H:i:s'),
+                    'iduserCreated' =>auth()->user()->id,
+                    'iduserUpdated' =>auth()->user()->id
+                ];
+
+                DocumentoCliente::insert($data);
+            }
+        }
+
+
+        $colIdDocumento = $request->id_documento;
+        if($request->hasfile('archivo')){
+            $archivos = $request->file('archivo');
+            foreach($archivos as $indice => $archivo)
+            {
+                $archivoNombre = $archivo->hashName();
+                $mimeType = $archivo->getMimeType();
+                Storage::putFileAs('cliente/'.$id_cliente, $archivo, $archivoNombre);
+                $data = [
+                    'cliente_id' => $id_cliente,
+                    'cliente_tipo_documento_id' =>$colIdDocumento[$indice],
+                    'documento' => $archivoNombre,
+                    'mime_type' => $mimeType,
+                    'created_at' =>date('Y-m-d H:i:s'),
+                    'updated_at' =>date('Y-m-d H:i:s'),
+                    'iduserCreated' =>auth()->user()->id,
+                    'iduserUpdated' =>auth()->user()->id
+                ];
+
+                DocumentoCliente::insert($data);
+            }
+        }
+
 
         session()->flash('success', 'El cliente se añadió correctamente');
         return redirect()->route('cliente.listadocliente');  
@@ -181,37 +269,130 @@ class ClienteController extends Controller
     public function editarcliente($cliente_id)
     {
         $data = Cliente::where('id', $cliente_id)->first();
+        $cliente_operativo = ClienteContactoOperativo::where('cliente_id', $cliente_id)->get();
+        $cliente_fac = ClienteContactoFacturacion::where('cliente_id', $cliente_id)->get();
+        
 
-        return view('cliente.editar-cliente', compact('data', 'cliente_id'));      
+        $documento = TipoDocumentoC::where('siaf_status_id',1)->get();
+        //tipo de documentos en formato json
+        $cadenaTipoDocumento = "";
+        foreach($documento as $doc){
+            $cadenaTipoDocumento .= '"'.$doc->id.'":"'.$doc->nombre_documento.'",';
+        }
+        $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
+
+        $documentos = DocumentoCliente::where('cliente_id',$cliente_id)->get();
+
+
+        return view('cliente.editar-cliente', compact('data', 'cliente_id', 'cliente_operativo', 'cliente_fac', 'cadenaTipoDocumento', 'documentos'));      
     }
 
+    public function eliminarcontactooperativo(Request $request)
+    {
+        $doc = ClienteContactoOperativo::findOrFail($request->id);
+        $estatus = true;
+        if ($doc){
+            ClienteContactoOperativo::where('id', $request->id)->delete();
+        }else{
+            $estatus = false;
+        }
+
+        return response()->json([
+            'estatus' => $estatus,
+        ]);
+    }
+
+    public function eliminarcontactofacturacion(Request $request)
+    {
+        $doc = ClienteContactoFacturacion::findOrFail($request->id);
+        $estatus = true;
+        if ($doc){
+            ClienteContactoFacturacion::where('id', $request->id)->delete();
+        }else{
+            $estatus = false;
+        }
+
+        return response()->json([
+            'estatus' => $estatus,
+        ]);
+    }
 
     public function updatecliente(Request $request)
     {
         $data = [
-            'organizacion' => $request->organizacion,
-            'nombre_comercial' => $request->nombre_comercial,
-            'calle' => $request->calle,
-            'no_exterior' => $request->no_exterior,
-            'no_interior' => $request->no_interior,
-            'delegacion' => $request->delegacion,
-            'giro_comercial' => $request->giro_comercial,
-            'sector' => $request->sector,
-            'no_personal' => $request->no_personal,
-            'contacto_principal' => $request->contacto_principal,
-            'cargo' => $request->cargo,
-            'telefono' => $request->telefono,
-            'mail' => $request->mail,
-            'persona_atiende' => $request->persona_atiende,
-            'cargo_atiende' => $request->cargo_atiende,
-            'telefono_atiende' => $request->telefono_atiende,
-            'mail_atiende' => $request->mail_atiende,
-            'status_delete' => 1,
+            'razon_social' => $request->razon_social,
+            'nombre_cliente'  => $request->cliente,
+            'grupo'  => $request->grupo,
+            'dias_credito'  => $request->dias_credito,
+            'costo_estadia' => $request->costo_estadia ? $this->money_format->clearFormat($request->costo_estadia):null,
+            'costo_km' => $request->costo_km ? $this->money_format->clearFormat($request->costo_km):null,
+            'observaciones' => $request->observaciones,
+            'siaf_status' => 1,
             'updated_at' =>date('Y-m-d H:i:s'),
             'iduserUpdated' =>auth()->user()->id,
         ];
         Cliente::where('id', $request->cliente_id)->update($data);
         // dd($request);
+
+        if($request->nombre){
+            for($i = 1; $i <= count($request->nombre); $i++){
+                $data = [
+                    'cliente_id' => $request->cliente_id,
+                    'nombre_operativo' =>$request->nombre[$i],
+                    'telefono_operativo' =>$request->telefono[$i],
+                    'email_operativo' =>$request->email[$i],
+                    'siaf_status' => 1,
+                    'created_at' =>date('Y-m-d H:i:s'),
+                    'updated_at' =>date('Y-m-d H:i:s'),
+                    'iduserCreated' => auth()->user()->id,
+                    'iduserUpdated' => auth()->user()->id,
+                ];
+
+                ClienteContactoOperativo::insert($data);
+            }
+        }
+
+        if($request->nombre_fac){
+            for($f = 1; $f <= count($request->nombre_fac); $f++){
+                
+                $data = [
+                    'cliente_id' => $request->cliente_id,
+                    'nombre_contacto' =>$request->nombre_fac[$f],
+                    'telefono_contacto' =>$request->telefono_fac[$f],
+                    'email_contacto' =>$request->email_fac[$f],
+                    'siaf_status' => 1,
+                    'created_at' =>date('Y-m-d H:i:s'),
+                    'updated_at' =>date('Y-m-d H:i:s'),
+                    'iduserCreated' => auth()->user()->id,
+                    'iduserUpdated' => auth()->user()->id,
+                ];
+                ClienteContactoFacturacion::insert($data);
+            }
+        }
+
+
+        $colIdDocumento = $request->id_documento;
+        if($request->hasfile('archivo')){
+            $archivos = $request->file('archivo');
+            foreach($archivos as $indice => $archivo)
+            {
+                $archivoNombre = $archivo->hashName();
+                $mimeType = $archivo->getMimeType();
+                Storage::putFileAs('cliente/'.$request->cliente_id, $archivo, $archivoNombre);
+                $data = [
+                    'cliente_id' => $request->cliente_id,
+                    'cliente_tipo_documento_id' =>$colIdDocumento[$indice],
+                    'documento' => $archivoNombre,
+                    'mime_type' => $mimeType,
+                    'created_at' =>date('Y-m-d H:i:s'),
+                    'updated_at' =>date('Y-m-d H:i:s'),
+                    'iduserCreated' =>auth()->user()->id,
+                    'iduserUpdated' =>auth()->user()->id
+                ];
+
+                DocumentoCliente::insert($data);
+            }
+        }
 
 
         session()->flash('success', 'El cliente se añadió correctamente');
@@ -221,7 +402,7 @@ class ClienteController extends Controller
     public function desactivarcliente(Request $request)
     {
         $data = [
-            'status_delete' => 2,
+            'siaf_status' => 2,
             'iduserUpdated' => auth()->user()->id,
             'updated_at' => date('Y-m-d H:i:s')
         ];
@@ -234,7 +415,7 @@ class ClienteController extends Controller
 
     public function listadoclienteinactivo()
     {
-        $data = Cliente::where('status_delete', 2)->get();
+        $data = Cliente::where('siaf_status', 2)->get();
 
         return view('cliente.listado-cliente-inactivo', compact('data'));       
     }
@@ -242,7 +423,7 @@ class ClienteController extends Controller
     public function activarcliente(Request $request)
     {
         $data = [
-            'status_delete' => 1,
+            'siaf_status' => 1,
             'iduserUpdated' => auth()->user()->id,
             'updated_at' => date('Y-m-d H:i:s')
         ];
@@ -256,8 +437,27 @@ class ClienteController extends Controller
     public function vercliente($cliente_id)
     {
         $data = Cliente::where('id', $cliente_id)->first();
+        $cliente_operativo = ClienteContactoOperativo::where('cliente_id', $cliente_id)->get();
+        $cliente_fac = ClienteContactoFacturacion::where('cliente_id', $cliente_id)->get();
+        $documentos = DocumentoCliente::where('cliente_id',$cliente_id)->get();
         
-        return view('cliente.ver-cliente', compact('data', 'cliente_id'));         
+        return view('cliente.ver-cliente', compact('data', 'cliente_id', 'cliente_operativo', 'cliente_fac', 'documentos'));         
+    }
+
+    public function eliminardocumentocliente(Request $request)
+    {
+        $doc = DocumentoCliente::findOrFail($request->id);
+        $estatus = true;
+        if ($doc){
+            Storage::delete('cliente/'.$doc->cliente_id.'/'.$doc->documento);
+            DocumentoCliente::where('id', $request->id)->delete();
+        }else{
+            $estatus = false;
+        }
+
+        return response()->json([
+            'estatus' => $estatus,
+        ]);
     }
 
 }
