@@ -17,6 +17,7 @@
 		Route::get('/ver-cliente/{cliente}', [App\Http\Controllers\Cliente\ClienteController::class, 'vercliente'])->name('cliente.vercliente');
 		Route::post('/eliminar-documento-cliente', [App\Http\Controllers\Cliente\ClienteController::class, 'eliminardocumentocliente'])->name('cliente.eliminardocumentocliente');
 
+
     //Listado de Tipo de Documentos
         Route::get('/catalogo-documentos', [App\Http\Controllers\Cliente\DocumentosClienteController::class, 'catalogoDocumentos'])->name('doccliente.catalogoDocumentos');
         Route::post('/documentos-datatable', [App\Http\Controllers\Cliente\DocumentosClienteController::class, 'municipiosdatatable'])->name('doccliente.municipiosdatatable');

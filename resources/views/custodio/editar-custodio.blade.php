@@ -14,6 +14,9 @@
             <div class="card card-custom gutter-b">
                 <div class="card-header">
                     <h3 class="card-title">Editar Custodio</h3>
+                    <div class="card-toolbar">
+                        <a href="{{ route('custodio.listadocustodio') }}" class="btn btn-sm btn-clean btn-hover-icon-success btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
+                    </div>
                 </div>
                 <!--begin::Form-->
                 <input type="hidden" id="documentoEliminarPath" value="{{ route('custodio.eliminardocumentocustodio') }}">
@@ -134,9 +137,9 @@
                                                     <label>Fecha de ingreso</label>
                                                     <div class="input-group">
                                                         @if($custodio->fecha_ingreso != null || $custodio->fecha_ingreso != "")
-                                                            <input type="text" class="form-control" value="{{ date('d/m/Y', strtotime($custodio->fecha_ingreso))}}" name="fecha_ingreso" id="fecha_ingreso" required readonly/>
+                                                            <input type="text" class="form-control" value="{{ date('d/m/Y', strtotime($custodio->fecha_ingreso))}}" name="fecha_ingreso" id="fecha_ingreso" required />
                                                         @else
-                                                            <input type="text" class="form-control" value="" name="fecha_ingreso" id="fecha_ingreso" required readonly/>
+                                                            <input type="text" class="form-control" value="" name="fecha_ingreso" id="fecha_ingreso" required />
                                                         @endif
                                                     </div>
                                                 </div>
@@ -189,7 +192,7 @@
                                     <div class="col-lg-6">
                                         <label>Fecha de nacimiento</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" value="{{ date('d/m/Y', strtotime($custodio->fecha_nacimiento))}}" name="fecha_nacimiento" id="fecha_nacimiento" required readonly/>
+                                            <input type="text" class="form-control" value="{{ date('d/m/Y', strtotime($custodio->fecha_nacimiento))}}" name="fecha_nacimiento" id="fecha_nacimiento" required />
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
