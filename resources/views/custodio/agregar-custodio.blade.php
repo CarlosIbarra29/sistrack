@@ -6,15 +6,24 @@
     Agregar custodio
 @endsection
 @section('content')
+prueba subir cambios
+
 
     <!--begin::Card-->
-    <div class="row">
+    <div class="row mt-2">
         <div class="col-lg-12">
             <!--begin::Card-->
             <div class="card card-custom gutter-b">
                 <div class="card-header">
                     <h3 class="card-title">Agregar Custodio</h3>
+                    <div class="card-toolbar">
+                        <a href="{{ route('custodio.listadocustodio') }}" class="btn btn-sm btn-clean btn-hover-icon-success btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
+                    </div>
                 </div>
+
+
+
+                    
                 <!--begin::Form-->
                 <form action="{{ route('custodio.guardarcustodio') }}" method="post" id="submit_cliente" enctype="multipart/form-data">
                     @csrf
@@ -56,7 +65,7 @@
                                     <div class="col-lg-6">
                                         <label>Fecha de ingreso</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="fecha_ingreso" readonly id="fecha_ingreso" required/>
+                                            <input type="text" class="form-control" name="fecha_ingreso" id="fecha_ingreso" required/>
                                         </div>
                                     </div>
 
@@ -106,7 +115,7 @@
                                     <div class="col-lg-6">
                                         <label>Fecha de nacimiento</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="fecha_nacimiento" readonly id="fecha_nacimiento" required />
+                                            <input type="text" class="form-control" name="fecha_nacimiento"  id="fecha_nacimiento" required />
                                         </div>
                                     </div>
                                     <div class="col-lg-6">

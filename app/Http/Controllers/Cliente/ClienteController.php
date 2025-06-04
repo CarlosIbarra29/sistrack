@@ -34,7 +34,7 @@ class ClienteController extends Controller
 
     public function listadocliente()
     {
-        $data = Cliente::where('siaf_status', 1)->get();
+        $data = Cliente::where('siaf_status', 1)->get;
 
         return view('cliente.listado-cliente', compact('data'));
     }

@@ -42,6 +42,7 @@ class CustodioController extends Controller
     public function listadocustodio()
     {
         $data = Cliente::where('siaf_status', 1)->get();
+        // dd($data);
 
         return view('custodio.listado-custodio', compact('data'));
 
@@ -175,6 +176,7 @@ class CustodioController extends Controller
 
     public function guardarcustodio(Request $request)
     {
+
         $data = [
             'fecha_ingreso' => $request->fecha_ingreso ? Carbon::createFromFormat('d/m/Y', $request->fecha_ingreso)->format('Y-m-d'):null,
             'ap_paterno' => $request->ape_paterno,
@@ -207,6 +209,7 @@ class CustodioController extends Controller
             'iduserCreated' =>auth()->user()->id,
             'iduserUpdated' =>auth()->user()->id,
         ];
+        // dd($data);
         $id_custodio = Custodio::insertGetId($data);
 
         $data_seleccion = [
