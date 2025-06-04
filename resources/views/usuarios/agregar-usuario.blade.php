@@ -14,6 +14,7 @@
             <div class="card card-custom gutter-b">
                 <div class="card-header">
                     <h3 class="card-title">Agregar usuario</h3>
+                    
                 </div>
                 <!--begin::Form-->
                 <form action="{{ route('user.guardarusuario') }}" method="post" id="submit_user">
