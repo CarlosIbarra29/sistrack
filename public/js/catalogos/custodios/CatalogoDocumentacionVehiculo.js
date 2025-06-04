@@ -1,4 +1,4 @@
-"use strict";
+ "use strict";
 var Tabla = function() {
 
     $.fn.dataTable.Api.register('column().title()', function() {

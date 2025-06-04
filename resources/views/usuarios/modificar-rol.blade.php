@@ -25,6 +25,9 @@
 <div class="card card-custom">
     <div class="card-header">
         <h3 class="card-title">Editar rol</h3>
+         <div class="card-toolbar">
+                        <a href="{{ route('rol.catalogoroles') }}" class="btn btn-sm btn-clean btn-hover-icon-success btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
+                    </div>
     </div>
 
     <div class="card-body">
