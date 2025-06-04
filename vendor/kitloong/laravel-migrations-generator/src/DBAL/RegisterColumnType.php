@@ -132,10 +132,11 @@ class RegisterColumnType
 
             $customType->type = $type;
 
-            if (!Type::hasType($type)) {
-                Type::getTypeRegistry()->register($type, $customType);
+            if (Type::hasType($type)) {
+                continue;
             }
 
+            Type::getTypeRegistry()->register($type, $customType);
             $this->registerDoctrineTypeMapping($type, $type);
         }
     }

@@ -5,19 +5,17 @@ declare(strict_types=1);
 namespace Intervention\Gif\Decoders;
 
 use Intervention\Gif\Blocks\CommentExtension;
-use Intervention\Gif\Exceptions\DecoderException;
 
 class CommentExtensionDecoder extends AbstractDecoder
 {
     /**
      * Decode current source
      *
-     * @throws DecoderException
      * @return CommentExtension
      */
     public function decode(): CommentExtension
     {
-        $this->getNextBytesOrFail(2); // skip marker & label
+        $this->getNextBytes(2); // skip marker & label
 
         $extension = new CommentExtension();
         foreach ($this->decodeComments() as $comment) {
@@ -30,7 +28,6 @@ class CommentExtensionDecoder extends AbstractDecoder
     /**
      * Decode comment from current source
      *
-     * @throws DecoderException
      * @return array<string>
      */
     protected function decodeComments(): array
@@ -38,10 +35,10 @@ class CommentExtensionDecoder extends AbstractDecoder
         $comments = [];
 
         do {
-            $byte = $this->getNextByteOrFail();
+            $byte = $this->getNextByte();
             $size = $this->decodeBlocksize($byte);
             if ($size > 0) {
-                $comments[] = $this->getNextBytesOrFail($size);
+                $comments[] = $this->getNextBytes($size);
             }
         } while ($byte !== CommentExtension::TERMINATOR);
 

@@ -5,33 +5,31 @@ declare(strict_types=1);
 namespace Intervention\Gif\Decoders;
 
 use Intervention\Gif\Blocks\ImageDescriptor;
-use Intervention\Gif\Exceptions\DecoderException;
 
 class ImageDescriptorDecoder extends AbstractPackedBitDecoder
 {
     /**
      * Decode given string to current instance
      *
-     * @throws DecoderException
      * @return ImageDescriptor
      */
     public function decode(): ImageDescriptor
     {
         $descriptor = new ImageDescriptor();
 
-        $this->getNextByteOrFail(); // skip separator
+        $this->getNextByte(); // skip separator
 
         $descriptor->setPosition(
-            $this->decodeMultiByte($this->getNextBytesOrFail(2)),
-            $this->decodeMultiByte($this->getNextBytesOrFail(2))
+            $this->decodeMultiByte($this->getNextBytes(2)),
+            $this->decodeMultiByte($this->getNextBytes(2))
         );
 
         $descriptor->setSize(
-            $this->decodeMultiByte($this->getNextBytesOrFail(2)),
-            $this->decodeMultiByte($this->getNextBytesOrFail(2))
+            $this->decodeMultiByte($this->getNextBytes(2)),
+            $this->decodeMultiByte($this->getNextBytes(2))
         );
 
-        $packedField = $this->getNextByteOrFail();
+        $packedField = $this->getNextByte();
 
         $descriptor->setLocalColorTableExistance(
             $this->decodeLocalColorTableExistance($packedField)

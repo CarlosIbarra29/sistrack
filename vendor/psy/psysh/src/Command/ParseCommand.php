@@ -12,7 +12,6 @@
 namespace Psy\Command;
 
 use PhpParser\Node;
-use PhpParser\Parser;
 use Psy\Context;
 use Psy\ContextAware;
 use Psy\Input\CodeArgument;
@@ -29,9 +28,15 @@ use Symfony\Component\VarDumper\Caster\Caster;
  */
 class ParseCommand extends Command implements ContextAware, PresenterAware
 {
-    protected Context $context;
-    private Presenter $presenter;
-    private Parser $parser;
+    /**
+     * Context instance (for ContextAware interface).
+     *
+     * @var Context
+     */
+    protected $context;
+
+    private $presenter;
+    private $parser;
 
     /**
      * {@inheritdoc}
@@ -85,9 +90,9 @@ class ParseCommand extends Command implements ContextAware, PresenterAware
         $this
             ->setName('parse')
             ->setDefinition([
-                new CodeArgument('code', CodeArgument::REQUIRED, 'PHP code to parse.'),
-                new InputOption('depth', '', InputOption::VALUE_REQUIRED, 'Depth to parse.', 10),
-            ])
+            new CodeArgument('code', CodeArgument::REQUIRED, 'PHP code to parse.'),
+            new InputOption('depth', '', InputOption::VALUE_REQUIRED, 'Depth to parse.', 10),
+        ])
             ->setDescription('Parse PHP code and show the abstract syntax tree.')
             ->setHelp(
                 <<<'HELP'
@@ -109,6 +114,7 @@ HELP
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $code = $input->getArgument('code');
+        $parserKind = $input->getOption('kind');
         $depth = $input->getOption('depth');
 
         $nodes = $this->parser->parse($code);

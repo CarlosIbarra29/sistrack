@@ -21,15 +21,12 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\File;
 use Illuminate\Support\Str;
 use Intervention\Image\Gd\Font;
-use Intervention\Image\Geometry\Factories\LineFactory;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
 use Illuminate\Session\Store as Session;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Http\Response;
-
 
 /**
  * Class Captcha
@@ -118,16 +115,6 @@ class Captcha
     protected $lines = 3;
 
     /**
-     * @var int
-     */
-    protected $lineWidth = 2;
-
-    /**
-     * @var string
-     */
-    protected $lineColor = 'ff00ff';
-
-    /**
      * @var string
      */
     protected $characters;
@@ -208,11 +195,6 @@ class Captcha
     protected $marginTop = 0;
 
     /**
-     * @var string
-     */
-    protected $fill = 'ccc';
-
-    /**
      * Constructor
      *
      * @param Filesystem $files
@@ -282,15 +264,18 @@ class Captcha
         $generator = $this->generate();
         $this->text = $generator['value'];
 
-        $this->canvas = $this->imageManager->create($this->width , $this->height)->fill($this->fill);
-
+        $this->canvas = $this->imageManager->canvas(
+            $this->width,
+            $this->height,
+            $this->bgColor
+        );
 
         if ($this->bgImage) {
-            $this->image = $this->imageManager->read($this->background())->resize(
+            $this->image = $this->imageManager->make($this->background())->resize(
                 $this->width,
                 $this->height
             );
-            $this->canvas->place($this->image);
+            $this->canvas->insert($this->image);
         } else {
             $this->image = $this->canvas;
         }
@@ -318,11 +303,8 @@ class Captcha
         return $api ? [
             'sensitive' => $generator['sensitive'],
             'key' => $generator['key'],
-            'img' => $this->image->toJpg()->toDataUri()
-        ] : new Response($this->image->toJpg(), 200, [
-            'Content-Type' => 'image/jpeg',
-            'Content-Disposition' => 'inline; filename="image.jpg"',
-        ]);
+            'img' => $this->image->encode('data-url')->encoded
+        ] : $this->image->response('png', $this->quality);
     }
 
     /**
@@ -463,12 +445,16 @@ class Captcha
     protected function lines()
     {
         for ($i = 0; $i <= $this->lines; $i++) {
-            $this->image->drawLine(function (LineFactory $line) use ($i) {
-                $line->from(rand(0, $this->image->width()) + $i * rand(0, $this->image->height()) , rand(0, $this->image->height()));
-                $line->to( rand(0, $this->image->width()), rand(0, $this->image->height()));
-                $line->color($this->lineColor); // color of line
-                $line->width($this->lineWidth); // line width in pixels
-            });
+            $this->image->line(
+                rand(0, $this->image->width()) + $i * rand(0, $this->image->height()),
+                rand(0, $this->image->height()),
+                rand(0, $this->image->width()),
+                rand(0, $this->image->height()),
+                function ($draw) {
+                    /* @var Font $draw */
+                    $draw->color($this->fontColor());
+                }
+            );
         }
 
         return $this->image;

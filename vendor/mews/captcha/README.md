@@ -1,4 +1,4 @@
-# Captcha for Laravel 10/11/12
+# Captcha for Laravel 5/6/7/8/9
 
 [![Build Status](https://travis-ci.org/mewebstudio/captcha.svg?branch=master)](https://travis-ci.org/mewebstudio/captcha) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mewebstudio/captcha/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mewebstudio/captcha/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/mews/captcha/v/stable.svg)](https://packagist.org/packages/mews/captcha)
@@ -6,16 +6,14 @@
 [![License](https://poser.pugx.org/mews/captcha/license.svg)](https://packagist.org/packages/mews/captcha)
 [![Total Downloads](https://poser.pugx.org/mews/captcha/downloads.svg)](https://packagist.org/packages/mews/captcha)
 
-A simple [Laravel 5/6/7/8/9/10/11/12](http://www.laravel.com/) service provider for including the [Captcha for Laravel](https://github.com/mewebstudio/captcha).
+A simple [Laravel 5/6](http://www.laravel.com/) service provider for including the [Captcha for Laravel](https://github.com/mewebstudio/captcha).
 
 for Laravel 4 [Captcha for Laravel Laravel 4](https://github.com/mewebstudio/captcha/tree/master-l4)
-
-for Laravel 5 to 12 [Captcha for Laravel Laravel 5 and Newer versions](https://github.com/mewebstudio/captcha/tree/master-l5-l9)
 
 ## Preview
 ![Preview](https://image.ibb.co/kZxMLm/image.png)
 
-- [Captcha for Laravel 5/6/7/8/9/10/11/12](#captcha-for-laravel-5-6-7)
+- [Captcha for Laravel 5/6/7](#captcha-for-laravel-5-6-7)
   * [Preview](#preview)
   * [Installation](#installation)
   * [Usage](#usage)
@@ -41,7 +39,7 @@ project's `composer.json`.
 {
     "require": {
         "laravel/framework": "5.0.*",
-        "mews/captcha": "~3.0"
+        "mews/captcha": "~2.0"
     },
     "minimum-stability": "stable"
 }
@@ -81,13 +79,6 @@ for Laravel 5.1+
         Mews\Captcha\CaptchaServiceProvider::class,
     ]
 ```
-For Laravel 11+ you can add the provider to `bootstrap\providers.php`.
-```php
-return [
-    // ...
-    Mews\Captcha\CaptchaServiceProvider::class
-];
-```
 
 Find the `aliases` key in `config/app.php`.
 
@@ -105,14 +96,12 @@ for Laravel 5.1+
     ]
 ```
 
-For Laravel 11+ : you do not need to add the alias, it will be added automatically.
-
 
 ## Configuration
 ### Custom settings:
 To use your own settings, publish config.
 
-```$ php artisan vendor:publish --provider="Mews\Captcha\CaptchaServiceProvider"```
+```$ php artisan vendor:publish```
 
 `config/captcha.php`
 
@@ -140,6 +129,7 @@ CAPTCHA_DISABLE=true
 ## Example Usage
 ### Session Mode:
 ```php
+
     // [your site path]/Http/routes.php
     Route::any('captcha-test', function() {
         if (request()->getMethod() == 'POST') {
@@ -160,33 +150,6 @@ CAPTCHA_DISABLE=true
         $form .= '</form>';
         return $form;
     });
-```
-Detailed Example in Laravel way
-view files
-```html
-    //register.blade.php
-    <img src="{{ captcha_src() }}" alt="captcha">
-        <div class="mt-2"></div>
-        <input 
-            type="text" name="captcha" class="form-control @error('captcha') is-invalid @enderror" placeholder="Please Insert Captch"
-            >
-         @error('captcha') 
-         <div class="invalid-feedback">{{ $message }}</div> @enderror 
-```
-controller files
-```php
-        Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                Rule::unique(User::class),
-            ],
-            'password' => $this->passwordRules(),
-            'captcha' => 'required|captcha'
-        ])->validate();
 ```
 ### Stateless Mode:
 You get key and img from this url
@@ -256,4 +219,4 @@ Based on [Intervention Image](https://github.com/Intervention/image)
 * [License](http://www.opensource.org/licenses/mit-license.php)
 * [Laravel website](http://laravel.com)
 * [Laravel Turkiye website](http://www.laravel.gen.tr)
-* [mewebstudio](https://github.com/mewebstudio/captcha)
+* [MeWebStudio website](http://www.mewebstudio.com)

@@ -78,6 +78,6 @@ class Cell
             }
         }
 
-        return app(Pipeline::class)->send($value)->through(config('excel.imports.cells.middleware', []))->thenReturn();
+        return resolve(Pipeline::class)->send($value)->through(config('excel.imports.cells.middleware', []))->thenReturn();
     }
 }

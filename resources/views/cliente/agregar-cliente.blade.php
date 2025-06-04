@@ -14,6 +14,9 @@
             <div class="card card-custom gutter-b">
                 <div class="card-header">
                     <h3 class="card-title">Agregar Cliente</h3>
+                    <div class="card-toolbar">
+                        <a href="{{ route('cliente.listadocliente') }}" class="btn btn-sm btn-clean btn-hover-icon-success btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
+                    </div>
                 </div>
                 <!--begin::Form-->
                 <form action="{{ route('cliente.guardarcliente') }}" method="post" id="submit_cliente"  enctype="multipart/form-data">

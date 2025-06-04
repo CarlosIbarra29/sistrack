@@ -7,7 +7,6 @@ namespace Intervention\Gif\Decoders;
 use Intervention\Gif\AbstractEntity;
 use Intervention\Gif\Blocks\DataSubBlock;
 use Intervention\Gif\Blocks\ImageData;
-use Intervention\Gif\Exceptions\DecoderException;
 use Intervention\Gif\Exceptions\FormatException;
 
 class ImageDataDecoder extends AbstractDecoder
@@ -15,7 +14,6 @@ class ImageDataDecoder extends AbstractDecoder
     /**
      * Decode current source
      *
-     * @throws DecoderException
      * @throws FormatException
      * @return ImageData
      */
@@ -24,16 +22,16 @@ class ImageDataDecoder extends AbstractDecoder
         $data = new ImageData();
 
         // LZW min. code size
-        $char = $this->getNextByteOrFail();
+        $char = $this->getNextByte();
         $size = (int) unpack('C', $char)[1];
         $data->setLzwMinCodeSize($size);
 
         do {
             // decode sub blocks
-            $char = $this->getNextByteOrFail();
+            $char = $this->getNextByte();
             $size = (int) unpack('C', $char)[1];
             if ($size > 0) {
-                $data->addBlock(new DataSubBlock($this->getNextBytesOrFail($size)));
+                $data->addBlock(new DataSubBlock($this->getNextBytes($size)));
             }
         } while ($char !== AbstractEntity::TERMINATOR);
 

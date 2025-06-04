@@ -15,8 +15,6 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\Closure;
 use PhpParser\Node\Expr\ConstFetch;
 use PhpParser\Node\Identifier;
-use PhpParser\Node\IntersectionType;
-use PhpParser\Node\Name;
 use PhpParser\Node\NullableType;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\Return_;
@@ -34,7 +32,7 @@ class ReturnTypePass extends CodeCleanerPass
     const VOID_NULL_MESSAGE = 'A void function must not return a value (did you mean "return;" instead of "return null;"?)';
     const NULLABLE_VOID_MESSAGE = 'Void type cannot be nullable';
 
-    private array $returnTypeStack = [];
+    private $returnTypeStack = [];
 
     /**
      * {@inheritdoc}
@@ -102,16 +100,12 @@ class ReturnTypePass extends CodeCleanerPass
             return \implode('|', \array_map([$this, 'typeName'], $node->types));
         }
 
-        if ($node instanceof IntersectionType) {
-            return \implode('&', \array_map([$this, 'typeName'], $node->types));
-        }
-
         if ($node instanceof NullableType) {
-            return $this->typeName($node->type);
+            return \strtolower($node->type->name);
         }
 
-        if ($node instanceof Identifier || $node instanceof Name) {
-            return $node->toLowerString();
+        if ($node instanceof Identifier) {
+            return \strtolower($node->name);
         }
 
         throw new \InvalidArgumentException('Unable to find type name');

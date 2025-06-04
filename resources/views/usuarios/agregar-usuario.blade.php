@@ -14,6 +14,9 @@
             <div class="card card-custom gutter-b">
                 <div class="card-header">
                     <h3 class="card-title">Agregar usuario</h3>
+                    <div class="card-toolbar">
+                        <a href="{{ route('user.catalogousuarios') }}" class="btn btn-sm btn-clean btn-hover-icon-success btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
+                    </div>
                 </div>
                 <!--begin::Form-->
                 <form action="{{ route('user.guardarusuario') }}" method="post" id="submit_user">
