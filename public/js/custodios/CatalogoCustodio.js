@@ -34,13 +34,15 @@ var Tabla = function() {
                 },
                 data: {
                     columnsDef: [
-                        'id', 'nombre_custodio', 'curp', 'rfc','numero_telefono', 'correo_electronico', 'op_vehiculo', 'op_arma', 'permisos' ,'acciones'],
+                        'id', 'nombre_custodio', 'ap_paterno', 'ap_materno', 'curp', 'rfc','numero_telefono', 'correo_electronico', 'op_vehiculo', 'op_arma', 'permisos' ,'acciones'],
                 },
 
             },
             columns: [
                 { data: 'id' },
                 { data: 'nombre_custodio' },
+                { data: 'ap_paterno' },
+                { data: 'ap_materno' },
                 { data: 'curp' },
                 { data: 'rfc' },
                 { data: 'numero_telefono' },

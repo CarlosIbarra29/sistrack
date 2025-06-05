@@ -88,7 +88,7 @@ class CustodioController extends Controller
 
         // Fetch records
 
-        $records = Custodio::select('custodio.id', 'custodio.nombre_custodio', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones',
+        $records = Custodio::select('custodio.id', 'custodio.nombre_custodio', 'custodio.ap_paterno', 'custodio.ap_materno', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones',
             'custodio.op_vehiculo', 'custodio.op_arma')
             ->where('custodio.siaf_status', 1)
             ->orderBy($order_column_name, $order_column_dir)
@@ -103,7 +103,7 @@ class CustodioController extends Controller
                 if (!empty($columna['search']['value'])){
                     $valor = trim($columna['search']['value']);
 
-                    $records = Custodio::select('custodio.id', 'custodio.nombre_custodio', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones',
+                    $records = Custodio::select('custodio.id', 'custodio.nombre_custodio','custodio.ap_paterno', 'custodio.ap_materno', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones',
             'custodio.op_vehiculo' , 'custodio.op_arma')
                     ->where('custodio.siaf_status', 1)
                     ->where("custodio.name", '=' , $valor)
@@ -116,7 +116,7 @@ class CustodioController extends Controller
         }
 
         if($valor == "No"){
-            $records = Custodio::select('custodio.id', 'custodio.nombre_custodio', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones',
+            $records = Custodio::select('custodio.id', 'custodio.nombre_custodio','custodio.ap_paterno', 'custodio.ap_materno', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones',
             'custodio.op_vehiculo', 'custodio.op_arma')
             ->where('custodio.siaf_status', 1)
             ->orderBy($order_column_name, $order_column_dir)
@@ -135,6 +135,8 @@ class CustodioController extends Controller
             $data_arr[] = array(
                 "id" => $record->id,
                 "nombre_custodio" => strtoupper($record->nombre_custodio),
+                "ap_paterno" => strtoupper($record->ap_paterno),
+                "ap_materno" => strtoupper($record->ap_materno),
                 "curp" => strtoupper($record->curp),
                 "rfc" => $record->rfc,
                 "numero_telefono" => strtoupper($record->numero_telefono),

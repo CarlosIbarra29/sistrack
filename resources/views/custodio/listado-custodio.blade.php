@@ -137,6 +137,8 @@
                                 <tr>
                                   <th>No.</th>
                                   <th>Nombre</th>
+                                  <th>Apellido Paterno</th>
+                                  <th>Apellido Materno</th>
                                   <th>CURP</th>
                                   <th>RFC</th>
                                   <th>Número Telefono</th>
@@ -148,6 +150,8 @@
                                 <tr>
                                   <th>No.</th>
                                   <th>Nombre</th>
+                                  <th>Apellido Paterno</th>
+                                  <th>Apellido Materno</th>
                                   <th>CURP</th>
                                   <th>RFC</th>
                                   <th>Número Telefono</th>
