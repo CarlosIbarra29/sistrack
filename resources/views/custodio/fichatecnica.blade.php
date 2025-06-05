@@ -25,10 +25,11 @@
 
 <div class="row" style="margin-top: 10px;">
     <div class="col-lg-6">
-        {{-- <a href="javascript:window.history.go(-1);" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>   --}}  
+        
+        <button class="export-pdf btn btn-primary mr-2" onclick="getPDF('.pdf-page')">Descargar</button>   
     </div>
     <div class="col-lg-6 text-right">
-        <button class="export-pdf btn btn-primary mr-2" onclick="getPDF('.pdf-page')">Descargar</button>
+        <a href="javascript:window.history.go(-1);" class="export-pdf btn btn-primary mr-2" >Regresar</a> 
     </div>
 </div>
 
