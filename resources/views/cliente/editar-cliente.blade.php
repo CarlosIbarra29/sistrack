@@ -15,6 +15,9 @@
             <div class="card card-custom gutter-b">
                 <div class="card-header">
                     <h3 class="card-title">Editar Cliente</h3>
+                     <div class="card-toolbar">
+                     <a href="{{ route('cliente.listadocliente') }}"  class="btn btn-secondary">Regresar</a>
+                     </div>
                 </div>
 
                 <input type="hidden" id="documentoEliminarPath" value="{{ route('cliente.eliminardocumentocliente') }}">
