@@ -46,6 +46,8 @@
                                 <tr>
                                   <th>No.</th>
                                   <th>Nombre</th>
+                                  <th>Apellido Paterno</th>
+                                  <th>Apellido Materno</th>
                                   <th>CURP</th>
                                   <th>RFC</th>
                                   <th>Número Telefono</th>
@@ -59,6 +61,8 @@
                                     <tr>
                                       <td>{{ $unid->id }}</td>
                                       <td>{{ $unid->nombre_custodio }}</td>
+                                      <td>{{ $unid->ap_paterno }}</td>
+                                      <td>{{ $unid->ap_materno }}</td>
                                       <td>{{ $unid->curp }}</td>
                                       <td>{{ $unid->rfc }}</td>
                                       <td>{{ $unid->numero_telefono }}</td>
@@ -75,6 +79,8 @@
                                 <tr>
                                   <th>No.</th>
                                   <th>Nombre</th>
+                                  <th>Apellido Paterno</th>
+                                  <th>Apellido Materno</th>
                                   <th>CURP</th>
                                   <th>RFC</th>
                                   <th>Número Telefono</th>

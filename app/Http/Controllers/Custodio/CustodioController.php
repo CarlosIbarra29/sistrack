@@ -48,6 +48,15 @@ class CustodioController extends Controller
 
     }
 
+    public function pruebasari()
+    {
+        $data = Cliente::where('siaf_status', 1)->get();
+        // dd($data);
+
+        return view('pruebadev.djcocoloco', compact('data'));
+
+    }
+
     public function custodiodatatable(Request $request)
     {
         $user = User::where('id', auth()->user()->id)->first();
@@ -376,6 +385,7 @@ class CustodioController extends Controller
 
     public function updatecustodio(Request $request)
     {
+        // dd($request->id_custodio);
         $data = [
             'fecha_ingreso' => $request->fecha_ingreso ? Carbon::createFromFormat('d/m/Y', $request->fecha_ingreso)->format('Y-m-d'):null,
             'ap_paterno' => $request->ape_paterno,
@@ -509,7 +519,7 @@ class CustodioController extends Controller
         }
 
         session()->flash('success', 'El custodio se actualizó correctamente');
-        return redirect()->route('custodio.listadocustodio');       
+        return redirect()->route('custodio.editarcustodio',$request->id_custodio);       
     }
 
 
@@ -680,6 +690,7 @@ class CustodioController extends Controller
 
     public function editinfovehiculo(Request $request)
     {
+        // dd($request);
         $data = [
             'custodio_id' => $request->custodio_id,
             'vehiculo' => $request->vehiculo,
@@ -696,6 +707,7 @@ class CustodioController extends Controller
             'iduserCreated' =>auth()->user()->id,
             'iduserUpdated' =>auth()->user()->id,
         ];
+        // dd($data);
 
         CustodioVehiculo::where('custodio_id', $request->custodio_id)->update($data);
 
@@ -750,7 +762,7 @@ class CustodioController extends Controller
         Custodio::where('id', $request->custodio_id)->update($data);
 
         session()->flash('success', 'El vehiculo se edito correctamente');
-        return redirect()->route('custodio.listadocustodio');          
+        return redirect()->route('custodio.editarvehiculo',$request->custodio_id);          
     }
 
 
@@ -866,6 +878,7 @@ class CustodioController extends Controller
 
     public function editinfoarma(Request $request)
     {
+        
         $data = [
             'custodio_id' => $request->custodio_id,
             'registro_arma' => $request->registro_arma,
@@ -929,7 +942,7 @@ class CustodioController extends Controller
         Custodio::where('id', $request->custodio_id)->update($data);
 
         session()->flash('success', 'El arma se edito correctamente');
-        return redirect()->route('custodio.listadocustodio');           
+        return redirect()->route('custodio.editararma',$request->custodio_id);           
     }
 
     public function eliminardocumentoarma(Request $request)
@@ -999,7 +1012,7 @@ class CustodioController extends Controller
 
     public function listadocustodioinactivo()
     {
-        $data = Custodio::where('siaf_status', 2)->get();
+        $data = Custodio::where('siaf_status', 2)->get();   
 
         return view('custodio.listado-custodio-inactivo', compact('data'));       
     }

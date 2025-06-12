@@ -56,3 +56,4 @@
 		Route::post('/editar-info-arma', [App\Http\Controllers\Custodio\CustodioController::class, 'editinfoarma'])->name('custodio.editinfoarma');
 		Route::post('/eliminar-documento-arma', [App\Http\Controllers\Custodio\CustodioController::class, 'eliminardocumentoarma'])->name('custodio.eliminardocumentoarma');
 		Route::post('/eliminar-fotografia-arma', [App\Http\Controllers\Custodio\CustodioController::class, 'eliminarfotografiaarma'])->name('custodio.eliminarfotografiaarma');
+		Route::get('/pruebas-ari', [App\Http\Controllers\Custodio\CustodioController::class, 'pruebasari'])->name('custodio.pruebasari');
