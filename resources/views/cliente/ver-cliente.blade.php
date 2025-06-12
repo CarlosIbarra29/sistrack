@@ -14,6 +14,9 @@
             <div class="card card-custom gutter-b">
                 <div class="card-header">
                     <h3 class="card-title"> Cliente</h3>
+                    <div class="card-toolbar">
+                    <a href="{{ route('cliente.listadocliente') }}"  class="btn btn-secondary">Regresar</a>
+                    </div>
                 </div>
 
                 <input type="hidden" id="documentoEliminarOperativo" value="{{ route('cliente.eliminarcontactooperativo') }}">
@@ -202,7 +205,7 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-lg-6">
-                                <a href="{{ route('cliente.listadocliente') }}"  class="btn btn-secondary">Regresar</a>
+                               
                             </div>
                         </div>
                     </div>
