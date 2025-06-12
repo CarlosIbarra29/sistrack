@@ -111,11 +111,35 @@
                                 <!--begin: Search Form-->
                                 <form class="mb-15">
                                   <div class="row mb-6">
-                                    <div class="col-lg-6 mb-lg-0 mb-6">
+                                    <div class="col-lg-64mb-lg-0 mb-4">
                                       <label>Nombre del custodio:</label>
                                       <input type="text" class="form-control datatable-input" data-col-index="1" />
                                     </div>
+                                    <div class="col-lg-4 mb-lg-0 mb-4">
+                                      <label>Apellido paterno:</label>
+                                      <input type="text" class="form-control datatable-input" data-col-index="2" />
+                                    </div>
+                                    <div class="col-lg-4 mb-lg-0 mb-4">
+                                      <label>Apellido materno:</label>
+                                      <input type="text" class="form-control datatable-input" data-col-index="3" />
+                                    </div>
                                   </div>
+
+                                  <div class="row mb-6">
+                                    <div class="col-lg-64mb-lg-0 mb-4">
+                                      <label>CURP:</label>
+                                      <input type="text" class="form-control datatable-input" data-col-index="4" />
+                                    </div>
+                                    <div class="col-lg-4 mb-lg-0 mb-4">
+                                      <label>RFC:</label>
+                                      <input type="text" class="form-control datatable-input" data-col-index="5" />
+                                    </div>
+                                    <div class="col-lg-4 mb-lg-0 mb-4">
+                                      <label>Correo electronico:</label>
+                                      <input type="text" class="form-control datatable-input" data-col-index="7" />
+                                    </div>
+                                  </div>
+
 
                                   <div class="row mt-8">
                                     <div class="col-lg-12">

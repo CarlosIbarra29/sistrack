@@ -108,14 +108,84 @@ class CustodioController extends Controller
         $valor = "No";   
         // Bandera para varlidar si no hay filtros   $valor = "No";
         foreach ($columnName_arr as $indice => $columna){
-            if($columna['data']=='name'){
+            if($columna['data']=='nombre_custodio'){
                 if (!empty($columna['search']['value'])){
                     $valor = trim($columna['search']['value']);
 
-                    $records = Custodio::select('custodio.id', 'custodio.nombre_custodio','custodio.ap_paterno', 'custodio.ap_materno', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones',
-            'custodio.op_vehiculo' , 'custodio.op_arma')
+                    $records = Custodio::select('custodio.id', 'custodio.nombre_custodio','custodio.ap_paterno', 'custodio.ap_materno', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones','custodio.op_vehiculo' , 'custodio.op_arma')
                     ->where('custodio.siaf_status', 1)
-                    ->where("custodio.name", '=' , $valor)
+                    ->where('custodio.nombre_custodio', 'like', '%' .$valor . '%')
+                    ->orderBy($order_column_name, $order_column_dir)
+                    ->skip($start)
+                    ->take($rowperpage)
+                    ->get();
+                }
+            }
+
+            if($columna['data']=='ap_paterno'){
+                if (!empty($columna['search']['value'])){
+                    $valor = trim($columna['search']['value']);
+
+                    $records = Custodio::select('custodio.id', 'custodio.nombre_custodio','custodio.ap_paterno', 'custodio.ap_materno', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones','custodio.op_vehiculo' , 'custodio.op_arma')
+                    ->where('custodio.siaf_status', 1)
+                    ->where('custodio.ap_paterno', 'like', '%' .$valor . '%')
+                    ->orderBy($order_column_name, $order_column_dir)
+                    ->skip($start)
+                    ->take($rowperpage)
+                    ->get();
+                }
+            }
+
+            if($columna['data']=='ap_materno'){
+                if (!empty($columna['search']['value'])){
+                    $valor = trim($columna['search']['value']);
+
+                    $records = Custodio::select('custodio.id', 'custodio.nombre_custodio','custodio.ap_paterno', 'custodio.ap_materno', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones','custodio.op_vehiculo' , 'custodio.op_arma')
+                    ->where('custodio.siaf_status', 1)
+                    ->where('custodio.ap_materno', 'like', '%' .$valor . '%')
+                    ->orderBy($order_column_name, $order_column_dir)
+                    ->skip($start)
+                    ->take($rowperpage)
+                    ->get();
+                }
+            }
+
+            if($columna['data']=='curp'){
+                if (!empty($columna['search']['value'])){
+                    $valor = trim($columna['search']['value']);
+
+                    $records = Custodio::select('custodio.id', 'custodio.nombre_custodio','custodio.ap_paterno', 'custodio.ap_materno', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones','custodio.op_vehiculo' , 'custodio.op_arma')
+                    ->where('custodio.siaf_status', 1)
+                    ->where('custodio.curp', 'like', '%' .$valor . '%')
+                    ->orderBy($order_column_name, $order_column_dir)
+                    ->skip($start)
+                    ->take($rowperpage)
+                    ->get();
+                }
+            }
+
+            if($columna['data']=='rfc'){
+                if (!empty($columna['search']['value'])){
+                    $valor = trim($columna['search']['value']);
+
+                    $records = Custodio::select('custodio.id', 'custodio.nombre_custodio','custodio.ap_paterno', 'custodio.ap_materno', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones','custodio.op_vehiculo' , 'custodio.op_arma')
+                    ->where('custodio.siaf_status', 1)
+                    ->where('custodio.rfc', 'like', '%' .$valor . '%')
+                    ->orderBy($order_column_name, $order_column_dir)
+                    ->skip($start)
+                    ->take($rowperpage)
+                    ->get();
+                }
+            }
+
+
+            if($columna['data']=='correo_electronico'){
+                if (!empty($columna['search']['value'])){
+                    $valor = trim($columna['search']['value']);
+
+                    $records = Custodio::select('custodio.id', 'custodio.nombre_custodio','custodio.ap_paterno', 'custodio.ap_materno', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones','custodio.op_vehiculo' , 'custodio.op_arma')
+                    ->where('custodio.siaf_status', 1)
+                    ->where('custodio.correo_electronico', 'like', '%' .$valor . '%')
                     ->orderBy($order_column_name, $order_column_dir)
                     ->skip($start)
                     ->take($rowperpage)
