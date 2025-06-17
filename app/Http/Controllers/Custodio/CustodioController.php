@@ -48,6 +48,15 @@ class CustodioController extends Controller
 
     }
 
+    public function pruebasari()
+    {
+        $data = Cliente::where('siaf_status', 1)->get();
+        // dd($data);
+
+        return view('pruebadev.djcocoloco', compact('data'));
+
+    }
+
     public function custodiodatatable(Request $request)
     {
         $user = User::where('id', auth()->user()->id)->first();
@@ -99,14 +108,84 @@ class CustodioController extends Controller
         $valor = "No";   
         // Bandera para varlidar si no hay filtros   $valor = "No";
         foreach ($columnName_arr as $indice => $columna){
-            if($columna['data']=='name'){
+            if($columna['data']=='nombre_custodio'){
                 if (!empty($columna['search']['value'])){
                     $valor = trim($columna['search']['value']);
 
-                    $records = Custodio::select('custodio.id', 'custodio.nombre_custodio','custodio.ap_paterno', 'custodio.ap_materno', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones',
-            'custodio.op_vehiculo' , 'custodio.op_arma')
+                    $records = Custodio::select('custodio.id', 'custodio.nombre_custodio','custodio.ap_paterno', 'custodio.ap_materno', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones','custodio.op_vehiculo' , 'custodio.op_arma')
                     ->where('custodio.siaf_status', 1)
-                    ->where("custodio.name", '=' , $valor)
+                    ->where('custodio.nombre_custodio', 'like', '%' .$valor . '%')
+                    ->orderBy($order_column_name, $order_column_dir)
+                    ->skip($start)
+                    ->take($rowperpage)
+                    ->get();
+                }
+            }
+
+            if($columna['data']=='ap_paterno'){
+                if (!empty($columna['search']['value'])){
+                    $valor = trim($columna['search']['value']);
+
+                    $records = Custodio::select('custodio.id', 'custodio.nombre_custodio','custodio.ap_paterno', 'custodio.ap_materno', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones','custodio.op_vehiculo' , 'custodio.op_arma')
+                    ->where('custodio.siaf_status', 1)
+                    ->where('custodio.ap_paterno', 'like', '%' .$valor . '%')
+                    ->orderBy($order_column_name, $order_column_dir)
+                    ->skip($start)
+                    ->take($rowperpage)
+                    ->get();
+                }
+            }
+
+            if($columna['data']=='ap_materno'){
+                if (!empty($columna['search']['value'])){
+                    $valor = trim($columna['search']['value']);
+
+                    $records = Custodio::select('custodio.id', 'custodio.nombre_custodio','custodio.ap_paterno', 'custodio.ap_materno', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones','custodio.op_vehiculo' , 'custodio.op_arma')
+                    ->where('custodio.siaf_status', 1)
+                    ->where('custodio.ap_materno', 'like', '%' .$valor . '%')
+                    ->orderBy($order_column_name, $order_column_dir)
+                    ->skip($start)
+                    ->take($rowperpage)
+                    ->get();
+                }
+            }
+
+            if($columna['data']=='curp'){
+                if (!empty($columna['search']['value'])){
+                    $valor = trim($columna['search']['value']);
+
+                    $records = Custodio::select('custodio.id', 'custodio.nombre_custodio','custodio.ap_paterno', 'custodio.ap_materno', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones','custodio.op_vehiculo' , 'custodio.op_arma')
+                    ->where('custodio.siaf_status', 1)
+                    ->where('custodio.curp', 'like', '%' .$valor . '%')
+                    ->orderBy($order_column_name, $order_column_dir)
+                    ->skip($start)
+                    ->take($rowperpage)
+                    ->get();
+                }
+            }
+
+            if($columna['data']=='rfc'){
+                if (!empty($columna['search']['value'])){
+                    $valor = trim($columna['search']['value']);
+
+                    $records = Custodio::select('custodio.id', 'custodio.nombre_custodio','custodio.ap_paterno', 'custodio.ap_materno', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones','custodio.op_vehiculo' , 'custodio.op_arma')
+                    ->where('custodio.siaf_status', 1)
+                    ->where('custodio.rfc', 'like', '%' .$valor . '%')
+                    ->orderBy($order_column_name, $order_column_dir)
+                    ->skip($start)
+                    ->take($rowperpage)
+                    ->get();
+                }
+            }
+
+
+            if($columna['data']=='correo_electronico'){
+                if (!empty($columna['search']['value'])){
+                    $valor = trim($columna['search']['value']);
+
+                    $records = Custodio::select('custodio.id', 'custodio.nombre_custodio','custodio.ap_paterno', 'custodio.ap_materno', 'custodio.numero_telefono', 'custodio.correo_electronico', 'custodio.rfc', 'custodio.curp', 'custodio.base', 'custodio.observaciones','custodio.op_vehiculo' , 'custodio.op_arma')
+                    ->where('custodio.siaf_status', 1)
+                    ->where('custodio.correo_electronico', 'like', '%' .$valor . '%')
                     ->orderBy($order_column_name, $order_column_dir)
                     ->skip($start)
                     ->take($rowperpage)
@@ -376,6 +455,7 @@ class CustodioController extends Controller
 
     public function updatecustodio(Request $request)
     {
+        // dd($request->id_custodio);
         $data = [
             'fecha_ingreso' => $request->fecha_ingreso ? Carbon::createFromFormat('d/m/Y', $request->fecha_ingreso)->format('Y-m-d'):null,
             'ap_paterno' => $request->ape_paterno,
@@ -509,7 +589,7 @@ class CustodioController extends Controller
         }
 
         session()->flash('success', 'El custodio se actualizó correctamente');
-        return redirect()->route('custodio.listadocustodio');       
+        return redirect()->route('custodio.editarcustodio',$request->id_custodio);       
     }
 
 
@@ -680,6 +760,7 @@ class CustodioController extends Controller
 
     public function editinfovehiculo(Request $request)
     {
+        // dd($request);
         $data = [
             'custodio_id' => $request->custodio_id,
             'vehiculo' => $request->vehiculo,
@@ -696,6 +777,7 @@ class CustodioController extends Controller
             'iduserCreated' =>auth()->user()->id,
             'iduserUpdated' =>auth()->user()->id,
         ];
+        // dd($data);
 
         CustodioVehiculo::where('custodio_id', $request->custodio_id)->update($data);
 
@@ -750,7 +832,7 @@ class CustodioController extends Controller
         Custodio::where('id', $request->custodio_id)->update($data);
 
         session()->flash('success', 'El vehiculo se edito correctamente');
-        return redirect()->route('custodio.listadocustodio');          
+        return redirect()->route('custodio.editarvehiculo',$request->custodio_id);          
     }
 
 
@@ -866,6 +948,7 @@ class CustodioController extends Controller
 
     public function editinfoarma(Request $request)
     {
+        
         $data = [
             'custodio_id' => $request->custodio_id,
             'registro_arma' => $request->registro_arma,
@@ -929,7 +1012,7 @@ class CustodioController extends Controller
         Custodio::where('id', $request->custodio_id)->update($data);
 
         session()->flash('success', 'El arma se edito correctamente');
-        return redirect()->route('custodio.listadocustodio');           
+        return redirect()->route('custodio.editararma',$request->custodio_id);           
     }
 
     public function eliminardocumentoarma(Request $request)
@@ -999,7 +1082,7 @@ class CustodioController extends Controller
 
     public function listadocustodioinactivo()
     {
-        $data = Custodio::where('siaf_status', 2)->get();
+        $data = Custodio::where('siaf_status', 2)->get();   
 
         return view('custodio.listado-custodio-inactivo', compact('data'));       
     }

@@ -250,6 +250,7 @@ class UsuarioController extends Controller
 
     public function modificarusuario(Request $request)
     {
+        // dd($request);
         if (in_array("112", Session::get('permisos'))){
             // $this->notificacionusuario($request->id, 2, 1, 112);
         }
@@ -275,7 +276,7 @@ class UsuarioController extends Controller
 
         session()->flash('success', 'El usuario se modifico correctamente');
     	if (in_array("7", Session::get('permisos'))){
-            return redirect()->route('user.catalogousuarios');
+            return redirect()->route('user.editarusuario',$request->id);
         }else{
             return redirect()->route('tablero.show');
         }
