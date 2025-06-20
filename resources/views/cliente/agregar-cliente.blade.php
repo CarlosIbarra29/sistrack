@@ -68,22 +68,31 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group row">
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-6">
                                                 <label>Días de Crédito </label>
                                                 <div class="input-group">
                                                     <input type="number" class="form-control" name="dias_credito" id="dias_credito" />
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-6">
                                                 <label>Costo de estadía</label>
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" name="costo_estadia" id="costo_estadia" />
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4">
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-lg-6">
                                                 <label>Costo km extraordinario</label>
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" name="costo_km" id="costo_km" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label>Costo por estadía no armada</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="costo_estadia_armada" id="costo_estadia_armada" />
                                                 </div>
                                             </div>
                                         </div>

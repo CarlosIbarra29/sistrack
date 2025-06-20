@@ -68,7 +68,11 @@
             <div class="for" style="margin-top: 10px;">
               <div class="row">
               <div class="col-lg-6 text-center">
-                <a class="example-image-link" href="/" data-lightbox="example-1"><img class="example-image oculto" src="{{ route('archivo.fotografiaCustodio', ['id'=>$custodio->id]) }}"  alt="image-1" style="width: 180px; height: 180px;"/></a> <br>
+                @if($custodio->fotografia_custodio == null)
+                  <a class="example-image-link" href="/" data-lightbox="example-1"><img class="example-image oculto" src="{{ asset('theme/assets/media/logos/profile.jpg') }}"  alt="image-1" style="width: 180px; height: 180px;"/></a> <br>
+                @else
+                  <a class="example-image-link" href="/" data-lightbox="example-1"><img class="example-image oculto" src="{{ route('archivo.fotografiaCustodio', ['id'=>$custodio->id]) }}"  alt="image-1" style="width: 180px; height: 180px;"/></a> <br>
+                @endif
                 {{-- <span>Fecha de ingreso: {{ date('d/m/Y', strtotime($custodio->fecha_nacimiento))}}</span> --}}
                   <table class="table responsive-table">
                       <thead class="thead-light">
@@ -79,7 +83,7 @@
                       <tbody>
                           <tr>
 
-                              <td>{{ date('d/m/Y', strtotime($custodio->fecha_nacimiento))}}</td>
+                              <td>{{ date('d/m/Y', strtotime($custodio->fecha_ingreso))}}</td>
                           </tr>
                       </tbody>
                   </table>

@@ -41,7 +41,7 @@ class CustodioController extends Controller
 
     public function listadocustodio()
     {
-        $data = Cliente::where('siaf_status', 1)->get();
+        $data = Custodio::where('siaf_status', 1)->get();
         // dd($data);
 
         return view('custodio.listado-custodio', compact('data'));

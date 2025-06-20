@@ -167,6 +167,7 @@ class ClienteController extends Controller
             'dias_credito'  => $request->dias_credito,
             'costo_estadia' => $request->costo_estadia ? $this->money_format->clearFormat($request->costo_estadia):null,
             'costo_km' => $request->costo_km ? $this->money_format->clearFormat($request->costo_km):null,
+            'costo_estadia_armada' => $request->costo_estadia_armada ? $this->money_format->clearFormat($request->costo_estadia_armada):null,
             'observaciones' => $request->observaciones,
             'siaf_status' => 1,
             'created_at' =>date('Y-m-d H:i:s'),
@@ -320,6 +321,7 @@ class ClienteController extends Controller
 
     public function updatecliente(Request $request)
     {
+        // dd($request);
         $data = [
             'razon_social' => $request->razon_social,
             'nombre_cliente'  => $request->cliente,
@@ -327,6 +329,7 @@ class ClienteController extends Controller
             'dias_credito'  => $request->dias_credito,
             'costo_estadia' => $request->costo_estadia ? $this->money_format->clearFormat($request->costo_estadia):null,
             'costo_km' => $request->costo_km ? $this->money_format->clearFormat($request->costo_km):null,
+            'costo_estadia_armada' => $request->costo_estadia_armada ? $this->money_format->clearFormat($request->costo_estadia_armada):null,
             'observaciones' => $request->observaciones,
             'siaf_status' => 1,
             'updated_at' =>date('Y-m-d H:i:s'),

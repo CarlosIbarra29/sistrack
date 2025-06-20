@@ -71,22 +71,28 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group row">
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <label>Días de Crédito </label>
                                             <div class="input-group">
                                                 <p>{{ $data->dias_credito }}</p>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <label>Costo de estadía</label>
                                             <div class="input-group">
-                                                <p>{{ $data->costo_estadia }}</p>
+                                                <p>${{ $data->costo_estadia }}</p>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <label>Costo km extraordinario</label>
                                             <div class="input-group">
-                                                <p>{{ $data->costo_km }}</p>
+                                                <p>${{ $data->costo_km }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label>Costo por estadía no armada</label>
+                                            <div class="input-group">
+                                                <p>${{ $data->costo_estadia_armada }}</p>
                                             </div>
                                         </div>
                                     </div>
