@@ -63,6 +63,11 @@ var Modulo = function() {
             numericInput: true
         });
 
+        $("#costo_estadia_armada").inputmask('$ 999,999,999.99', {
+            numericInput: true
+        });
+        
+
         lista = construyeElementosLista();
         //botón agregar otro archivo
         $( ".hrefAgregarOtro" ).on( "click", function(event) {

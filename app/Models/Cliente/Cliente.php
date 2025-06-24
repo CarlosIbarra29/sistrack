@@ -36,7 +36,7 @@ class Cliente extends Model
     /**
      * @var array
      */
-    protected $fillable = ['siaf_status', 'razon_social', 'nombre_cliente', 'grupo', 'dias_credito', 'costo_estadia', 'costo_km', 'observaciones', 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at'];
+    protected $fillable = ['siaf_status', 'razon_social', 'nombre_cliente', 'grupo', 'dias_credito', 'costo_estadia', 'costo_km', 'observaciones', 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at', 'costo_estadia_armada'];
 
     public function siafStatus()
     {
