@@ -25,3 +25,13 @@
 		Route::post('/desactivar-rol', [App\Http\Controllers\UsuarioController::class, 'desacticarrol'])->name('rol.desacticarrol')->middleware('permission:role-delete');
 		Route::get('/catalogo-roles-inactivos', [App\Http\Controllers\UsuarioController::class, 'catalogorolesinactivos'])->name('rol.rolesinactivos')->middleware('permission:role-delete');
 		Route::post('/activar-rol', [App\Http\Controllers\UsuarioController::class, 'activarrol'])->name('rol.activarrol')->middleware('permission:role-delete');
+		Route::get('/catalogo-usuarios', [App\Http\Controllers\UsuarioController::class, 'catalogousuarios'])->name('user.catalogousuarios')->middleware('permission:usuario-list');
+
+
+	// Catálogo Documentación Usuario
+	Route::get('/catalogodocumentos', [App\Http\Controllers\UsuarioDocumentoController::class, 'listadodocusuarios'])->name('usuario.catalogodocumentos');
+    Route::get('/documentosdatatable', [App\Http\Controllers\UsuarioDocumentoController::class, 'datatable'])->name('usuario.documentosdatatable');
+    Route::post('/guardardocumento', [App\Http\Controllers\UsuarioDocumentoController::class, 'guardar'])->name('usuario.guardardocumento');
+    Route::post('/editardocumento', [App\Http\Controllers\UsuarioDocumentoController::class, 'editar'])->name('usuario.editardocumento');
+    Route::post('/desactivardocumento', [App\Http\Controllers\UsuarioDocumentoController::class, 'desactivar'])->name('usuario.desactivardocumento');
+    Route::get('/catalogodocumentosinactivos', [App\Http\Controllers\UsuarioDocumentoController::class, 'inactivos'])->name('usuario.catalogodocumentosinactivos');
