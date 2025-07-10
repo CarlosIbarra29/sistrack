@@ -35,8 +35,12 @@ class UsuarioController extends Controller
 
     public function catalogousuarios()
     {
-		$usuario = User::where('id_status_delete', 1)->get();
-
+		$usuario = User::select('users.id', 'users.name', 'users.email', 'users.id_status_delete', 
+            'rol.name as name_role', 'users.role', 'users.rfc', 'users.telefono', 'users.ubicacion')
+            ->leftjoin("roles as rol","rol.id","users.role")
+            ->where('users.id_status_delete', 1)
+            ->get();
+        // dd($usuario);
 		$rol = Role::where('status_delete', 0)->get();
         $user = User::where('id', auth()->user()->id)->first();
 

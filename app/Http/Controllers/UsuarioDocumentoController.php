@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Config;
-use App\Models\Usuarios\DocumentacionUsuarios;  
+use App\Models\Usuarios\DocumentacionUsuario;  
 
 class UsuarioDocumentoController extends Controller
 {
@@ -21,41 +21,92 @@ class UsuarioDocumentoController extends Controller
 
     public function listadodocusuarios()
     {
-        $data = DocumentacionUsuarios::where('siaf_status', 1)->get();
-
-        return view('usuarios.catalogos-usuarios', compact('data'));
+        $data = DocumentacionUsuario::where('siaf_status', 1)->get();
+        
+        return view('usuarios.usuario-catalogodocumentos', compact('data'));
     }
 
 
     public function datatable(Request $request)
     {
-        $documentos = DocumentacionUsuarios::where('activo', 1)->select('id', 'documento_usuario')->get();
+         $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // Rows display per page
 
-        return DataTables::of($documentos)
-            ->addIndexColumn()
-            ->addColumn('acciones', function($row){
-                return '
-                    <button class="btn btn-sm btn-primary editar" data-id="'.$row->id.'" data-nombre="'.$row->documento_usuario.'">Editar</button>
-                    <button class="btn btn-sm btn-danger desactivar" data-id="'.$row->id.'">Desactivar</button>
-                ';
-            })
-            ->rawColumns(['acciones'])
-            ->make(true);
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $search_arr = $request->get('search');
+        $searchValue = $search_arr['value']; // Search value
+
+        // Total records
+        $totalRecords = DocumentacionUsuario::select('count(*) as allcount')->count();
+        $totalRecordswithFilter = DocumentacionUsuario::select('count(*) as allcount')->where('id', 'like', '%' .$searchValue . '%')->count();
+        // Fetch records
+        $records = DocumentacionUsuario::select('user_documentos.id', 'user_documentos.tipo_documento', 'user_documentos.siaf_status')
+            ->where('user_documentos.siaf_status', 1)
+            ->skip($start)
+            ->take($rowperpage);
+
+        $valor = "No";   
+        // Bandera para varlidar si no hay filtros   $valor = "No";
+        foreach ($columnName_arr as $indice => $columna){
+            if($columna['data']=='nombre'){
+                if (!empty($columna['search']['value'])){
+                    $valor = trim($columna['search']['value']);
+                    $records = $records->where("user_documentos.tipo_documento", '=' , $valor);
+                }
+            }
+        }
+
+        if($valor == "No"){
+            $records= $records->get();
+        }else{
+            $records = $records->get();
+            $totalRecords = count($records);
+            $totalRecordswithFilter = count($records);          
+        }
+
+        $data_arr = array();
+        $pro="";
+        foreach($records as $record){
+
+            $data_arr[] = array(
+                "id" => $record->id,
+                "nombre" => $record->tipo_documento,
+                'acciones'=>null,
+            );
+        }
+
+        $response = array(
+           "draw" => intval($draw),
+           "iTotalRecords" => $totalRecords,
+           "iTotalDisplayRecords" => $totalRecordswithFilter,
+           "aaData" => $data_arr
+        );
+
+        return response()->json($response);
     }
 
     public function guardar(Request $request)
     {
-        $nuevo = new DocumentacionUsuarios();
-        $nuevo->documento_usuario = $request->documento_usuario;
-        $nuevo->activo = 1;
-        $nuevo->save();
+         $data = [
+            'tipo_documento' => $request->documento_usuario,
+            'siaf_status' => 1,
+            'iduserCreated' => auth()->user()->id,
+            'iduserUpdated' => auth()->user()->id,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
+        ];
+        
+        DocumentacionUsuario::insert($data);
 
-        return response()->json(['success' => true]);
+        session()->flash('success', 'El registro se creo correctamente');
+        return redirect()->route('usuario.catalogodocumentos');
     }
 
     public function editar(Request $request)
     {
-        $documento = DocumentacionUsuarios::find($request->id_documento_usuario);
+        $documento = DocumentacionUsuario::find($request->id_documento_usuario);
         $documento->documento_usuario = $request->documento_usuario;
         $documento->save();
 
@@ -64,7 +115,7 @@ class UsuarioDocumentoController extends Controller
 
     public function desactivar(Request $request)
     {
-        $documento = DocumentacionUsuarios::find($request->id);
+        $documento = DocumentacionUsuario::find($request->id);
         $documento->activo = 0;
         $documento->save();
 
@@ -74,6 +125,6 @@ class UsuarioDocumentoController extends Controller
     public function inactivos()
     {
         // inactivos
-        return view('catalogos.usuarios.documentos_inactivos');
+        return view('custodio.documentacion-usuario.listado-documentos-usuario-inactivo');
     }
 }

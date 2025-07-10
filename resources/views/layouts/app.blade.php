@@ -512,6 +512,30 @@
                                         <!--    </ul>-->
                                         <!--</div>-->
                                     </li>
+                                    <li id="menuCatalogoDocumentacionUsuarios"  class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                        <a href="{{ route('usuario.catalogodocumentos') }}" class="menu-link menu-toggle">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Documentación Usuario</span>
+                                            <!--<i class="menu-arrow"></i>-->
+                                        </a>
+                                        <!--<div class="menu-submenu">-->
+                                        <!--    <i class="menu-arrow"></i>-->
+                                        <!--    <ul class="menu-subnav">-->
+                                    
+                                        <!--        <li class="menu-item" aria-haspopup="true" id="menuListadodoccliente">-->
+                                        <!--            <a href="{{ route('doccliente.catalogoDocumentos') }}" class="menu-link">-->
+                                        <!--                <i class="menu-bullet menu-bullet-dot">-->
+                                        <!--                    <span></span>-->
+                                        <!--                </i>-->
+                                        <!--                <span class="menu-text">Listado de documentación</span>-->
+                                        <!--            </a>-->
+                                        <!--        </li>-->
+                                    
+                                        <!--    </ul>-->
+                                        <!--</div>-->
+                                    </li>
 
 
                                 </ul>

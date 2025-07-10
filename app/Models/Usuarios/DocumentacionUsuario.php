@@ -7,36 +7,46 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property integer $id
  * @property integer $siaf_status
+ * @property integer $users_id
+ * @property integer $users_id1
  * @property string $tipo_documento
- * @property integer $iduserCreated
  * @property string $created_at
- * @property integer $iduserUpdated
  * @property string $updated_at
+ * @property User $user
  * @property SiafStatus $siafStatus
  * @property User $user
- * @property User $user
  */
-class DocumentacionUsuarios extends Model
+class DocumentacionUsuario extends Model
 {
     /**
      * The table associated with the model.
      * 
      * @var string
      */
-    protected $table = 'user_documentacion';
+    protected $table = 'user_documentos';
 
     /**
      * @var array
      */
-    protected $fillable = ['siaf_status', 'tipo_documento', 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at'];
+    protected $fillable = ['siaf_status', 'users_id', 'users_id1', 'tipo_documento', 'created_at', 'updated_at'];
 
-    
-    public function siafStatus()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+   
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+     public function siafStatus()
     {
         return $this->belongsTo('App\Models\SiafStatus', 'siaf_status');
     }
 
-    public function userCreated()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+   public function userCreated()
     {
         return $this->belongsTo('App\Models\User', 'iduserCreated');
     }
@@ -45,4 +55,4 @@ class DocumentacionUsuarios extends Model
     {
         return $this->belongsTo('App\Models\User', 'iduserUpdated');
     }
-}
+   }
