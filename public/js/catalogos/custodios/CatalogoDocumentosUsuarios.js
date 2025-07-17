@@ -228,6 +228,18 @@ jQuery(document).ready(function() {
         ">"
     });
 
+        $(document).ready(function () {
+        $('#tablaInactivos').DataTable();
+    });
+
+
+    $(document).on('click', '.activar-documento', function () {
+        let id = $(this).data('id');
+        $('#id_documento').val(id);
+        $('#documento_act_form').submit();
+    });
+
+
 
     $(".activar-documento").click(function() {
         var id = $(this).data('id');

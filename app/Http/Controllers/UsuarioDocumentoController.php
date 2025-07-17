@@ -128,6 +128,22 @@ class UsuarioDocumentoController extends Controller
             'estatus' => $estatus,
         ]);
     }
+    public function inactivos()
+{
+    // Aquí puedes consultar los usuarios inactivos
+    $usuarios = Usuario::where('activo', 0)->get(); // asumiendo que tienes un campo 'activo'
+
+    return view('user.usuriosinactivos', compact('usuarios'));
+}
+
+    public function activar(Request $request)
+    {
+        $documento = DocumentoUsuario::findOrFail($request->id);
+        $documento->activo = 1;
+        $documento->save();
+
+        return redirect()->back()->with('success', 'Documento activado correctamente.');
+    }
 
 
 }   
