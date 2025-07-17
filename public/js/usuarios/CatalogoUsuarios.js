@@ -55,27 +55,42 @@ var Tabla = function() {
                     targets: -1,
                     title: 'Acciones',
                     orderable: false,
-                    render: function(data, type, full, meta) {
+                    {
+                data: null,
+                render: function (data, type, full, meta) {
+                let botones = '';
 
-                        if (full.permisos.includes(7) && full.permisos.includes(8)  && full.permisos.includes(5)){
-                           return `
-                                <a href="/usuario/ver-usuario/`+full.id+`" class="btn btn-sm btn-outline-success btn-icon mr-2" title="Ver usuario" data-theme="dark" data-toggle="tooltip" data-placement="top">
-                                    <span class="svg-icon svg-icon-md">
-                                        <i class="flaticon-eye"></i>
-                                    </span>
-                                </a>
-                                <a href="/usuario/editar-usuario/`+full.id+`" class="btn btn-sm btn-outline-success btn-icon mr-2" title="Editar usuario" data-theme="dark" data-toggle="tooltip" data-placement="top">
-                                    <span class="svg-icon svg-icon-md">
-                                        <i class="flaticon-edit"></i>
-                                    </span>
-                                </a>
-                                <button class="btn btn-clean btn-sm btn-icon btn-outline-success mt-1" onClick="deleteuser(`+ full.nombre +`,`+full.id+`)" data-toggle="modal" data-target="#model_delete_user" data-toggle="tooltip" data-theme="dark" title="Desactivar usuario">
-                                    <span class="svg-icon svg-icon-md">
-                                        <i class="flaticon-delete"></i>
-                                    </span>
-                                 </button>
-                            `;
-                        }
+                // Botón para Editar
+                if (full.permisos.includes(7)) {
+                    botones += `
+                        <a href="/usuario/editar-usuario/${full.id}" class="btn btn-sm btn-outline-success btn-icon mr-2" title="Editar usuario" data-toggle="tooltip">
+                            <i class="flaticon-edit"></i>
+                        </a>
+                    `;
+                }
+
+                // Botón para Eliminar / Desactivar
+                if (full.permisos.includes(8)) {
+                    botones += `
+                        <button class="btn btn-sm btn-outline-danger btn-icon mr-2" onclick="deleteuser('${full.name}', ${full.id})" title="Desactivar usuario" data-toggle="modal" data-target="#model_delete_user">
+                            <i class="flaticon-delete"></i>
+                        </button>
+                    `;
+                }
+
+                // Botón para Ver usuario
+                if (full.permisos.includes(5)) {
+                    botones += `
+                        <a href="/usuario/ver-usuario/${full.id}" class="btn btn-sm btn-outline-info btn-icon mr-2" title="Ver usuario" data-toggle="tooltip">
+                            <i class="flaticon-eye"></i>
+                        </a>
+                    `;
+                }
+
+                // Si no tiene permisos
+                return botones || '-';
+            }
+        }
 
                         if (full.permisos.includes(7)  && full.permisos.includes(5)){
                            return `
@@ -271,6 +286,12 @@ $("#send_desactivar").click(function(){
       }
     });
   });
+
+  function deleteDocumentacion(tipo_documento, id) {
+    $('#id_documento_eliminar').val(id);
+    $('#tipo_documento_nombre').val(tipo_documento);
+}
+
 
       $("#kdatatable_usuarios_dos").DataTable({
         language: {

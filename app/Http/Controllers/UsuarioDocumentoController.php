@@ -113,18 +113,21 @@ class UsuarioDocumentoController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function desactivar(Request $request)
+    public function eliminardoc(Request $request)
     {
-        $documento = DocumentacionUsuario::find($request->id);
-        $documento->activo = 0;
-        $documento->save();
+        $doc = DocumentacionUsuario::findOrFail($request->id);
+        $estatus = true;
+        if ($doc){
+            Storage::delete('user/'.$doc->user_id.'/'.$doc->documento);
+            DocumentoCliente::where('id', $request->id)->delete();
+        }else{
+            $estatus = false;
+        }
 
-        return response()->json(['success' => true]);
+        return response()->json([
+            'estatus' => $estatus,
+        ]);
     }
 
-    public function inactivos()
-    {
-        // inactivos
-        return view('custodio.documentacion-usuario.listado-documentos-usuario-inactivo');
-    }
-}
+
+}   

@@ -235,9 +235,6 @@
       </div>
   </div>
 
-  <form method="post" id="tipodocumento_delete_form" action="{{ route('doccustodio.desactivardocumento') }}" enctype="multipart/form-data">
-    @csrf
-    <input type="hidden" name="id" id="id_documento_delete" value="">
-  </form>
+  
 
 @endsection

@@ -33,5 +33,8 @@
     Route::post('/documentosdatatable', [App\Http\Controllers\UsuarioDocumentoController::class, 'datatable'])->name('usuario.documentosdatatable');
     Route::post('/guardardocumento', [App\Http\Controllers\UsuarioDocumentoController::class, 'guardar'])->name('usuario.guardardocumento');
     Route::post('/editardocumento', [App\Http\Controllers\UsuarioDocumentoController::class, 'editar'])->name('usuario.editardocumento');
-    Route::post('/desactivardocumento', [App\Http\Controllers\UsuarioDocumentoController::class, 'desactivar'])->name('usuario.desactivardocumento');
-    Route::get('/catalogodocumentosinactivos', [App\Http\Controllers\UsuarioDocumentoController::class, 'inactivos'])->name('usuario.catalogodocumentosinactivos');
+    Route::post('/desactivardoc', [App\Http\Controllers\UsuarioDocumentoController::class, 'desactivar'])->name('usuario.desactivardoc');
+    Route::get('/usuarios_inactivos', [App\Http\Controllers\UsuarioDocumentoController::class, 'inactivos'])->name('user.usuariosinactivos');
+    Route::get('/usuarios_activos', [App\Http\Controllers\UsuarioDocumentoController::class, 'activos'])->name('user.usuariosinactivos');
+    Route::get('/agregarusuario', [App\Http\Controllers\UsuarioDocumentoController::class, 'agregar'])->name('user.agregarusuario');
+    Route::post('/usuario/eliminar', [App\Http\Controllers\UsuarioDocumentoController::class, 'eliminar'])->name('usuario.eliminar');

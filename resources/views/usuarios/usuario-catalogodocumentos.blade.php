@@ -34,7 +34,7 @@
                                         data-toggle="modal" data-target="#kt_modal_1">
                                         <i class="la la-plus"></i>Nuevo</a>
 
-                                    <a href="{{ route('usuario.catalogodocumentosinactivos') }}"
+                                    <a href="{{ route('user.usuariosinactivos') }}"
                                         class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
                                         <i class="far fa-trash-alt"></i>Documentos inactivos</a>
 
@@ -138,7 +138,8 @@
         </div>
     </div>
 
-    {{-- MODALS --}}
+    <!-- {{-- MODALS --}} -->
+
     <div class="modal fade" id="kt_modal_1" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -171,7 +172,7 @@
                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('usuario.editardocumento') }}" method="post" id="form_editar">
+                    <form action="{{ route('usuario.editardocumento') }}" ...>
                         @csrf
                         <div class="form-group">
                             <label>Nombre del documento</label>
@@ -188,8 +189,9 @@
         </div>
     </div>
 
-    <form method="post" id="form_desactivar" action="{{ route('usuario.desactivardocumento') }}" enctype="multipart/form-data">
-        @csrf
-        <input type="hidden" name="id" id="id_documento_usuario_desactivar" value="">
-    </form>
+  <form method="post" id="tipodocumento_delete_form" action="{{ route('usuario.desactivardoc') }}" enctype="multipart/form-data">
+    @csrf
+    <input type="hidden" name="id" id="id_documento_delete" value="">
+  </form>
+
 @endsection
