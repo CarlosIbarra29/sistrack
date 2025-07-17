@@ -186,7 +186,7 @@
                                             </span>
                                         </a>
 
-                                        <button class="btn btn-clean btn-sm btn-icon btn-outline-success mt-1" onClick="deleteuser(`{{ $unid->name }} `,`{{ $unid->id }}`)" data-toggle="modal" data-target="#model_delete_user" data-toggle="tooltip" data-theme="dark" title="Desactivar cliente">
+                                        <button class="btn btn-clean btn-sm btn-icon btn-outline-success mt-1" onClick="deleteuser(`{{ $unid->name }} ,{{ $unid->id }}`)" data-toggle="modal" data-target="#model_delete_user" data-toggle="tooltip" data-theme="dark" title="Desactivar cliente">
                                             <span class="svg-icon svg-icon-md">
                                                 <i class="flaticon-delete"></i>
                                             </span>
