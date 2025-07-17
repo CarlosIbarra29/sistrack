@@ -16,9 +16,9 @@ var Tabla = function() {
 
             lengthMenu: [5, 10, 25, 50],
 
-            pageLength: 10,
+            pageLength: 15,
 
-            order: [[ 0, "desc" ]], //ordenamiento default
+            order: [[ 0, "asc" ]], //ordenamiento default
             language: {
                 'lengthMenu': 'Display _MENU_',
                 "url": $('#datatable_i18n').val()
@@ -292,8 +292,10 @@ jQuery(document).ready(function() {
     $("#kdatatable_usuarios2").DataTable({
         language: {
             'lengthMenu': 'Display _MENU_',
-            "url": $('#datatable_i18n').val()
+            "url": $('#datatable_i18n').val(),
         },
+    "aaSorting": [[ 0, "desc" ]],
+
 
         "dom":
         "<'row'" +

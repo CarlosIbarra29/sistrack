@@ -157,9 +157,10 @@
                                 </thead>
 
                                 <tbody>
+                                  @php $num = 1; @endphp
                                   @foreach($data as $unid)
                                     <tr>
-                                      <td>{{ $unid->id }}</td>
+                                      <td>{{ $num }}</td>
                                       <td>{{ $unid->nombre_custodio }}</td>
                                       <td>{{ $unid->ap_paterno }}</td>
                                       <td>{{ $unid->ap_materno }}</td>
@@ -217,6 +218,7 @@
 
                                       </td>
                                     </tr>
+                                    @php $num ++; @endphp
                                   @endforeach
                                 </tbody>
 
