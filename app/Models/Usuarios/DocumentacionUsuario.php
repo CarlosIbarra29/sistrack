@@ -34,7 +34,7 @@ class DocumentacionUsuario extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
    
-   protected $fillable = ['nombre', 'email', 'activo'];
+   // protected $fillable = ['nombre', 'email', 'activo'];
 
 
     /**
