@@ -1,0 +1,115 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\DocumentacionUsuario;
+use DataTables;
+use Illuminate\Support\Facades\Validator;
+
+class DocumentacionUsuarioController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    // Vista principal del catálogo
+    public function catalogoDocumentacionUsuario()
+    {
+        return view('catalogos.custodios.catalogo_documentacion_usuario');
+    }
+
+    // DataTables
+    public function documentacionUsuarioDatatable(Request $request)
+    {
+        if ($request->ajax()) {
+            $query = DocumentacionUsuario::where('activo', 1)->select('id', 'documento');
+
+            return DataTables::of($query)
+                ->addIndexColumn()
+                ->addColumn('acciones', function ($row) {
+                    return view('catalogos.custodios.partials.acciones', compact('row'))->render();
+                })
+                ->rawColumns(['acciones'])
+                ->make(true);
+        }
+    }
+
+    // Formulario nuevo
+    public function agregarDocumentacionUsuario()
+    {
+        return view('catalogos.custodios.form_nuevo_documento');
+    }
+
+    // Guardar nuevo
+    public function guardarDocumentacionUsuario(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'documento' => 'required|string|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        DocumentacionUsuario::create([
+            'documento' => $request->documento,
+            'activo' => 1
+        ]);
+
+        return redirect()->route('documentacion.catalogoDocumentacionUsuario')->with('success', 'Documento creado exitosamente.');
+    }
+
+    // Editar formulario
+    public function editarDocumentacionUsuario($id)
+    {
+        $documento = DocumentacionUsuario::findOrFail($id);
+        return view('catalogos.custodios.form_editar_documento', compact('documento'));
+    }
+
+    // Guardar edición
+    public function modificarDocumentacionUsuario(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:documentacion_usuarios,id',
+            'documento' => 'required|string|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $doc = DocumentacionUsuario::findOrFail($request->id);
+        $doc->update([
+            'documento' => $request->documento
+        ]);
+
+        return redirect()->route('documentacion.catalogoDocumentacionUsuario')->with('success', 'Documento actualizado correctamente.');
+    }
+
+    // Desactivar
+    public function desactivarDocumentacionUsuario(Request $request)
+    {
+        $doc = DocumentacionUsuario::findOrFail($request->id);
+        $doc->update(['activo' => 0]);
+
+        return redirect()->route('documentacion.catalogoDocumentacionUsuario')->with('success', 'Documento desactivado.');
+    }
+
+    // Vista inactivos
+    public function catalogoDocumentacionUsuarioInactivos()
+    {
+        $documentos = DocumentacionUsuario::where('activo', 0)->get();
+        return view('catalogos.custodios.catalogo_documentacion_usuario_inactivos', compact('documentos'));
+    }
+
+    // Reactivar
+    public function activarDocumentacionUsuario(Request $request)
+    {
+        $doc = DocumentacionUsuario::findOrFail($request->id);
+        $doc->update(['activo' => 1]);
+
+        return redirect()->route('documentacion.documentacionUsuarioInactivos')->with('success', 'Documento reactivado.');
+    }
+}

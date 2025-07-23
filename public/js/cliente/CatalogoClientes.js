@@ -232,6 +232,23 @@ jQuery(document).ready(function() {
                 )
             }
         });
+        $(document).ready(function () {
+    var table = $('#kdatatable_usuarios').DataTable({
+        language: {
+            url: $('#datatable_i18n').val()
+        },
+        processing: true,
+        serverSide: true,
+        ajax: $('#clientedatatable').val(),
+        columns: [
+            { data: 'id' },
+            { data: 'razon_social' },
+            { data: 'nombre_cliente' },
+            { data: 'grupo' },
+            { data: 'acciones', orderable: false, searchable: false }
+        ]
+    });
+});
     });
 
     $("#kdatatable_clientes").DataTable({

@@ -30,6 +30,7 @@ class DocumentacionUsuario extends Model
      */
     protected $fillable = ['siaf_status', 'tipo_documento', 'created_at', 'updated_at', 'iduserCreated', 'iduserUpdated'];
 
+
     public function siafStatus()
     {
         return $this->belongsTo('App\Models\SiafStatus', 'siaf_status');
