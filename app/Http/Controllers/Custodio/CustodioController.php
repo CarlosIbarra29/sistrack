@@ -57,6 +57,15 @@ class CustodioController extends Controller
 
     }
 
+    public function pruebasdiego()
+    {
+        $data = Cliente::where('siaf_status', 1)->get();
+        // dd($data);
+
+        return view('pruebadev.diego', compact('data'));
+
+    }
+
     public function custodiodatatable(Request $request)
     {
         $user = User::where('id', auth()->user()->id)->first();

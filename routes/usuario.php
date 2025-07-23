@@ -39,3 +39,4 @@
     Route::get('/agregarusuario', [App\Http\Controllers\UsuarioDocumentoController::class, 'agregar'])->name('user.agregarusuario');
     Route::post('/usuario/eliminar', [App\Http\Controllers\UsuarioDocumentoController::class, 'eliminar'])->name('usuario.eliminar');
     Route::post('/activardocumentos', [App\Http\Controllers\UsuarioDocumentoController::class, 'activar'])->name('usuario.activardoc');
+	
