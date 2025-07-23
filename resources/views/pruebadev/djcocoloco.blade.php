@@ -1,81 +1,171 @@
 @extends('layouts.app')
+
 @push('scripts')
-	{{-- <script src="{{ asset('js/custodios/AgregarCustodio.js') }}"></script> --}}
+{{-- Puedes incluir JS personalizado aquí --}}
 @endpush
+
 @section('title')
-    pruebadev
+    Página KPOP
 @endsection
+
 @section('content')
 
+<style>
+    .hero-section {
+        background: url('{{ asset('img/kpop-bg.jpg') }}') center center / cover no-repeat;
+        color: white;
+        text-align: center;
+        padding: 100px 20px;
+    }
 
+    .hero-section h1 {
+        font-size: 4rem;
+        font-weight: bold;
+    }
 
-<div class="card card-custom">
-	<div class="card-header">
-		<div class="card-title">
-            <span class="card-icon">
-                <i class="flaticon2-chat-1 text-primary"></i>
-            </span>
-			<h3 class="card-label">
-				<span>Estilo diferente</span>
+    .hero-section p {
+        font-size: 1.2rem;
+        margin-top: 10px;
+    }
 
-			</h3>
-		</div>
-        <div class="card-toolbar">
-            <a href="#" class="btn btn-sm btn-light-primary font-weight-bold">
-                <i class="flaticon2-cube"></i> Settings
-            </a>
+    .artist-section {
+        background-color: #fff;
+        padding: 60px 20px;
+        text-align: center;
+    }
+
+    .artist-section h2 {
+        margin-bottom: 40px;
+    }
+
+    .artist-card {
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        overflow: hidden;
+        margin-bottom: 30px;
+        background-color: #f7f7f7;
+        transition: transform 0.3s;
+    }
+
+    .artist-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .artist-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .artist-card .card-body {
+        padding: 20px;
+        text-align: left;
+    }
+
+    .testimonials {
+        background-color: #f1e1d6;
+        padding: 60px 20px;
+    }
+
+    .testimonial-card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .contact-section {
+        background-color: #d4a373;
+        color: white;
+        padding: 60px 20px;
+        text-align: center;
+    }
+
+    .btn-learn-more {
+        background-color: #6a4e42;
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        font-size: 16px;
+        border-radius: 5px;
+        margin-top: 15px;
+    }
+</style>
+
+{{-- PORTADA --}}
+<section class="hero-section">
+    <h1>Bienvenidos al Mundo del KPOP</h1>
+    <p>Explora artistas, historias y más sobre tus grupos favoritos</p>
+</section>
+
+{{-- SECCIÓN DE ARTISTAS --}}
+<section class="artist-section">
+    <h2>Conoce a los Grupos</h2>
+    <div class="row justify-content-center">
+        @php
+            $grupos = [
+                [
+                    'nombre' => 'Blackpink',
+                    'imagen' => 'img/logos/descarga (1).png',
+                    'descripcion' => 'Grupo femenino de YG Entertainment, debutó en 2016...',
+                ],
+                [
+                    'nombre' => 'Stray Kids',
+                    'imagen' => 'img/logos/skz.png',
+                    'descripcion' => 'Grupo masculino de JYP Entertainment, debut oficial en 2018...',
+                ],
+                [
+                    'nombre' => 'BTS',
+                    'imagen' => 'img/logos/BANANA_BTS_ARMY_LOGO.png',
+                    'descripcion' => 'Debutó en 2013 con Big Hit. Alcanzaron fama global rápidamente...',
+                ],
+                [
+                    'nombre' => 'TWICE',
+                    'imagen' => 'img/logos/twice.jpg',
+                    'descripcion' => 'Grupo femenino de JYP que conquistó Corea y Japón desde 2016...',
+                ],
+            ];
+        @endphp
+
+        @foreach ($grupos as $grupo)
+        <div class="col-md-3">
+            <div class="artist-card">
+                <img src="{{ asset($grupo['imagen']) }}" alt="{{ $grupo['nombre'] }}">
+                <div class="card-body">
+                    <h4>{{ $grupo['nombre'] }}</h4>
+                    <p>{{ $grupo['descripcion'] }}</p>
+                </div>
+            </div>
         </div>
-	</div>
-	<div class="card-body">
-        <div data-scroll="true" data-height="200">
-			<span class="estilo">Estilo diferente</span>	
-			<table class="table">
-			    <thead>
-			        <tr>
-			            <th scope="col">#</th>
-			            <th scope="col">First</th>
-			            <th scope="col">Last</th>
-			            <th scope="col">Status</th>
-			        </tr>
-			    </thead>
-			    <tbody>
-			        <tr>
-			            <th scope="row">1</th>
-			            <td>Nick</td>
-			            <td>Stone</td>
-			            <td>
-			                <span class="label label-inline label-light-primary font-weight-bold">
-			                    Pending
-			                </span>
-			            </td>
-			        </tr>
-			        <tr>
-			            <th scope="row">2</th>
-			            <td>Ana</td>
-			            <td>Jacobs</td>
-			            <td>
-			                <span class="label label-inline label-light-success font-weight-bold">
-			                    Approved
-			                </span>
-			            </td>
-			        </tr>
-			        <tr>
-			            <th scope="row">3</th>
-			            <td>Larry</td>
-			            <td>Pettis</td>
-			            <td>
-			                <span class="label label-inline label-light-danger font-weight-bold">
-			                    New
-			                </span>
-			            </td>
-			        </tr>
-			    </tbody>
-			</table>
+        @endforeach
+    </div>
+</section>
+
+{{-- TESTIMONIOS --}}
+<section class="testimonials">
+    <h2 class="mb-5">Testimonios de Fans</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="testimonial-card">
+                <p>"Blackpink cambió mi vida, son únicas."</p>
+                <strong>- Ari</strong>
+            </div>
         </div>
-	</div>
-    <div class="card-footer d-flex justify-content-between">
-        <a href="#" class="btn btn-light-primary font-weight-bold">Manage</a>
-        <a href="#" class="btn btn-outline-secondary font-weight-bold">Learn more</a>
-	</div>
-</div>
+        <div class="col-md-4">
+            <div class="testimonial-card">
+                <p>"BTS me inspira a seguir mis sueños. ¡Son increíbles!"</p>
+                <strong>- Ari</strong>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{-- CONTACTO --}}
+<section class="contact-section">
+    <h2>¿Quieres Saber Más?</h2>
+    <p>Descubre noticias, eventos y más sobre tus artistas KPOP favoritos.</p>
+    <button class="btn-learn-more">Aprende más</button>
+</section>
+
 @endsection

@@ -34,6 +34,8 @@ class DocumentacionUsuario extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
    
+   protected $fillable = ['nombre', 'email', 'activo'];
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -55,4 +57,5 @@ class DocumentacionUsuario extends Model
     {
         return $this->belongsTo('App\Models\User', 'iduserUpdated');
     }
+
    }
