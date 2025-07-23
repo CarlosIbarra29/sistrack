@@ -129,5 +129,4 @@ class UsuarioDocumentoController extends Controller
         ]);
     }
 
-
-}
+}   

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Catálogo de tipo de documentos cliente
+    Catálogo de documentos cliente
 @endsection
 
 @push('scripts')
