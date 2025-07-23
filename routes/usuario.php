@@ -14,6 +14,8 @@
 		Route::post('/activar-usuario', [App\Http\Controllers\UsuarioController::class, 'activarusuario'])->name('user.activarusuario')->middleware('permission:usuario-delete');
 		Route::get('/ver-usuario/{id}', [App\Http\Controllers\UsuarioController::class, 'verUsuario'])->name('user.verusuario');
 		Route::get('/error-permiso', [App\Http\Controllers\UsuarioController::class, 'errorpermiso'])->name('user.errorpermiso');
+		Route::post('/activar-usuario', [App\Http\Controllers\UsuarioController::class, 'activarusuario'])->name('user.activarusuario');
+		Route::post('/eliminar-documento-usuario', [App\Http\Controllers\UsuarioController::class, 'eliminardocumentouser'])->name('user.eliminardocumentouser');
 
 	// Listado de Roles
 		Route::get('/catalogo-roles', [App\Http\Controllers\UsuarioController::class, 'catalogoroles'])->name('rol.catalogoroles')->middleware('permission:role-list');
@@ -29,13 +31,11 @@
 
 
 	// Catálogo Documentación Usuario
-	Route::get('/catalogodocumentos', [App\Http\Controllers\UsuarioDocumentoController::class, 'listadodocusuarios'])->name('usuario.catalogodocumentos');
-    Route::post('/documentosdatatable', [App\Http\Controllers\UsuarioDocumentoController::class, 'datatable'])->name('usuario.documentosdatatable');
-    Route::post('/guardardocumento', [App\Http\Controllers\UsuarioDocumentoController::class, 'guardar'])->name('usuario.guardardocumento');
-    Route::post('/editardocumento', [App\Http\Controllers\UsuarioDocumentoController::class, 'editar'])->name('usuario.editardocumento');
-    Route::post('/desactivardoc', [App\Http\Controllers\UsuarioDocumentoController::class, 'desactivar'])->name('usuario.desactivardoc');
-    Route::get('/usuarios_inactivos', [App\Http\Controllers\UsuarioDocumentoController::class, 'inactivos'])->name('user.usuariosinactivos');
-    Route::get('/usuarios_activos', [App\Http\Controllers\UsuarioDocumentoController::class, 'activos'])->name('user.usuariosinactivos');
-    Route::get('/agregarusuario', [App\Http\Controllers\UsuarioDocumentoController::class, 'agregar'])->name('user.agregarusuario');
-    Route::post('/usuario/eliminar', [App\Http\Controllers\UsuarioDocumentoController::class, 'eliminar'])->name('usuario.eliminar');
-    Route::post('/activardocumentos', [App\Http\Controllers\UsuarioDocumentoController::class, 'activar'])->name('usuario.activardoc');
+		Route::get('/catalogodocumentos', [App\Http\Controllers\UsuarioDocumentoController::class, 'listadodocusuarios'])->name('usuario.catalogodocumentos');
+	    Route::post('/documentosdatatable', [App\Http\Controllers\UsuarioDocumentoController::class, 'datatable'])->name('usuario.documentosdatatable');
+	    Route::post('/guardardocumento', [App\Http\Controllers\UsuarioDocumentoController::class, 'guardar'])->name('usuario.guardardocumento');
+	    Route::post('/editardocumento', [App\Http\Controllers\UsuarioDocumentoController::class, 'editar'])->name('usuario.editardocumento');
+	    Route::post('/desactivardoc', [App\Http\Controllers\UsuarioDocumentoController::class, 'desactivar'])->name('usuario.desactivardoc');
+	    Route::get('/usuarios_inactivos', [App\Http\Controllers\UsuarioDocumentoController::class, 'inactivos'])->name('user.usuariosinactivos');
+	    Route::post('/activar-documento-usuario', [App\Http\Controllers\UsuarioDocumentoController::class, 'activardocumento'])->name('usuario.activardocusuario');
+

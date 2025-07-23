@@ -19,10 +19,23 @@
                     </div>  
                 </div>
                 <!--begin::Form-->
-                <form action="{{ route('user.guardarusuario') }}" method="post" id="submit_user">
+                <form action="{{ route('user.guardarusuario') }}" method="post" id="submit_user" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
 
+                        <ul class="nav nav-tabs nav-tabs-line">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1">Información del usuario</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2">Documentación</a>
+                            </li>
+                        </ul>
+
+
+
+                        <div class="tab-content mt-5" id="myTabContent">
+                            <div class="tab-pane fade show active mt-10" id="kt_tab_pane_1" role="tabpanel" aria-labelledby="kt_tab_pane_1">
                                 <div class="form-group row">
                                     <div class="col-lg-6">
                                         <label>Nombre del usuario</label>
@@ -89,23 +102,37 @@
                                         </div>
                                     </div>
                                 </div>
-{{--                                 <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label>Tipo de usuario</label>
-                                        <div class="input-group">
-                                            <select class="form-control" name="tipo_usuario" id="tipo_usuario" required>
-                                                <option value="">Selecciona un opción</option>
-                                                @foreach ($tipos_usuario as $tipo)
-                                                    <option value="{{ $tipo->id }}">{{ strtoupper($tipo->nombre) }}
-                                                @endforeach
-                                            </select>
-                                        </div>
+                            </div>
+
+                            <div class="tab-pane fade mt-10" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
+                                <input type='hidden' id='tipoArchivo' value='{{ $cadenaTipoDocumento }}'>
+                                <div class="row form-group" >
+                                    <div class="col-lg-12" id="tblArchivos">
+                                        <table class='table table-bordered table-hover' id='tblDocumentos'>
+                                            <thead>
+                                            <tr>
+                                                <th>Adjuntar Documento</th>
+                                                <th>Tipo de Documento</th>
+                                                <th>Opción</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id='tbodyDocumentos'>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div> --}}
+                                </div>
 
+                                <div class="row form-group">
+                                    <div class="col-lg-12">
+                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                            <i class="flaticon2-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
 
+                        </div>
 
-                        <!--end::tabs-->
 
                     </div>
                     <div class="card-footer">

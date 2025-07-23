@@ -113,7 +113,7 @@ class DocumentacionArmaController extends Controller
 
         DocumentacionArmaCustodio::where('id', $request->id_documento)->update($data);
 
-        session()->flash('success', 'El registro modifico correctamente');
+        session()->flash('success', 'El registro se modifico correctamente');
         return redirect()->route('docarma.listadodocarma');
     }
 

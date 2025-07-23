@@ -10,6 +10,7 @@ use App\Models\Custodio\VehiculoDocCustodio;
 use App\Models\Custodio\ArmaDocCustodio;
 use App\Models\Custodio\FotografiaArmaCustodio;
 use App\Models\Cliente\DocumentoCliente;
+use App\Models\Usuarios\UsuarioDocRegistro; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -121,6 +122,19 @@ class ArchivoController extends Controller
         }else{
             return abort('403');
         }     
+    }
+
+    public function documentoUsuario(Request $request)
+    {
+        $user = auth()->user();
+        $id = $request->id;
+        $documento = UsuarioDocRegistro::findOrFail($id);
+        $existeArchivo = Storage::exists('usuario/'.$documento->users_id.'/'.$documento->documento);
+        if($user && $documento && $existeArchivo) {
+            return Storage::download('usuario/'.$documento->users_id.'/'.$documento->documento, $documento->documento, ['Content-Disposition'=>'inline; filename="'.$documento->documento.'"']);
+        }else{
+            return abort('403');
+        }           
     }
 
 }

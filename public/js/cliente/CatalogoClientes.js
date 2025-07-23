@@ -237,8 +237,10 @@ jQuery(document).ready(function() {
     $("#kdatatable_clientes").DataTable({
         language: {
             'lengthMenu': 'Display _MENU_',
-            "url": $('#datatable_i18n').val()
+            "url": $('#datatable_i18n').val(),
         },
+        "aaSorting": [[ 0, "desc" ]],
+
 
         "dom":
         "<'row'" +

@@ -23,7 +23,7 @@ class UsuarioDocumentoController extends Controller
     {
         $data = DocumentacionUsuario::where('siaf_status', 1)->get();
         
-        return view('usuarios.usuario-catalogodocumentos', compact('data'));
+        return view('usuarios.documentacion-usuario.usuario-catalogodocumentos', compact('data'));
     }
 
 
@@ -106,43 +106,52 @@ class UsuarioDocumentoController extends Controller
 
     public function editar(Request $request)
     {
-        $documento = DocumentacionUsuario::find($request->id_documento_usuario);
-        $documento->documento_usuario = $request->documento_usuario;
-        $documento->save();
 
-        return response()->json(['success' => true]);
+        $data = [
+            'tipo_documento' => $request->documento,
+            'iduserUpdated' => auth()->user()->id,
+            'updated_at' => date('Y-m-d H:i:s')
+        ];
+
+        DocumentacionUsuario::where('id', $request->id_documento_edit)->update($data);
+
+        session()->flash('success', 'El registro se modifico correctamente');
+        return redirect()->route('usuario.catalogodocumentos');
     }
 
-    public function eliminardoc(Request $request)
+    public function desactivar(Request $request)
     {
-        $doc = DocumentacionUsuario::findOrFail($request->id);
-        $estatus = true;
-        if ($doc){
-            Storage::delete('user/'.$doc->user_id.'/'.$doc->documento);
-            DocumentoCliente::where('id', $request->id)->delete();
-        }else{
-            $estatus = false;
-        }
+        $data = [
+            'siaf_status' => 2,
+            'iduserUpdated' => auth()->user()->id,
+            'updated_at' => date('Y-m-d H:i:s')
+        ];
 
-        return response()->json([
-            'estatus' => $estatus,
-        ]);
+        DocumentacionUsuario::where('id', $request->id)->update($data);
+
+        session()->flash('success', 'El registro se desactivo correctamente');
+        return redirect()->route('usuario.catalogodocumentos');  
     }
+
     public function inactivos()
-{
-    // Aquí puedes consultar los usuarios inactivos
-    $usuarios = Usuario::where('activo', 0)->get(); // asumiendo que tienes un campo 'activo'
-
-    return view('user.usuriosinactivos', compact('usuarios'));
-}
-
-    public function activar(Request $request)
     {
-        $documento = DocumentoUsuario::findOrFail($request->id);
-        $documento->activo = 1;
-        $documento->save();
+        $data = DocumentacionUsuario::where('siaf_status', 2)->get();
+        
+        return view('usuarios.documentacion-usuario.usuario-catalogodocumentos-inactivos', compact('data'));
+    }
 
-        return redirect()->back()->with('success', 'Documento activado correctamente.');
+    public function activardocumento(Request $request)
+    {
+        $data = [
+            'siaf_status' => 1,
+            'iduserUpdated' => auth()->user()->id,
+            'updated_at' => date('Y-m-d H:i:s')
+        ];
+
+        DocumentacionUsuario::where('id', $request->id)->update($data);
+
+        session()->flash('success', 'El registro se activo correctamente');
+        return redirect()->route('user.usuariosinactivos');  
     }
 
 

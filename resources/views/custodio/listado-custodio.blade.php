@@ -160,7 +160,7 @@
                                   @php $num = 1; @endphp
                                   @foreach($data as $unid)
                                     <tr>
-                                      <td>{{ $num }}</td>
+                                      <td>{{ $unid->num_list }}</td>
                                       <td>{{ $unid->nombre_custodio }}</td>
                                       <td>{{ $unid->ap_paterno }}</td>
                                       <td>{{ $unid->ap_materno }}</td>

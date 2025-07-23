@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('title')
-    Catálogo de clientes inactivos
+    Catálogo de documentos de usuario inactivos
 @endsection
 
 @push('scripts')
-  <script src="{{ asset('js/cliente/CatalogoClientes.js') }}"></script>
+  <script src="{{ asset('js/catalogos/usuarios/CatalogoDocumentosUsuario.js') }}"></script> 
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
 
@@ -28,12 +28,12 @@
                       <span class="card-icon">
                         <i class="flaticon2-file text-primary"></i>
                       </span>
-                                <h3 class="card-label">Inventario de clientes inactivos</h3>
+                                <h3 class="card-label">Inventario de documentación del usuario inactivos</h3>
                             </div>
                             <div class="card-toolbar">
 
                                 <!--begin::Button-->
-                                <a href="{{ route('cliente.listadocliente') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
+                                <a href="{{ route('usuario.catalogodocumentos') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
                                   Regresar</a>
                                 <!--end::Button-->
 
@@ -41,13 +41,11 @@
                         </div>
                         <div class="card-body">
                             <!--begin: Datatable-->
-                            <table class="table table-hover table-checkable" id="kdatatable_clientes_inactivos">
+                            <table class="table table-hover table-checkable" id="kdatatable_documentos_inactivos">
                                 <thead>
                                 <tr>
-                                  {{-- <th>No.</th> --}}
-                                  <th>Razon social</th>
-                                  <th>Nombre cliente</th>
-                                  <th>Grupo</th>
+                                  <th>No.</th>
+                                  <th>Documento</th>
                                   <th class="text-center">Acciones</th>
                                 </tr>
                                 </thead>
@@ -55,13 +53,11 @@
                                 <tbody>
                                   @foreach($data as $unid)
                                     <tr>
-                                      {{-- <td>{{ $unid->id }}</td> --}}
-                                      <td>{{ $unid->razon_social }}</td>
-                                      <td>{{ $unid->nombre_cliente }}</td>
-                                      <td>{{ $unid->grupo }}</td>
+                                      <td>{{ $unid->id }}</td>
+                                      <td>{{ $unid->tipo_documento }}</td>
 
                                       <td class="text-center">
-                                        <button class="btn btn-clean btn-icon btn-outline-success mt-1 activar-cliente" data-id="{{ $unid->id }}" data-nombre="{{ $unid->razon_social }}" data-toggle="tooltip" data-theme="dark" title="Activar Cliente" ><i class="flaticon2-reply "></i></button>
+                                        <button class="btn btn-clean btn-icon btn-outline-success mt-1 activar-documento" data-id="{{ $unid->id }}" data-nombre="{{ $unid->tipo_documento }}" data-toggle="tooltip" data-theme="dark" title="Activar Documento" ><i class="flaticon2-reply "></i></button>
                                       </td>
                                     </tr>
                                   @endforeach
@@ -69,10 +65,8 @@
 
                                 <tfoot>
                                 <tr>
-                                  {{-- <th>No.</th> --}}
-                                  <th>Razon social</th>
-                                  <th>Nombre cliente</th>
-                                  <th>Grupo</th>
+                                  <th>No.</th>
+                                  <th>Documento</th>
                                   <th class="text-center">Acciones</th>
                                 </tr>
                                 </tfoot>
@@ -95,7 +89,7 @@
     <!--end::List-->
 </div>
 
-  <form method="post" id="cliente_act_form" action="{{ route('cliente.activarcliente') }}" enctype="multipart/form-data">
+  <form method="post" id="documento_act_form" action="{{ route('usuario.activardocusuario') }}" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="id" id="id_delete" value="">
   </form>
