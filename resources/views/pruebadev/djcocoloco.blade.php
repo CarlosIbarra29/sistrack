@@ -13,7 +13,7 @@
 <style>
     .hero-section {
         background: url('{{ asset('img/kpop-bg.jpg') }}') center center / cover no-repeat;
-        color: white;
+        color: #1ba0d5 ;
         text-align: center;
         padding: 100px 20px;
     }
@@ -90,7 +90,8 @@
         font-size: 16px;
         border-radius: 5px;
         margin-top: 15px;
-    }
+    {
+
 </style>
 
 {{-- PORTADA --}}
@@ -124,7 +125,8 @@
                     'nombre' => 'TWICE',
                     'imagen' => 'img/logos/twice.jpg',
                     'descripcion' => 'Grupo femenino de JYP que conquistó Corea y Japón desde 2016...',
-                ],
+                ]
+
             ];
         @endphp
 
@@ -133,7 +135,7 @@
             <div class="artist-card">
                 <img src="{{ asset($grupo['imagen']) }}" alt="{{ $grupo['nombre'] }}">
                 <div class="card-body">
-                    <h4>{{ $grupo['nombre'] }}</h4>
+                  <a href="" class="links_bandas">{{ $grupo['nombre'] }}</a>
                     <p>{{ $grupo['descripcion'] }}</p>
                 </div>
             </div>
@@ -141,6 +143,9 @@
         @endforeach
     </div>
 </section>
+
+
+
 
 {{-- TESTIMONIOS --}}
 <section class="testimonials">
