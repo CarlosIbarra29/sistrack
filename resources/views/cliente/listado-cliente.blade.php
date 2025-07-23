@@ -133,7 +133,7 @@
                             <table class="table table-hover table-checkable" id="kdatatable_clientes">
                                 <thead>
                                 <tr>
-                                  <th>No.</th>
+                                  {{-- <th>No.</th> --}}
                                   <th>Razon social</th>
                                   <th>Nombre cliente</th>
                                   <th>Grupo</th>
@@ -141,9 +141,10 @@
                                 </tr>
                                 </thead>
                                 <tbody> 
+                                  @php $num = 1; @endphp
                                   @foreach($data as $unid)
                                     <tr>
-                                      <td>{{ $unid->id }}</td>
+                                      {{-- <td>{{ $num }}</td> --}}
                                       <td>{{ $unid->razon_social }}</td>
                                       <td>{{ $unid->nombre_cliente }}</td>
                                       <td>{{ $unid->grupo }}</td>
@@ -167,11 +168,12 @@
                                          </button>
                                       </td>
                                     </tr>
+                                     @php $num ++; @endphp
                                   @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                  <th>No.</th>
+                                  {{-- <th>No.</th> --}}
                                   <th>Razon social</th>
                                   <th>Nombre cliente</th>
                                   <th>Grupo</th>

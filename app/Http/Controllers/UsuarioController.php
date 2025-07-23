@@ -21,6 +21,8 @@ use Spatie\Permission\Models\Permission;
 // use App\Models\Notificaciones\NotificacionesUsuario;
 use App\Models\Requisicion\AreaPersonal;
 use App\Models\TipoUsuario;
+use App\Models\Usuarios\DocumentacionUsuario; 
+use App\Models\Usuarios\UsuarioDocRegistro; 
 
 class UsuarioController extends Controller
 {
@@ -210,12 +212,22 @@ class UsuarioController extends Controller
 
         $tipos_usuario = TipoUsuario::all();
 
-        return view('usuarios.agregar-usuario', compact('rol', 'areas', 'tipos_usuario'));
+        $documentos = DocumentacionUsuario::where('siaf_status',1)->get();
+        // dd($documentos);
+        //tipo de documentos en formato json
+        $cadenaTipoDocumento = "";
+        foreach($documentos as $documento){
+            $cadenaTipoDocumento .= '"'.$documento->id.'":"'.$documento->tipo_documento.'",';
+        }
+        $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
+
+
+        return view('usuarios.agregar-usuario', compact('rol', 'areas', 'tipos_usuario', 'cadenaTipoDocumento'));
     }
 
     public function guardarusuario(Request $request)
     {
-
+        // dd($request);
         $data = [
             'name' => $request->name_user,
             'area_personal_id' => $request->area_personal,
@@ -232,7 +244,31 @@ class UsuarioController extends Controller
             'updated_at' =>date('Y-m-d H:i:s')
         ];
 
-        User::insert($data);
+        $id_user = User::insertGetId($data);
+
+        // $id_user = 1;
+        $colIdDocumento = $request->id_documento;
+        if($request->hasfile('archivo')){
+            $archivos = $request->file('archivo');
+            foreach($archivos as $indice => $archivo)
+            {
+                $archivoNombre = $archivo->hashName();
+                $mimeType = $archivo->getMimeType();
+                Storage::putFileAs('usuario/'.$id_user, $archivo, $archivoNombre);
+                $data = [
+                    'users_id' => $id_user,
+                    'user_documentos_id' =>$colIdDocumento[$indice],
+                    'documento' => $archivoNombre,
+                    'created_at' =>date('Y-m-d H:i:s'),
+                    'updated_at' =>date('Y-m-d H:i:s'),
+                    'iduserCreated' =>auth()->user()->id,
+                    'iduserUpdated' =>auth()->user()->id
+                ];
+                // dd($data);
+                UsuarioDocRegistro::insert($data);
+            }
+        }
+
 
         session()->flash('success', 'El usuario se creo correctamente');
         if (in_array("5", Session::get('permisos'))){
@@ -249,7 +285,19 @@ class UsuarioController extends Controller
         $areas = AreaPersonal::where('id_status_delete', 1)->get();
         $tipos_usuario = TipoUsuario::all();
 
-    	return view('usuarios.editar-usuario', compact('rol', 'usuario', 'userinfo', 'areas', 'tipos_usuario'));   	
+        $documentos = DocumentacionUsuario::where('siaf_status',1)->get();
+        // dd($documentos);
+        //tipo de documentos en formato json
+        $cadenaTipoDocumento = "";
+        foreach($documentos as $documento){
+            $cadenaTipoDocumento .= '"'.$documento->id.'":"'.$documento->tipo_documento.'",';
+        }
+        $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
+
+        $documentos = UsuarioDocRegistro::where('users_id',$usuario)->get();
+        // dd($documentos);
+
+    	return view('usuarios.editar-usuario', compact('rol', 'usuario', 'userinfo', 'areas', 'tipos_usuario', 'cadenaTipoDocumento', 'documentos'));   	
     }
 
     public function modificarusuario(Request $request)
@@ -276,7 +324,31 @@ class UsuarioController extends Controller
         	$data['password'] = Hash::make($request->password);
         }
 
+
         User::where('id', $request->id)->update($data);
+
+
+        $colIdDocumento = $request->id_documento;
+        if($request->hasfile('archivo')){
+            $archivos = $request->file('archivo');
+            foreach($archivos as $indice => $archivo)
+            {
+                $archivoNombre = $archivo->hashName();
+                $mimeType = $archivo->getMimeType();
+                Storage::putFileAs('usuario/'.$request->id, $archivo, $archivoNombre);
+                $data = [
+                    'users_id' => $request->id,
+                    'user_documentos_id' =>$colIdDocumento[$indice],
+                    'documento' => $archivoNombre,
+                    'created_at' =>date('Y-m-d H:i:s'),
+                    'updated_at' =>date('Y-m-d H:i:s'),
+                    'iduserCreated' =>auth()->user()->id,
+                    'iduserUpdated' =>auth()->user()->id
+                ];
+                // dd($data);
+                UsuarioDocRegistro::insert($data);
+            }
+        }
 
         session()->flash('success', 'El usuario se modifico correctamente');
     	if (in_array("7", Session::get('permisos'))){
@@ -329,6 +401,21 @@ class UsuarioController extends Controller
     //     } 
     // }
 
+    public function eliminardocumentouser(Request $request)
+    {
+        $doc = UsuarioDocRegistro::findOrFail($request->id);
+        $estatus = true;
+        if ($doc){
+            UsuarioDocRegistro::where('id', $request->id)->delete();
+        }else{
+            $estatus = false;
+        }
+
+        return response()->json([
+            'estatus' => $estatus,
+        ]);
+    }
+
 
     public function desacticarusuario(Request $request)
     {
@@ -372,8 +459,9 @@ class UsuarioController extends Controller
     {
         $rol = Role::orderBy('id', 'asc')->get();
         $userinfo = User::where('id', $usuario)->get();
+        $documentos = UsuarioDocRegistro::where('users_id',$usuario)->get();
 
-        return view('usuarios.ver-usuario', compact('rol', 'usuario', 'userinfo'));   
+        return view('usuarios.ver-usuario', compact('rol', 'usuario', 'userinfo', 'documentos'));   
     }
 
 // C R U D    R O L E S

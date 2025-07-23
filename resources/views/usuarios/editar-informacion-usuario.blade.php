@@ -142,7 +142,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <button type="button"  id="btnGuardar" class="btn btn-primary mr-2">Guardar</button>
-                                    <a href="{{ route('custodio.listadocustodio') }}"  class="btn btn-secondary">Cancelar</a>
+                                    <a href="{{ route('usuario.catalogodocumentos') }}"  class="btn btn-secondary">Cancelar</a>
                                 </div>
                             </div>
                         </div>

@@ -21,7 +21,7 @@
                                     <span class="card-icon">
                                         <i class="flaticon2-file text-primary"></i>
                                     </span>
-                                    <h3 class="card-label">Inventario de documentos de usuario</h3>
+                                    <h3 class="card-label">Inventario de documentos del usuario</h3>
                                 </div>
                                 <div class="card-toolbar">
                                     <a class="btn btn-link-primary font-weight-bold mr-2 busqueda" data-toggle="collapse"
@@ -164,32 +164,40 @@
         </div>
     </div>
 
-    <div class="modal fade" id="model_edit_documento" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Editar documento</h5>
-                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('usuario.editardocumento') }}" ...>
-                        @csrf
-                        <div class="form-group">
-                            <label>Nombre del documento</label>
-                            <input type="text" class="form-control" name="documento_usuario" id="documento_usuario_edit" />
-                        </div>
-                        <input type="hidden" name="id_documento_usuario" id="id_documento_usuario" value="">
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" id="guardar_editar_registro" class="btn btn-primary">Guardar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="model_edit_tipodocumento">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title">Editar documentación</h5>
+                  <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                      <span class="svg-icon svg-icon-2x"></span>
+                  </div>
+              </div>
 
-  <form method="post" id="tipodocumento_delete_form" action="{{ route('usuario.desactivardoc') }}" enctype="multipart/form-data">
+              <div class="modal-body">
+                <form action="{{ route('usuario.editardocumento') }}" method="post" id="submit_documento_edit">
+                @csrf
+                      <div class="row form-group">
+                        <div class="col-lg-12 mt-2">
+                          <label>Nombre del documento</label>
+                          <input type="text" class="form-control" name="documento" id="documento_edit" />
+                        </div>
+
+                      </div>
+
+                  <input type="hidden" name="id_documento_edit" id="id_documento_edit" value="">
+                </form> 
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn btn-secondary font-weight-bold" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="edit_tipodocumento_submit" class="btn btn-primary">Guardar</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <form method="post" id="documento_delete_form" action="{{ route('usuario.desactivardoc') }}" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="id" id="id_documento_delete" value="">
   </form>

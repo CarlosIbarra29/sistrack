@@ -44,7 +44,7 @@
                             <table class="table table-hover table-checkable" id="kdatatable_custodios_inactivos">
                                 <thead>
                                 <tr>
-                                  <th>No.</th>
+                                  {{-- <th>No.</th> --}}
                                   <th>Nombre</th>
                                   <th>Apellido Paterno</th>
                                   <th>Apellido Materno</th>
@@ -59,7 +59,7 @@
                                 <tbody>
                                   @foreach($data as $unid)
                                     <tr>
-                                      <td>{{ $unid->id }}</td>
+                                      {{-- <td>{{ $unid->id }}</td> --}}
                                       <td>{{ $unid->nombre_custodio }}</td>
                                       <td>{{ $unid->ap_paterno }}</td>
                                       <td>{{ $unid->ap_materno }}</td>
@@ -77,7 +77,7 @@
 
                                 <tfoot>
                                 <tr>
-                                  <th>No.</th>
+                                  {{-- <th>No.</th> --}}
                                   <th>Nombre</th>
                                   <th>Apellido Paterno</th>
                                   <th>Apellido Materno</th>

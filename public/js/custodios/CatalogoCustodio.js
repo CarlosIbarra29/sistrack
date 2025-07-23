@@ -7,7 +7,7 @@ var Tabla = function() {
 
     var initTable1 = function() {
         // begin first table
-        var table = $('#kdatatable_usuarios').DataTable({
+        var table = $('#kdatatable_usuario').DataTable({
             responsive: true,
             // Pagination settings
             dom: `<'row'<'col-sm-12'tr>>
@@ -16,9 +16,9 @@ var Tabla = function() {
 
             lengthMenu: [5, 10, 25, 50],
 
-            pageLength: 10,
+            pageLength: 15,
 
-            order: [[ 0, "desc" ]], //ordenamiento default
+            order: [[ 0, "asc" ]], //ordenamiento default
             language: {
                 'lengthMenu': 'Display _MENU_',
                 "url": $('#datatable_i18n').val()
@@ -292,8 +292,10 @@ jQuery(document).ready(function() {
     $("#kdatatable_usuarios2").DataTable({
         language: {
             'lengthMenu': 'Display _MENU_',
-            "url": $('#datatable_i18n').val()
+            "url": $('#datatable_i18n').val(),
+            "order": [[ 0, "desc" ]],
         },
+
 
         "dom":
         "<'row'" +
@@ -308,3 +310,4 @@ jQuery(document).ready(function() {
         "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
         ">"
     });
+

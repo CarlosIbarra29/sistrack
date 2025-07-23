@@ -25,3 +25,6 @@
 
     //Documento cliente
     Route::get('/documento-cliente/{id}', [App\Http\Controllers\Archivo\ArchivoController::class, 'documentoCliente'])->name('archivo.documentoCliente');
+
+    //Documento Usuario
+    Route::get('/documento-usuario/{id}', [App\Http\Controllers\Archivo\ArchivoController::class, 'documentoUsuario'])->name('archivo.documentoUsuario');
