@@ -12,8 +12,8 @@
 
 <style>
     .hero-section {
-        background: linear-gradient(to bottom right, #FFFDD0, #FADADD); 
-        color: #6A0DAD; 
+        background: linear-gradient(to bottom right, #FFFDD0, #FADADD);
+        color: #6A0DAD;
         text-align: center;
         padding: 100px 20px;
     }
@@ -21,14 +21,12 @@
     .hero-section h1 {
         font-size: 4rem;
         font-weight: bold;
-        
         color: #6A0DAD;
     }
 
     .hero-section p {
         font-size: 1.2rem;
         margin-top: 10px;
-       
         color: #8A6DA8;
     }
 
@@ -77,7 +75,7 @@
     }
 
     .testimonials {
-        background-color: #F8F4EE; 
+        background-color: #F8F4EE;
         padding: 60px 20px;
     }
 
@@ -94,7 +92,7 @@
         padding: 20px;
         margin-bottom: 20px;
         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        font-size: 0.95rem; 
+        font-size: 0.95rem;
     }
 
     .testimonial-card p {
@@ -103,27 +101,26 @@
     }
 
     .testimonial-card strong {
-        color: #555; 
+        color: #555;
         display: block;
-        text-align: right; 
+        text-align: right;
         margin-top: 10px;
     }
 
-
     .contact-section {
-        background-color: #e2c0a3; 
-        color: #4682B4; 
+        background-color: #e2c0a3;
+        color: #4682B4;
         padding: 60px 20px;
         text-align: center;
     }
 
     .contact-section h2, .contact-section p {
-        color: #4682B4; 
+        color: #4682B4;
     }
 
     .btn-learn-more {
-        background-color: #E6ABA9; 
-        color: #333; 
+        background-color: #E6ABA9;
+        color: #333;
         border: none;
         padding: 10px 25px;
         font-size: 16px;
@@ -134,16 +131,70 @@
     }
 
     .btn-learn-more:hover {
-        background-color: #d19794; 
+        background-color: #d19794;
+    }
+
+    /* Estilos específicos para las tarjetas de concierto */
+    .concert-card {
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        overflow: hidden;
+        margin-bottom: 30px;
+        background-color: #e0f2f7; /* Un color de fondo diferente para destacar */
+        transition: transform 0.3s;
+    }
+
+    .concert-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .concert-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .concert-card .card-body {
+        padding: 20px;
+        text-align: left;
+    }
+
+    .concert-card .card-body h5 {
+        font-weight: bold;
+        color: #007bff; /* Un color para el título del concierto */
+        margin-bottom: 10px;
+    }
+
+    .concert-card .card-body p {
+        font-size: 0.95rem;
+        color: #555;
+    }
+
+    .concert-card .card-body .btn-buy-ticket {
+        background-color: #28a745; /* Botón de compra de tickets verde */
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .concert-card .card-body .btn-buy-ticket:hover {
+        background-color: #218838;
     }
 </style>
 
+---
 {{-- PORTADA --}}
 <section class="hero-section">
     <h1>Bienvenidos al Mundo del KPOP</h1>
     <p>Explora artistas, historias y más sobre tus grupos favoritos</p>
 </section>
 
+---
 {{-- SECCIÓN DE ARTISTAS --}}
 <section class="artist-section">
     <h2>Conoce a los Grupos</h2>
@@ -154,32 +205,32 @@
                 [
                     'nombre' => 'Blackpink',
                     'imagen' => 'img/logos/descarga (1).png',
-                    'descripcion' => 'Grupo femenino de YG Entertainment, debutó en 2016...',
+                    'descripcion' => 'Grupo femenino de YG Entertainment, debutó en 2016.',
                     'link' => 'https://www.youtube.com/BlackpinkOfficial'
                 ],
                 [
                     'nombre' => 'Stray Kids',
                     'imagen' => 'img/logos/skz.png',
-                    'descripcion' => 'Grupo masculino de JYP Entertainment, debut oficial en 2018...',
+                    'descripcion' => 'Grupo masculino de JYP Entertainment, debut oficial en 2018.',
                     'link' => 'https://www.youtube.com/jypentertainment'
                 ],
                 [
                     'nombre' => 'BTS',
                     'imagen' => 'img/logos/BANANA_BTS_ARMY_LOGO.png',
-                    'descripcion' => 'Debutó en 2013 con Big Hit. Alcanzaron fama global rápidamente...',
+                    'descripcion' => 'Debutó en 2013 con Big Hit. Alcanzaron fama global rápidamente.',
                     'link' => 'https://www.youtube.com/BANGTANTV'
                 ],
                 [
                     'nombre' => 'LE SSERAFIM',
                     'imagen' => 'img/logos/le sserafim.jpg',
-                    'descripcion' => 'Grupo femenino de SOURCE MUSIC y HYBE, debutó en 2022...',
+                    'descripcion' => 'Grupo femenino de SOURCE MUSIC y HYBE, debutó en 2022.',
                     'link' => 'https://www.youtube.com/@LESSERAFIM_official'
                 ],
             ];
         @endphp
 
         @foreach ($grupos as $grupo)
-        <div class="col-md-3 col-sm-6"> 
+        <div class="col-md-3 col-sm-6">
             <div class="artist-card">
                 <img src="{{ asset($grupo['imagen']) }}" alt="{{ $grupo['nombre'] }}">
                 <div class="card-body">
@@ -192,7 +243,68 @@
     </div>
 </section>
 
-{{-- SECCIÓN DE MERCANCÍA) --}}
+---
+{{-- SECCIÓN DE CONCIERTOS --}}
+<section class="artist-section">
+    <h2>Próximos Conciertos</h2>
+    <div class="row justify-content-center">
+
+        @php
+            $conciertos = [
+                [
+                    'grupo' => 'Blackpink',
+                    'titulo' => 'BLACKPINK WORLD TOUR DEADLINE',
+                    'imagen' => 'img/logos/bpconcert.jpeg',
+                    'fecha' => '23 de Julio, 2025',
+                    'lugar' => 'Toronto',
+                    'link' => 'https://www.ticketmaster.ca/blackpink-world-tour-deadline-in-toronto-toronto-ontario-07-23-2025/event/1000625A75F50C37?_ga=2.24904058.1343831535.1753310078-1076486613.1753310078'
+                ],
+                [
+                    'grupo' => 'Stray Kids',
+                    'titulo' => 'STRAY KIDS 5-STAR DOME TOUR',
+                    'imagen' => 'img/logos/skz.jpg',
+                    'fecha' => '20 de Enero, 2026',
+                    'lugar' => 'Palacio de los Deportes, México',
+                    'link' => 'https://www.ticketmaster.com.mx/stray-kids-boletos/artist/2660145'
+                ],
+                [
+                    'grupo' => 'BTS',
+                    'titulo' => 'BTS: PERMISSION TO DANCE ON STAGE',
+                    'imagen' => 'img/logos/BTS.jpg',
+                    'fecha' => '10 de Marzo, 2026',
+                    'lugar' => 'Foro Sol, México',
+                    'link' => 'https://www.ticketmaster.com.mx/bts-boletos/artist/1941656'
+                ],
+                [
+                    'grupo' => 'LE SSERAFIM',
+                    'titulo' => 'LE SSERAFIM TOUR ‘FLAME RISES’',
+                    'imagen' => 'img/logos/lesserafim.jpg',
+                    'fecha' => '5 de Febrero, 2026',
+                    'lugar' => 'Auditorio Nacional, México',
+                    'link' => 'https://www.ticketmaster.com.mx/le-sserafim-boletos/artist/2959887'
+                ],
+            ];
+        @endphp
+
+        @foreach ($conciertos as $concierto)
+        <div class="col-md-3 col-sm-6">
+            <div class="concert-card">
+                <img src="{{ asset($concierto['imagen']) }}" alt="{{ $concierto['grupo'] }} Concierto">
+                <div class="card-body">
+                    <h5>{{ $concierto['titulo'] }}</h5>
+                    <p>Grupo: <strong>{{ $concierto['grupo'] }}</strong></p>
+                    <p>Fecha: <strong>{{ $concierto['fecha'] }}</strong></p>
+                    <p>Lugar: <strong>{{ $concierto['lugar'] }}</strong></p>
+                    <a href="{{ $concierto['link'] }}" class="btn-buy-ticket" target="_blank">Comprar Boletos</a>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</section>
+
+---
+{{-- SECCIÓN DE MERCANCÍA --}}
 <section class="artist-section">
     <h2>Mercancía de los grupos</h2>
     <div class="row justify-content-center">
@@ -201,25 +313,25 @@
             $grupos_merch = [
                 [
                     'nombre' => 'Blackpink',
-                    'imagen' => 'img/logos/BP.jpeg',
+                    'imagen' => 'img/logos/lamparabp.jpg.',
                     'descripcion' => 'Encuentra el merch oficial de Blackpink.',
                     'link' => 'https://shop.weverse.io/es/shop/MXN/artists/32'
                 ],
                 [
                     'nombre' => 'Stray Kids',
-                    'imagen' => 'img/logos/skz.jpg',
+                    'imagen' => 'img/logos/lamparaskz1.jpg',
                     'descripcion' => 'Explora la colección oficial de Stray Kids.',
                     'link' => 'https://en.thejypshop.com/category/merch/35/'
                 ],
                 [
                     'nombre' => 'BTS',
-                    'imagen' => 'img/logos/BTS.jpg',
+                    'imagen' => 'img/logos/btslampara.jpg',
                     'descripcion' => 'Descubre la amplia gama de merch de BTS.',
                     'link' => 'https://shop.weverse.io/es/shop/MXN/artists/2'
                 ],
                 [
                     'nombre' => 'LE SSERAFIM',
-                    'imagen' => 'img/logos/lesserafim.jpg',
+                    'imagen' => 'img/logos/lamparalesserafim.jpg',
                     'descripcion' => 'Adquiere el merch exclusivo de LE SSERAFIM.',
                     'link' => 'https://shop.weverse.io/es/shop/MXN/artists/50'
                 ],
@@ -240,11 +352,12 @@
     </div>
 </section>
 
+---
 {{-- TESTIMONIOS --}}
 <section class="testimonials">
     <h2 class="mb-1">Testimonios de Fans</h2>
     <div class="row justify-content-center">
-      
+
         <div class="col-md-3 col-sm-6">
             <div class="testimonial-card">
                 <p>"Blackpink cambió mi vida, son únicas."</p>
@@ -266,12 +379,13 @@
         <div class="col-md-3 col-sm-6">
             <div class="testimonial-card">
                 <p>"LE SSERAFIM me ha cautivado con su confianza y mensajes de empoderamiento. Cada canción y cada actuación irradian una fuerza y determinación que realmente me inspiran a perseguir mis propias metas sin miedo."</p>
-                <strong>- Ari</strong> 
+                <strong>- Ari</strong>
             </div>
         </div>
     </div>
 </section>
 
+---
 {{-- CONTACTO --}}
 <section class="contact-section">
     <h2>¿Quieres Saber Más?</h2>
