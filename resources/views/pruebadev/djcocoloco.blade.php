@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
 @push('scripts')
-{{-- Puedes incluir JS personalizado aquí --}}
 @endpush
 
 @section('title')
@@ -134,13 +132,12 @@
         background-color: #d19794;
     }
 
-    /* Estilos específicos para las tarjetas de concierto */
     .concert-card {
         border-radius: 10px;
         box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         overflow: hidden;
         margin-bottom: 30px;
-        background-color: #e0f2f7; /* Un color de fondo diferente para destacar */
+        background-color: #e0f2f7; 
         transition: transform 0.3s;
     }
 
@@ -161,7 +158,7 @@
 
     .concert-card .card-body h5 {
         font-weight: bold;
-        color: #007bff; /* Un color para el título del concierto */
+        color: #007bff;
         margin-bottom: 10px;
     }
 
@@ -171,7 +168,7 @@
     }
 
     .concert-card .card-body .btn-buy-ticket {
-        background-color: #28a745; /* Botón de compra de tickets verde */
+        background-color: #28a745;
         color: white;
         border: none;
         padding: 8px 15px;
@@ -187,14 +184,14 @@
     }
 </style>
 
----
+
 {{-- PORTADA --}}
 <section class="hero-section">
     <h1>Bienvenidos al Mundo del KPOP</h1>
     <p>Explora artistas, historias y más sobre tus grupos favoritos</p>
 </section>
 
----
+
 {{-- SECCIÓN DE ARTISTAS --}}
 <section class="artist-section">
     <h2>Conoce a los Grupos</h2>
@@ -243,7 +240,7 @@
     </div>
 </section>
 
----
+
 {{-- SECCIÓN DE CONCIERTOS --}}
 <section class="artist-section">
     <h2>Próximos Conciertos</h2>
@@ -255,17 +252,17 @@
                     'grupo' => 'Blackpink',
                     'titulo' => 'BLACKPINK WORLD TOUR DEADLINE',
                     'imagen' => 'img/logos/bpconcert.jpeg',
-                    'fecha' => '23 de Julio, 2025',
-                    'lugar' => 'Toronto',
-                    'link' => 'https://www.ticketmaster.ca/blackpink-world-tour-deadline-in-toronto-toronto-ontario-07-23-2025/event/1000625A75F50C37?_ga=2.24904058.1343831535.1753310078-1076486613.1753310078'
+                    'fecha' => '16 de Agosto, 2025',
+                    'lugar' => 'London, GBWembley Stadium',
+                    'link' => 'https://www.ticketmaster.co.uk/blackpink-world-tour-deadline-in-london-london-16-08-2025/event/230062588C620A64'
                 ],
                 [
                     'grupo' => 'Stray Kids',
-                    'titulo' => 'STRAY KIDS 5-STAR DOME TOUR',
+                    'titulo' => 'Stray Kids World Tour dominATE',
                     'imagen' => 'img/logos/skz.jpg',
-                    'fecha' => '20 de Enero, 2026',
-                    'lugar' => 'Palacio de los Deportes, México',
-                    'link' => 'https://www.ticketmaster.com.mx/stray-kids-boletos/artist/2660145'
+                    'fecha' => '30 de Julio, 2025',
+                    'lugar' => 'Stadio Olimpico di Roma',
+                    'link' => 'https://shop.ticketmaster.it/biglietti/stray-kids-world-tour-3cdominate-rome3e-30-luglio-2025-stadio-olimpico-di-roma-roma-11607.html'
                 ],
                 [
                     'grupo' => 'BTS',
@@ -273,15 +270,15 @@
                     'imagen' => 'img/logos/BTS.jpg',
                     'fecha' => '10 de Marzo, 2026',
                     'lugar' => 'Foro Sol, México',
-                    'link' => 'https://www.ticketmaster.com.mx/bts-boletos/artist/1941656'
+                    'link' => 'https://www.ticketmaster.ca/bts-tickets/artist/2110227'
                 ],
                 [
                     'grupo' => 'LE SSERAFIM',
-                    'titulo' => 'LE SSERAFIM TOUR ‘FLAME RISES’',
+                    'titulo' => 'LE SSERAFIM - 2025 EASY CRAZY HOT TOUR',
                     'imagen' => 'img/logos/lesserafim.jpg',
                     'fecha' => '5 de Febrero, 2026',
-                    'lugar' => 'Auditorio Nacional, México',
-                    'link' => 'https://www.ticketmaster.com.mx/le-sserafim-boletos/artist/2959887'
+                    'lugar' => 'Seattle, WA, USClimate Pledge Arena',
+                    'link' => 'https://www.ticketmaster.com/le-sserafim-2025-easy-crazy-hot-seattle-washington-09-17-2025/event/0F0062C9F4123FFD?currency-locale=en-ca&_gl=1*1b7sl6e*_gcl_au*MzI1MTg5NzczLjE3NTMzNzY4MDQ.*_ga*MTg5MTE1NDA3MS4xNzUzMzc2ODAz*_ga_C1T806G4DF*czE3NTMzNzY4MDIkbzEkZzEkdDE3NTMzNzc4NzAkajM2JGwwJGgw*_ga_H1KKSGW33X*czE3NTMzNzY4MDIkbzEkZzEkdDE3NTMzNzc4NzAkajM2JGwwJGgw&_ga=2.90727962.1267877708.1753376803-1891154071.1753376803'
                 ],
             ];
         @endphp
@@ -303,7 +300,7 @@
     </div>
 </section>
 
----
+
 {{-- SECCIÓN DE MERCANCÍA --}}
 <section class="artist-section">
     <h2>Mercancía de los grupos</h2>
@@ -352,7 +349,61 @@
     </div>
 </section>
 
----
+
+{{-- NOTICIAS --}}
+<section class="contact-section">
+    <h2>¿Quieres Saber Más?</h2>
+    <p>Descubre noticias, eventos y más sobre tus artistas KPOP favoritos.</p>
+    <section class="artist-section">
+    <h2>Noticias de KPOP</h2>
+    <div class="row justify-content-center">
+
+        @php
+            $grupos_noticias = [
+                [
+                    'nombre' => 'Blackpink',
+                    'imagen' => 'img/logos/ot4.jpg.',
+                    'descripcion' => 'Descubre noticias de BlackPink.',
+                    'link' => 'https://www.vogue.mx/articulo/blackpink-biografia'
+                ],
+                [
+                    'nombre' => 'Stray Kids',
+                    'imagen' => 'img/logos/ot8.jpg',
+                    'descripcion' => 'Descubre noticias de StrayKids.',
+                    'link' => 'https://www.vogue.mx/articulo/stray-kids-todo-lo-que-debes-saber-banda-k-pop'
+                ],
+                [
+                    'nombre' => 'BTS',
+                    'imagen' => 'img/logos/ot7.jpg',
+                    'descripcion' => 'Descubre noticias de BTS.',
+                    'link' => 'https://www.vogue.mx/articulo/bts-anuncia-su-regreso-oficial-en-2026'
+                ],
+                [
+                    'nombre' => 'LE SSERAFIM',
+                    'imagen' => 'img/logos/ot5.jpg',
+                    'descripcion' => 'Descubre noticias de Le sserafim.',
+                    'link' => 'https://www.vogue.mx/articulo/le-sserafim-entrevista'
+                ],
+            ];
+        @endphp
+
+        @foreach ($grupos_merch as $grupo)
+        <div class="col-md-3 col-sm-6">
+            <div class="artist-card">
+                <img src="{{ asset($grupo['imagen']) }}" alt="{{ $grupo['nombre'] }}">
+                <div class="card-body">
+                    <a href="{{ $grupo['link'] }}" class="links_bandas" target="_blank">{{ $grupo['nombre'] }}</a>
+                    <p>{{ $grupo['descripcion'] }}</p>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</section>
+</section>
+
+
+
 {{-- TESTIMONIOS --}}
 <section class="testimonials">
     <h2 class="mb-1">Testimonios de Fans</h2>
@@ -383,14 +434,6 @@
             </div>
         </div>
     </div>
-</section>
-
----
-{{-- CONTACTO --}}
-<section class="contact-section">
-    <h2>¿Quieres Saber Más?</h2>
-    <p>Descubre noticias, eventos y más sobre tus artistas KPOP favoritos.</p>
-    <button class="btn-learn-more">Aprende más</button>
 </section>
 
 @endsection
