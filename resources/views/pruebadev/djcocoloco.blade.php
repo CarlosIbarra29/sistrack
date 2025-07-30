@@ -359,10 +359,10 @@
     <div class="row justify-content-center">
 
         @php
-            $grupos_noticias = [
+            $grupos_merch = [
                 [
                     'nombre' => 'Blackpink',
-                    'imagen' => 'img/logos/ot4.jpg.',
+                    'imagen' => 'img/logos/ot4.jpg',
                     'descripcion' => 'Descubre noticias de BlackPink.',
                     'link' => 'https://www.vogue.mx/articulo/blackpink-biografia'
                 ],

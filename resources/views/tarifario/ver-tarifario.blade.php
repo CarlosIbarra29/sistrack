@@ -115,7 +115,7 @@
 
                                         <div class="form-group row">
                                             <div class="col-lg-12">
-                                                <label>Subtotal</label>
+                                                <label>Pago de custodia sin arma</label>
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" disabled name="subtotal" id="subtotal_sis"  value="{{ $tarifario->subtotal }}"/>
                                                 </div>
