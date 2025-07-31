@@ -34,7 +34,7 @@
                                         data-toggle="modal" data-target="#kt_modal_1">
                                         <i class="la la-plus"></i>Nuevo</a>
 
-                                    <a href="{{ route('user.usuariosinactivos') }}"
+                                    <a href="{{ route('usuario.usuariosinactivos') }}"
                                         class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
                                         <i class="far fa-trash-alt"></i>Documentos inactivos</a>
 

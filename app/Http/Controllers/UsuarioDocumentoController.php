@@ -154,4 +154,5 @@ class UsuarioDocumentoController extends Controller
         return redirect()->route('user.usuariosinactivos');  
     }
 
+
 }   
