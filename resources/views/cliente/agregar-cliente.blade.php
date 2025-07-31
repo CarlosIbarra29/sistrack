@@ -99,7 +99,7 @@
                                     </div>
                                 </div>
 
-
+<input type='hidden' id='tipoArchivo2' value='{{ $cadenatipocliente }}'>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="card card-custom gutter-b">
@@ -113,9 +113,11 @@
                                             <div class="card-body">
                                                 <div class="row form-group" >
                                                     <div class="col-lg-12" id="tblArchivos">
+                                                        
                                                         <table class='table table-bordered table-hover' id='tblDocumentos'>
                                                             <thead>
                                                             <tr>
+                                                                <th>Tipo contacto</th>
                                                                 <th>Nombre contacto</th>
                                                                 <th>Email</th>
                                                                 <th>Telefono</th>
@@ -138,7 +140,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
+{{--                                     <div class="col-lg-12">
                                         <div class="card card-custom gutter-b">
                                             <div class="card-header">
                                                 <div class="card-title">
@@ -173,7 +175,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
 
 

@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $id
  * @property integer $cliente_id
  * @property integer $siaf_status
- * @property integer $id_tipo_contacto
  * @property string $nombre_operativo
  * @property string $telefono_operativo
  * @property string $email_operativo
@@ -17,9 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $iduserUpdated
  * @property string $updated_at
  * @property Cliente $cliente
- * @property SiafStatus $siafStatus
  * @property User $user
- * @property ClienteTipoContacto $clienteTipoContacto
+ * @property SiafStatus $siafStatus
  * @property User $user
  */
 class ClienteContactoOperativo extends Model
@@ -34,8 +32,11 @@ class ClienteContactoOperativo extends Model
     /**
      * @var array
      */
-    protected $fillable = ['cliente_id', 'siaf_status', 'id_tipo_contacto', 'nombre_operativo', 'telefono_operativo', 'email_operativo', 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at'];
+    protected $fillable = ['cliente_id', 'siaf_status', 'nombre_operativo', 'telefono_operativo', 'email_operativo', 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function cliente()
     {
         return $this->belongsTo('App\Models\Cliente\Cliente');
@@ -55,11 +56,4 @@ class ClienteContactoOperativo extends Model
     {
         return $this->belongsTo('App\Models\User', 'iduserUpdated');
     }
-
-    public function TipoContactoCliente()
-    {
-        return $this->belongsTo('App\Models\Cliente\TipoContactoCliente', 'id_tipo_contacto');
-    }
-
-
 }

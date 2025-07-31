@@ -16,6 +16,7 @@ use App\Models\Cliente\ClienteContactoFacturacion;
 use App\Models\Cliente\ClienteContactoOperativo;
 use App\Models\Cliente\TipoDocumentoC;
 use App\Models\Cliente\DocumentoCliente;
+use App\Models\Cliente\TipoContactoCliente;
 
 use App\Models\User;
 use App\Models\Rol;
@@ -154,11 +155,22 @@ class ClienteController extends Controller
         }
         $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
 
-        return view('cliente.agregar-cliente', compact('data','cadenaTipoDocumento'));
+        $tipocliente = TipoContactoCliente::get();
+
+        //tipo de documentos en formato json
+        $cadenatipocliente = "";
+        foreach($tipocliente as $documento){
+            $cadenatipocliente .= '"'.$documento->id.'":"'.$documento->tipo_contacto.'",';
+        }
+        $cadenatipocliente = '{'.rtrim($cadenatipocliente, ',').'}';
+
+
+        return view('cliente.agregar-cliente', compact('data','cadenaTipoDocumento', 'cadenatipocliente'));
     }
 
     public function guardarcliente(Request $request)
     {
+
 
         $data = [
             'razon_social' => $request->razon_social,
@@ -178,10 +190,12 @@ class ClienteController extends Controller
         $id_cliente = Cliente::insertGetId($data);
         // dd($request);
 
+        $colIdDocumento = $request->id_tipocontacto;
         if($request->nombre){
             for($i = 1; $i <= count($request->nombre); $i++){
                 $data = [
                     'cliente_id' => $id_cliente,
+                    'id_tipo_contacto' =>$colIdDocumento[$i],
                     'nombre_operativo' =>$request->nombre[$i],
                     'telefono_operativo' =>$request->telefono[$i],
                     'email_operativo' =>$request->email[$i],
@@ -196,23 +210,23 @@ class ClienteController extends Controller
             }
         }
 
-        if($request->nombre_fac){
-            for($f = 1; $f <= count($request->nombre_fac); $f++){
+        // if($request->nombre_fac){
+        //     for($f = 1; $f <= count($request->nombre_fac); $f++){
                 
-                $data = [
-                    'cliente_id' => $id_cliente,
-                    'nombre_contacto' =>$request->nombre_fac[$f],
-                    'telefono_contacto' =>$request->telefono_fac[$f],
-                    'email_contacto' =>$request->email_fac[$f],
-                    'siaf_status' => 1,
-                    'created_at' =>date('Y-m-d H:i:s'),
-                    'updated_at' =>date('Y-m-d H:i:s'),
-                    'iduserCreated' => auth()->user()->id,
-                    'iduserUpdated' => auth()->user()->id,
-                ];
-                ClienteContactoFacturacion::insert($data);
-            }
-        }
+        //         $data = [
+        //             'cliente_id' => $id_cliente,
+        //             'nombre_contacto' =>$request->nombre_fac[$f],
+        //             'telefono_contacto' =>$request->telefono_fac[$f],
+        //             'email_contacto' =>$request->email_fac[$f],
+        //             'siaf_status' => 1,
+        //             'created_at' =>date('Y-m-d H:i:s'),
+        //             'updated_at' =>date('Y-m-d H:i:s'),
+        //             'iduserCreated' => auth()->user()->id,
+        //             'iduserUpdated' => auth()->user()->id,
+        //         ];
+        //         ClienteContactoFacturacion::insert($data);
+        //     }
+        // }
 
 
         $colIdDocumento = $request->id_documento;
@@ -285,8 +299,16 @@ class ClienteController extends Controller
 
         $documentos = DocumentoCliente::where('cliente_id',$cliente_id)->get();
 
+        $tipocliente = TipoContactoCliente::get();
 
-        return view('cliente.editar-cliente', compact('data', 'cliente_id', 'cliente_operativo', 'cliente_fac', 'cadenaTipoDocumento', 'documentos'));      
+        //tipo de documentos en formato json
+        $cadenatipocliente = "";
+        foreach($tipocliente as $documento){
+            $cadenatipocliente .= '"'.$documento->id.'":"'.$documento->tipo_contacto.'",';
+        }
+        $cadenatipocliente = '{'.rtrim($cadenatipocliente, ',').'}';
+
+        return view('cliente.editar-cliente', compact('data', 'cliente_id', 'cliente_operativo', 'cliente_fac', 'cadenaTipoDocumento', 'documentos', 'cadenatipocliente'));      
     }
 
     public function eliminarcontactooperativo(Request $request)
@@ -338,10 +360,12 @@ class ClienteController extends Controller
         Cliente::where('id', $request->cliente_id)->update($data);
         // dd($request);
 
+        $colIdDocumento = $request->id_tipocontacto;
         if($request->nombre){
             for($i = 1; $i <= count($request->nombre); $i++){
                 $data = [
                     'cliente_id' => $request->cliente_id,
+                    'id_tipo_contacto' =>$colIdDocumento[$i],
                     'nombre_operativo' =>$request->nombre[$i],
                     'telefono_operativo' =>$request->telefono[$i],
                     'email_operativo' =>$request->email[$i],

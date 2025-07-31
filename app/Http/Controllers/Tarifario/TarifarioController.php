@@ -33,7 +33,7 @@ class TarifarioController extends Controller
         $data = Cliente::where('siaf_status', 1)->get();
         $tarifario = Tarifario::where('siaf_status', 1)->get();
 
-        return view('tarifario.listado-tarifario', compact('data'));
+        return view('tarifario.listado-tarifario', compact('data', 'tarifario'));
     }
 
     public function tarifariolistadodatatable(Request $request)
@@ -173,6 +173,7 @@ class TarifarioController extends Controller
             'ppkm_sis' => $request->ppkm_sis,
             'ppkm_cust' => $request->ppkm_cust,
             'caseta' => $request->caseta,
+            'tipo_viaje' => $request->tipo_viaje,
 
             'monto_cliente'=> $total_sis,
             'monto_custodio'=> $total_cust,
@@ -216,6 +217,7 @@ class TarifarioController extends Controller
     	
         $data = [
             'cliente_id' => $request->cliente_id,
+            'tipo_viaje' => $request->tipo_viaje,
             'origen'  => $request->origen,
             'destino' => $request->destino,
             'kms' => $request->kms,

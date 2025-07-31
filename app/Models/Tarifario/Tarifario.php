@@ -35,7 +35,7 @@ class Tarifario extends Model
     /**
      * @var array
      */
-    protected $fillable = ['cliente_id', 'siaf_status', 'origen', 'destino', 'kms', 'ppkm_sis', 'ppkm_cust', 'caseta', 'monto_cliente', 'monto_custodio', 'subtotal', 'ganancia', 'porcentaje_custodio', 'porcentaje_sisprotec', 'total', 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at', 'observaciones'];
+    protected $fillable = ['cliente_id', 'siaf_status', 'origen', 'destino', 'kms', 'ppkm_sis', 'ppkm_cust', 'caseta', 'monto_cliente', 'monto_custodio', 'subtotal', 'ganancia', 'porcentaje_custodio', 'porcentaje_sisprotec', 'total', 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at', 'observaciones', 'tipo_viaje'];
 
     public function siafStatus()
     {
