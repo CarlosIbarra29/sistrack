@@ -1,11 +1,9 @@
 @extends('layouts.app')
 @push('scripts')
 @endpush
-
 @section('title')
     Página KPOP
 @endsection
-
 @section('content')
 
 <style>
@@ -132,12 +130,13 @@
         background-color: #d19794;
     }
 
+    
     .concert-card {
         border-radius: 10px;
         box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         overflow: hidden;
         margin-bottom: 30px;
-        background-color: #e0f2f7; 
+        background-color: #e0f2f7;
         transition: transform 0.3s;
     }
 
@@ -158,7 +157,7 @@
 
     .concert-card .card-body h5 {
         font-weight: bold;
-        color: #007bff;
+        color: #007bff; 
         margin-bottom: 10px;
     }
 
@@ -303,7 +302,7 @@
 
 {{-- SECCIÓN DE MERCANCÍA --}}
 <section class="artist-section">
-    <h2>Mercancía de los grupos</h2>
+    <h2>Mercancía oficial de los grupos</h2>
     <div class="row justify-content-center">
 
         @php
@@ -355,14 +354,13 @@
     <h2>¿Quieres Saber Más?</h2>
     <p>Descubre noticias, eventos y más sobre tus artistas KPOP favoritos.</p>
     <section class="artist-section">
-    <h2>Noticias de KPOP</h2>
     <div class="row justify-content-center">
 
         @php
             $grupos_merch = [
                 [
                     'nombre' => 'Blackpink',
-                    'imagen' => 'img/logos/ot4.jpg',
+                    'imagen' => 'img/logos/ot4.jpg.',
                     'descripcion' => 'Descubre noticias de BlackPink.',
                     'link' => 'https://www.vogue.mx/articulo/blackpink-biografia'
                 ],
