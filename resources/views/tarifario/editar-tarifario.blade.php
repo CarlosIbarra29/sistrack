@@ -27,6 +27,23 @@
                             <div class="col-lg-8">
                                 <div class="form-group row">
                                     <div class="col-lg-6">
+                                            <label>Tipo viaje</label>
+                                            <div class="radio-inline">
+                                                <label class="radio">
+                                                    <input type="radio" {{($tarifario->tipo_viaje == 0) ? 'checked' : ''}} name="tipo_viaje" value="0"/>
+                                                    <span></span>
+                                                    Local
+                                                </label>
+                                                <label class="radio">
+                                                    <input type="radio" {{($tarifario->tipo_viaje == 1) ? 'checked' : ''}} name="tipo_viaje" value="1"/>
+                                                    <span></span>
+                                                    Foraneo
+                                                </label>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-6">
                                         <label>Cliente</label>
                                         <select class="form-control" id="cliente_id" name="cliente_id"  required >
                                             <option value="">Selecciona una cliente</option>

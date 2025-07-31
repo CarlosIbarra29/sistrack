@@ -30,7 +30,7 @@
                             <div class="card-toolbar">
 
                                 <!--begin::Button-->
-                                <a href="{{ route('doccliente.catalogoDocumentos') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
+                                <a href="{{ route('user.catalogousuarios') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
                                   Regresar</a>
                                 <!--end::Button-->
 

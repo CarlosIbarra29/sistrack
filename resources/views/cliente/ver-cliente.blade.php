@@ -106,7 +106,7 @@
                                         <div class="card-header">
                                             <div class="card-title">
                                                 <h3 class="card-label">
-                                                    <small>Contacto operativo</small>
+                                                    <small>Contactos</small>
                                                 </h3>
                                             </div>
                                         </div>
@@ -114,6 +114,7 @@
                                             <table class="table table-hover mb-6 table-responsive-sm" id="tblDocumentos">
                                                 <thead>
                                                 <tr>
+                                                    <th scope="col">Tipo Contacto</th>
                                                     <th scope="col">Nombre contacto</th>
                                                     <th scope="col">Email</th>
                                                     <th scope="col">Telefono</th>
@@ -122,6 +123,13 @@
                                                 <tbody id='tbodyDocumentos'>
                                                     @foreach($cliente_operativo as $documento)
                                                         <tr id="trDocumento{{ $documento->id }}">
+                                                            <td>
+                                                                @if($documento->id_tipo_contacto == 1)
+                                                                    Operativo
+                                                                @else
+                                                                    Facturación y cobranza
+                                                                @endif
+                                                            </td>
                                                             <td>{{ $documento->nombre_operativo }}</td>
                                                             <td>{{ $documento->email_operativo }}</td>
                                                             <td>{{ $documento->telefono_operativo }}</td>
@@ -136,7 +144,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
+{{--                                 <div class="col-lg-12">
                                     <div class="card card-custom gutter-b">
                                         <div class="card-header">
                                             <div class="card-title">
@@ -167,7 +175,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
 
 

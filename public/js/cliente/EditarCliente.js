@@ -2,6 +2,7 @@
 var Modulo = function() {
 
     var lista = ''; //lista de elementos
+    var lista_dos = '';
     var contadorDocumentos=0; //indice contador de elementos
     var validador; //validador del formulario
     var contadorDoc=0; //indice contador de elementos
@@ -51,6 +52,7 @@ var Modulo = function() {
     var initEvents = function() {
 
         lista = construyeElementosLista();
+        lista_dos = construyeElementosListados();
 
         var arrows = {
             leftArrow: '<i class="la la-angle-left"></i>',
@@ -104,7 +106,7 @@ var Modulo = function() {
                 text: documento,
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: "Eliminar Documento",
+                confirmButtonText: "Eliminar Contacto",
                 cancelButtonText: "Cerrar",
                 reverseButtons: true
             }).then(function(result) {
@@ -131,7 +133,7 @@ var Modulo = function() {
                                     "closeButton" : true,
                                     "progressBar" : true
                                 }
-                            toastr.success("El documento se elimino correctamente.");
+                            toastr.success("El contacto se elimino correctamente.");
 
                         }else{
                             toastr.options =
@@ -276,6 +278,17 @@ var Modulo = function() {
         return opcion;
     };
 
+    var construyeElementosListados = function () {
+        var tipoArchivo = $("#tipoArchivo2").val();
+        var colTipoArchivo = JSON.parse(tipoArchivo);
+        var opcion ="";
+
+        $.each(colTipoArchivo, function(i, item) {
+            opcion += "<option value='"+i+"' >"+item+"</option>";
+        });
+
+        return opcion;
+    };
     //validador de elementos agregados para archivo
     const archivoValidador = {
         validators: {
@@ -307,6 +320,14 @@ var Modulo = function() {
             "<tr id='trDocumento"+contadorDocumentos+"'>",
             "    <td>" +
             "       <div class='form-group mb-0'>" +
+            "          <select class='form-control' name='id_tipocontacto["+contadorDocumentos+"]' id='id_tipocontacto"+contadorDocumentos+"' required>",
+            "              <option value=''>Selecciona un opción</option>",
+            lista_dos,
+            "          </select>",
+            "       </div>" +
+            "    </td>",
+            "    <td>" +
+            "       <div class='form-group mb-0'>" +
             "               <input type='text' class='form-control' id='nombre"+contadorDocumentos+"' name='nombre["+contadorDocumentos+"]' required />",
             "       </div>" +
             "    </td>",
@@ -330,6 +351,7 @@ var Modulo = function() {
             ""].join(""));
         $("#tblDocumentos tbody").append(html); //agrega el html creado
         //agrega validación del elemento creado
+        validador.addField('id_tipocontacto[' + contadorDocumentos + ']', archivoValidador);
         validador.addField('nombre[' + contadorDocumentos + ']', archivoValidador);
         validador.addField('email[' + contadorDocumentos + ']', archivoValidador);
         validador.addField('telefono[' + contadorDocumentos + ']', archivoValidador);
@@ -344,6 +366,7 @@ var Modulo = function() {
             var idDocumento = $(this).attr("data-id"); //indice del elemento
             KTApp.hideTooltips(); //oculta tooltip
             //elimina la validación del elemento
+            validador.addField('id_tipocontacto[' + contadorDocumentos + ']', archivoValidador);
             validador.removeField('nombre[' + idDocumento + ']');
             validador.removeField('email[' + idDocumento + ']');
             validador.removeField('telefono[' + idDocumento + ']');
