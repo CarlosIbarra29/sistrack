@@ -419,6 +419,7 @@ class UsuarioController extends Controller
 
     public function desacticarusuario(Request $request)
     {
+        dd($request);
         $data = [
             'id_status_delete' => 2,
             'motivo_desactivar' => $request->motivo,

@@ -215,7 +215,7 @@
 
 
 function deleteuser(nombre, id) {
-    
+    alert(id);
     document.getElementById("id_user_desc").value = id;
     document.getElementById("name_user").value = nombre;
 }
