@@ -106,7 +106,7 @@
     }
 
     .contact-section {
-        background-color: #e2c0a3;
+        background-color: #8F473B;
         color: #4682B4;
         padding: 60px 20px;
         text-align: center;
@@ -257,7 +257,8 @@
                     'link' => 'https://www.ticketmaster.co.uk/blackpink-world-tour-deadline-in-london-london-16-08-2025/event/230062588C620A64'
                 ],
                 [
-                    'grupo' => 'Stray Kids',
+
+                    'grupo' => 'Stray Kids',                    
                     'titulo' => 'Stray Kids World Tour dominATE',
                     'imagen' => 'img/logos/skz.jpg',
                     'fecha' => '30 de Julio, 2025',
