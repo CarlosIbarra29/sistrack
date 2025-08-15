@@ -5,32 +5,6 @@
     Página KPOP
 @endsection
 @section('content')
-
-
-<!DOCTYPE html>
-<html lang='es'>
-<head>
- <meta charset='UTF-8'>
-<style>
- #cabecera{
- width: 100%;
- height: 500px;
- }
- #video {
- position: absolute;
- left: 0;
- top: 0;
- width: 100%;
- height: auto;
- z-index: -10;
- visibility: visible;
- }
- h2{
- color:white;
- text-shadow: 4px 4px 4px #333;
- text-align: center;
- margin-top: 200px;
- }
  </style> 
 </head>
 <body>
