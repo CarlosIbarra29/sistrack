@@ -7,8 +7,18 @@
 @endsection
 
 @section('content')
+<<<<<<< HEAD
 
 <style>
+=======
+ </style> 
+</head>
+<body>
+<div id='cabecera'>
+<h2>Página KPOP</h2>
+</div>
+<h4><style>
+>>>>>>> 7fde262917d6e5b086dee24741614d63bed46a31
     .hero-section {
         background: linear-gradient(to bottom right, #FFFDD0, #FADADD);
         color: #6A0DAD;
@@ -106,7 +116,11 @@
     }
 
     .contact-section {
+<<<<<<< HEAD
         background-color: #8F473B;
+=======
+        background-color: #e2c0a3;
+>>>>>>> 7fde262917d6e5b086dee24741614d63bed46a31
         color: #4682B4;
         padding: 60px 20px;
         text-align: center;
@@ -132,12 +146,20 @@
         background-color: #d19794;
     }
 
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 7fde262917d6e5b086dee24741614d63bed46a31
     .concert-card {
         border-radius: 10px;
         box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         overflow: hidden;
         margin-bottom: 30px;
+<<<<<<< HEAD
         background-color: #e0f2f7; 
+=======
+        background-color: #e0f2f7;
+>>>>>>> 7fde262917d6e5b086dee24741614d63bed46a31
         transition: transform 0.3s;
     }
 
@@ -158,7 +180,11 @@
 
     .concert-card .card-body h5 {
         font-weight: bold;
+<<<<<<< HEAD
         color: #007bff;
+=======
+        color: #007bff; 
+>>>>>>> 7fde262917d6e5b086dee24741614d63bed46a31
         margin-bottom: 10px;
     }
 
@@ -257,8 +283,12 @@
                     'link' => 'https://www.ticketmaster.co.uk/blackpink-world-tour-deadline-in-london-london-16-08-2025/event/230062588C620A64'
                 ],
                 [
+<<<<<<< HEAD
 
                     'grupo' => 'Stray Kids',                    
+=======
+                    'grupo' => 'Stray Kids',
+>>>>>>> 7fde262917d6e5b086dee24741614d63bed46a31
                     'titulo' => 'Stray Kids World Tour dominATE',
                     'imagen' => 'img/logos/skz.jpg',
                     'fecha' => '30 de Julio, 2025',
@@ -279,7 +309,11 @@
                     'imagen' => 'img/logos/lesserafim.jpg',
                     'fecha' => '5 de Febrero, 2026',
                     'lugar' => 'Seattle, WA, USClimate Pledge Arena',
+<<<<<<< HEAD
                     'link' => 'https://www.ticketmaster.com/le-sserafim-2025-easy-crazy-hot-seattle-washington-09-17-2025/event/0F0062C9F4123FFD?currency-locale=en-ca&_gl=1*1b7sl6e*_gcl_au*MzI1MTg5NzczLjE3NTMzNzY4MDQ.*_ga*MTg5MTE1NDA3MS4xNzUzMzc2ODAz*_ga_C1T806G4DF*czE3NTMzNzY4MDIkbzEkZzEkdDE3NTMzNzc4NzAkajM2JGwwJGgw*_ga_H1KKSGW33X*czE3NTMzNzY4MDIkbzEkZzEkdDE3NTMzNzc4NzAkajM2JGwwJGgw&_ga=2.90727962.1267877708.1753376803-1891154071.1753376803'
+=======
+                    'link' => 'https://www.ticketmaster.com/le-sserafim-2025-easy-crazy-hot-seattle-washington-09-17-2025/event/0F0062C9F4123FFD?currency-locale=en-ca&_gl=1*1b7sl6e*_gcl_au*MzI1MTg5NzczLjE3NTMzNzY4MDQ._ga*MTg5MTE1NDA3MS4xNzUzMzc2ODAz_ga_C1T806G4DF*czE3NTMzNzY4MDIkbzEkZzEkdDE3NTMzNzc4NzAkajM2JGwwJGgw*_ga_H1KKSGW33X*czE3NTMzNzY4MDIkbzEkZzEkdDE3NTMzNzc4NzAkajM2JGwwJGgw&_ga=2.90727962.1267877708.1753376803-1891154071.1753376803'
+>>>>>>> 7fde262917d6e5b086dee24741614d63bed46a31
                 ],
             ];
         @endphp
@@ -303,8 +337,13 @@
 
 
 {{-- SECCIÓN DE MERCANCÍA --}}
+<<<<<<< HEAD
 <section class="artist-section">
     <h2>Mercancía de los grupos</h2>
+=======
+<div class="artist-section">
+    <h2>Mercancía oficial de los grupos</h2>
+>>>>>>> 7fde262917d6e5b086dee24741614d63bed46a31
     <div class="row justify-content-center">
 
         @php
@@ -348,6 +387,7 @@
         </div>
         @endforeach
     </div>
+<<<<<<< HEAD
 </section>
 
 
@@ -357,13 +397,27 @@
     <p>Descubre noticias, eventos y más sobre tus artistas KPOP favoritos.</p>
     <section class="artist-section">
     <h2>Noticias de KPOP</h2>
+=======
+</div>
+
+
+{{-- NOTICIAS --}}
+<div class="contact-section">
+    <h2>¿Quieres Saber Más?</h2>
+    <p>Descubre noticias, eventos y más sobre tus artistas KPOP favoritos.</p>
+    <div class="artist-section">
+>>>>>>> 7fde262917d6e5b086dee24741614d63bed46a31
     <div class="row justify-content-center">
 
         @php
             $grupos_merch = [
                 [
                     'nombre' => 'Blackpink',
+<<<<<<< HEAD
                     'imagen' => 'img/logos/ot4.jpg',
+=======
+                    'imagen' => 'img/logos/ot4.jpg.',
+>>>>>>> 7fde262917d6e5b086dee24741614d63bed46a31
                     'descripcion' => 'Descubre noticias de BlackPink.',
                     'link' => 'https://www.vogue.mx/articulo/blackpink-biografia'
                 ],
@@ -400,6 +454,7 @@
         </div>
         @endforeach
     </div>
+<<<<<<< HEAD
 </section>
 </section>
 
@@ -437,4 +492,54 @@
     </div>
 </section>
 
+=======
+</div>
+
+
+
+{{-- TESTIMONIOS --}}
+<div class="testimonials">
+    <h2 class="mb-1">Testimonios de Fans</h2>
+    <div class="row justify-content-center">
+
+        <div class="col-md-3 col-sm-6">
+            <div class="testimonial-card">
+                <p>"Blackpink cambió mi vida, son únicas."</p>
+                <strong>- Ari</strong>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="testimonial-card">
+                <p>"BTS me inspira a seguir mis sueños. ¡Son increíbles!"</p>
+                <strong>- Ari</strong>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="testimonial-card">
+                <p>"Stray Kids me inspira a ser yo mismo sin miedo. Su música es cruda y honesta, y me hace sentir que no estoy solo en mis luchas. ¡Son mi fuerza!"</p>
+                <strong>- Ari</strong>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="testimonial-card">
+                <p>"LE SSERAFIM me ha cautivado con su confianza y mensajes de empoderamiento. Cada canción y cada actuación irradian una fuerza y determinación que realmente me inspiran a perseguir mis propias metas sin miedo."</p>
+                <strong>- Ari</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- CONTACTO --}}
+<div class="contact-section">
+    <h2>¿Quieres Saber Más?</h2>
+    <p>Descubre noticias, eventos y más sobre tus artistas KPOP favoritos.</p>
+    <button class="btn-learn-more">Aprende más</button>
+</div>
+</h4>
+</body>
+</html>
+
+
+
+>>>>>>> 7fde262917d6e5b086dee24741614d63bed46a31
 @endsection
