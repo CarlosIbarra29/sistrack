@@ -1,18 +1,14 @@
 @extends('layouts.app')
 @push('scripts')
 @endpush
+
 @section('title')
     Página KPOP
 @endsection
+
 @section('content')
 
-
-<!DOCTYPE html>
-<html lang='es'>
-<head>
- <meta charset='UTF-8'>
 <style>
-<<<<<<< HEAD
     .hero-section {
         background: linear-gradient(to bottom right, #FFFDD0, #FADADD);
         color: #6A0DAD;
@@ -406,42 +402,39 @@
     </div>
 </section>
 </section>
-=======
- #cabecera{
- width: 100%;
- height: 500px;
- }
- #video {
- position: absolute;
- left: 0;
- top: 0;
- width: 100%;
- height: auto;
- z-index: -10;
- visibility: visible;
- }
- h2{
- color:white;
- text-shadow: 4px 4px 4px #333;
- text-align: center;
- margin-top: 200px;
- }
- </style> 
-</head>
-<body>
-<div id='cabecera'>
- <video id='video' loop autoplay preload muted>
-<source src='video.mp4' type='video/mp4; codecs='videoplayback.mp4'' />
-<source src='video.ogg' type='video/ogg; codecs='theora,vorbis'' />
-<source src='video.webm' type='video/webm; codecs='vp8,vorbis'' />
-</video>
-<h2>El texto lo podríamos poner en esta línea</h2>
-</div>
-<h4></h4>
-</body>
-</html>
->>>>>>> 941a9bc2292a96241cb1a44833db7841366cf83e
 
 
+
+{{-- TESTIMONIOS --}}
+<section class="testimonials">
+    <h2 class="mb-1">Testimonios de Fans</h2>
+    <div class="row justify-content-center">
+
+        <div class="col-md-3 col-sm-6">
+            <div class="testimonial-card">
+                <p>"Blackpink cambió mi vida, son únicas."</p>
+                <strong>- Ari</strong>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="testimonial-card">
+                <p>"BTS me inspira a seguir mis sueños. ¡Son increíbles!"</p>
+                <strong>- Ari</strong>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="testimonial-card">
+                <p>"Stray Kids me inspira a ser yo mismo sin miedo. Su música es cruda y honesta, y me hace sentir que no estoy solo en mis luchas. ¡Son mi fuerza!"</p>
+                <strong>- Ari</strong>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="testimonial-card">
+                <p>"LE SSERAFIM me ha cautivado con su confianza y mensajes de empoderamiento. Cada canción y cada actuación irradian una fuerza y determinación que realmente me inspiran a perseguir mis propias metas sin miedo."</p>
+                <strong>- Ari</strong>
+            </div>
+        </div>
+    </div>
+</section>
 
 @endsection
