@@ -1,3 +1,10 @@
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+@stack('scripts')
+</body>
+@extends('layouts.app')
+@push('scripts')
+@endpush
+
 @extends('layouts.app')
 @push('scripts')
 @endpush
@@ -5,309 +12,220 @@
     Página KPOP
 @endsection
 @section('content')
- </style> 
-</head>
-<body>
-<div id='cabecera'>
-<h2>Página KPOP</h2>
-</div>
-<h4><style>
-    .hero-section {
-        background: linear-gradient(to bottom right, #FFFDD0, #FADADD);
-        color: #6A0DAD;
-        text-align: center;
-        padding: 100px 20px;
-    }
 
-    .hero-section h1 {
-        font-size: 4rem;
-        font-weight: bold;
-        color: #6A0DAD;
-    }
+<script>
+    
+    document.addEventListener("DOMContentLoaded", () => {
+        const sections = document.querySelectorAll(".fade-section");
 
-    .hero-section p {
-        font-size: 1.2rem;
-        margin-top: 10px;
-        color: #8A6DA8;
-    }
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
 
-    .artist-section {
-        background-color: #fff;
-        padding: 60px 20px;
-        text-align: center;
-    }
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    });
+</script>
 
-    .artist-section h2 {
-        margin-bottom: 40px;
-    }
-
-    .artist-card {
-        border-radius: 10px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        overflow: hidden;
-        margin-bottom: 30px;
-        background-color: #f7f7f7;
-        transition: transform 0.3s;
-    }
-
-    .artist-card:hover {
-        transform: translateY(-5px);
-    }
-
-    .artist-card img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-    }
-
-    .artist-card .card-body {
-        padding: 20px;
-        text-align: left;
-    }
-
-    .links_bandas {
-        color: #4682B4;
-        font-weight: bold;
-        text-decoration: none;
-    }
-
-    .links_bandas:hover {
-        text-decoration: underline;
-    }
-
-    .testimonials {
-        background-color: #F8F4EE;
-        padding: 60px 20px;
-    }
-
-    .testimonials h2 {
-        text-align: left;
-        color: #4682B4;
-        margin-left: 20px;
-        margin-bottom: 30px;
-    }
-
-    .testimonial-card {
-        background: white;
-        border-radius: 10px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        font-size: 0.95rem;
-    }
-
-    .testimonial-card p {
-        color: #333;
-        margin-bottom: 10px;
-    }
-
-    .testimonial-card strong {
-        color: #555;
-        display: block;
-        text-align: right;
-        margin-top: 10px;
-    }
-
-    .contact-section {
-        background-color: #e2c0a3;
-        color: #4682B4;
-        padding: 60px 20px;
-        text-align: center;
-    }
-
-    .contact-section h2, .contact-section p {
-        color: #4682B4;
-    }
-
-    .btn-learn-more {
-        background-color: #E6ABA9;
-        color: #333;
-        border: none;
-        padding: 10px 25px;
-        font-size: 16px;
-        border-radius: 5px;
-        margin-top: 15px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    .btn-learn-more:hover {
-        background-color: #d19794;
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        scroll-behavior: smooth; 
     }
 
     
-    .concert-card {
-        border-radius: 10px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    .navbar {
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .navbar-brand {
+        font-weight: bold;
+        color: #FF1493 !important;
+        font-size: 1.5rem;
+    }
+    .navbar-nav .nav-link {
+        color: #6A0DAD !important;
+        font-weight: 500;
+        padding: 10px 15px;
+    }
+    .navbar-nav .nav-link:hover {
+        color: #FF1493 !important;
+    }
+
+    
+    section, div[id] {
+        scroll-margin-top: 80px; 
+    }
+
+   
+    .hero-carousel img {
+        height: 85vh;
+        object-fit: cover;
+        filter: brightness(80%);
+    }
+    .carousel-caption {
+        bottom: 20%;
+    }
+    .carousel-caption h1 {
+        font-size: 3.5rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    }
+    .carousel-caption p {
+        font-size: 1.2rem;
+        margin-top: 10px;
+        text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+    }
+
+    
+    .fade-section {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+    .fade-section.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    
+    .artist-card, .concert-card {
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         overflow: hidden;
         margin-bottom: 30px;
-        background-color: #e0f2f7;
-        transition: transform 0.3s;
+        transition: all 0.3s ease;
     }
-
-    .concert-card:hover {
-        transform: translateY(-5px);
+    .artist-card:hover, .concert-card:hover {
+        transform: scale(1.05);
     }
-
-    .concert-card img {
+    .artist-card img, .concert-card img {
         width: 100%;
-        height: 200px;
+        height: 220px;
         object-fit: cover;
     }
-
-    .concert-card .card-body {
+    .artist-card .card-body, .concert-card .card-body {
         padding: 20px;
         text-align: left;
     }
 
-    .concert-card .card-body h5 {
-        font-weight: bold;
-        color: #007bff; 
-        margin-bottom: 10px;
-    }
-
-    .concert-card .card-body p {
-        font-size: 0.95rem;
-        color: #555;
-    }
-
-    .concert-card .card-body .btn-buy-ticket {
-        background-color: #28a745;
+    
+    .footer {
+        background-color: #222;
         color: white;
-        border: none;
-        padding: 8px 15px;
-        border-radius: 5px;
-        text-decoration: none;
-        display: inline-block;
-        margin-top: 10px;
-        transition: background-color 0.3s ease;
+        padding: 30px 20px;
+        text-align: center;
     }
-
-    .concert-card .card-body .btn-buy-ticket:hover {
-        background-color: #218838;
+    .footer a {
+        color: #FF1493;
+        margin: 0 10px;
+        text-decoration: none;
+    }
+    .footer a:hover {
+        text-decoration: underline;
     }
 </style>
 
+{{-- NAVBAR --}}
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">KPOP World</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#grupos">Grupos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#merch">Merch</a></li>
+        <li class="nav-item"><a class="nav-link" href="#noticias">Noticias</a></li>
+        <li class="nav-item"><a class="nav-link" href="#preventa">Membresia oficial de grupos</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-{{-- PORTADA --}}
-<section class="hero-section">
-    <h1>Bienvenidos al Mundo del KPOP</h1>
-    <p>Explora artistas, historias y más sobre tus grupos favoritos</p>
-</section>
+{{-- CARRUSEL HERO --}}
+<div id="heroCarousel" class="carousel slide carousel-fade hero-carousel" data-bs-ride="carousel" data-bs-interval="5000">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{{ asset('img/logos/ot4.jpg') }}" class="d-block w-100" alt="KPOP 1">  
+      <div class="carousel-caption">
+        <h1>Bienvenidos al Mundo del KPOP</h1>
+        <p>Explora artistas, conciertos y más sobre tus grupos favoritos</p>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <img src="{{ asset('img/logos/ot7.jpg') }}" class="d-block w-100" alt="BTS">
+      <div class="carousel-caption">
+        <h1>Artistas Increíbles</h1>
+        <p>Descubre BTS, BLACKPINK, LE SSERAFIM, STRAY KIDS y más</p>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <img src="{{ asset('img/logos/ot5.jpg') }}" class="d-block w-100" alt="KPOP 3">
+      <div class="carousel-caption">
+        <h1>Conciertos y Merch</h1>
+        <p>Todo lo que necesitas para vivir el KPOP al máximo</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
 
 
 {{-- SECCIÓN DE ARTISTAS --}}
-<section class="artist-section">
+<section id="grupos" class="fade-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">🎤 Conoce a los Grupos</h2>
+        <p class="text-center"><section class="artist-section">
     <h2>Conoce a los Grupos</h2>
     <div class="row justify-content-center">
-
         @php
             $grupos = [
-                [
-                    'nombre' => 'Blackpink',
-                    'imagen' => 'img/logos/descarga (1).png',
-                    'descripcion' => 'Grupo femenino de YG Entertainment, debutó en 2016.',
-                    'link' => 'https://www.youtube.com/BlackpinkOfficial'
-                ],
-                [
-                    'nombre' => 'Stray Kids',
-                    'imagen' => 'img/logos/skz.png',
-                    'descripcion' => 'Grupo masculino de JYP Entertainment, debut oficial en 2018.',
-                    'link' => 'https://www.youtube.com/jypentertainment'
-                ],
-                [
-                    'nombre' => 'BTS',
-                    'imagen' => 'img/logos/BANANA_BTS_ARMY_LOGO.png',
-                    'descripcion' => 'Debutó en 2013 con Big Hit. Alcanzaron fama global rápidamente.',
-                    'link' => 'https://www.youtube.com/BANGTANTV'
-                ],
-                [
-                    'nombre' => 'LE SSERAFIM',
-                    'imagen' => 'img/logos/le sserafim.jpg',
-                    'descripcion' => 'Grupo femenino de SOURCE MUSIC y HYBE, debutó en 2022.',
-                    'link' => 'https://www.youtube.com/@LESSERAFIM_official'
-                ],
+                ['nombre' => 'Blackpink','imagen' => 'img/logos/descarga (1).png','descripcion' => 'Grupo femenino de YG Entertainment, debutó en 2016.','link' => 'https://www.youtube.com/BlackpinkOfficial'],
+                ['nombre' => 'Stray Kids','imagen' => 'img/logos/skz.png','descripcion' => 'Grupo masculino de JYP Entertainment, debut oficial en 2018.','link' => 'https://www.youtube.com/jypentertainment'],
+                ['nombre' => 'BTS','imagen' => 'img/logos/BANANA_BTS_ARMY_LOGO.png','descripcion' => 'Debutó en 2013 con Big Hit. Alcanzaron fama global rápidamente.','link' => 'https://www.youtube.com/BANGTANTV'],
+                ['nombre' => 'LE SSERAFIM','imagen' => 'img/logos/le sserafim.jpg','descripcion' => 'Grupo femenino de SOURCE MUSIC y HYBE, debutó en 2022.','link' => 'https://www.youtube.com/@LESSERAFIM_official'],
             ];
         @endphp
 
         @foreach ($grupos as $grupo)
-        <div class="col-md-3 col-sm-6">
-            <div class="artist-card">
-                <img src="{{ asset($grupo['imagen']) }}" alt="{{ $grupo['nombre'] }}">
-                <div class="card-body">
-                    <a href="{{ $grupo['link'] }}" class="links_bandas" target="_blank">{{ $grupo['nombre'] }}</a>
-                    <p>{{ $grupo['descripcion'] }}</p>
+            <div class="col-md-3 col-sm-6">
+                <div class="artist-card">
+                    <img src="{{ asset($grupo['imagen']) }}" alt="{{ $grupo['nombre'] }}">
+                    <div class="card-body">
+                        <a href="{{ $grupo['link'] }}" class="links_bandas" target="_blank">{{ $grupo['nombre'] }}</a>
+                        <p>{{ $grupo['descripcion'] }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
         @endforeach
     </div>
-</section>
-
-
-{{-- SECCIÓN DE CONCIERTOS --}}
-<section class="artist-section">
-    <h2>Próximos Conciertos</h2>
-    <div class="row justify-content-center">
-
-        @php
-            $conciertos = [
-                [
-                    'grupo' => 'Blackpink',
-                    'titulo' => 'BLACKPINK WORLD TOUR DEADLINE',
-                    'imagen' => 'img/logos/bpconcert.jpeg',
-                    'fecha' => '16 de Agosto, 2025',
-                    'lugar' => 'London, GBWembley Stadium',
-                    'link' => 'https://www.ticketmaster.co.uk/blackpink-world-tour-deadline-in-london-london-16-08-2025/event/230062588C620A64'
-                ],
-                [
-                    'grupo' => 'Stray Kids',
-                    'titulo' => 'Stray Kids World Tour dominATE',
-                    'imagen' => 'img/logos/skz.jpg',
-                    'fecha' => '30 de Julio, 2025',
-                    'lugar' => 'Stadio Olimpico di Roma',
-                    'link' => 'https://shop.ticketmaster.it/biglietti/stray-kids-world-tour-3cdominate-rome3e-30-luglio-2025-stadio-olimpico-di-roma-roma-11607.html'
-                ],
-                [
-                    'grupo' => 'BTS',
-                    'titulo' => 'BTS: PERMISSION TO DANCE ON STAGE',
-                    'imagen' => 'img/logos/BTS.jpg',
-                    'fecha' => '10 de Marzo, 2026',
-                    'lugar' => 'Foro Sol, México',
-                    'link' => 'https://www.ticketmaster.ca/bts-tickets/artist/2110227'
-                ],
-                [
-                    'grupo' => 'LE SSERAFIM',
-                    'titulo' => 'LE SSERAFIM - 2025 EASY CRAZY HOT TOUR',
-                    'imagen' => 'img/logos/lesserafim.jpg',
-                    'fecha' => '5 de Febrero, 2026',
-                    'lugar' => 'Seattle, WA, USClimate Pledge Arena',
-                    'link' => 'https://www.ticketmaster.com/le-sserafim-2025-easy-crazy-hot-seattle-washington-09-17-2025/event/0F0062C9F4123FFD?currency-locale=en-ca&_gl=1*1b7sl6e*_gcl_au*MzI1MTg5NzczLjE3NTMzNzY4MDQ._ga*MTg5MTE1NDA3MS4xNzUzMzc2ODAz_ga_C1T806G4DF*czE3NTMzNzY4MDIkbzEkZzEkdDE3NTMzNzc4NzAkajM2JGwwJGgw*_ga_H1KKSGW33X*czE3NTMzNzY4MDIkbzEkZzEkdDE3NTMzNzc4NzAkajM2JGwwJGgw&_ga=2.90727962.1267877708.1753376803-1891154071.1753376803'
-                ],
-            ];
-        @endphp
-
-        @foreach ($conciertos as $concierto)
-        <div class="col-md-3 col-sm-6">
-            <div class="concert-card">
-                <img src="{{ asset($concierto['imagen']) }}" alt="{{ $concierto['grupo'] }} Concierto">
-                <div class="card-body">
-                    <h5>{{ $concierto['titulo'] }}</h5>
-                    <p>Grupo: <strong>{{ $concierto['grupo'] }}</strong></p>
-                    <p>Fecha: <strong>{{ $concierto['fecha'] }}</strong></p>
-                    <p>Lugar: <strong>{{ $concierto['lugar'] }}</strong></p>
-                    <a href="{{ $concierto['link'] }}" class="btn-buy-ticket" target="_blank">Comprar Boletos</a>
-                </div>
-            </div>
-        </div>
-        @endforeach
+</section></p>
     </div>
 </section>
-
 
 {{-- SECCIÓN DE MERCANCÍA --}}
-<div class="artist-section">
+<div id="merch" class="fade-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">🛒 Mercancía oficial</h2>
+        <p class="text-center"><div class="artist-section">
     <h2>Mercancía oficial de los grupos</h2>
+    <p>Descubre noticias, eventos y más sobre tus artistas KPOP favoritos.</p>
     <div class="row justify-content-center">
 
         @php
@@ -352,10 +270,15 @@
         @endforeach
     </div>
 </div>
-
+</p>
+    </div>
+</div>
 
 {{-- NOTICIAS --}}
-<div class="contact-section">
+<div id="noticias" class="fade-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">📰 Noticias</h2>
+        <p class="text-center"><div class="contact-section">
     <h2>¿Quieres Saber Más?</h2>
     <p>Descubre noticias, eventos y más sobre tus artistas KPOP favoritos.</p>
     <div class="artist-section">
@@ -403,51 +326,71 @@
         @endforeach
     </div>
 </div>
-
-
-
-{{-- TESTIMONIOS --}}
-<div class="testimonials">
-    <h2 class="mb-1">Testimonios de Fans</h2>
-    <div class="row justify-content-center">
-
-        <div class="col-md-3 col-sm-6">
-            <div class="testimonial-card">
-                <p>"Blackpink cambió mi vida, son únicas."</p>
-                <strong>- Ari</strong>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="testimonial-card">
-                <p>"BTS me inspira a seguir mis sueños. ¡Son increíbles!"</p>
-                <strong>- Ari</strong>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="testimonial-card">
-                <p>"Stray Kids me inspira a ser yo mismo sin miedo. Su música es cruda y honesta, y me hace sentir que no estoy solo en mis luchas. ¡Son mi fuerza!"</p>
-                <strong>- Ari</strong>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="testimonial-card">
-                <p>"LE SSERAFIM me ha cautivado con su confianza y mensajes de empoderamiento. Cada canción y cada actuación irradian una fuerza y determinación que realmente me inspiran a perseguir mis propias metas sin miedo."</p>
-                <strong>- Ari</strong>
-            </div>
-        </div>
+</p>
     </div>
 </div>
 
-{{-- CONTACTO --}}
-<div class="contact-section">
-    <h2>¿Quieres Saber Más?</h2>
-    <p>Descubre noticias, eventos y más sobre tus artistas KPOP favoritos.</p>
-    <button class="btn-learn-more">Aprende más</button>
+{{-- MEMBRESIAS DE LOS GRUPOS --}}
+<div id="preventa" class="fade-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">🎟 Membresias de Grupos</h2>
+        <p class="text-center">Información sobre membresias oficiales de los grupos.</p>
+    <div class="contact-section">
+    <div class="artist-section">
+    <div class="row justify-content-center">
+
+        @php
+            $grupos_merch = [
+                [
+                    'nombre' => 'Blackpink',
+                    'imagen' => 'img/logos/BLACKPINK-1.jpg',
+                    'descripcion' => 'Membresía oficial de BlackPink.',
+                    'link' => 'https://shop.weverse.io/es/shop/MXN/artists/32?categoryId=853'
+                ],
+                [
+                    'nombre' => 'Stray Kids',
+                    'imagen' => 'img/logos/SKZ-1.jpg',
+                    'descripcion' => 'Membresía oficial de StrayKids.',
+                    'link' => 'https://www.yes24.com/product/search?domain=BOOK&query=%25EC%258A%25A4%25ED%258A%25B8%25EB%25A0%2588%25EC%259D%25B4%25ED%2582%25A4%25EC%25A6%2588%2520%25EB%25A9%25A4%25EB%25B2%2584%25EC%258B%25AD'
+                ],
+                [
+                    'nombre' => 'BTS',
+                    'imagen' => 'img/logos/BTS-1.jpg',
+                    'descripcion' => 'Membresía oficial de BTS.',
+                    'link' => 'https://shop.weverse.io/es/shop/MXN/artists/2?categoryId=18'
+                ],
+                [
+                    'nombre' => 'LE SSERAFIM',
+                    'imagen' => 'img/logos/leseerafim-1.jpg',
+                    'descripcion' => 'Membresía oficial de Le sserafim.',
+                    'link' => 'https://shop.weverse.io/es/shop/MXN/artists/50?categoryId=1759'
+                ],
+            ];
+        @endphp
+
+        @foreach ($grupos_merch as $grupo)
+        <div class="col-md-3 col-sm-6">
+            <div class="artist-card">
+                <img src="{{ asset($grupo['imagen']) }}" alt="{{ $grupo['nombre'] }}">
+                <div class="card-body">
+                    <a href="{{ $grupo['link'] }}" class="links_bandas" target="_blank">{{ $grupo['nombre'] }}</a>
+                    <p>{{ $grupo['descripcion'] }}</p>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
 </div>
-</h4>
-</body>
-</html>
 
 
+{{-- FOOTER --}}
+<div class="footer">
+    <p>&copy; 2025 KPOP World. Todos los derechos reservados.</p>
+    <div>
+        <a href="https://www.youtube.com" target="_blank">YouTube</a> |
+        <a href="https://www.instagram.com" target="_blank">Instagram</a> |
+        <a href="https://weverse.io" target="_blank">Weverse</a>
+    </div>
+</div>
 
 @endsection
