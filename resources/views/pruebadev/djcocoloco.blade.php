@@ -1,3 +1,10 @@
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+@stack('scripts')
+</body>
+@extends('layouts.app')
+@push('scripts')
+@endpush
+
 @extends('layouts.app')
 @push('scripts')
 @endpush
@@ -5,6 +12,7 @@
     Página KPOP
 @endsection
 @section('content')
+<<<<<<< HEAD
 <style>
     body {
         font-family: 'Poppins', sans-serif;
@@ -49,6 +57,91 @@
     }
 
     /* CARDS */
+=======
+
+<script>
+    
+    document.addEventListener("DOMContentLoaded", () => {
+        const sections = document.querySelectorAll(".fade-section");
+
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    });
+</script>
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        scroll-behavior: smooth; 
+    }
+
+    
+    .navbar {
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .navbar-brand {
+        font-weight: bold;
+        color: #FF1493 !important;
+        font-size: 1.5rem;
+    }
+    .navbar-nav .nav-link {
+        color: #6A0DAD !important;
+        font-weight: 500;
+        padding: 10px 15px;
+    }
+    .navbar-nav .nav-link:hover {
+        color: #FF1493 !important;
+    }
+
+    
+    section, div[id] {
+        scroll-margin-top: 80px; 
+    }
+
+   
+    .hero-carousel img {
+        height: 85vh;
+        object-fit: cover;
+        filter: brightness(80%);
+    }
+    .carousel-caption {
+        bottom: 20%;
+    }
+    .carousel-caption h1 {
+        font-size: 3.5rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    }
+    .carousel-caption p {
+        font-size: 1.2rem;
+        margin-top: 10px;
+        text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+    }
+
+    
+    .fade-section {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+    .fade-section.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    
+>>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
     .artist-card, .concert-card {
         border-radius: 15px;
         box-shadow: 0 10px 25px rgba(0,0,0,0.1);
@@ -68,6 +161,7 @@
         padding: 20px;
         text-align: left;
     }
+<<<<<<< HEAD
     .links_bandas {
         color: #FF1493;
         font-weight: bold;
@@ -105,6 +199,16 @@
         padding: 30px 20px;
         text-align: center;
     }
+=======
+
+    
+    .footer {
+        background-color: #222;
+        color: white;
+        padding: 30px 20px;
+        text-align: center;
+    }
+>>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
     .footer a {
         color: #FF1493;
         margin: 0 10px;
@@ -127,37 +231,64 @@
         <li class="nav-item"><a class="nav-link" href="#grupos">Grupos</a></li>
         <li class="nav-item"><a class="nav-link" href="#merch">Merch</a></li>
         <li class="nav-item"><a class="nav-link" href="#noticias">Noticias</a></li>
+<<<<<<< HEAD
         <li class="nav-item"><a class="nav-link" href="#testimonios">Fans</a></li>
+=======
+        <li class="nav-item"><a class="nav-link" href="#preventa">Membresia oficial de grupos</a></li>
+>>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
       </ul>
     </div>
   </div>
 </nav>
 
 {{-- CARRUSEL HERO --}}
+<<<<<<< HEAD
 <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
       <img src="{{ asset('img/logos/ot4.jpg.') }}" class="d-block w-100" alt="KPOP 1">
+=======
+<div id="heroCarousel" class="carousel slide carousel-fade hero-carousel" data-bs-ride="carousel" data-bs-interval="5000">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{{ asset('img/logos/ot4.jpg') }}" class="d-block w-100" alt="KPOP 1">  
+>>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
       <div class="carousel-caption">
         <h1>Bienvenidos al Mundo del KPOP</h1>
         <p>Explora artistas, conciertos y más sobre tus grupos favoritos</p>
       </div>
     </div>
+<<<<<<< HEAD
     <div class="carousel-item">
       <img src="{{ asset('img/logos/ot4.jpg.') }}"class="d-block w-100" alt="KPOP 2">
+=======
+
+    <div class="carousel-item">
+      <img src="{{ asset('img/logos/ot7.jpg') }}" class="d-block w-100" alt="BTS">
+>>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
       <div class="carousel-caption">
         <h1>Artistas Increíbles</h1>
         <p>Descubre BTS, BLACKPINK, LE SSERAFIM, STRAY KIDS y más</p>
       </div>
     </div>
+<<<<<<< HEAD
     <div class="carousel-item">
       <img src="https://i.imgur.com/ajO1ClC.jpg" class="d-block w-100" alt="KPOP 3">
+=======
+
+    <div class="carousel-item">
+      <img src="{{ asset('img/logos/ot5.jpg') }}" class="d-block w-100" alt="KPOP 3">
+>>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
       <div class="carousel-caption">
         <h1>Conciertos y Merch</h1>
         <p>Todo lo que necesitas para vivir el KPOP al máximo</p>
       </div>
     </div>
   </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
   <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
     <span class="carousel-control-prev-icon"></span>
   </button>
@@ -165,9 +296,16 @@
     <span class="carousel-control-next-icon"></span>
   </button>
 </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
 
 {{-- SECCIÓN DE ARTISTAS --}}
-<section class="artist-section">
+<section id="grupos" class="fade-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">🎤 Conoce a los Grupos</h2>
+        <p class="text-center"><section class="artist-section">
     <h2>Conoce a los Grupos</h2>
     <div class="row justify-content-center">
         @php
@@ -191,11 +329,20 @@
             </div>
         @endforeach
     </div>
+<<<<<<< HEAD
+=======
+</section></p>
+    </div>
+>>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
 </section>
 
 {{-- SECCIÓN DE MERCANCÍA --}}
-<div class="artist-section">
+<div id="merch" class="fade-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">🛒 Mercancía oficial</h2>
+        <p class="text-center"><div class="artist-section">
     <h2>Mercancía oficial de los grupos</h2>
+    <p>Descubre noticias, eventos y más sobre tus artistas KPOP favoritos.</p>
     <div class="row justify-content-center">
 
         @php
@@ -240,10 +387,15 @@
         @endforeach
     </div>
 </div>
-
+</p>
+    </div>
+</div>
 
 {{-- NOTICIAS --}}
-<div class="contact-section">
+<div id="noticias" class="fade-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">📰 Noticias</h2>
+        <p class="text-center"><div class="contact-section">
     <h2>¿Quieres Saber Más?</h2>
     <p>Descubre noticias, eventos y más sobre tus artistas KPOP favoritos.</p>
     <div class="artist-section">
@@ -291,41 +443,11 @@
         @endforeach
     </div>
 </div>
-
-
-
-{{-- TESTIMONIOS --}}
-<div class="testimonials">
-    <h2 class="mb-1">Testimonios de Fans</h2>
-    <div class="row justify-content-center">
-
-        <div class="col-md-3 col-sm-6">
-            <div class="testimonial-card">
-                <p>"Blackpink cambió mi vida, son únicas."</p>
-                <strong>- Ari</strong>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="testimonial-card">
-                <p>"BTS me inspira a seguir mis sueños. ¡Son increíbles!"</p>
-                <strong>- Ari</strong>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="testimonial-card">
-                <p>"Stray Kids me inspira a ser yo mismo sin miedo. Su música es cruda y honesta, y me hace sentir que no estoy solo en mis luchas. ¡Son mi fuerza!"</p>
-                <strong>- Ari</strong>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="testimonial-card">
-                <p>"LE SSERAFIM me ha cautivado con su confianza y mensajes de empoderamiento. Cada canción y cada actuación irradian una fuerza y determinación que realmente me inspiran a perseguir mis propias metas sin miedo."</p>
-                <strong>- Ari</strong>
-            </div>
-        </div>
+</p>
     </div>
 </div>
 
+<<<<<<< HEAD
 {{-- SECCIÓN DE ARTISTAS DESTACADOS --}}
 <section id="grupos" class="py-5">
   <div class="container text-center">
@@ -381,6 +503,59 @@
     </div>
   </div>
 </section>
+=======
+{{-- MEMBRESIAS DE LOS GRUPOS --}}
+<div id="preventa" class="fade-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">🎟 Membresias de Grupos</h2>
+        <p class="text-center">Información sobre membresias oficiales de los grupos.</p>
+    <div class="contact-section">
+    <div class="artist-section">
+    <div class="row justify-content-center">
+
+        @php
+            $grupos_merch = [
+                [
+                    'nombre' => 'Blackpink',
+                    'imagen' => 'img/logos/BLACKPINK-1.jpg',
+                    'descripcion' => 'Membresía oficial de BlackPink.',
+                    'link' => 'https://shop.weverse.io/es/shop/MXN/artists/32?categoryId=853'
+                ],
+                [
+                    'nombre' => 'Stray Kids',
+                    'imagen' => 'img/logos/SKZ-1.jpg',
+                    'descripcion' => 'Membresía oficial de StrayKids.',
+                    'link' => 'https://www.yes24.com/product/search?domain=BOOK&query=%25EC%258A%25A4%25ED%258A%25B8%25EB%25A0%2588%25EC%259D%25B4%25ED%2582%25A4%25EC%25A6%2588%2520%25EB%25A9%25A4%25EB%25B2%2584%25EC%258B%25AD'
+                ],
+                [
+                    'nombre' => 'BTS',
+                    'imagen' => 'img/logos/BTS-1.jpg',
+                    'descripcion' => 'Membresía oficial de BTS.',
+                    'link' => 'https://shop.weverse.io/es/shop/MXN/artists/2?categoryId=18'
+                ],
+                [
+                    'nombre' => 'LE SSERAFIM',
+                    'imagen' => 'img/logos/leseerafim-1.jpg',
+                    'descripcion' => 'Membresía oficial de Le sserafim.',
+                    'link' => 'https://shop.weverse.io/es/shop/MXN/artists/50?categoryId=1759'
+                ],
+            ];
+        @endphp
+
+        @foreach ($grupos_merch as $grupo)
+        <div class="col-md-3 col-sm-6">
+            <div class="artist-card">
+                <img src="{{ asset($grupo['imagen']) }}" alt="{{ $grupo['nombre'] }}">
+                <div class="card-body">
+                    <a href="{{ $grupo['link'] }}" class="links_bandas" target="_blank">{{ $grupo['nombre'] }}</a>
+                    <p>{{ $grupo['descripcion'] }}</p>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
+>>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
 
 
 {{-- FOOTER --}}
