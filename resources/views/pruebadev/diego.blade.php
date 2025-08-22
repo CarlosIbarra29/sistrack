@@ -1,166 +1,173 @@
 @extends('layouts.app')
-
-@push('styles')
+@push('scripts')
+@endpush
+@section('title')
+    Página KPOP
+@endsection
+@section('content')
 <style>
-    /* Video de fondo */
-    #video {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: auto;
-        z-index: -10;
-        object-fit: cover;
+    body {
+        font-family: 'Poppins', sans-serif;
     }
 
+    /* NAVBAR */
+    .navbar {
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .navbar-brand {
+        font-weight: bold;
+        color: #FF1493 !important;
+        font-size: 1.5rem;
+    }
+    .navbar-nav .nav-link {
+        color: #6A0DAD !important;
+        font-weight: 500;
+    }
+    .navbar-nav .nav-link:hover {
+        color: #FF1493 !important;
+    }
+
+    /* HERO */
     .hero-section {
-        background: linear-gradient(to bottom right, #FFFDD0, #FADADD);
+        background: linear-gradient(to right, #FFFDD0, #FADADD);
         color: #6A0DAD;
         text-align: center;
-        padding: 100px 20px;
-        position: relative;
+        padding: 120px 20px;
     }
-
-    .section-title {
-        text-align: center;
-        margin-bottom: 50px;
-        color: #6A0DAD;
+    .hero-section h1 {
+        font-size: 4rem;
         font-weight: bold;
     }
-
-    .card {
-        border: none;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        border-radius: 15px;
-        overflow: hidden;
+    .hero-section p {
+        font-size: 1.2rem;
+        margin-top: 10px;
     }
 
-    .card img {
+    /* CARDS */
+    .artist-card, .concert-card {
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        overflow: hidden;
+        margin-bottom: 30px;
+        transition: all 0.3s ease;
+    }
+    .artist-card:hover, .concert-card:hover {
+        transform: scale(1.05);
+    }
+    .artist-card img, .concert-card img {
         width: 100%;
-        height: auto;
+        height: 220px;
+        object-fit: cover;
+    }
+    .artist-card .card-body, .concert-card .card-body {
+        padding: 20px;
+        text-align: left;
+    }
+    .links_bandas {
+        color: #FF1493;
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 1.2rem;
+    }
+    .links_bandas:hover {
+        text-decoration: underline;
+    }
+
+    /* TESTIMONIALS */
+    .testimonials {
+        background-color: #F8F4EE;
+        padding: 60px 20px;
+    }
+    .testimonial-card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        font-size: 0.95rem;
+        text-align: center;
+    }
+    .testimonial-card strong {
+        color: #FF1493;
+        display: block;
+        margin-top: 10px;
+    }
+
+    /* FOOTER */
+    .footer {
+        background-color: #222;
+        color: white;
+        padding: 30px 20px;
+        text-align: center;
+    }
+    .footer a {
+        color: #FF1493;
+        margin: 0 10px;
+        text-decoration: none;
+    }
+    .footer a:hover {
+        text-decoration: underline;
     }
 </style>
-@endpush
 
-@section('title', 'Página KPOP')
-
-@section('content')
-
-    <!-- Sección Hero con video -->
-    <div class="hero-section">
-        <video id="video" autoplay loop muted playsinline>
-            <source src="{{ asset('videoplayback.mp4') }}" type="video/mp4">
-            Tu navegador no soporta videos en HTML5.
-        </video>
-        <h1>Bienvenido al Mundo KPOP</h1>
-        <p>Explora artistas, conciertos, mercancía y más</p>
+{{-- NAVBAR --}}
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">KPOP World</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#grupos">Grupos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#merch">Merch</a></li>
+        <li class="nav-item"><a class="nav-link" href="#noticias">Noticias</a></li>
+        <li class="nav-item"><a class="nav-link" href="#testimonios">Fans</a></li>
+      </ul>
     </div>
+  </div>
+</nav>
 
-    <!-- Artistas -->
-    <div class="container py-5">
-        <h2 class="section-title">Artistas</h2>
-        <div class="row g-4">
-           @php
+{{-- PORTADA --}}
+<section class="hero-section">
+    <h1>Bienvenidos al Mundo del KPOP</h1>
+    <p>Explora artistas, historias y más sobre tus grupos favoritos</p>
+</section>
+
+{{-- SECCIÓN DE ARTISTAS --}}
+<section class="artist-section">
+    <h2>Conoce a los Grupos</h2>
+    <div class="row justify-content-center">
+        @php
             $grupos = [
-                [
-                    'nombre' => 'Blackpink',
-                    'imagen' => 'img/logos/descarga (1).png',
-                    'descripcion' => 'Grupo femenino de YG Entertainment, debutó en 2016.',
-                    'link' => 'https://www.youtube.com/BlackpinkOfficial'
-                ],
-                [
-                    'nombre' => 'Stray Kids',
-                    'imagen' => 'img/logos/skz.png',
-                    'descripcion' => 'Grupo masculino de JYP Entertainment, debut oficial en 2018.',
-                    'link' => 'https://www.youtube.com/jypentertainment'
-                ],
-                [
-                    'nombre' => 'BTS',
-                    'imagen' => 'img/logos/BANANA_BTS_ARMY_LOGO.png',
-                    'descripcion' => 'Debutó en 2013 con Big Hit. Alcanzaron fama global rápidamente.',
-                    'link' => 'https://www.youtube.com/BANGTANTV'
-                ],
-                [
-                    'nombre' => 'LE SSERAFIM',
-                    'imagen' => 'img/logos/le sserafim.jpg',
-                    'descripcion' => 'Grupo femenino de SOURCE MUSIC y HYBE, debutó en 2022.',
-                    'link' => 'https://www.youtube.com/@LESSERAFIM_official'
-                ],
-            ];
-        @endphp
-            
-                <div class="col-lg-3 col-md-6">
-                    <div class="card">
-                        <a href="{{ $artista['link'] }}" target="_blank">
-                            <img src="{{ asset($artista['imagen']) }}" alt="{{ $artista['nombre'] }}">
-                        </a>
-                        <div class="p-3 text-center">
-                            <h5>{{ $artista['nombre'] }}</h5>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
-
-    <!-- Conciertos -->
-    <div class="container py-5">
-        <h2 class="section-title">Próximos Conciertos</h2>
-        <div class="row g-4">
-             @php
-            $conciertos = [
-                [
-                    'grupo' => 'Blackpink',
-                    'titulo' => 'BLACKPINK WORLD TOUR DEADLINE',
-                    'imagen' => 'img/logos/bpconcert.jpeg',
-                    'fecha' => '16 de Agosto, 2025',
-                    'lugar' => 'London, GBWembley Stadium',
-                    'link' => 'https://www.ticketmaster.co.uk/blackpink-world-tour-deadline-in-london-london-16-08-2025/event/230062588C620A64'
-                ],
-                [
-
-                    'grupo' => 'Stray Kids',                    
-                    'titulo' => 'Stray Kids World Tour dominATE',
-                    'imagen' => 'img/logos/skz.jpg',
-                    'fecha' => '30 de Julio, 2025',
-                    'lugar' => 'Stadio Olimpico di Roma',
-                    'link' => 'https://shop.ticketmaster.it/biglietti/stray-kids-world-tour-3cdominate-rome3e-30-luglio-2025-stadio-olimpico-di-roma-roma-11607.html'
-                ],
-                [
-                    'grupo' => 'BTS',
-                    'titulo' => 'BTS: PERMISSION TO DANCE ON STAGE',
-                    'imagen' => 'img/logos/BTS.jpg',
-                    'fecha' => '10 de Marzo, 2026',
-                    'lugar' => 'Foro Sol, México',
-                    'link' => 'https://www.ticketmaster.ca/bts-tickets/artist/2110227'
-                ],
-                [
-                    'grupo' => 'LE SSERAFIM',
-                    'titulo' => 'LE SSERAFIM - 2025 EASY CRAZY HOT TOUR',
-                    'imagen' => 'img/logos/lesserafim.jpg',
-                    'fecha' => '5 de Febrero, 2026',
-                    'lugar' => 'Seattle, WA, USClimate Pledge Arena',
-                    'link' => 'https://www.ticketmaster.com/le-sserafim-2025-easy-crazy-hot-seattle-washington-09-17-2025/event/0F0062C9F4123FFD?currency-locale=en-ca&_gl=1*1b7sl6e*_gcl_au*MzI1MTg5NzczLjE3NTMzNzY4MDQ.*_ga*MTg5MTE1NDA3MS4xNzUzMzc2ODAz*_ga_C1T806G4DF*czE3NTMzNzY4MDIkbzEkZzEkdDE3NTMzNzc4NzAkajM2JGwwJGgw*_ga_H1KKSGW33X*czE3NTMzNzY4MDIkbzEkZzEkdDE3NTMzNzc4NzAkajM2JGwwJGgw&_ga=2.90727962.1267877708.1753376803-1891154071.1753376803'
-                ],
+                ['nombre' => 'Blackpink','imagen' => 'img/logos/descarga (1).png','descripcion' => 'Grupo femenino de YG Entertainment, debutó en 2016.','link' => 'https://www.youtube.com/BlackpinkOfficial'],
+                ['nombre' => 'Stray Kids','imagen' => 'img/logos/skz.png','descripcion' => 'Grupo masculino de JYP Entertainment, debut oficial en 2018.','link' => 'https://www.youtube.com/jypentertainment'],
+                ['nombre' => 'BTS','imagen' => 'img/logos/BANANA_BTS_ARMY_LOGO.png','descripcion' => 'Debutó en 2013 con Big Hit. Alcanzaron fama global rápidamente.','link' => 'https://www.youtube.com/BANGTANTV'],
+                ['nombre' => 'LE SSERAFIM','imagen' => 'img/logos/le sserafim.jpg','descripcion' => 'Grupo femenino de SOURCE MUSIC y HYBE, debutó en 2022.','link' => 'https://www.youtube.com/@LESSERAFIM_official'],
             ];
         @endphp
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="card p-3 text-center">
-                        <h5>{{ $c['grupo'] }}</h5>
-                        <p>{{ $c['fecha'] }}</p>
-                        <p>{{ $c['lugar'] }}</p>
+        @foreach ($grupos as $grupo)
+            <div class="col-md-3 col-sm-6">
+                <div class="artist-card">
+                    <img src="{{ asset($grupo['imagen']) }}" alt="{{ $grupo['nombre'] }}">
+                    <div class="card-body">
+                        <a href="{{ $grupo['link'] }}" class="links_bandas" target="_blank">{{ $grupo['nombre'] }}</a>
+                        <p>{{ $grupo['descripcion'] }}</p>
                     </div>
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
     </div>
+</section>
 
-    <!-- Mercancía -->
-    <div class="container py-5">
-        <h2 class="section-title">Mercancía Oficial</h2>
-        <div class="row g-4">
-            @php
+{{-- SECCIÓN DE MERCANCÍA --}}
+<div class="artist-section">
+    <h2>Mercancía oficial de los grupos</h2>
+    <div class="row justify-content-center">
+
+        @php
             $grupos_merch = [
                 [
                     'nombre' => 'Blackpink',
@@ -188,29 +195,34 @@
                 ],
             ];
         @endphp
-                <div class="col-lg-3 col-md-6">
-                    <div class="card">
-                        <a href="{{ $gm['link'] }}" target="_blank">
-                            <img src="{{ asset($gm['imagen']) }}" alt="{{ $gm['nombre'] }}">
-                        </a>
-                        <div class="p-3 text-center">
-                            <h5>{{ $gm['nombre'] }}</h5>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
 
-    <!-- Noticias -->
-    <div class="container py-5">
-        <h2 class="section-title">Últimas Noticias</h2>
-        <div class="row g-4">
-            @php
+        @foreach ($grupos_merch as $grupo)
+        <div class="col-md-3 col-sm-6">
+            <div class="artist-card">
+                <img src="{{ asset($grupo['imagen']) }}" alt="{{ $grupo['nombre'] }}">
+                <div class="card-body">
+                    <a href="{{ $grupo['link'] }}" class="links_bandas" target="_blank">{{ $grupo['nombre'] }}</a>
+                    <p>{{ $grupo['descripcion'] }}</p>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
+
+
+{{-- NOTICIAS --}}
+<div class="contact-section">
+    <h2>¿Quieres Saber Más?</h2>
+    <p>Descubre noticias, eventos y más sobre tus artistas KPOP favoritos.</p>
+    <div class="artist-section">
+    <div class="row justify-content-center">
+
+        @php
             $grupos_merch = [
                 [
                     'nombre' => 'Blackpink',
-                    'imagen' => 'img/logos/ot4.jpg',
+                    'imagen' => 'img/logos/ot4.jpg.',
                     'descripcion' => 'Descubre noticias de BlackPink.',
                     'link' => 'https://www.vogue.mx/articulo/blackpink-biografia'
                 ],
@@ -235,17 +247,63 @@
             ];
         @endphp
 
-            
-                <div class="col-lg-3 col-md-6">
-                    <div class="card">
-                        <img src="{{ asset($gn['imagen']) }}" alt="{{ $gn['titulo'] }}">
-                        <div class="p-3 text-center">
-                            <p>{{ $gn['titulo'] }}</p>
-                        </div>
-                    </div>
+        @foreach ($grupos_merch as $grupo)
+        <div class="col-md-3 col-sm-6">
+            <div class="artist-card">
+                <img src="{{ asset($grupo['imagen']) }}" alt="{{ $grupo['nombre'] }}">
+                <div class="card-body">
+                    <a href="{{ $grupo['link'] }}" class="links_bandas" target="_blank">{{ $grupo['nombre'] }}</a>
+                    <p>{{ $grupo['descripcion'] }}</p>
                 </div>
-            @endforeach
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
+
+
+
+{{-- TESTIMONIOS --}}
+<div class="testimonials">
+    <h2 class="mb-1">Testimonios de Fans</h2>
+    <div class="row justify-content-center">
+
+        <div class="col-md-3 col-sm-6">
+            <div class="testimonial-card">
+                <p>"Blackpink cambió mi vida, son únicas."</p>
+                <strong>- Ari</strong>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="testimonial-card">
+                <p>"BTS me inspira a seguir mis sueños. ¡Son increíbles!"</p>
+                <strong>- Ari</strong>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="testimonial-card">
+                <p>"Stray Kids me inspira a ser yo mismo sin miedo. Su música es cruda y honesta, y me hace sentir que no estoy solo en mis luchas. ¡Son mi fuerza!"</p>
+                <strong>- Ari</strong>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="testimonial-card">
+                <p>"LE SSERAFIM me ha cautivado con su confianza y mensajes de empoderamiento. Cada canción y cada actuación irradian una fuerza y determinación que realmente me inspiran a perseguir mis propias metas sin miedo."</p>
+                <strong>- Ari</strong>
+            </div>
         </div>
     </div>
+</div>
+
+
+{{-- FOOTER --}}
+<div class="footer">
+    <p>&copy; 2025 KPOP World. Todos los derechos reservados.</p>
+    <div>
+        <a href="https://www.youtube.com" target="_blank">YouTube</a> |
+        <a href="https://www.instagram.com" target="_blank">Instagram</a> |
+        <a href="https://weverse.io" target="_blank">Weverse</a>
+    </div>
+</div>
 
 @endsection
