@@ -1,10 +1,4 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
-@stack('scripts')
-</body>
-@extends('layouts.app')
-@push('scripts')
-@endpush
-
 @extends('layouts.app')
 @push('scripts')
 @endpush
@@ -36,10 +30,10 @@
 <style>
     body {
         font-family: 'Poppins', sans-serif;
-        scroll-behavior: smooth; 
+        scroll-behavior: smooth; /* Scroll suave */
     }
 
-    
+    /* NAVBAR */
     .navbar {
         background-color: #fff;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -58,12 +52,12 @@
         color: #FF1493 !important;
     }
 
-    
+    /* Fix para que la navbar no tape secciones */
     section, div[id] {
         scroll-margin-top: 80px; 
     }
 
-   
+    /* HERO (con carrusel) */
     .hero-carousel img {
         height: 85vh;
         object-fit: cover;
@@ -83,7 +77,7 @@
         text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
     }
 
-    
+    /* SECCIONES CON FADE-IN */
     .fade-section {
         opacity: 0;
         transform: translateY(40px);
@@ -94,7 +88,7 @@
         transform: translateY(0);
     }
 
-    
+    /* CARDS */
     .artist-card, .concert-card {
         border-radius: 15px;
         box-shadow: 0 10px 25px rgba(0,0,0,0.1);
@@ -115,7 +109,7 @@
         text-align: left;
     }
 
-    
+    /* FOOTER */
     .footer {
         background-color: #222;
         color: white;
@@ -160,15 +154,13 @@
         <p>Explora artistas, conciertos y más sobre tus grupos favoritos</p>
       </div>
     </div>
-
     <div class="carousel-item">
-      <img src="{{ asset('img/logos/ot7.jpg') }}" class="d-block w-100" alt="BTS">
+      <img src="{{ asset('img/logos/ot7.jpg') }}" alt="BTS">
       <div class="carousel-caption">
         <h1>Artistas Increíbles</h1>
         <p>Descubre BTS, BLACKPINK, LE SSERAFIM, STRAY KIDS y más</p>
       </div>
     </div>
-
     <div class="carousel-item">
       <img src="{{ asset('img/logos/ot5.jpg') }}" class="d-block w-100" alt="KPOP 3">
       <div class="carousel-caption">
@@ -177,7 +169,6 @@
       </div>
     </div>
   </div>
-
   <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
     <span class="carousel-control-prev-icon"></span>
   </button>
@@ -185,7 +176,6 @@
     <span class="carousel-control-next-icon"></span>
   </button>
 </div>
-
 
 {{-- SECCIÓN DE ARTISTAS --}}
 <section id="grupos" class="fade-section py-5">
@@ -218,6 +208,61 @@
 </section></p>
     </div>
 </section>
+
+{{-- NOTICIAS --}}
+<div id="noticias" class="fade-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">🎶 Conciertos.</h2>
+        <p class="text-center"><div class="contact-section">
+    <p>Aqui podras encontrar los proximos conciertos.</p>
+    <div class="artist-section">
+    <div class="row justify-content-center">
+
+        @php
+            $grupos_merch = [
+                [
+                    'nombre' => 'Blackpink',
+                    'imagen' => 'img/logos/bpconcert.jpeg',
+                    'descripcion' => 'Descubre el proximo concierto de BlackPink.',
+                    'link' => 'https://www.ticketmaster.ca/blackpink-tickets/artist/2590072'
+                ],
+                [
+                    'nombre' => 'Stray Kids',
+                    'imagen' => 'img/logos/skz.jpg',
+                    'descripcion' => 'Descubre el proximo concierto de StrayKids.',
+                    'link' => 'https://www.ticketmaster.ca/stray-kids-tickets/artist/2593788'
+                ],
+                [
+                    'nombre' => 'BTS',
+                    'imagen' => 'img/logos/BTS.jpg',
+                    'descripcion' => 'Descubre el proximo concierto de BTS.',
+                    'link' => 'https://www.ticketmaster.ca/bts-tickets/artist/2110227'
+                ],
+                [
+                    'nombre' => 'LE SSERAFIM',
+                    'imagen' => 'img/logos/lesserafim.jpg',
+                    'descripcion' => 'Descubre el proximo concierto de Le sserafim.',
+                    'link' => 'https://www.ticketmaster.ca/le-sserafim-tickets/artist/3068703'
+                ],
+            ];
+        @endphp
+
+        @foreach ($grupos_merch as $grupo)
+        <div class="col-md-3 col-sm-6">
+            <div class="artist-card">
+                <img src="{{ asset($grupo['imagen']) }}" alt="{{ $grupo['nombre'] }}">
+                <div class="card-body">
+                    <a href="{{ $grupo['link'] }}" class="links_bandas" target="_blank">{{ $grupo['nombre'] }}</a>
+                    <p>{{ $grupo['descripcion'] }}</p>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
+</p>
+    </div>
+</div>
 
 {{-- SECCIÓN DE MERCANCÍA --}}
 <div id="merch" class="fade-section py-5">
