@@ -142,7 +142,8 @@
                                   <th>Origen</th>
                                   <th>Destino</th>
                                   <th>Cliente</th>
-                                  <th>Caseta</th>
+                                   <th>Tipo de Viaje</th>
+                                   <th>Caseta</th>
                                   <th>#KMS</th>
                                   <th>PPKM SIS</th>
                                   <th>PPKM CUST</th>
@@ -157,6 +158,13 @@
                                       <td>{{ $unid->origen }}</td>
                                       <td>{{ $unid->destino }}</td>
                                       <td>{{ $unid->cliente->nombre_cliente }}</td>
+                                      <td>
+                                        @if($unid->tipo_viaje==0)
+                                        Local
+                                        @else
+                                        Foraneo
+                                        @endif
+                                      </td>
                                       <td>{{ $unid->caseta }}</td>
                                       <td>{{ $unid->kms }}</td>
                                       <td>{{ $unid->ppkm_sis }}</td>
@@ -191,6 +199,7 @@
                                   <th>Origen</th>
                                   <th>Destino</th>
                                   <th>Cliente</th>
+                                  <th>Tipo de Viaje</th>
                                   <th>Caseta</th>
                                   <th>#KMS</th>
                                   <th>PPKM SIS</th>
