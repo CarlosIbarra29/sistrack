@@ -12,52 +12,6 @@
     Página KPOP
 @endsection
 @section('content')
-<<<<<<< HEAD
-<style>
-    body {
-        font-family: 'Poppins', sans-serif;
-    }
-
-    /* NAVBAR */
-    .navbar {
-        background-color: #fff;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    .navbar-brand {
-        font-weight: bold;
-        color: #FF1493 !important;
-        font-size: 1.5rem;
-    }
-    .navbar-nav .nav-link {
-        color: #6A0DAD !important;
-        font-weight: 500;
-    }
-    .navbar-nav .nav-link:hover {
-        color: #FF1493 !important;
-    }
-
-    /* HERO (con carrusel) */
-    .hero-carousel img {
-        height: 85vh;
-        object-fit: cover;
-        filter: brightness(80%);
-    }
-    .carousel-caption {
-        bottom: 20%;
-    }
-    .carousel-caption h1 {
-        font-size: 3.5rem;
-        font-weight: bold;
-        text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
-    }
-    .carousel-caption p {
-        font-size: 1.2rem;
-        margin-top: 10px;
-        text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
-    }
-
-    /* CARDS */
-=======
 
 <script>
     
@@ -141,7 +95,6 @@
     }
 
     
->>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
     .artist-card, .concert-card {
         border-radius: 15px;
         box-shadow: 0 10px 25px rgba(0,0,0,0.1);
@@ -161,45 +114,6 @@
         padding: 20px;
         text-align: left;
     }
-<<<<<<< HEAD
-    .links_bandas {
-        color: #FF1493;
-        font-weight: bold;
-        text-decoration: none;
-        font-size: 1.2rem;
-    }
-    .links_bandas:hover {
-        text-decoration: underline;
-    }
-
-    /* TESTIMONIALS */
-    .testimonials {
-        background-color: #F8F4EE;
-        padding: 60px 20px;
-    }
-    .testimonial-card {
-        background: white;
-        border-radius: 10px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        font-size: 0.95rem;
-        text-align: center;
-    }
-    .testimonial-card strong {
-        color: #FF1493;
-        display: block;
-        margin-top: 10px;
-    }
-
-    /* FOOTER */
-    .footer {
-        background-color: #222;
-        color: white;
-        padding: 30px 20px;
-        text-align: center;
-    }
-=======
 
     
     .footer {
@@ -208,7 +122,6 @@
         padding: 30px 20px;
         text-align: center;
     }
->>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
     .footer a {
         color: #FF1493;
         margin: 0 10px;
@@ -231,64 +144,40 @@
         <li class="nav-item"><a class="nav-link" href="#grupos">Grupos</a></li>
         <li class="nav-item"><a class="nav-link" href="#merch">Merch</a></li>
         <li class="nav-item"><a class="nav-link" href="#noticias">Noticias</a></li>
-<<<<<<< HEAD
-        <li class="nav-item"><a class="nav-link" href="#testimonios">Fans</a></li>
-=======
         <li class="nav-item"><a class="nav-link" href="#preventa">Membresia oficial de grupos</a></li>
->>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
       </ul>
     </div>
   </div>
 </nav>
 
 {{-- CARRUSEL HERO --}}
-<<<<<<< HEAD
-<div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="{{ asset('img/logos/ot4.jpg.') }}" class="d-block w-100" alt="KPOP 1">
-=======
 <div id="heroCarousel" class="carousel slide carousel-fade hero-carousel" data-bs-ride="carousel" data-bs-interval="5000">
   <div class="carousel-inner">
     <div class="carousel-item active">
       <img src="{{ asset('img/logos/ot4.jpg') }}" class="d-block w-100" alt="KPOP 1">  
->>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
       <div class="carousel-caption">
         <h1>Bienvenidos al Mundo del KPOP</h1>
         <p>Explora artistas, conciertos y más sobre tus grupos favoritos</p>
       </div>
     </div>
-<<<<<<< HEAD
-    <div class="carousel-item">
-      <img src="{{ asset('img/logos/ot4.jpg.') }}"class="d-block w-100" alt="KPOP 2">
-=======
 
     <div class="carousel-item">
       <img src="{{ asset('img/logos/ot7.jpg') }}" class="d-block w-100" alt="BTS">
->>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
       <div class="carousel-caption">
         <h1>Artistas Increíbles</h1>
         <p>Descubre BTS, BLACKPINK, LE SSERAFIM, STRAY KIDS y más</p>
       </div>
     </div>
-<<<<<<< HEAD
-    <div class="carousel-item">
-      <img src="https://i.imgur.com/ajO1ClC.jpg" class="d-block w-100" alt="KPOP 3">
-=======
 
     <div class="carousel-item">
       <img src="{{ asset('img/logos/ot5.jpg') }}" class="d-block w-100" alt="KPOP 3">
->>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
       <div class="carousel-caption">
         <h1>Conciertos y Merch</h1>
         <p>Todo lo que necesitas para vivir el KPOP al máximo</p>
       </div>
     </div>
   </div>
-<<<<<<< HEAD
-=======
 
->>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
   <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
     <span class="carousel-control-prev-icon"></span>
   </button>
@@ -296,10 +185,7 @@
     <span class="carousel-control-next-icon"></span>
   </button>
 </div>
-<<<<<<< HEAD
-=======
 
->>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
 
 {{-- SECCIÓN DE ARTISTAS --}}
 <section id="grupos" class="fade-section py-5">
@@ -329,11 +215,8 @@
             </div>
         @endforeach
     </div>
-<<<<<<< HEAD
-=======
 </section></p>
     </div>
->>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
 </section>
 
 {{-- SECCIÓN DE MERCANCÍA --}}
@@ -447,63 +330,6 @@
     </div>
 </div>
 
-<<<<<<< HEAD
-{{-- SECCIÓN DE ARTISTAS DESTACADOS --}}
-<section id="grupos" class="py-5">
-  <div class="container text-center">
-    <h2 class="mb-4 fw-bold" style="color:#6A0DAD;">⭐ Artistas Destacados ⭐</h2>
-    <p class="mb-5 text-muted">Descubre los grupos más populares del KPOP y sigue sus cuentas oficiales</p>
-    
-    <div class="row g-4">
-      {{-- BTS --}}
-      <div class="col-md-3">
-        <div class="artist-card card h-100">
-           <img src="{{ asset('img/logos/ot7.jpg') }}" alt="BTS">
-          <div class="card-body">
-            <h5 class="card-title">BTS</h5>
-            <p class="card-text">El grupo más influyente del KPOP en el mundo.</p>
-            <a href="https://ibighit.com/bts/eng/" class="links_bandas" target="_blank">🌐 Sitio Oficial</a>
-          </div>
-        </div>
-      </div>
-      {{-- BLACKPINK --}}
-      <div class="col-md-3">
-        <div class="artist-card card h-100">
-          <img src="{{ asset('img/logos/ot4.jpg.') }}" alt="BLACKPINK">
-          <div class="card-body">
-            <h5 class="card-title">BLACKPINK</h5>
-            <p class="card-text">Las reinas del KPOP con estilo y poder mundial.</p>
-            <a href="https://blackpinkofficial.com/" class="links_bandas" target="_blank">🌐 Sitio Oficial</a>
-          </div>
-        </div>
-      </div>
-      {{-- LE SSERAFIM --}}
-<div class="col-md-3">
-  <div class="artist-card card h-100">
-    <img src="{{ asset('img/logos/ot5.jpg') }}" alt="LE SSERAFIM">
-    <div class="card-body">
-      <h5 class="card-title">LE SSERAFIM</h5>
-      <p class="card-text">Rompiendo barreras con su estilo único.</p>
-      <a href="https://lesserafim.weverse.io/" class="links_bandas" target="_blank">🌐 Sitio Oficial</a>
-    </div>
-  </div>
-</div>
-
-      {{-- STRAY KIDS --}}
-      <div class="col-md-3">
-        <div class="artist-card card h-100">
-           <img src="{{ asset('img/logos/ot8.jpg') }}"  alt="Stray Kids">
-          <div class="card-body">
-            <h5 class="card-title">Stray Kids</h5>
-            <p class="card-text">Conquistando al mundo con energía y talento.</p>
-            <a href="https://straykids.jype.com/" class="links_bandas" target="_blank">🌐 Sitio Oficial</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-=======
 {{-- MEMBRESIAS DE LOS GRUPOS --}}
 <div id="preventa" class="fade-section py-5">
     <div class="container">
@@ -555,7 +381,6 @@
         @endforeach
     </div>
 </div>
->>>>>>> 8b748ad2acf91be814a32fb010501d18cf307158
 
 
 {{-- FOOTER --}}
