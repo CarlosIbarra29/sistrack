@@ -30,10 +30,10 @@
 <style>
     body {
         font-family: 'Poppins', sans-serif;
-        scroll-behavior: smooth; /* Scroll suave */
+        scroll-behavior: smooth; 
     }
 
-    /* NAVBAR */
+    
     .navbar {
         background-color: #fff;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -52,12 +52,10 @@
         color: #FF1493 !important;
     }
 
-    /* Fix para que la navbar no tape secciones */
     section, div[id] {
         scroll-margin-top: 80px; 
     }
 
-    /* HERO (con carrusel) */
     .hero-carousel img {
         height: 85vh;
         object-fit: cover;
@@ -77,7 +75,7 @@
         text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
     }
 
-    /* SECCIONES CON FADE-IN */
+    
     .fade-section {
         opacity: 0;
         transform: translateY(40px);
@@ -88,7 +86,6 @@
         transform: translateY(0);
     }
 
-    /* CARDS */
     .artist-card, .concert-card {
         border-radius: 15px;
         box-shadow: 0 10px 25px rgba(0,0,0,0.1);
@@ -109,7 +106,7 @@
         text-align: left;
     }
 
-    /* FOOTER */
+    
     .footer {
         background-color: #222;
         color: white;
@@ -119,7 +116,7 @@
     .footer a {
         color: #FF1493;
         margin: 0 10px;
-        text-decoration: none;
+        text-decoration: none;1
     }
     .footer a:hover {
         text-decoration: underline;
