@@ -1,4 +1,4 @@
-@extends('layouts.app')
+ @extends('layouts.app')
 @push('scripts')
 	<script src="{{ asset('js/tarifario/AgregarTarifario.js') }}"></script>
 @endpush
