@@ -5,6 +5,8 @@ namespace App\Services;
 
 
 use App\Models\Programacion\FolioProgramacion;
+use App\Models\Cliente\ClienteFolio;
+use App\Models\Custodio\CustodioFolio;
 
 class Folio
 {
@@ -27,5 +29,34 @@ class Folio
     }
 
 
+    public function getFolioCliente(){
+
+        $folio = ClienteFolio::with('folio')->max('folio');
+        // dd($folio);
+        $folio = $folio ? ++$folio : 1;
+         
+        $folioModel = new ClienteFolio();
+        $folioModel->folio = $folio;
+        $folioModel->anio = date('Y');
+        $folioModel->save();
+
+        return "CL".str_pad($folio,5,"0", STR_PAD_LEFT);
+
+    }
+
+    public function getFolioCustodio(){
+
+        $folio = ClienteFolio::with('folio')->max('folio');
+        // dd($folio);
+        $folio = $folio ? ++$folio : 1;
+         
+        $folioModel = new ClienteFolio();
+        $folioModel->folio = $folio;
+        $folioModel->anio = date('Y');
+        $folioModel->save();
+
+        return "C".str_pad($folio,5,"0", STR_PAD_LEFT);
+
+    }
 
 }

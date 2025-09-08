@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cliente;
 
 use App\Http\Controllers\Controller;
+use App\Services\Folio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +18,7 @@ use App\Models\Cliente\ClienteContactoOperativo;
 use App\Models\Cliente\TipoDocumentoC;
 use App\Models\Cliente\DocumentoCliente;
 use App\Models\Cliente\TipoContactoCliente;
+use App\Models\Cliente\ClienteFolio;
 
 use App\Models\User;
 use App\Models\Rol;
@@ -26,10 +28,13 @@ use Spatie\Permission\Models\Permission;
 
 class ClienteController extends Controller
 {
+    protected $folio;
     protected $money_format;
-    public function __construct( Money $money_format)
+    
+    public function __construct(Folio $folio, Money $money_format)
     {
         $this->middleware('auth');
+        $this->folio = $folio;
         $this->money_format = $money_format;
     }
 
@@ -81,7 +86,7 @@ class ClienteController extends Controller
 
         // Fetch records
 
-        $records = Cliente::select('cliente.id', 'cliente.razon_social', 'cliente.nombre_cliente', 'cliente.grupo', 'cliente.dias_credito', 'cliente.costo_estadia', 'cliente.costo_km', 'cliente.observaciones')
+        $records = Cliente::select('cliente.id', 'cliente.razon_social', 'cliente.nombre_cliente', 'cliente.grupo', 'cliente.dias_credito', 'cliente.costo_estadia', 'cliente.costo_km', 'cliente.observaciones', 'cliente.num_list')
             ->where('cliente.siaf_status', 1)
             ->orderBy($order_column_name, $order_column_dir)
             ->skip($start)
@@ -95,7 +100,7 @@ class ClienteController extends Controller
                 if (!empty($columna['search']['value'])){
                     $valor = trim($columna['search']['value']);
 
-                    $records = Cliente::select('cliente.id', 'cliente.razon_social', 'cliente.nombre_cliente', 'cliente.grupo', 'cliente.dias_credito', 'cliente.costo_estadia', 'cliente.costo_km', 'cliente.observaciones')
+                    $records = Cliente::select('cliente.id', 'cliente.razon_social', 'cliente.nombre_cliente', 'cliente.grupo', 'cliente.dias_credito', 'cliente.costo_estadia', 'cliente.costo_km', 'cliente.observaciones', 'cliente.num_list')
                     ->where('cliente.siaf_status', 1)
                     ->where("cliente.nombre_cliente", '=' , $valor)
                     ->orderBy($order_column_name, $order_column_dir)
@@ -107,7 +112,7 @@ class ClienteController extends Controller
         }
 
         if($valor == "No"){
-            $records = Cliente::select('cliente.id', 'cliente.razon_social', 'cliente.nombre_cliente', 'cliente.grupo', 'cliente.dias_credito', 'cliente.costo_estadia', 'cliente.costo_km', 'cliente.observaciones')
+            $records = Cliente::select('cliente.id', 'cliente.razon_social', 'cliente.nombre_cliente', 'cliente.grupo', 'cliente.dias_credito', 'cliente.costo_estadia', 'cliente.costo_km', 'cliente.observaciones', 'cliente.num_list')
             ->where('cliente.siaf_status', 1)
             ->orderBy($order_column_name, $order_column_dir)
             ->skip($start)
@@ -128,6 +133,7 @@ class ClienteController extends Controller
                 "nombre_cliente" => $record->nombre_cliente,
                 "grupo" => $record->grupo,
                 "permisos" => $permiso_array,
+                "num_list" => $record->num_list,
                 'acciones'=>null,
             );
         }
@@ -173,6 +179,7 @@ class ClienteController extends Controller
 
 
         $data = [
+            'num_list' => $this->folio->getFolioCliente(),
             'razon_social' => $request->razon_social,
             'nombre_cliente'  => $request->cliente,
             'grupo'  => $request->grupo,

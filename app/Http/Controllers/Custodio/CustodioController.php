@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Custodio;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Services\Folio;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -25,6 +26,7 @@ use App\Models\Custodio\DocumentacionArmaCustodio;
 use App\Models\Custodio\CustodioArma;
 use App\Models\Custodio\FotografiaArmaCustodio;
 use App\Models\Custodio\ArmaDocCustodio;
+use App\Models\Custodio\CustodioFolio;
 
 use App\Models\User;
 use App\Models\Rol;
@@ -34,9 +36,11 @@ use Spatie\Permission\Models\Permission;
 
 class CustodioController extends Controller
 {
-    public function __construct()
+    protected $folio;
+    public function __construct(Folio $folio)
     {
         $this->middleware('auth');
+        $this->folio = $folio;
     }
 
     public function listadocustodio()
@@ -268,6 +272,7 @@ class CustodioController extends Controller
     {
 
         $data = [
+            'num_list' => $this->folio->getFolioCustodio(),
             'fecha_ingreso' => $request->fecha_ingreso ? Carbon::createFromFormat('d/m/Y', $request->fecha_ingreso)->format('Y-m-d'):null,
             'ap_paterno' => $request->ape_paterno,
             'ap_materno' => $request->ape_materno,
