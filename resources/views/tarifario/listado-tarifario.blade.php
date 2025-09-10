@@ -138,7 +138,7 @@
                             <table class="table table-hover table-checkable" id="kdatatable_tarifario_dos">
                                 <thead>
                                 <tr>
-                                  {{-- <th>No.</th> --}}
+                                  <th>Folio.</th>
                                   <th>Origen</th>
                                   <th>Destino</th>
                                   <th>Cliente</th>
@@ -154,7 +154,7 @@
                                 <tbody>
                                   @foreach($tarifario as $unid)
                                     <tr>
-                                      {{-- <td>{{ $unid->id }}</td> --}}
+                                      <td>{{ $unid->num_list }}</td>
                                       <td>{{ $unid->origen }}</td>
                                       <td>{{ $unid->destino }}</td>
                                       <td>{{ $unid->cliente->nombre_cliente }}</td>
@@ -195,7 +195,7 @@
 
                                 <tfoot>
                                 <tr>
-                                  {{-- <th>No.</th> --}}
+                                  <th>Folio.</th>
                                   <th>Origen</th>
                                   <th>Destino</th>
                                   <th>Cliente</th>

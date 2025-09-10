@@ -293,7 +293,7 @@ jQuery(document).ready(function() {
         language: {
             'lengthMenu': 'Display _MENU_',
             "url": $('#datatable_i18n').val(),
-            "order": [[ 0, "desc" ]],
+            // "order": [[ 0, "desc" ]],
         },
 
 

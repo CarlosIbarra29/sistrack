@@ -212,6 +212,8 @@ jQuery(document).ready(function() {
             "url": $('#datatable_i18n').val()
         },
 
+
+
         "dom":
         "<'row'" +
         "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
