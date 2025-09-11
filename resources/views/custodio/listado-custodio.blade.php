@@ -144,7 +144,7 @@
                             <table class="table table-hover table-checkable" id="kdatatable_usuarios2">
                                 <thead>
                                 <tr>
-                                  <th>No.</th>
+                                  <th>Folio.</th>
                                   <th>Nombre</th>
                                   <th>Apellido Paterno</th>
                                   <th>Apellido Materno</th>
@@ -224,7 +224,7 @@
 
                                 <tfoot>
                                 <tr>
-                                  <th>No.</th>
+                                  <th>Folio.</th>
                                   <th>Nombre</th>
                                   <th>Apellido Paterno</th>
                                   <th>Apellido Materno</th>

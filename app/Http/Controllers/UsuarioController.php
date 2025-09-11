@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Services\Folio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -23,11 +24,14 @@ use App\Models\Requisicion\AreaPersonal;
 use App\Models\TipoUsuario;
 use App\Models\Usuarios\DocumentacionUsuario; 
 use App\Models\Usuarios\UsuarioDocRegistro; 
+use App\Models\Usuarios\UsuarioFolio;
 
 class UsuarioController extends Controller
 {
-    public function __construct() {
+    protected $folio;
+    public function __construct(Folio $folio) {
         $this->middleware('auth');
+        $this->folio = $folio;
     }
 
     public function errorpermiso()
@@ -38,7 +42,7 @@ class UsuarioController extends Controller
     public function catalogousuarios()
     {
 		$usuario = User::select('users.id', 'users.name', 'users.email', 'users.id_status_delete', 
-            'rol.name as name_role', 'users.role', 'users.rfc', 'users.telefono', 'users.ubicacion')
+            'rol.name as name_role', 'users.role', 'users.rfc', 'users.telefono', 'users.ubicacion', 'users.num_list')
             ->leftjoin("roles as rol","rol.id","users.role")
             ->where('users.id_status_delete', 1)
             ->get();
@@ -229,6 +233,7 @@ class UsuarioController extends Controller
     {
         // dd($request);
         $data = [
+            'num_list' => $this->folio->getFolioUsuario(),
             'name' => $request->name_user,
             'area_personal_id' => $request->area_personal,
             'email' => $request->email_user,
