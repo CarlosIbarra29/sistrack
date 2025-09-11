@@ -51,7 +51,7 @@
                                             @foreach($data as $cli)
                                                 <option value="{{ $cli->id }}" >{{ $cli->nombre_cliente }} / {{ $cli->razon_social }}</option>
                                             @endforeach
-                                        </select>
+                                        </select>   w
                                     </div>
                                     <div class="col-lg-6">
                                         <label>Origen</label>
