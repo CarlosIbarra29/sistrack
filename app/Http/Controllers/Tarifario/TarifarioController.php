@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tarifario;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Services\Folio;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Cliente\Cliente;
 use App\Models\Custodio\Custodio;
 use App\Models\Tarifario\Tarifario;
+use App\Models\Tarifario\TarifarioFolio;
 
 use App\Models\User;
 use App\Models\Rol;
@@ -23,9 +25,11 @@ use Spatie\Permission\Models\Permission;
 
 class TarifarioController extends Controller
 {
-    public function __construct()
+        protected $folio;
+    public function __construct(Folio $folio)
     {
         $this->middleware('auth');
+        $this->folio = $folio;
     }
 
     public function listadodotarifario()
@@ -166,6 +170,7 @@ class TarifarioController extends Controller
     	$porcentaje_sisprotec = 100 - $porcentaje_custodio;
     	
         $data = [
+            'num_list' => $this->folio->getFolioTarifario(),
             'cliente_id' => $request->cliente_id,
             'origen'  => $request->origen,
             'destino' => $request->destino,
