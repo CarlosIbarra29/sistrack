@@ -1,4 +1,4 @@
- @extends('layouts.app')
+@extends('layouts.app')
 @push('scripts')
 	<script src="{{ asset('js/tarifario/AgregarTarifario.js') }}"></script>
 @endpush
@@ -51,7 +51,7 @@
                                             @foreach($data as $cli)
                                                 <option value="{{ $cli->id }}" >{{ $cli->nombre_cliente }} / {{ $cli->razon_social }}</option>
                                             @endforeach
-                                        </select>   w
+                                        </select>
                                     </div>
                                     <div class="col-lg-6">
                                         <label>Origen</label>
