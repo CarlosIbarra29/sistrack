@@ -106,7 +106,7 @@
         text-align: left;
     }
 
-    
+      
     .footer {
         background-color: #222;
         color: white;
