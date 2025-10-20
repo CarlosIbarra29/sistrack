@@ -1,438 +1,215 @@
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 @extends('layouts.app')
 @push('scripts')
+
+  <script src="{{ asset('js/cliente/CatalogoClientes.js') }}"></script>
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
 @section('title')
-    Página KPOP
+  Inventario de clientes
 @endsection
 @section('content')
 
-<script>
-    
-    document.addEventListener("DOMContentLoaded", () => {
-        const sections = document.querySelectorAll(".fade-section");
+    <div class="d-flex flex-row">
 
-        const observer = new IntersectionObserver((entries, obs) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("visible");
-                    obs.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.2 });
+    <!--begin::List-->
+    <div class="flex-row-fluid">
+        <div class="d-flex flex-column flex-grow-1">
 
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-    });
-</script>
+            <!--begin::Row-->
+            <div class="row">
+                <div class="col-xl-12">
 
-<style>
-    body {
-        font-family: 'Poppins', sans-serif;
-        scroll-behavior: smooth; 
-    }
+                <!--begin::Card-->
+                    <div class="card card-custom">
+                        <div class="card-header">
+                            <div class="card-title">
+                      <span class="card-icon">
+                        <i class="flaticon2-file text-primary"></i>
+                      </span>
+                                <h3 class="card-label">Inventario de clientes</h3>
+                            </div>
+                            <div class="card-toolbar">
 
-    
-    .navbar {
-        background-color: #fff;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    .navbar-brand {
-        font-weight: bold;
-        color: #FF1493 !important;
-        font-size: 1.5rem;
-    }
-    .navbar-nav .nav-link {
-        color: #6A0DAD !important;
-        font-weight: 500;
-        padding: 10px 15px;
-    }
-    .navbar-nav .nav-link:hover {
-        color: #FF1493 !important;
-    }
+{{--                                 <a class="btn btn-link-primary font-weight-bold mr-2 busqueda" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    Busqueda
+                                </a> --}}
 
-    section, div[id] {
-        scroll-margin-top: 80px; 
-    }
+                                <!--begin::Button-->
+                                @if (in_array("6", Session::get('permisos'))) 
+                                  <a href="{{ route('cliente.agregarcliente') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3" >
+                                  <i class="la la-plus"></i>Nuevo</a>
+                                @endif
+                                <!--end::Button-->
 
-    .hero-carousel img {
-        height: 85vh;
-        object-fit: cover;
-        filter: brightness(80%);
-    }
-    .carousel-caption {
-        bottom: 20%;
-    }
-    .carousel-caption h1 {
-        font-size: 3.5rem;
-        font-weight: bold;
-        text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
-    }
-    .carousel-caption p {
-        font-size: 1.2rem;
-        margin-top: 10px;
-        text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
-    }
+                                <a href="{{ route('cliente.listadoclienteinactivo') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
+                                    <i class="far fa-trash-alt"></i>Clientes inactivos</a>
 
-    
-    .fade-section {
-        opacity: 0;
-        transform: translateY(40px);
-        transition: opacity 1s ease-out, transform 1s ease-out;
-    }
-    .fade-section.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
+                                <!--begin::Dropdown-->
+                                <div class="dropdown dropdown-inline mr-2">
+{{--                                     <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <span class="svg-icon svg-icon-md">
+                                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                          <rect x="0" y="0" width="24" height="24" />
+                                          <path d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z" fill="#000000" opacity="0.3" />
+                                          <path d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z" fill="#000000" />
+                                        </g>
+                                      </svg>
+                                      </span>Exportar
+                                    </button> --}}
+                                    <!--begin::Dropdown Menu-->
+                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                        <!--begin::Navigation-->
+                                        <ul class="navi flex-column navi-hover py-2">
+                                            <li class="navi-item">
+                                              <a href="#" class="navi-link" id="export-excel">
+                                                <span class="navi-icon">
+                                                  <i class="la la-file-excel-o"></i>
+                                                </span>
+                                                <span class="navi-text">Excel</span>
+                                              </a>
+                                            </li>
+{{--                                             <li class="navi-item">
+                                              <a href="#" class="navi-link" id="export-pdf">
+                                                <span class="navi-icon">
+                                                  <i class="la la-file-pdf-o"></i>
+                                                </span>
+                                                <span class="navi-text">PDF</span>
+                                              </a>
+                                            </li> --}}
+                                            <li class="navi-item">
+                                              <a href="#" class="navi-link" id="export-csv">
+                                                <span class="navi-icon">
+                                                  <i class="la la-file-text-o"></i>
+                                                </span>
+                                                <span class="navi-text">CSV</span>
+                                              </a>
+                                            </li>
+                                            <li class="navi-item">
+                                              <a href="#" class="navi-link" id="export-print">
+                                                <span class="navi-icon">
+                                                  <i class="la la-file-text-o"></i>
+                                                </span>
+                                                <span class="navi-text">Imprimir</span>
+                                              </a>
+                                            </li>
 
-    .artist-card, .concert-card {
-        border-radius: 15px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        overflow: hidden;
-        margin-bottom: 30px;
-        transition: all 0.3s ease;
-    }
-    .artist-card:hover, .concert-card:hover {
-        transform: scale(1.05);
-    }
-    .artist-card img, .concert-card img {
-        width: 100%;
-        height: 220px;
-        object-fit: cover;
-    }
-    .artist-card .card-body, .concert-card .card-body {
-        padding: 20px;
-        text-align: left;
-    }
+                                        </ul>
+                                        <!--end::Navigation-->
+                                    </div>
+                                    <!--end::Dropdown Menu-->
+                                </div>
+                                <!--end::Dropdown-->
+                            </div>
+                        </div>
+                        <div class="card-body">
 
-      
-    .footer {
-        background-color: #222;
-        color: white;
-        padding: 30px 20px;
-        text-align: center;
-    }
-    .footer a {
-        color: #FF1493;
-        margin: 0 10px;
-        text-decoration: none;1
-    }
-    .footer a:hover {
-        text-decoration: underline;
-    }
-</style>
+                          <div class="collapse" id="collapseExample">
+                              <div class="card card-body">
+                                <!--begin: Search Form-->
+                                <form class="mb-15">
+                                  <div class="row mb-6">
+                                    <div class="col-lg-6 mb-lg-0 mb-6">
+                                      <label>Nombre del cliente:</label>
+                                      <input type="text" class="form-control datatable-input" data-col-index="1" />
+                                    </div>
+                                  </div>
 
-{{-- NAVBAR --}}
-<nav class="navbar navbar-expand-lg navbar-light fixed-top">
-  <div class="container">
-    <a class="navbar-brand" href="#">KPOP World</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#grupos">Grupos</a></li>
-        <li class="nav-item"><a class="nav-link" href="#merch">Merch</a></li>
-        <li class="nav-item"><a class="nav-link" href="#noticias">Noticias</a></li>
-        <li class="nav-item"><a class="nav-link" href="#preventa">Membresia oficial de grupos</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+                                  <div class="row mt-8">
+                                    <div class="col-lg-12">
+                                      <button class="btn btn-primary btn-primary--icon" id="kt_search">
+                                        <span><i class="la la-search"></i><span>Buscar</span></span>
+                                      </button>&#160;&#160;
+                                      <button class="btn btn-secondary btn-secondary--icon" id="kt_reset">
+                                        <span><i class="la la-close"></i><span>Limpiar</span></span>
+                                      </button>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                          </div>
 
-{{-- CARRUSEL HERO --}}
-<div id="heroCarousel" class="carousel slide carousel-fade hero-carousel" data-bs-ride="carousel" data-bs-interval="5000">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="{{ asset('img/logos/ot4.jpg') }}" class="d-block w-100" alt="KPOP 1">  
-      <div class="carousel-caption">
-        <h1>Bienvenidos al Mundo del KPOP</h1>
-        <p>Explora artistas, conciertos y más sobre tus grupos favoritos</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="{{ asset('img/logos/ot7.jpg') }}" alt="BTS">
-      <div class="carousel-caption">
-        <h1>Artistas Increíbles</h1>
-        <p>Descubre BTS, BLACKPINK, LE SSERAFIM, STRAY KIDS y más</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="{{ asset('img/logos/ot5.jpg') }}" class="d-block w-100" alt="KPOP 3">
-      <div class="carousel-caption">
-        <h1>Conciertos y Merch</h1>
-        <p>Todo lo que necesitas para vivir el KPOP al máximo</p>
-      </div>
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
-  </button>
-</div>
+                            <!--begin: Datatable-->
+                            <table class="table table-hover table-checkable" id="kdatatable_clientes">
+                                <thead>
+                                <tr>
+                                  <th>Folio.</th>
+                                  <th>Razon social</th>
+                                  <th>Nombre cliente</th>
+                                  <th>Grupo</th>
+                                  <th class="text-center">Opciones</th>
+                                </tr>
+                                </thead>
+                                <tbody> 
+                                  @php $num = 1; @endphp
+                                  @foreach($data as $unid)
+                                    <tr>
+                                      <td>{{ $unid->num_list }}</td>
+                                      <td>{{ $unid->razon_social }}</td>
+                                      <td>{{ $unid->nombre_cliente }}</td>
+                                      <td>{{ $unid->grupo }}</td>
+                                      <td>
+                                        <a href="{{ route('cliente.vercliente', $unid->id) }}" class="btn btn-sm btn-outline-success btn-icon mr-2" title="Ver cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
+                                            <span class="svg-icon svg-icon-md">
+                                                <i class="flaticon-eye"></i>
+                                            </span>
+                                        </a>
 
-{{-- SECCIÓN DE ARTISTAS --}}
-<section id="grupos" class="fade-section py-5">
-    <div class="container">
-        <h2 class="text-center mb-4">🎤 Conoce a los Grupos</h2>
-        <p class="text-center"><section class="artist-section">
-    <h2>Conoce a los Grupos</h2>
-    <div class="row justify-content-center">
-        @php
-            $grupos = [
-                ['nombre' => 'Blackpink','imagen' => 'img/logos/descarga (1).png','descripcion' => 'Grupo femenino de YG Entertainment, debutó en 2016.','link' => 'https://www.youtube.com/BlackpinkOfficial'],
-                ['nombre' => 'Stray Kids','imagen' => 'img/logos/skz.png','descripcion' => 'Grupo masculino de JYP Entertainment, debut oficial en 2018.','link' => 'https://www.youtube.com/jypentertainment'],
-                ['nombre' => 'BTS','imagen' => 'img/logos/BANANA_BTS_ARMY_LOGO.png','descripcion' => 'Debutó en 2013 con Big Hit. Alcanzaron fama global rápidamente.','link' => 'https://www.youtube.com/BANGTANTV'],
-                ['nombre' => 'LE SSERAFIM','imagen' => 'img/logos/le sserafim.jpg','descripcion' => 'Grupo femenino de SOURCE MUSIC y HYBE, debutó en 2022.','link' => 'https://www.youtube.com/@LESSERAFIM_official'],
-            ];
-        @endphp
+                                        <a href="{{ route('cliente.editarcliente', $unid->id) }}" class="btn btn-sm btn-outline-success btn-icon mr-2" title="Editar cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
+                                            <span class="svg-icon svg-icon-md">
+                                                <i class="flaticon-edit"></i>
+                                            </span>
+                                        </a>
 
-        @foreach ($grupos as $grupo)
-            <div class="col-md-3 col-sm-6">
-                <div class="artist-card">
-                    <img src="{{ asset($grupo['imagen']) }}" alt="{{ $grupo['nombre'] }}">
-                    <div class="card-body">
-                        <a href="{{ $grupo['link'] }}" class="links_bandas" target="_blank">{{ $grupo['nombre'] }}</a>
-                        <p>{{ $grupo['descripcion'] }}</p>
+                                        <button class="btn btn-clean btn-sm btn-icon btn-outline-success mt-1" onClick="deletecliente(`{{ $unid->id }} `,`{{ $unid->id }}`)" data-toggle="modal" data-target="#model_delete_user" data-toggle="tooltip" data-theme="dark" title="Desactivar cliente">
+                                            <span class="svg-icon svg-icon-md">
+                                                <i class="flaticon-delete"></i>
+                                            </span>
+                                         </button>
+                                      </td>
+                                    </tr>
+                                     @php $num ++; @endphp
+                                  @endforeach
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                  <th>Folio.</th>
+                                  <th>Razon social</th>
+                                  <th>Nombre cliente</th>
+                                  <th>Grupo</th>
+                                  <th class="text-center">Opciones</th>
+                                </tr>
+                                </tfoot>
+
+                            </table>
+                            <!--end: Datatable-->
+
+                            <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
+                            {{-- <input type="hidden" id="clientedatatable" value="{{ route('cliente.clientelistadodatatable') }}"> --}}
+
+                        </div>
                     </div>
+                    <!--end::Card-->
+                    <!--end::Card-->
                 </div>
+
             </div>
-        @endforeach
-    </div>
-</section></p>
-    </div>
-</section>
-
-{{-- NOTICIAS --}}
-<div id="noticias" class="fade-section py-5">
-    <div class="container">
-        <h2 class="text-center mb-4">🎶 Conciertos.</h2>
-        <p class="text-center"><div class="contact-section">
-    <p>Aqui podras encontrar los proximos conciertos.</p>
-    <div class="artist-section">
-    <div class="row justify-content-center">
-
-        @php
-            $grupos_merch = [
-                [
-                    'nombre' => 'Blackpink',
-                    'imagen' => 'img/logos/bpconcert.jpeg',
-                    'descripcion' => 'Descubre el proximo concierto de BlackPink.',
-                    'link' => 'https://www.ticketmaster.ca/blackpink-tickets/artist/2590072'
-                ],
-                [
-                    'nombre' => 'Stray Kids',
-                    'imagen' => 'img/logos/skz.jpg',
-                    'descripcion' => 'Descubre el proximo concierto de StrayKids.',
-                    'link' => 'https://www.ticketmaster.ca/stray-kids-tickets/artist/2593788'
-                ],
-                [
-                    'nombre' => 'BTS',
-                    'imagen' => 'img/logos/BTS.jpg',
-                    'descripcion' => 'Descubre el proximo concierto de BTS.',
-                    'link' => 'https://www.ticketmaster.ca/bts-tickets/artist/2110227'
-                ],
-                [
-                    'nombre' => 'LE SSERAFIM',
-                    'imagen' => 'img/logos/lesserafim.jpg',
-                    'descripcion' => 'Descubre el proximo concierto de Le sserafim.',
-                    'link' => 'https://www.ticketmaster.ca/le-sserafim-tickets/artist/3068703'
-                ],
-            ];
-        @endphp
-
-        @foreach ($grupos_merch as $grupo)
-        <div class="col-md-3 col-sm-6">
-            <div class="artist-card">
-                <img src="{{ asset($grupo['imagen']) }}" alt="{{ $grupo['nombre'] }}">
-                <div class="card-body">
-                    <a href="{{ $grupo['link'] }}" class="links_bandas" target="_blank">{{ $grupo['nombre'] }}</a>
-                    <p>{{ $grupo['descripcion'] }}</p>
-                </div>
-            </div>
+            <!--end::Row-->
         </div>
-        @endforeach
     </div>
-</div>
-</p>
-    </div>
+    <!--end::List-->
 </div>
 
-{{-- SECCIÓN DE MERCANCÍA --}}
-<div id="merch" class="fade-section py-5">
-    <div class="container">
-        <h2 class="text-center mb-4">🛒 Mercancía oficial</h2>
-        <p class="text-center"><div class="artist-section">
-    <h2>Mercancía oficial de los grupos</h2>
-    <p>Descubre noticias, eventos y más sobre tus artistas KPOP favoritos.</p>
-    <div class="row justify-content-center">
+{{-- M O D A L S --}}
+  <form method="post" id="cliente_delete_form" action="{{ route('cliente.desactivarclientelistado') }}" enctype="multipart/form-data">
+    @csrf
+    <input type="hidden" name="id" id="id_cliente_delete" value="">
+  </form>
 
-        @php
-            $grupos_merch = [
-                [
-                    'nombre' => 'Blackpink',
-                    'imagen' => 'img/logos/lamparabp.jpg.',
-                    'descripcion' => 'Encuentra el merch oficial de Blackpink.',
-                    'link' => 'https://shop.weverse.io/es/shop/MXN/artists/32'
-                ],
-                [
-                    'nombre' => 'Stray Kids',
-                    'imagen' => 'img/logos/lamparaskz1.jpg',
-                    'descripcion' => 'Explora la colección oficial de Stray Kids.',
-                    'link' => 'https://en.thejypshop.com/category/merch/35/'
-                ],
-                [
-                    'nombre' => 'BTS',
-                    'imagen' => 'img/logos/btslampara.jpg',
-                    'descripcion' => 'Descubre la amplia gama de merch de BTS.',
-                    'link' => 'https://shop.weverse.io/es/shop/MXN/artists/2'
-                ],
-                [
-                    'nombre' => 'LE SSERAFIM',
-                    'imagen' => 'img/logos/lamparalesserafim.jpg',
-                    'descripcion' => 'Adquiere el merch exclusivo de LE SSERAFIM.',
-                    'link' => 'https://shop.weverse.io/es/shop/MXN/artists/50'
-                ],
-            ];
-        @endphp
-
-        @foreach ($grupos_merch as $grupo)
-        <div class="col-md-3 col-sm-6">
-            <div class="artist-card">
-                <img src="{{ asset($grupo['imagen']) }}" alt="{{ $grupo['nombre'] }}">
-                <div class="card-body">
-                    <a href="{{ $grupo['link'] }}" class="links_bandas" target="_blank">{{ $grupo['nombre'] }}</a>
-                    <p>{{ $grupo['descripcion'] }}</p>
-                </div>
-            </div>
-        </div>
-        @endforeach
-    </div>
-</div>
-</p>
-    </div>
-</div>
-
-{{-- NOTICIAS --}}
-<div id="noticias" class="fade-section py-5">
-    <div class="container">
-        <h2 class="text-center mb-4">📰 Noticias</h2>
-        <p class="text-center"><div class="contact-section">
-    <h2>¿Quieres Saber Más?</h2>
-    <p>Descubre noticias, eventos y más sobre tus artistas KPOP favoritos.</p>
-    <div class="artist-section">
-    <div class="row justify-content-center">
-
-        @php
-            $grupos_merch = [
-                [
-                    'nombre' => 'Blackpink',
-                    'imagen' => 'img/logos/ot4.jpg.',
-                    'descripcion' => 'Descubre noticias de BlackPink.',
-                    'link' => 'https://www.vogue.mx/articulo/blackpink-biografia'
-                ],
-                [
-                    'nombre' => 'Stray Kids',
-                    'imagen' => 'img/logos/ot8.jpg',
-                    'descripcion' => 'Descubre noticias de StrayKids.',
-                    'link' => 'https://www.vogue.mx/articulo/stray-kids-todo-lo-que-debes-saber-banda-k-pop'
-                ],
-                [
-                    'nombre' => 'BTS',
-                    'imagen' => 'img/logos/ot7.jpg',
-                    'descripcion' => 'Descubre noticias de BTS.',
-                    'link' => 'https://www.vogue.mx/articulo/bts-anuncia-su-regreso-oficial-en-2026'
-                ],
-                [
-                    'nombre' => 'LE SSERAFIM',
-                    'imagen' => 'img/logos/ot5.jpg',
-                    'descripcion' => 'Descubre noticias de Le sserafim.',
-                    'link' => 'https://www.vogue.mx/articulo/le-sserafim-entrevista'
-                ],
-            ];
-        @endphp
-
-        @foreach ($grupos_merch as $grupo)
-        <div class="col-md-3 col-sm-6">
-            <div class="artist-card">
-                <img src="{{ asset($grupo['imagen']) }}" alt="{{ $grupo['nombre'] }}">
-                <div class="card-body">
-                    <a href="{{ $grupo['link'] }}" class="links_bandas" target="_blank">{{ $grupo['nombre'] }}</a>
-                    <p>{{ $grupo['descripcion'] }}</p>
-                </div>
-            </div>
-        </div>
-        @endforeach
-    </div>
-</div>
-</p>
-    </div>
-</div>
-
-{{-- MEMBRESIAS DE LOS GRUPOS --}}
-<div id="preventa" class="fade-section py-5">
-    <div class="container">
-        <h2 class="text-center mb-4">🎟 Membresias de Grupos</h2>
-        <p class="text-center">Información sobre membresias oficiales de los grupos.</p>
-    <div class="contact-section">
-    <div class="artist-section">
-    <div class="row justify-content-center">
-
-        @php
-            $grupos_merch = [
-                [
-                    'nombre' => 'Blackpink',
-                    'imagen' => 'img/logos/BLACKPINK-1.jpg',
-                    'descripcion' => 'Membresía oficial de BlackPink.',
-                    'link' => 'https://shop.weverse.io/es/shop/MXN/artists/32?categoryId=853'
-                ],
-                [
-                    'nombre' => 'Stray Kids',
-                    'imagen' => 'img/logos/SKZ-1.jpg',
-                    'descripcion' => 'Membresía oficial de StrayKids.',
-                    'link' => 'https://www.yes24.com/product/search?domain=BOOK&query=%25EC%258A%25A4%25ED%258A%25B8%25EB%25A0%2588%25EC%259D%25B4%25ED%2582%25A4%25EC%25A6%2588%2520%25EB%25A9%25A4%25EB%25B2%2584%25EC%258B%25AD'
-                ],
-                [
-                    'nombre' => 'BTS',
-                    'imagen' => 'img/logos/BTS-1.jpg',
-                    'descripcion' => 'Membresía oficial de BTS.',
-                    'link' => 'https://shop.weverse.io/es/shop/MXN/artists/2?categoryId=18'
-                ],
-                [
-                    'nombre' => 'LE SSERAFIM',
-                    'imagen' => 'img/logos/leseerafim-1.jpg',
-                    'descripcion' => 'Membresía oficial de Le sserafim.',
-                    'link' => 'https://shop.weverse.io/es/shop/MXN/artists/50?categoryId=1759'
-                ],
-            ];
-        @endphp
-
-        @foreach ($grupos_merch as $grupo)
-        <div class="col-md-3 col-sm-6">
-            <div class="artist-card">
-                <img src="{{ asset($grupo['imagen']) }}" alt="{{ $grupo['nombre'] }}">
-                <div class="card-body">
-                    <a href="{{ $grupo['link'] }}" class="links_bandas" target="_blank">{{ $grupo['nombre'] }}</a>
-                    <p>{{ $grupo['descripcion'] }}</p>
-                </div>
-            </div>
-        </div>
-        @endforeach
-    </div>
-</div>
+  <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
 
 
-{{-- FOOTER --}}
-<div class="footer">
-    <p>&copy; 2025 KPOP World. Todos los derechos reservados.</p>
-    <div>
-        <a href="https://www.youtube.com" target="_blank">YouTube</a> |
-        <a href="https://www.instagram.com" target="_blank">Instagram</a> |
-        <a href="https://weverse.io" target="_blank">Weverse</a>
-    </div>
-</div>
+
+
 
 @endsection
