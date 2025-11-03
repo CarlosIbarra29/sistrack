@@ -6,149 +6,181 @@
     /* Dorado/Oro Principal: rgb(205, 153, 51) */
     /* Gris Oscuro (Casi Negro): rgb(24, 24, 24) */
     /* Dorado Oscuro (Para el degradado): rgb(184, 142, 46) */
+    /* Color de Texto Principal: white */
+    /* Gris de fondo sutil: rgb(35, 35, 35) */
 
     /* ---------------------------------------------------- */
-    /* --- ESTILOS DE BOTONES SUPERIORES (Se mantienen) --- */
+    /* --- ESTILOS GLOBALES Y DE CONTENEDOR --- */
     /* ---------------------------------------------------- */
 
-    .btn-top-menu {
-        display: inline-flex;
-        align-items: center;
-        padding: 10px 18px;
-        border-radius: 5px;
-        font-weight: bold;
-        cursor: pointer;
-        text-decoration: none;
-        margin-right: 10px;
-        border: none;
-        transition: all 0.2s;
+    /* Fondo de la vista general (body) */
+    .app-content {
+        background-color: rgb(35, 35, 35) !important; /* Fondo Gris Oscuro Suave */
+    }
+
+    /* Contenedor principal (card-custom) */
+    .card-custom {
         position: relative;
         overflow: hidden;
+        z-index: 1;
+        background-color: rgb(24, 24, 24) !important; /* Fondo Negro Sólido para la tarjeta */
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     }
 
-    .btn-nuevo {
-        background: linear-gradient(to right, rgb(205, 153, 51), rgb(184, 142, 46));
-        color: white;
-        box-shadow: 0 4px 6px rgba(184, 142, 46, 0.4);
+    /* Encabezado de la tarjeta (Inventario de clientes inactivos) */
+    .card-header {
+        background-color: rgb(24, 24, 24) !important; /* Mismo fondo oscuro */
+        border-bottom: 1px solid rgb(184, 142, 46, 0.5) !important; /* Separador Dorado Suave */
     }
-    .btn-nuevo:hover {
-        opacity: 0.9;
-    }
-    .btn-nuevo::before { content: none; }
 
-    .btn-clientes-inactivos {
-        background-color: #e9e9e9;
-        color: #555;
-        border: 1px solid #ccc;
-        box-shadow: none;
+    /* Título principal */
+    .card-label {
+        color: white !important; /* Texto del título en BLANCO */
+        font-weight: 700 !important;
     }
-    .btn-clientes-inactivos:hover {
-        background-color: #ddd;
+
+    /* Icono del título */
+    .card-icon .flaticon2-file {
+        color: rgb(205, 153, 51) !important; /* Icono en Dorado */
     }
-    .btn-clientes-inactivos::before { content: none; }
+    
+    /* Texto "Mostrar X registros" y "Buscar:" */
+    .dataTables_length,
+    .dataTables_filter label,
+    .dataTables_filter input::placeholder {
+        color: white !important; /* Texto en BLANCO */
+    }
+    
+    /* Campos de entrada de texto (Buscar) y select (Mostrar X) */
+    .dataTables_filter input,
+    .dataTables_length select {
+        background-color: rgb(50, 50, 50) !important; /* Fondo oscuro sutil */
+        border: 1px solid rgb(184, 142, 46) !important; /* Borde Dorado */
+        color: white !important; /* Texto de entrada en BLANCO */
+    }
+
+    /* ---------------------------------------------------- */
+    /* --- ESTILO BOTÓN REGRESAR --- */
+    /* ---------------------------------------------------- */
+
+    .btn-regresar {
+        background-color: transparent !important;
+        color: rgb(205, 153, 51) !important; /* Texto en Dorado */
+        border: 2px solid rgb(205, 153, 51) !important; /* Borde Dorado */
+        font-weight: 700;
+        border-radius: 6px;
+        padding: 10px 20px;
+        transition: all 0.2s;
+    }
+    .btn-regresar:hover {
+        background-color: rgb(205, 153, 51, 0.1) !important; /* Sombra sutil dorada */
+        color: white !important; /* Texto blanco en hover */
+        box-shadow: 0 0 10px rgba(205, 153, 51, 0.5);
+    }
+
+    /* ---------------------------------------------------- */
+    /* --- ESTILOS DE TABLA (kdatatable_clientes_inactivos) --- */
+    /* ---------------------------------------------------- */
+
+    /* Estilo del cuerpo de la tabla */
+    #kdatatable_clientes_inactivos {
+        background-color: rgb(24, 24, 24) !important;
+    }
+    
+    /* Regla Crítica para el contenido de las celdas */
+    #kdatatable_clientes_inactivos tbody tr td {
+        color: white !important; /* Aseguramos que el texto de CADA celda sea BLANCO */
+        background-color: transparent !important;
+    }
+
+
+    /* Encabezado y pie de tabla */
+    #kdatatable_clientes_inactivos thead th,
+    #kdatatable_clientes_inactivos tfoot th {
+        color: rgb(205, 153, 51) !important; /* Texto del encabezado en Dorado */
+        font-weight: 700;
+        text-transform: uppercase;
+        border-bottom: 2px solid rgb(205, 153, 51) !important; /* Línea inferior dorada */
+        background-color: rgb(24, 24, 24) !important; /* Fondo oscuro */
+    }
+
+    /* Filas de la tabla (para el efecto de cebra o hover) */
+    #kdatatable_clientes_inactivos tbody tr {
+        background-color: rgb(24, 24, 24); /* Fondo base */
+        border-bottom: 1px solid rgb(50, 50, 50); /* Separador sutil */
+    }
+
+    /* Estilo al pasar el ratón (Hover) */
+    #kdatatable_clientes_inactivos tbody tr:hover {
+        background-color: rgb(45, 45, 45) !important; /* Gris más claro al pasar el ratón */
+    }
 
 
     /* ---------------------------------------------------- */
-    /* --- ESTILOS BOTONES DE OPCIONES (Borde Degradado) --- */
+    /* --- ESTILO BOTÓN DE ACCIONES (Activar) --- */
     /* ---------------------------------------------------- */
     
-    .btn-opciones-icon {
-        background: white !important;
-        color: rgb(24, 24, 24) !important;
-        
-        /* Borde Degradado (requiere el elemento interno) */
-        background: linear-gradient(to right, rgb(205, 153, 51), rgb(184, 142, 46)) !important;
-        background-clip: padding-box;
-        border: 1px solid transparent !important;
-        padding: 0; 
-        
-        width: 35px;
-        height: 35px;
+    .activar-cliente {
+        background-color: rgb(30, 85, 30) !important; /* Fondo Verde Oscuro (Para activar) */
+        color: white !important; 
+        border: 1px solid rgb(60, 150, 60) !important; 
+        padding: 8px 10px;
+        width: 38px;
+        height: 38px;
         border-radius: 4px;
         cursor: pointer;
         transition: all 0.3s ease;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        margin: 0 5px; 
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
     }
 
-    /* Contenedor interior blanco para el efecto de borde */
-    .btn-opciones-icon > * {
-        background-color: white;
-        border-radius: 3px; 
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    .activar-cliente i {
+        color: white !important; /* Icono en blanco */
     }
 
-    .btn-opciones-icon .svg-icon,
-    .btn-opciones-icon .flaticon-eye,
-    .btn-opciones-icon .flaticon-edit,
-    .btn-opciones-icon .flaticon-delete {
-        color: rgb(24, 24, 24) !important; /* Color de icono Gris Oscuro/Negro */
+    .activar-cliente:hover {
+        background-color: rgb(40, 105, 40) !important;
+        box-shadow: 0 4px 8px rgba(30, 85, 30, 0.5);
     }
-
-    .btn-opciones-icon:hover {
-        box-shadow: 0 4px 8px rgba(184, 142, 46, 0.5);
-    }
-
-
+    
     /* ---------------------------------------------------- */
-    /* --- NUEVO ESTILO: BOTONES DE PAGINACIÓN --- */
+    /* --- ESTILOS DE PAGINACIÓN --- */
     /* ---------------------------------------------------- */
 
-    /* Estilo para todos los enlaces de paginación (no activos) - Borde Dorado */
-    .pagination .page-item .page-link {
-        border: 1px solid rgb(205, 153, 51) !important; /* Borde Dorado */
-        color: rgb(24, 24, 24) !important; /* Texto Gris Oscuro/Negro */
-        background-color: white !important;
+    /* Paginación (Botones Anterior/Siguiente y números) */
+    .dataTables_wrapper .pagination .page-item .page-link {
+        border: 1px solid rgb(184, 142, 46) !important; /* Borde Dorado */
+        color: white !important; /* Texto en BLANCO */
+        background-color: rgb(50, 50, 50) !important;
         margin: 0 2px;
         border-radius: 4px;
         font-weight: 600;
         transition: all 0.2s;
-        height: 40px; 
-        min-width: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        /* Sobrescribir estilos de borde doble en el centro de paginación */
-        border-left-width: 1px !important; 
-        border-right-width: 1px !important;
     }
 
-    .pagination .page-item .page-link:hover {
-        background-color: #fffaf0 !important; 
+    .dataTables_wrapper .pagination .page-item .page-link:hover {
+        background-color: rgb(65, 65, 65) !important; 
+        color: white !important;
     }
-    
-    /* Estilo para la Paginación Activa (Solid Gradient) */
-    .pagination .page-item.active .page-link,
-    .paginacion-btn-activo {
+
+    /* Botón de paginación Activo */
+    .dataTables_wrapper .pagination .page-item.active .page-link {
         background: linear-gradient(to right, rgb(205, 153, 51), rgb(184, 142, 46)) !important;
         color: white !important;
-        font-weight: bold;
         border: none !important;
-        box-shadow: 0 4px 6px rgba(184, 142, 46, 0.4);
-        z-index: 2; 
-        /* Resetear márgenes en los extremos para que el botón activo no se vea afectado */
-        margin-left: 2px !important;
-        margin-right: 2px !important;
     }
 
-
-    /* ---------------------------------------------------- */
-    /* --- CÓDIGO MARCA DE AGUA (NO MODIFICADO) --- */
-    /* ---------------------------------------------------- */
-    .card-custom {
-        position: relative;
-        overflow: hidden;
-        z-index: 1;
-        background-color: white;
+    /* Texto de Registros mostrados */
+    .dataTables_info {
+        color: white !important; /* Texto en BLANCO */
     }
 
+    /* ---------------------------------------------------- */
+    /* --- CÓDIGO MARCA DE AGUA --- */
+    /* ---------------------------------------------------- */
+    
     .card-custom::before {
         content: "";
         position: absolute;
@@ -156,141 +188,118 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url('{{ asset('img/logos/LogoSis.png') }}');
+        /* Asegúrate de que esta ruta sea correcta para tu logo */
+        background-image: url('{{ asset('img/logos/LogoSis.png') }}'); 
         background-repeat: no-repeat;
         background-position: center center;
         background-size: 70%;
-        opacity: 0.05;
+        opacity: 0.1; 
         z-index: -1;
         pointer-events: none;
+        /* Aplicar un filtro de color para que el logo se vea blanco/dorado */
+        filter: grayscale(100%) brightness(200%); 
     }
 </style>
 @endpush
 
-@push('scripts')
-<script src="{{ asset('js/cliente/CatalogoClientes.js') }}"></script>
-<meta name="csrf-token" content="{{ csrf_token() }}" />
-@endpush
 @section('title')
-Inventario de clientes
+ Catálogo de clientes inactivos
 @endsection
+
+@push('scripts')
+ <script src="{{ asset('js/cliente/CatalogoClientes.js') }}"></script>
+ <meta name="csrf-token" content="{{ csrf_token() }}" />
+@endpush
+
+
 @section('content')
+ <div class="d-flex flex-row">
 
-<div class="d-flex flex-row">
-<div class="flex-row-fluid">
-<div class="d-flex flex-column flex-grow-1">
+ <!--begin::List-->
+ <div class="flex-row-fluid">
+ <div class="d-flex flex-column flex-grow-1">
 
+ <!--begin::Row-->
  <div class="row">
  <div class="col-xl-12">
 
-<div class="card card-custom">
-<div class="card-header">
-<div class="card-title">
-<span class="card-icon">
+ <!--begin::Card-->
+ <div class="card card-custom">
+ <div class="card-header">
+ <div class="card-title">
+ <span class="card-icon">
  <i class="flaticon2-file text-primary"></i>
  </span>
- <h3 class="card-label">Inventario de clientes</h3>
+ <h3 class="card-label">Inventario de clientes inactivos</h3>
  </div>
-
  <div class="card-toolbar">
- @if (in_array("6", Session::get('permisos')))
- <a href="{{ route('cliente.agregarcliente') }}" class="btn-top-menu btn-nuevo mr-3">
- <i class="la la-plus"></i>Nuevo
- </a>
- @endif
- <a href="{{ route('cliente.listadoclienteinactivo') }}" class="btn-top-menu btn-clientes-inactivos">
- <i class="far fa-trash-alt"></i>Clientes inactivos
- </a>
- </div>
- </div>
 
- <div class="card-body pt-0 pb-0">
- <div class="row align-items-center mb-4 mt-4">
- <div class="col-lg-12">
- <div class="row align-items-center">
- <div class="col-md-4 my-2 my-md-0">
- <div class="input-icon">
- </div>
- </div>
- </div>
- </div>
- </div>
+ <!--begin::Button-->
+ <a href="{{ route('cliente.listadocliente') }}" class="btn-regresar mr-3 ml-3">
+ Regresar</a>
+ <!--end::Button-->
 
- <hr class="mt-0">
- <div class="collapse" id="collapseExample">
- <div class="card card-body">
  </div>
  </div>
- </div>
-
  <div class="card-body pt-0">
- <table class="table table-hover table-checkable" id="kdatatable_clientes">
+ <!--begin: Datatable-->
+ <table class="table table-hover table-checkable" id="kdatatable_clientes_inactivos">
  <thead>
  <tr>
- <th>Folio.</th>
+ {{-- <th>No.</th> --}}
  <th>Razon social</th>
- <th>Nombre cliente</th>
- <th>Nombre cliente</th>
+<th>Nombre cliente</th>
  <th>Grupo</th>
- <th class="text-center">Opciones</th>
+ <th class="text-center">Acciones</th>
  </tr>
  </thead>
+
  <tbody>
- @php $num = 1; @endphp
  @foreach($data as $unid)
  <tr>
- <td>{{ $unid->num_list }}</td>
+ {{-- <td>{{ $unid->id }}</td> --}}
  <td>{{ $unid->razon_social }}</td>
  <td>{{ $unid->nombre_cliente }}</td>
- <td>{{ $unid->nombre_cliente }}</td>
  <td>{{ $unid->grupo }}</td>
+
  <td class="text-center">
- <a href="{{ route('cliente.vercliente', $unid->id) }}" class="btn btn-sm btn-icon mr-2 btn-opciones-icon" title="Ver cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
- <span class="svg-icon svg-icon-md">
- <i class="flaticon-eye"></i>
- </span>
- </a>
- <a href="{{ route('cliente.editarcliente', $unid->id) }}" class="btn btn-sm btn-icon mr-2 btn-opciones-icon" title="Editar cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
- <span class="svg-icon svg-icon-md">
- <i class="flaticon-edit"></i>
- </span>
- </a>
- <button class="btn btn-sm btn-icon mt-1 btn-opciones-icon" onClick="deletecliente(`{{ $unid->id }} `,`{{ $unid->id }}`)" data-toggle="modal" data-target="#model_delete_user" data-toggle="tooltip" data-theme="dark" title="Desactivar cliente">
- <span class="svg-icon svg-icon-md">
- <i class="flaticon-delete"></i>
- </span>
- </button>
+ <button class="activar-cliente" data-id="{{ $unid->id }}" data-nombre="{{ $unid->razon_social }}" data-toggle="tooltip" data-theme="dark" title="Activar Cliente" ><i class="flaticon2-reply "></i></button>
  </td>
  </tr>
- @php $num ++; @endphp
  @endforeach
  </tbody>
+
  <tfoot>
  <tr>
- <th>Folio.</th>
+ {{-- <th>No.</th> --}}
  <th>Razon social</th>
  <th>Nombre cliente</th>
  <th>Grupo</th>
- <th class="text-center">Opciones</th>
+ <th class="text-center">Acciones</th>
  </tr>
  </tfoot>
+
  </table>
+ <!--end: Datatable-->
+
  <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
- </div>
- </div>
- </div>
 
  </div>
  </div>
+ <!--end::Card-->
  </div>
+
+ </div>
+ <!--end::Row-->
+ </div>
+ </div>
+ <!--end::List-->
 </div>
 
-{{-- M O D A L S --}}
-<form method="post" id="cliente_delete_form" action="{{ route('cliente.desactivarclientelistado') }}" enctype="multipart/form-data">
-@csrf
-<input type="hidden" name="id" id="id_cliente_delete" value="">
-</form>
+ <form method="post" id="cliente_act_form" action="{{ route('cliente.activarcliente') }}" enctype="multipart/form-data">
+ @csrf
+<input type="hidden" name="id" id="id_delete" value="">
+ </form>
 
-<input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
 
 @endsection
