@@ -264,14 +264,17 @@ class CustodioController extends Controller
         }
         $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
 
+         $users_custodio = User::where('id_status_delete', 1)->where('op_custodio', 0)->where('role', 16)->get();
+         // dd($data);
 
-        return view('custodio.agregar-custodio', compact('data', 'cadenaTipoDocumento'));
+        return view('custodio.agregar-custodio', compact('data', 'cadenaTipoDocumento', 'users_custodio'));
     }
 
     public function guardarcustodio(Request $request)
     {
-
+// dd($request);
         $data = [
+            'users_custodios' => $request->users_custodios,
             'num_list' => $this->folio->getFolioCustodio(),
             'fecha_ingreso' => $request->fecha_ingreso ? Carbon::createFromFormat('d/m/Y', $request->fecha_ingreso)->format('Y-m-d'):null,
             'ap_paterno' => $request->ape_paterno,
@@ -397,6 +400,13 @@ class CustodioController extends Controller
             }
         }
 
+
+        $data_user = [
+            'op_custodio' => 1,
+        ];
+        User::where('id', $request->users_custodios)->update($data_user);
+        
+
         session()->flash('success', 'El custodio se añadió correctamente');
         return redirect()->route('custodio.listadocustodio');    
     }
@@ -407,6 +417,7 @@ class CustodioController extends Controller
         $custodio = Custodio::where('id', $custodio_id)->first();
         // dd($custodio);
         $custodio_seleccion = CustodioSeleccion::where('custodio_id', $custodio_id)->first();
+        // dd($custodio_id);
         $custodio_confianza = CustodioControlConfianza::where('custodio_id', $custodio_id)->first();
         $documento = DocumentacionCustodio::where('siaf_status',1)->get();
         //tipo de documentos en formato json
@@ -444,6 +455,7 @@ class CustodioController extends Controller
         if($custodio->dom_cp == null){ $por_cp = 0; }else{ $por_cp = 1; }
         $porcentaje_domicilio = $por_calle + $por_num + $por_municipio + $por_estado + $por_cp + $por_colonia;
 
+        // dd($custodio_seleccion);
         if($custodio_seleccion->entin_fecha == null){ $por_entin_fecha = 0; }else{ $por_entin_fecha = 1; };
         if($custodio_seleccion->verdoc_fecha == null){ $por_verdoc_fecha = 0; }else{ $por_verdoc_fecha = 1; };
         if($custodio_seleccion->entope_fecha == null){ $por_entope_fecha = 0; }else{ $por_entope_fecha = 1; };

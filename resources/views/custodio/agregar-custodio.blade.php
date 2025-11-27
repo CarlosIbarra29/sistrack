@@ -6,7 +6,6 @@
     Agregar custodio
 @endsection
 @section('content')
-prueba subir cambios
 
 
     <!--begin::Card-->
@@ -54,6 +53,18 @@ prueba subir cambios
                             <div class="tab-pane fade show active mt-10" id="kt_tab_pane_1" role="tabpanel" aria-labelledby="kt_tab_pane_1">
 
                                 <div class="form-group row">
+                                    <div class="col-lg-6">
+                                        <label>Usuario / Custodio</label>
+                                        <select class="form-control" id="users_custodios" name="users_custodios" required >
+                                            <option value="">Selecciona una opción</option>
+                                            @foreach($users_custodio as $estado)
+                                                <option value="{{ $estado->id }}" data-nombre="{{ $estado->name }}">Nombre:{{ $estado->name }}, Correo:{{ $estado->email }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
                                     <div class="col-lg-6  form-group">
                                         <label>Fotografía</label>
                                         <div class='custom-file'>
@@ -65,7 +76,7 @@ prueba subir cambios
                                     <div class="col-lg-6">
                                         <label>Fecha de ingreso</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="fecha_ingreso" id="fecha_ingreso" required/>
+                                            <input type="text" class="form-control" name="fecha_ingreso" id="fecha_ingreso"  required/>
                                         </div>
                                     </div>
 

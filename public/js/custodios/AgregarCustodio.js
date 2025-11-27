@@ -217,6 +217,12 @@ var Modulo = function() {
             language: "es",
             format: "dd/mm/yyyy",
         });
+
+        $("#users_custodios").select2({
+            placeholder: "Seleccione una opción",
+            allowClear: true
+        });
+        
         
         lista = construyeElementosLista();
         lista_vehiculos = construyeavancevehiculosLista();
