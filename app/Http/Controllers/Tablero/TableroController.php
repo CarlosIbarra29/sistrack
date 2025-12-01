@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 // use App\Models\Notificaciones\Notificaciones;
 // use App\Models\Notificaciones\NotificacionesUsuario;
-
+use App\Models\Programacion\Programacion;
 use App\Models\Cliente\Cliente;
 
 use App\Models\Licitacion\LicitacionSegmento;
@@ -24,7 +24,14 @@ class TableroController extends Controller
     {
     	// $not = Notificaciones::where('users_permiso', auth()->user()->id)->orderBy('id','ASC')->get();
         $not=1;
-        return view('tablero.show', compact('not'));
+
+        $programcion = Programacion::select('programacion.id','programacion.folio', 'programacion.tipo_servicio', 'pe.estatus_programacion', 'cli.nombre_cliente', 'programacion.dom_origen', 'programacion.dom_destino', 'programacion.fecha_servicio', 'programacion.programacion_estatus_id', 'programacion.op_monitoreo_id',  'programacion.custodio_id', 'cli.razon_social')
+            ->leftjoin("programacion_estatus as pe","pe.id","programacion.programacion_estatus_id")
+            ->leftjoin("cliente as cli","cli.id","programacion.cliente_id")
+            ->where('programacion.siaf_status', 1)
+            ->get();
+
+        return view('tablero.show', compact('not', 'programcion'));
     }
 
     public function vernotconcurso($licitacion)
