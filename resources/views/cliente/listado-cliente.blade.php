@@ -35,7 +35,7 @@
                                 </a> --}}
 
                                 <!--begin::Button-->
-                                @if (in_array("6", Session::get('permisos'))) 
+                                @if (in_array("6", Session::get('permisos', []))) 
                                   <a href="{{ route('cliente.agregarcliente') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3" >
                                   <i class="la la-plus"></i>Nuevo</a>
                                 @endif
