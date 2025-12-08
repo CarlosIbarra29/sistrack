@@ -8,7 +8,55 @@
   Inventario de clientes
 @endsection
 @section('content')
+<style>
+  .alert-card {
+        background: white;
+        border: 1px solid #e8e8e8;
+        padding: 22px;
+        border-radius: 14px;
+        transition: 0.3s ease;
+    }
 
+    .alert-card:hover {
+        border-color: #eaeaea;
+        box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .alert-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .alert-header i {
+        font-size: 25px;
+        color: #B9770E;
+    }
+
+    .alert-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #000000
+    }
+
+    .alert-value {
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--);
+        margin-top: 4px;
+    }
+    .divider {
+        height: 1px;
+        background: #eaeaea;
+        margin: 14px 0;
+    }
+
+    .coloricono {
+      color:#B9770E!important;
+      font-weigth:500!important;
+    }
+</style>
     <div class="d-flex flex-row">
 
     <!--begin::List-->
@@ -24,7 +72,7 @@
                         <div class="card-header">
                             <div class="card-title">
                       <span class="card-icon">
-                        <i class="flaticon2-file text-primary"></i>
+                        <i class="flaticon2-file coloricono"></i>
                       </span>
                                 <h3 class="card-label">Inventario de clientes</h3>
                             </div>
@@ -36,13 +84,14 @@
 
                                 <!--begin::Button-->
                                 @if (in_array("6", Session::get('permisos', []))) 
-                                  <a href="{{ route('cliente.agregarcliente') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3" >
-                                  <i class="la la-plus"></i>Nuevo</a>
+                                  
+                                  <a href="{{ route('cliente.agregarcliente') }}"class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black"><i class="la la-plus"></i>Nuevo</a>
                                 @endif
                                 <!--end::Button-->
 
-                                <a href="{{ route('cliente.listadoclienteinactivo') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
-                                    <i class="far fa-trash-alt"></i>Clientes inactivos</a>
+                                
+
+                                    <a href="{{ route('cliente.listadoclienteinactivo') }}" class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black"><i class="far fa-trash-alt"></i>Clientes inactivos</a>
 
                                 <!--begin::Dropdown-->
                                 <div class="dropdown dropdown-inline mr-2">
@@ -129,6 +178,60 @@
                               </div>
                           </div>
 
+
+
+<div class="row">
+  <div class="col-lg-3">
+        <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-wallet"></i>
+                <span class="alert-title">Pagos próximos</span>
+            </div>
+            <div class="alert-value">12</div>
+            <div class="divider"></div>
+            <small>Clientes con pagos programados los próximos 7 días.</small>
+        </div>
+  </div>
+  <div class="col-lg-3">
+<div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-user-clock"></i>
+                <span class="alert-title">Clientes inactivos</span>
+            </div>
+            <div class="alert-value">8</div>
+            <div class="divider"></div>
+            <small>Clientes sin actividad en más de 30 días.</small>
+        </div>
+  </div>
+  <div class="col-lg-3">
+  <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-exclamation-circle"></i>
+                <span class="alert-title">Tareas vencidas</span>
+            </div>
+            <div class="alert-value">3</div>
+            <div class="divider"></div>
+            <small>Tareas importantes que requieren atención inmediata.</small>
+        </div>
+  </div>
+  <div class="col-lg-3">
+  <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-user-shield"></i>
+                <span class="alert-title">Clientes en riesgo</span>
+            </div>
+            <div class="alert-value">4</div>
+            <div class="divider"></div>
+            <small>Clientes con señales de abandono o retrasos.</small>
+        </div>
+  </div>
+
+</div>
+
+
+
+<div class="row mt-2">
+<div class="col-lg-9">
                             <!--begin: Datatable-->
                             <table class="table table-hover table-checkable" id="kdatatable_clientes">
                                 <thead>
@@ -149,19 +252,19 @@
                                       <td>{{ $unid->nombre_cliente }}</td>
                                       <td>{{ $unid->grupo }}</td>
                                       <td>
-                                        <a href="{{ route('cliente.vercliente', $unid->id) }}" class="btn btn-sm btn-outline-success btn-icon mr-2" title="Ver cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
+                                        <a href="{{ route('cliente.vercliente', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mr-2" title="Ver cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
                                             <span class="svg-icon svg-icon-md">
                                                 <i class="flaticon-eye"></i>
                                             </span>
                                         </a>
 
-                                        <a href="{{ route('cliente.editarcliente', $unid->id) }}" class="btn btn-sm btn-outline-success btn-icon mr-2" title="Editar cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
+                                        <a href="{{ route('cliente.editarcliente', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mr-2" title="Editar cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
                                             <span class="svg-icon svg-icon-md">
                                                 <i class="flaticon-edit"></i>
                                             </span>
                                         </a>
 
-                                        <button class="btn btn-clean btn-sm btn-icon btn-outline-success mt-1" onClick="deletecliente(`{{ $unid->id }} `,`{{ $unid->id }}`)" data-toggle="modal" data-target="#model_delete_user" data-toggle="tooltip" data-theme="dark" title="Desactivar cliente">
+                                        <button class="btn btn-clean btn-sm btn-icon btn-outline-warning mt-1" onClick="deletecliente(`{{ $unid->id }} `,`{{ $unid->id }}`)" data-toggle="modal" data-target="#model_delete_user" data-toggle="tooltip" data-theme="dark" title="Desactivar cliente">
                                             <span class="svg-icon svg-icon-md">
                                                 <i class="flaticon-delete"></i>
                                             </span>
@@ -183,6 +286,73 @@
 
                             </table>
                             <!--end: Datatable-->
+</div>
+
+<div class="col-lg-3"> 
+
+
+
+  <div class="card card-custom">
+  <div class="card-header">
+    <div class="card-title">
+            <span class="card-icon">
+                <i class="flaticon2-chat-1 coloricono" ></i>
+            </span>
+      <h3 class="card-label">
+        Pendientes
+        
+      </h3>
+    </div>
+        
+  </div>
+  <div class="card-body">
+   <div class="form-group row">
+                                    <div class="col-lg-12">
+                                        <label>Nombre del pendiente</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="pendiente" id="pendiente" />
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+  
+                                <div class="form-group row">
+                                    <div class="col-lg-6">
+                                        <label>Fecha inicial</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="fecha_inicial" id="fecha_inicial" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label>Fecha final</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="fecha_final" id="fecha_final" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                      
+
+
+                                  <div class="form-group row">
+                                    <div class="col-lg-9">
+                                        
+                                    </div>
+                                    <div class="col-lg-3">
+<a href="#" class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black">Guardar</a>
+                                    </div>
+                                </div>
+  </div>
+    
+</div>
+                                  
+</div>
+
+
+
+</div>
+
 
                             <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
                             {{-- <input type="hidden" id="clientedatatable" value="{{ route('cliente.clientelistadodatatable') }}"> --}}

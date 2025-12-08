@@ -1,264 +1,229 @@
 @extends('layouts.app')
 
-@push('scripts')
-<script src="{{ asset('js/cliente/CatalogoClientes.js') }}"></script>
-<meta name="csrf-token" content="{{ csrf_token() }}" />
-
+@push('styles')
 <style>
-/* ===================== */
-/* EXECUTIVE REPORT UI */
-/* ===================== */
-:root{
- --brand:#D4AF37;
- --ink:#121212;
- --soft:#f5f5f5;
- --border:#e4e4e4;
- --muted:#777;
-}
+    :root {
+        --gold: #D4AF37;
+        --blue: #1A2B4C;
+        --light-gray: #f7f7f7;
+        --text-dark: #333;
+    }
 
-body,.app-content{
- background:white!important;
- color:var(--ink);
- font-family:'Georgia','Times New Roman',serif;
-}
+    body, .app-content {
+        background: #ffffff !important;
+    }
 
-/* COVER */
-.report-cover{
- display:grid;
- grid-template-columns:3fr 1fr;
- gap:40px;
- margin-bottom:50px;
- border-bottom:3px solid var(--brand);
- padding-bottom:35px;
-}
+    /* TÍTULO GENERAL */
+    .section-title {
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--blue);
+        margin-bottom: 25px;
+        letter-spacing: -0.5px;
+    }
 
-.cover-title h1{
- font-size:48px;
- margin:0;
- letter-spacing:-1px;
-}
+    /* CONTENEDOR GRID */
+    .alert-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 22px;
+    }
 
-.cover-title small{
- font-size:12px;
- letter-spacing:.4em;
- color:var(--muted);
-}
+    /* TARJETAS MINIMALISTAS */
+    .alert-card {
+        background: white;
+        border: 1px solid #e8e8e8;
+        padding: 22px;
+        border-radius: 14px;
+        transition: 0.3s ease;
+    }
 
-.cover-meta{
- text-align:right;
- font-size:12px;
-}
+    .alert-card:hover {
+        border-color: var(--gold);
+        box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
+    }
 
-/* SUMMARY */
-.report-summary{
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:30px;
- margin-bottom:50px;
-}
+    .alert-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
 
-.summary-item{
- border-top:3px solid var(--brand);
- padding-top:10px;
-}
+    .alert-header i {
+        font-size: 20px;
+        color: var(--blue);
+    }
 
-.summary-item span{
- display:block;
- color:var(--muted);
- letter-spacing:.2em;
- font-size:11px;
-}
+    .alert-title {
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--blue);
+    }
 
-.summary-item strong{
- font-size:34px;
-}
+    .alert-value {
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--gold);
+        margin-top: 4px;
+    }
 
-/* SECTION */
-.report-section{
- margin-bottom:60px;
-}
+    .divider {
+        height: 1px;
+        background: #eaeaea;
+        margin: 14px 0;
+    }
 
-.section-header{
- display:flex;
- justify-content:space-between;
- align-items:flex-end;
- border-left:4px solid var(--brand);
- padding-left:15px;
- margin-bottom:15px;
-}
+    /* TABLA MINIMALISTA */
+    .table-minimal {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 30px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #eee;
+    }
 
-.section-header h2{
- margin:0;
- font-size:22px;
-}
+    .table-minimal thead {
+        background: var(--blue);
+        color: white;
+    }
 
-.section-header small{
- color:var(--muted);
- font-size:11px;
- letter-spacing:.3em;
-}
+    .table-minimal th {
+        padding: 12px;
+        font-size: 15px;
+        text-align: left;
+    }
 
-/* TEXT BLOCKS */
-.report-block{
- line-height:1.8;
- font-size:14px;
- max-width:880px;
-}
+    .table-minimal td {
+        padding: 14px;
+        border-bottom: 1px solid #f2f2f2;
+        color: var(--text-dark);
+    }
 
-/* ALERT LIST */
-.alert-list{
- margin:0;
- padding:0;
- list-style:none;
-}
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
 
-.alert-list li{
- display:flex;
- justify-content:space-between;
- padding:10px 0;
- border-bottom:1px dotted var(--border);
- font-size:14px;
-}
+    .status-warning { background: #FFF5D6; color: #B38400; }
+    .status-danger { background: #FFE0E0; color: #B30000; }
+    .status-info { background: #E6F0FF; color: #003E95; }
+    .status-safe { background: #E5FFD9; color: #2B7A0B; }
 
-/* TABLE */
-.report-table{
- width:100%;
- border-collapse:collapse;
- font-size:13px;
- margin-top:20px;
-}
-
-.report-table th{
- border-bottom:2px solid var(--brand);
- font-size:11px;
- letter-spacing:.2em;
- text-align:left;
- padding-bottom:6px;
-}
-
-.report-table td{
- border-bottom:1px solid var(--border);
- padding:6px 4px;
-}
-
-/* REPORT FILTER */
-.report-form input, .report-form select{
- width:100%;
- margin-top:8px;
- padding:5px;
- border:1px solid var(--border);
-}
-
-.report-btn{
- margin-top:10px;
- border:1px solid var(--brand);
- background:white;
- padding:6px;
- width:100%;
-}
-
-.report-btn:hover{background:var(--brand);}
-
-/* CALENDAR */
-.report-calendar{
- border:1px dashed var(--border);
- height:150px;
- display:flex;
- align-items:center;
- justify-content:center;
- font-style:italic;
- color:var(--muted);
-}
 </style>
 @endpush
 
-
-@section('title','Reporte Ejecutivo')
-
 @section('content')
 
-{{-- COVER --}}
-<div class="report-cover">
-<div class="cover-title">
-<h1>Corporate Intelligence Report</h1>
-<small>CUSTOMER BEHAVIOR & OPERATIONS</small>
-</div>
-<div class="cover-meta">
-EDITION 2025<br>
-BOARD LEVEL VIEW
-</div>
-</div>
+<div class="container">
 
-{{-- SUMMARY --}}
-<div class="report-summary">
-<div class="summary-item"><span>ACTIVOS</span><strong>{{ $clientesActivos ?? '—' }}</strong></div>
-<div class="summary-item"><span>RIESGO</span><strong>{{ $clientesRiesgo ?? '—' }}</strong></div>
-<div class="summary-item"><span>VENCIDOS</span><strong>{{ $pagosVencidos ?? '—' }}</strong></div>
-<div class="summary-item"><span>VIP</span><strong>{{ $clientesVIP ?? '—' }}</strong></div>
-</div>
+    <h2 class="section-title">🔔 LISTAS</h2>
 
-{{-- ALERTS --}}
-<div class="report-section">
-<div class="section-header">
-<h2>Critical Notifications</h2>
-<small>SYSTEM SIGNALS</small>
-</div>
+    <!-- GRID DE TARJETAS -->
+    <div class="alert-grid">
 
-<ul class="alert-list">
-<li><span>Upcoming payments</span><strong>8</strong></li>
-<li><span>Pending phone calls</span><strong>5</strong></li>
-<li><span>Inactive customers</span><strong>4</strong></li>
-<li><span>Overdue tasks</span><strong>6</strong></li>
-<li><span>Risk exposure</span><strong>3</strong></li>
-<li><span>Automated events</span><strong>2</strong></li>
-</ul>
-</div>
+        <!-- Pagos próximos -->
+        <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-wallet"></i>
+                <span class="alert-title">Pagos próximos</span>
+            </div>
+            <div class="alert-value">12</div>
+            <div class="divider"></div>
+            <small>Clientes con pagos programados los próximos 7 días.</small>
+        </div>
 
-{{-- CLIENTS --}}
-<div class="report-section">
-<div class="section-header">
-<h2>Customer Overview</h2>
-<small>PORTFOLIO SNAPSHOT</small>
-</div>
 
-<table class="report-table">
-<thead>
-<tr><th>ID</th><th>CLIENT</th><th>GROUP</th></tr>
-</thead>
-<tbody>
-@foreach($data as $c)
-<tr>
-<td>{{ $c->num_list }}</td>
-<td>{{ $c->nombre_cliente }}</td>
-<td>{{ $c->grupo }}</td>
-</tr>
-@endforeach
-</tbody>
-</table>
-</div>
+        <!-- Clientes inactivos -->
+        <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-user-clock"></i>
+                <span class="alert-title">Clientes inactivos</span>
+            </div>
+            <div class="alert-value">8</div>
+            <div class="divider"></div>
+            <small>Clientes sin actividad en más de 30 días.</small>
+        </div>
 
-{{-- CALENDAR --}}
-<div class="report-section">
-<div class="section-header">
-<h2>Strategic Calendar</h2>
-<small>SCHEDULE VIEW</small>
-</div>
-<div class="report-calendar">Corporate agenda timeline</div>
-</div>
+        <!-- Tareas vencidas -->
+        <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-exclamation-circle"></i>
+                <span class="alert-title">Tareas vencidas</span>
+            </div>
+            <div class="alert-value">3</div>
+            <div class="divider"></div>
+            <small>Tareas importantes que requieren atención inmediata.</small>
+        </div>
 
-{{-- REPORT --}}
-<div class="report-section">
-<div class="section-header">
-<h2>Revenue Analysis</h2>
-<small>FILTERS</small>
-</div>
+        <!-- Clientes en riesgo -->
+        <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-user-shield"></i>
+                <span class="alert-title">Clientes en riesgo</span>
+            </div>
+            <div class="alert-value">4</div>
+            <div class="divider"></div>
+            <small>Clientes con señales de abandono o retrasos.</small>
+        </div>
 
-<div class="report-form">
-<select><option>User</option></select>
-<input type="date">
-<input type="date">
-<button class="report-btn">Run analysis</button>
-</div>
+      
+
+    </div>
+
+    <!-- TABLA DETALLADA DE ALERTAS -->
+    <table class="table-minimal">
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Tipo de Alerta</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>Juan Pérez</td>
+                <td>Pago próximo</td>
+                <td>10/12/2025</td>
+                <td><span class="status-badge status-warning">Próximo</span></td>
+            </tr>
+
+            <tr>
+                <td>María López</td>
+                <td>Llamada pendiente</td>
+                <td>Hoy</td>
+                <td><span class="status-badge status-info">Pendiente</span></td>
+            </tr>
+
+            <tr>
+                <td>Oscar Díaz</td>
+                <td>Tarea vencida</td>
+                <td>Ayer</td>
+                <td><span class="status-badge status-danger">Vencido</span></td>
+            </tr>
+
+            <tr>
+                <td>Carla Ramos</td>
+                <td>Cliente en riesgo</td>
+                <td>05/12/2025</td>
+                <td><span class="status-badge status-danger">Riesgo</span></td>
+            </tr>
+
+            <tr>
+                <td>Grupo Kora</td>
+                <td>Evento automático</td>
+                <td>Hoy</td>
+                <td><span class="status-badge status-safe">Atendido</span></td>
+            </tr>
+        </tbody>
+    </table>
+
 </div>
 
 @endsection
