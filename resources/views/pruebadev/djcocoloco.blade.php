@@ -1,229 +1,154 @@
 @extends('layouts.app')
 
-@push('styles')
-<style>
-    :root {
-        --gold: #D4AF37;
-        --blue: #1A2B4C;
-        --light-gray: #f7f7f7;
-        --text-dark: #333;
-    }
+@section('title')
+    Catálogo de clientes inactivos
+@endsection
 
-    body, .app-content {
-        background: #ffffff !important;
-    }
-
-    /* TÍTULO GENERAL */
-    .section-title {
-        font-size: 26px;
-        font-weight: 700;
-        color: var(--blue);
-        margin-bottom: 25px;
-        letter-spacing: -0.5px;
-    }
-
-    /* CONTENEDOR GRID */
-    .alert-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 22px;
-    }
-
-    /* TARJETAS MINIMALISTAS */
-    .alert-card {
-        background: white;
-        border: 1px solid #e8e8e8;
-        padding: 22px;
-        border-radius: 14px;
-        transition: 0.3s ease;
-    }
-
-    .alert-card:hover {
-        border-color: var(--gold);
-        box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
-    }
-
-    .alert-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 12px;
-    }
-
-    .alert-header i {
-        font-size: 20px;
-        color: var(--blue);
-    }
-
-    .alert-title {
-        font-size: 17px;
-        font-weight: 700;
-        color: var(--blue);
-    }
-
-    .alert-value {
-        font-size: 32px;
-        font-weight: 800;
-        color: var(--gold);
-        margin-top: 4px;
-    }
-
-    .divider {
-        height: 1px;
-        background: #eaeaea;
-        margin: 14px 0;
-    }
-
-    /* TABLA MINIMALISTA */
-    .table-minimal {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 30px;
-        border-radius: 12px;
-        overflow: hidden;
-        border: 1px solid #eee;
-    }
-
-    .table-minimal thead {
-        background: var(--blue);
-        color: white;
-    }
-
-    .table-minimal th {
-        padding: 12px;
-        font-size: 15px;
-        text-align: left;
-    }
-
-    .table-minimal td {
-        padding: 14px;
-        border-bottom: 1px solid #f2f2f2;
-        color: var(--text-dark);
-    }
-
-    .status-badge {
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        text-transform: uppercase;
-    }
-
-    .status-warning { background: #FFF5D6; color: #B38400; }
-    .status-danger { background: #FFE0E0; color: #B30000; }
-    .status-info { background: #E6F0FF; color: #003E95; }
-    .status-safe { background: #E5FFD9; color: #2B7A0B; }
-
-</style>
+@push('scripts')
+    <script src="{{ asset('js/cliente/CatalogoClientes.js') }}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
 
 @section('content')
 
-<div class="container">
+<style>
+/* ================= PAGINACIÓN MEJORADA ================= */
+.dataTables_wrapper .dataTables_info {
+    font-size: 13px;
+    color: #7e8299;
+    padding-top: 12px;
+}
 
-    <h2 class="section-title">🔔 LISTAS</h2>
+.dataTables_wrapper .dataTables_paginate {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 6px;
+    padding-top: 10px;
+}
 
-    <!-- GRID DE TARJETAS -->
-    <div class="alert-grid">
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    min-width: 36px;
+    height: 36px;
+    line-height: 36px;
+    padding: 0 12px;
+    margin: 0 2px;
+    border-radius: 8px;
+    border: 1px solid #e4e6ef;
+    background: #ffffff;
+    color: #7e8299 !important;
+    font-weight: 500;
+    transition: all .2s ease;
+}
 
-        <!-- Pagos próximos -->
-        <div class="alert-card">
-            <div class="alert-header">
-                <i class="fas fa-wallet"></i>
-                <span class="alert-title">Pagos próximos</span>
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #fff4de !important;
+    border-color: #ffa800;
+    color: #000 !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #ffa800 !important;
+    border-color: #ffa800;
+    color: #000 !important;
+    font-weight: 600;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dataTables_wrapper .dataTables_paginate {
+        justify-content: center;
+    }
+}
+</style>
+
+<div class="d-flex flex-row">
+    <div class="flex-row-fluid">
+        <div class="d-flex flex-column flex-grow-1">
+            <div class="row">
+                <div class="col-xl-12">
+
+                    <div class="card card-custom">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <span class="card-icon">
+                                    <i class="flaticon2-file text-warning"></i>
+                                </span>
+                                <h3 class="card-label">
+                                    Inventario de clientes inactivos
+                                    <small class="text-muted d-block mt-1">
+                                        Clientes sin actividad reciente
+                                    </small>
+                                </h3>
+                            </div>
+
+                            <div class="card-toolbar">
+                                <a href="{{ route('cliente.listadocliente') }}"
+                                   class="btn btn-light-warning font-weight-bold">
+                                   <i class="la la-arrow-left"></i> Regresar
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <table class="table table-hover table-checkable"
+                                   id="kdatatable_clientes_inactivos">
+
+                                <thead>
+                                <tr>
+                                    <th>Razón social</th>
+                                    <th>Nombre cliente</th>
+                                    <th>Grupo</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                @foreach($data as $unid)
+                                    <tr>
+                                        <td>{{ $unid->razon_social }}</td>
+                                        <td>{{ $unid->nombre_cliente }}</td>
+                                        <td>
+                                            <span class="label label-inline label-light-warning font-weight-bold">
+                                                Grupo {{ $unid->grupo }}
+                                            </span>
+                                        </td>
+                                        <td class="text-center">
+                                            <button
+                                                class="btn btn-icon btn-outline-warning activar-cliente"
+                                                data-id="{{ $unid->id }}"
+                                                data-nombre="{{ $unid->razon_social }}"
+                                                data-toggle="tooltip"
+                                                title="Activar cliente">
+                                                <i class="flaticon2-reply"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+
+                            </table>
+
+                            <input type="hidden" id="datatable_i18n"
+                                   value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <div class="alert-value">12</div>
-            <div class="divider"></div>
-            <small>Clientes con pagos programados los próximos 7 días.</small>
         </div>
-
-
-        <!-- Clientes inactivos -->
-        <div class="alert-card">
-            <div class="alert-header">
-                <i class="fas fa-user-clock"></i>
-                <span class="alert-title">Clientes inactivos</span>
-            </div>
-            <div class="alert-value">8</div>
-            <div class="divider"></div>
-            <small>Clientes sin actividad en más de 30 días.</small>
-        </div>
-
-        <!-- Tareas vencidas -->
-        <div class="alert-card">
-            <div class="alert-header">
-                <i class="fas fa-exclamation-circle"></i>
-                <span class="alert-title">Tareas vencidas</span>
-            </div>
-            <div class="alert-value">3</div>
-            <div class="divider"></div>
-            <small>Tareas importantes que requieren atención inmediata.</small>
-        </div>
-
-        <!-- Clientes en riesgo -->
-        <div class="alert-card">
-            <div class="alert-header">
-                <i class="fas fa-user-shield"></i>
-                <span class="alert-title">Clientes en riesgo</span>
-            </div>
-            <div class="alert-value">4</div>
-            <div class="divider"></div>
-            <small>Clientes con señales de abandono o retrasos.</small>
-        </div>
-
-      
-
     </div>
-
-    <!-- TABLA DETALLADA DE ALERTAS -->
-    <table class="table-minimal">
-        <thead>
-            <tr>
-                <th>Cliente</th>
-                <th>Tipo de Alerta</th>
-                <th>Fecha</th>
-                <th>Estado</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr>
-                <td>Juan Pérez</td>
-                <td>Pago próximo</td>
-                <td>10/12/2025</td>
-                <td><span class="status-badge status-warning">Próximo</span></td>
-            </tr>
-
-            <tr>
-                <td>María López</td>
-                <td>Llamada pendiente</td>
-                <td>Hoy</td>
-                <td><span class="status-badge status-info">Pendiente</span></td>
-            </tr>
-
-            <tr>
-                <td>Oscar Díaz</td>
-                <td>Tarea vencida</td>
-                <td>Ayer</td>
-                <td><span class="status-badge status-danger">Vencido</span></td>
-            </tr>
-
-            <tr>
-                <td>Carla Ramos</td>
-                <td>Cliente en riesgo</td>
-                <td>05/12/2025</td>
-                <td><span class="status-badge status-danger">Riesgo</span></td>
-            </tr>
-
-            <tr>
-                <td>Grupo Kora</td>
-                <td>Evento automático</td>
-                <td>Hoy</td>
-                <td><span class="status-badge status-safe">Atendido</span></td>
-            </tr>
-        </tbody>
-    </table>
-
 </div>
+
+<form method="post" id="cliente_act_form"
+      action="{{ route('cliente.activarcliente') }}">
+    @csrf
+    <input type="hidden" name="id" id="id_delete">
+</form>
 
 @endsection
