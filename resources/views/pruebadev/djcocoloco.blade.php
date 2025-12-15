@@ -1,154 +1,103 @@
 @extends('layouts.app')
 
-@section('title')
-    Catálogo de clientes inactivos
-@endsection
-
 @push('scripts')
-    <script src="{{ asset('js/cliente/CatalogoClientes.js') }}"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <script src="{{ asset('js/cliente/AgregarCliente.js') }}"></script>
 @endpush
+
+@section('title')
+    Agregar cliente
+@endsection
 
 @section('content')
 
 <style>
-/* ================= PAGINACIÓN MEJORADA ================= */
-.dataTables_wrapper .dataTables_info {
-    font-size: 13px;
-    color: #7e8299;
-    padding-top: 12px;
-}
-
-.dataTables_wrapper .dataTables_paginate {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 6px;
-    padding-top: 10px;
-}
-
-.dataTables_wrapper .dataTables_paginate .paginate_button {
-    min-width: 36px;
-    height: 36px;
-    line-height: 36px;
-    padding: 0 12px;
-    margin: 0 2px;
-    border-radius: 8px;
-    border: 1px solid #e4e6ef;
-    background: #ffffff;
-    color: #7e8299 !important;
+/* ===== ESTILO TABS AGREGAR CLIENTE ===== */
+.nav-tabs.nav-tabs-line .nav-link {
+    color: #6c757d; /* Gris */
     font-weight: 500;
-    transition: all .2s ease;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    background: #fff4de !important;
-    border-color: #ffa800;
-    color: #000 !important;
+.nav-tabs.nav-tabs-line .nav-link.active,
+.nav-tabs.nav-tabs-line .nav-item.show .nav-link {
+    color: #FFC107; /* Amarillo warning */
+    border-bottom: 2px solid #FFC107;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button.current {
-    background: #ffa800 !important;
-    border-color: #ffa800;
-    color: #000 !important;
-    font-weight: 600;
-}
-
-.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .dataTables_wrapper .dataTables_paginate {
-        justify-content: center;
-    }
+.nav-tabs.nav-tabs-line .nav-link:hover {
+    color: #FFB300;
 }
 </style>
 
-<div class="d-flex flex-row">
-    <div class="flex-row-fluid">
-        <div class="d-flex flex-column flex-grow-1">
-            <div class="row">
-                <div class="col-xl-12">
+<!--begin::Card-->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-custom gutter-b">
+            <div class="card-header">
+                <h3 class="card-title">Agregar Cliente</h3>
+                <div class="card-toolbar">
+                    <a href="{{ route('cliente.listadocliente') }}"
+                       class="btn btn-sm btn-clean btn-hover-icon-success btn-icon"
+                       data-toggle="tooltip" data-theme="dark" title="Salir">
+                        <i class="flaticon2-reply"></i>
+                    </a>
+                </div>
+            </div>
 
-                    <div class="card card-custom">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <span class="card-icon">
-                                    <i class="flaticon2-file text-warning"></i>
-                                </span>
-                                <h3 class="card-label">
-                                    Inventario de clientes inactivos
-                                    <small class="text-muted d-block mt-1">
-                                        Clientes sin actividad reciente
-                                    </small>
-                                </h3>
-                            </div>
+            <!--begin::Form-->
+            <form action="{{ route('cliente.guardarcliente') }}" method="post" id="submit_cliente" enctype="multipart/form-data">
+                @csrf
 
-                            <div class="card-toolbar">
-                                <a href="{{ route('cliente.listadocliente') }}"
-                                   class="btn btn-light-warning font-weight-bold">
-                                   <i class="la la-arrow-left"></i> Regresar
-                                </a>
-                            </div>
+                <div class="card-body">
+
+                    <!--begin::tabs-->
+                    <ul class="nav nav-tabs nav-tabs-line">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1">
+                                Información del Cliente
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2">
+                                Documentación
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content mt-5" id="myTabContent">
+
+                        <div class="tab-pane fade show active mt-10" id="kt_tab_pane_1" role="tabpanel">
+
+                            <!-- === AQUÍ CONTINÚA TU CONTENIDO SIN CAMBIOS === -->
+                            <!-- (todo lo demás se queda exactamente igual) -->
+
                         </div>
 
-                        <div class="card-body">
-                            <table class="table table-hover table-checkable"
-                                   id="kdatatable_clientes_inactivos">
-
-                                <thead>
-                                <tr>
-                                    <th>Razón social</th>
-                                    <th>Nombre cliente</th>
-                                    <th>Grupo</th>
-                                    <th class="text-center">Acciones</th>
-                                </tr>
-                                </thead>
-
-                                <tbody>
-                                @foreach($data as $unid)
-                                    <tr>
-                                        <td>{{ $unid->razon_social }}</td>
-                                        <td>{{ $unid->nombre_cliente }}</td>
-                                        <td>
-                                            <span class="label label-inline label-light-warning font-weight-bold">
-                                                Grupo {{ $unid->grupo }}
-                                            </span>
-                                        </td>
-                                        <td class="text-center">
-                                            <button
-                                                class="btn btn-icon btn-outline-warning activar-cliente"
-                                                data-id="{{ $unid->id }}"
-                                                data-nombre="{{ $unid->razon_social }}"
-                                                data-toggle="tooltip"
-                                                title="Activar cliente">
-                                                <i class="flaticon2-reply"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-
-                            </table>
-
-                            <input type="hidden" id="datatable_i18n"
-                                   value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
+                        <div class="tab-pane fade mt-10" id="kt_tab_pane_2" role="tabpanel">
+                            <!-- CONTENIDO DOCUMENTACIÓN -->
                         </div>
+
                     </div>
 
                 </div>
-            </div>
+
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <button type="button" id="btnGuardar" class="btn btn-warning mr-2">
+                                Guardar
+                            </button>
+                            <a href="{{ route('cliente.listadocliente') }}" class="btn btn-secondary">
+                                Cancelar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+            <!--end::Form-->
         </div>
     </div>
 </div>
-
-<form method="post" id="cliente_act_form"
-      action="{{ route('cliente.activarcliente') }}">
-    @csrf
-    <input type="hidden" name="id" id="id_delete">
-</form>
+<!--end::Card-->
 
 @endsection
