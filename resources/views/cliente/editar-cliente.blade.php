@@ -16,7 +16,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Editar Cliente</h3>
                      <div class="card-toolbar">
-                     <a href="{{ route('cliente.listadocliente') }}"  class="btn btn-secondary">Regresar</a>
+                     <a href="{{ route('cliente.listadocliente') }}"  class="btn btn-warning">Regresar</a>
                      </div>
                 </div>
 
@@ -155,7 +155,7 @@
 
                                             <div class="row form-group">
                                                 <div class="col-lg-12">
-                                                    <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                                    <a href="#" class="btn btn-icon btn-outline-warning btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
                                                         <i class="flaticon2-plus"></i>
                                                     </a>
                                                 </div>
@@ -236,7 +236,7 @@
                                             <td><a href="{{ route('archivo.documentoCliente', ['id'=>$documento->id]) }}" class="link-primary" target="_blank"> {{ $documento->clienteTipoDocumento->nombre_documento }} </a></td>
                                             <td>{{ $documento->clienteTipoDocumento->nombre_documento }}</td>
                                             <td>
-                                                <a href='#' class='btn btn-sm btn-clean btn-hover-icon-success btn-icon hrefEliminarDocumento2' data-id='{{ $documento->id }}' data-documento='{{ $documento->documento }}'  data-toggle='tooltip' data-theme='dark' title='Eliminar'>
+                                                <a href='#' class='btn btn-sm btn-clean btn-hover-icon-warning btn-icon hrefEliminarDocumento2' data-id='{{ $documento->id }}' data-documento='{{ $documento->documento }}'  data-toggle='tooltip' data-theme='dark' title='Eliminar'>
                                                     <i class='flaticon-delete'></i>
                                                 </a>
                                             </td>
@@ -247,7 +247,7 @@
 
                             <div class="row form-group">
                                 <div class="col-lg-12">
-                                    <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro2" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                    <a href="#" class="btn btn-icon btn-outline-warning btn-circle btn-sm mr-2 hrefAgregarOtro2" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
                                         <i class="flaticon2-plus"></i>
                                     </a>
                                 </div>
@@ -264,7 +264,7 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-lg-6">
-                                <button type="button"  id="btnGuardar" class="btn btn-primary mr-2">Guardar</button>
+                                <button type="button"  id="btnGuardar" class="btn btn-warning mr-2">Guardar</button>
                                 <a href="{{ route('cliente.listadocliente') }}"  class="btn btn-secondary">Cancelar</a>
                             </div>
                         </div>

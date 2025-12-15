@@ -15,7 +15,7 @@
                 <div class="card-header">
                     <h3 class="card-title"> Cliente</h3>
                     <div class="card-toolbar">
-                    <a href="{{ route('cliente.listadocliente') }}"  class="btn btn-secondary">Regresar</a>
+                    <a href="{{ route('cliente.listadocliente') }}"  class="btn btn-warning">Regresar</a>
                     </div>
                 </div>
 

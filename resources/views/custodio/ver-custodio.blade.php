@@ -16,10 +16,10 @@
 
 		</div>
         <div class="card-toolbar">
-				<a type="submit" href="{{ route('custodio.fichatecnica', $custodio->id) }}"   class="btn btn-outline-success">
+				<a type="submit" href="{{ route('custodio.fichatecnica', $custodio->id) }}"   class="btn btn-outline-warning">
 	   	 			<i class="flaticon2-poll-symbol"></i> Ficha técnica
 				</a>
-				                            <a href="{{ route('custodio.listadocustodio') }}" class="btn btn-sm btn-clean btn-hover-icon-success btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
+				                            <a href="{{ route('custodio.listadocustodio') }}" class="btn btn-sm btn-clean btn-hover-icon-warning btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
         </div>
 	</div>
 	<div class="card-body">
