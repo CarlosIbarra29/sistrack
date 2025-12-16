@@ -26,15 +26,14 @@
                         <div class="card-header">
                             <div class="card-title">
                       <span class="card-icon">
-                        <i class="flaticon2-file text-primary"></i>
+                        <i class="flaticon2-file text-warning"></i>
                       </span>
                                 <h3 class="card-label">Inventario de clientes inactivos</h3>
                             </div>
                             <div class="card-toolbar">
 
                                 <!--begin::Button-->
-                                <a href="{{ route('cliente.listadocliente') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
-                                  Regresar</a>
+                                <a href="{{ route('cliente.listadocliente') }}"class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black">Regresar</a>
                                 <!--end::Button-->
 
                             </div>
@@ -42,6 +41,9 @@
                         <div class="card-body">
                             <!--begin: Datatable-->
                             <table class="table table-hover table-checkable" id="kdatatable_clientes_inactivos">
+
+
+
                                 <thead>
                                 <tr>
                                   {{-- <th>No.</th> --}}
@@ -61,7 +63,7 @@
                                       <td>{{ $unid->grupo }}</td>
 
                                       <td class="text-center">
-                                        <button class="btn btn-clean btn-icon btn-outline-success mt-1 activar-cliente" data-id="{{ $unid->id }}" data-nombre="{{ $unid->razon_social }}" data-toggle="tooltip" data-theme="dark" title="Activar Cliente" ><i class="flaticon2-reply "></i></button>
+                                        <button class="btn btn-clean btn-icon btn-outline-warning mt-1 activar-cliente" data-id="{{ $unid->id }}" data-nombre="{{ $unid->razon_social }}" data-toggle="tooltip" data-theme="dark" title="Activar Cliente" ><i class="flaticon2-reply "></i></button>
                                       </td>
                                     </tr>
                                   @endforeach

@@ -1,5 +1,7 @@
 @extends('layouts.app')
+
 @push('scripts')
+<<<<<<< HEAD
 <<<<<<< HEAD
   <script src="{{ asset('js/cliente/CatalogoClientes.js') }}"></script>
   <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -198,146 +200,106 @@
     }
 </style>
 
+=======
+    <script src="{{ asset('js/cliente/AgregarCliente.js') }}"></script>
+>>>>>>> 57ac616e540f14b87531ac072f3dc43a92e4f729
 @endpush
 
 @section('title')
-  Inventario de clientes
+    Agregar cliente
 @endsection
 
 @section('content')
 
-    <div class="d-flex flex-row">
+<style>
+/* ===== ESTILO TABS AGREGAR CLIENTE ===== */
+.nav-tabs.nav-tabs-line .nav-link {
+    color: #6c757d; /* Gris */
+    font-weight: 500;
+}
 
-        <div class="flex-row-fluid">
-        <div class="d-flex flex-column flex-grow-1">
+.nav-tabs.nav-tabs-line .nav-link.active,
+.nav-tabs.nav-tabs-line .nav-item.show .nav-link {
+    color: #FFC107; /* Amarillo warning */
+    border-bottom: 2px solid #FFC107;
+}
 
-                <div class="row">
-                <div class="col-xl-12">
+.nav-tabs.nav-tabs-line .nav-link:hover {
+    color: #FFB300;
+}
+</style>
 
-                    <div class="card card-custom shadow-lg"> 
-                
-                        <div class="card-header bg-white border-0 py-4">
-                            <div class="card-title">
-                                <span class="card-icon">
-                                    <i class="flaticon2-file text-primary"></i>
-                                </span>
-                                <h3 class="card-label font-weight-bolder text-dark">Inventario de clientes</h3>
-                            </div>
-                            <div class="card-toolbar">
-
-                                @if (in_array("6", Session::get('permisos'))) 
-                                    <a href="{{ route('cliente.agregarcliente') }}" class="btn btn-primary font-weight-bolder mr-3 ml-3">
-                                        <i class="la la-plus"></i>Nuevo Cliente
-                                    </a>
-                                @endif
-
-                                <a href="{{ route('cliente.listadoclienteinactivo') }}" class="btn btn-light-secondary font-weight-bolder mr-3 ml-3">
-                                    <i class="far fa-trash-alt"></i>Clientes inactivos
-                                </a>
-
-                                <div class="dropdown dropdown-inline mr-2">
-                                    <button type="button" class="btn btn-outline-secondary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Exportar
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                        <ul class="navi flex-column navi-hover py-2">
-                                            <li class="navi-item"><a href="#" class="navi-link" id="export-excel"><span class="navi-icon"><i class="la la-file-excel-o"></i></span><span class="navi-text">Excel</span></a></li>
-                                            <li class="navi-item"><a href="#" class="navi-link" id="export-csv"><span class="navi-icon"><i class="la la-file-text-o"></i></span><span class="navi-text">CSV</span></a></li>
-                                            <li class="navi-item"><a href="#" class="navi-link" id="export-print"><span class="navi-icon"><i class="la la-file-text-o"></i></span><span class="navi-text">Imprimir</span></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-body">
-
-                            <table class="table table-striped table-borderless table-hover" id="kdatatable_clientes">
-                                <thead>
-                                <tr>
-                                    <th>Folio.</th>
-                                    <th>Razon social</th>
-                                    <th>Nombre cliente</th>
-                                    <th>Grupo</th>
-                                    <th class="text-center">Estado</th>
-                                    <th class="text-center">Opciones</th>
-                                </tr>
-                                </thead>
-
-                                <tbody> 
-                                @php $num = 1; @endphp
-                                @foreach($data as $unid)
-                                    <tr>
-                                        <td>{{ $unid->num_list }}</td>
-                                        <td>{{ $unid->razon_social }}</td>
-                                        <td>{{ $unid->nombre_cliente }}</td>
-                                        <td>{{ $unid->grupo }}</td>
-
-                                        {{-- Estado Activo verde --}}
-                                        <td class="text-center">
-                                            <span class="badge-active-green">
-                                                <i class="fas fa-check-circle"></i> Activo
-                                            </span>
-                                        </td>
-
-                                        <td>
-                                            {{-- Ver --}}
-                                            <a href="{{ route('cliente.vercliente', $unid->id) }}" 
-                                               class="btn btn-sm btn-icon btn-outline-gold mr-1" 
-                                               title="Ver cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
-                                                <i class="flaticon-eye icon-gold"></i>
-                                            </a>
-
-                                            {{-- Editar --}}
-                                            <a href="{{ route('cliente.editarcliente', $unid->id) }}" 
-                                               class="btn btn-sm btn-icon btn-outline-gold mr-1" 
-                                               title="Editar cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
-                                                <i class="flaticon-edit icon-gold"></i>
-                                            </a>
-
-                                            {{-- Eliminar --}}
-                                            <button class="btn btn-sm btn-icon btn-outline-gold" 
-                                                    onClick="deletecliente(`{{ $unid->id }} `,`{{ $unid->id }}`)" 
-                                                    data-toggle="modal" data-target="#model_delete_user" 
-                                                    data-toggle="tooltip" data-theme="dark" title="Desactivar cliente">
-                                                <i class="flaticon-delete icon-gold"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    @php $num ++; @endphp
-                                @endforeach
-                                </tbody>
-
-                                <tfoot>
-                                <tr>
-                                    <th>Folio.</th>
-                                    <th>Razon social</th>
-                                    <th>Nombre cliente</th>
-                                    <th>Grupo</th>
-                                    <th class="text-center">Estado</th>
-                                    <th class="text-center">Opciones</th>
-                                </tr>
-                                </tfoot>
-
-                            </table>
-
-                            <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
-                        </div>
-                    </div>
+<!--begin::Card-->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-custom gutter-b">
+            <div class="card-header">
+                <h3 class="card-title">Agregar Cliente</h3>
+                <div class="card-toolbar">
+                    <a href="{{ route('cliente.listadocliente') }}"
+                       class="btn btn-sm btn-clean btn-hover-icon-success btn-icon"
+                       data-toggle="tooltip" data-theme="dark" title="Salir">
+                        <i class="flaticon2-reply"></i>
+                    </a>
                 </div>
             </div>
 
-        </div>
+            <!--begin::Form-->
+            <form action="{{ route('cliente.guardarcliente') }}" method="post" id="submit_cliente" enctype="multipart/form-data">
+                @csrf
+
+                <div class="card-body">
+
+                    <!--begin::tabs-->
+                    <ul class="nav nav-tabs nav-tabs-line">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1">
+                                Información del Cliente
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2">
+                                Documentación
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content mt-5" id="myTabContent">
+
+                        <div class="tab-pane fade show active mt-10" id="kt_tab_pane_1" role="tabpanel">
+
+                            <!-- === AQUÍ CONTINÚA TU CONTENIDO SIN CAMBIOS === -->
+                            <!-- (todo lo demás se queda exactamente igual) -->
+
+                        </div>
+
+                        <div class="tab-pane fade mt-10" id="kt_tab_pane_2" role="tabpanel">
+                            <!-- CONTENIDO DOCUMENTACIÓN -->
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <button type="button" id="btnGuardar" class="btn btn-warning mr-2">
+                                Guardar
+                            </button>
+                            <a href="{{ route('cliente.listadocliente') }}" class="btn btn-secondary">
+                                Cancelar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+            <!--end::Form-->
         </div>
     </div>
-
-{{-- M O D A L S --}}
-<form method="post" id="cliente_delete_form" action="{{ route('cliente.desactivarclientelistado') }}" enctype="multipart/form-data">
-    @csrf
-    <input type="hidden" name="id" id="id_cliente_delete" value="">
-</form>
-
-<input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
+</div>
+<!--end::Card-->
 
 >>>>>>> dd131c9bfd9d89d6618879dfe112cac17b1611e3
 @endsection

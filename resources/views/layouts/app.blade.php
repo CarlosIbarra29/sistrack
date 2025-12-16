@@ -127,7 +127,7 @@
                                 <span class="menu-text">Tablero</span>
                             </a>
                         </li>
-                        @if (in_array("1", Session::get('permisos')) || in_array("2", Session::get('permisos')) || in_array("5", Session::get('permisos')) || in_array("6", Session::get('permisos')) )
+                        @if (in_array("1", Session::get('permisos', [])) || in_array("2", Session::get('permisos', [])))
                             <li id="menuAdministracion" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="javascript:;" class="menu-link menu-toggle">
                                     <i class="flaticon2-user-1 menu-icon"></i>
@@ -139,7 +139,7 @@
                                     <ul class="menu-subnav">
 
                                         {{-- USUARIOS --}}
-                                        @if (in_array("5", Session::get('permisos')) || in_array("6", Session::get('permisos')) )  
+                                        @if (in_array("3", Session::get('permisos', [])) || in_array("6", Session::get('permisos', []))) 
                                             <li id="menuUsuarios" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                                 <a href="{{ route('user.catalogousuarios') }}" class="menu-link menu-toggle">
                                                     <i class="flaticon-users-1 menu-icon"></i>

@@ -15,7 +15,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Agregar Cliente</h3>
                     <div class="card-toolbar">
-                        <a href="{{ route('cliente.listadocliente') }}" class="btn btn-sm btn-clean btn-hover-icon-success btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
+                        <a href="{{ route('cliente.listadocliente') }}" class="btn btn-sm btn-clean btn-hover-icon-warning btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
                     </div>
                 </div>
                 <!--begin::Form-->
@@ -131,7 +131,7 @@
 
                                                 <div class="row form-group">
                                                     <div class="col-lg-12">
-                                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                                        <a href="#" class="btn btn-icon btn-outline-warning btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
                                                             <i class="flaticon2-plus"></i>
                                                         </a>
                                                     </div>
@@ -168,7 +168,7 @@
 
                                                 <div class="row form-group">
                                                     <div class="col-lg-12">
-                                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro1" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                                        <a href="#" class="btn btn-icon btn-outline-warning btn-circle btn-sm mr-2 hrefAgregarOtro1" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
                                                             <i class="flaticon2-plus"></i>
                                                         </a>
                                                     </div>
@@ -208,7 +208,7 @@
 
                                 <div class="row form-group">
                                     <div class="col-lg-12">
-                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro2" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                        <a href="#" class="btn btn-icon btn-outline-warning btn-circle btn-sm mr-2 hrefAgregarOtro2" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
                                             <i class="flaticon2-plus"></i>
                                         </a>
                                     </div>
@@ -228,7 +228,7 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-lg-6">
-                                <button type="button"  id="btnGuardar" class="btn btn-primary mr-2">Guardar</button>
+                                <button type="button"  id="btnGuardar" class="btn btn-warning mr-2">Guardar</button>
                                 <a href="{{ route('cliente.listadocliente') }}"  class="btn btn-secondary">Cancelar</a>
                             </div>
                         </div>
