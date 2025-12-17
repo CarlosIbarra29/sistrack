@@ -15,7 +15,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Agregar Cliente</h3>
                     <div class="card-toolbar">
-                        <a href="{{ route('cliente.listadocliente') }}" class="btn btn-sm btn-clean btn-hover-icon-warning btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
+                        <a href="{{ route('cliente.listadocliente') }}" class="btn btn-sm btn-clean btn-hover-icon-success btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
                     </div>
                 </div>
                 <!--begin::Form-->
@@ -175,7 +175,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> --}}
+                                    </div> --}}  
                                 </div>
 
 
