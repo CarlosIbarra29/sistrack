@@ -155,7 +155,7 @@
 
                                             <div class="row form-group">
                                                 <div class="col-lg-12">
-                                                    <a href="#" class="btn btn-icon btn-outline-warning btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                                    <a href="#" class="btn btn-icon btn-outline-warning  btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
                                                         <i class="flaticon2-plus"></i>
                                                     </a>
                                                 </div>
