@@ -35,7 +35,7 @@ class Folio
 
         $folio = ClienteFolio::latest('id')->first();
         // dd($folio);
-        $folio = $folio->folio ? ++$folio->folio : 1;
+        
          
         $folioModel = new ClienteFolio();
         $folioModel->folio = $folio;

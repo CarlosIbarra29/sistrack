@@ -94,7 +94,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
-                                    <label>Estadía no armada</label>
+                                    <label>Costo por estadía no armada</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend"><span class="input-group-text">$</span></div>
                                         <input type="text" class="form-control form-control-solid" name="costo_estadia_armada" id="costo_estadia_armada" />
@@ -106,27 +106,122 @@
 
                             <div class="d-flex align-items-center justify-content-between mb-6">
                                 <h4 class="card-title-custom">Contactos Operativos</h4>
-                                <button type="button" class="btn btn-sm btn-light-primary font-weight-bolder hrefAgregarOtro">
-                                    <i class="flaticon2-plus"></i> Agregar Contacto
-                                </button>
                             </div>
 
                            
-                            <div class="table-responsive">
-                                <table class="table table-head-custom table-vertical-center" id="tblDocumentos">
-                                    <thead>
-                                        <tr>
-                                            <th>Tipo contacto</th>
-                                            <th>Nombre contacto</th>
-                                            <th>Email</th>
-                                            <th>Teléfono</th>
-                                            <th class="text-right">Acción</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tbodyDocumentos">
-                                        </tbody>
-                                </table>
+                            <input type='hidden' id='tipoArchivo2' value='{{ $cadenatipocliente }}'>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="card card-custom gutter-b">
+                                            <div class="card-header">
+                                                <div class="card-title">
+                                                    <h3 class="card-label">
+                                                        <small>Contacto operativo</small>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row form-group" >
+                                                    <div class="col-lg-12" id="tblArchivos">
+                                                        
+                                                        <table class='table table-bordered table-hover' id='tblDocumentos'>
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Tipo contacto</th>
+                                                                <th>Nombre contacto</th>
+                                                                <th>Email</th>
+                                                                <th>Telefono</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody id='tbodyDocumentos'>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row form-group">
+                                                    <div class="col-lg-12">
+                                                        <a href="#" class="btn btn-icon btn-outline-warning btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                                            <i class="flaticon2-plus"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+<!-- {{--                                     <div class="col-lg-12">
+                                        <div class="card card-custom gutter-b">
+                                            <div class="card-header">
+                                                <div class="card-title">
+                                                    <h3 class="card-label">
+                                                        <small>Contacto facturación y cobranza</small>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                              <div class="row form-group" >
+                                                    <div class="col-lg-12" id="tblArchivos1">
+                                                        <table class='table table-bordered table-hover' id='tblDocumentos1'>
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Nombre contacto</th>
+                                                                <th>Email</th>
+                                                                <th>Telefono</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody id='tbodyDocumentos1'>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row form-group">
+                                                    <div class="col-lg-12">
+                                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro1" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                                            <i class="flaticon2-plus"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> --}} -->
+                                </div>
+
+
+                               
+
+
+                            <div class="tab-pane fade mt-10" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
+                                <input type='hidden' id='tipoArchivo' value='{{ $cadenaTipoDocumento }}'>
+                                <div class="row form-group" >
+                                    <div class="col-lg-12" id="tblArchivos2">
+                                        <table class='table table-bordered table-hover' id='tblDocumentos2'>
+                                            <thead>
+                                            <tr>
+                                                <th>Adjuntar Documento</th>
+                                                <th>Tipo de Documento</th>
+                                                <th>Opción</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id='tbodyDocumentos2'>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-lg-12">
+                                        <a href="#" class="btn btn-icon btn-outline-warning btn-circle btn-sm mr-2 hrefAgregarOtro2" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                            <i class="flaticon2-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
+
+
+
+                            
 
                             <div class="row mt-10">
                                 <div class="col-lg-12">
@@ -134,8 +229,9 @@
                                     <textarea class="form-control form-control-solid" name="observaciones" id="observaciones" rows="3" placeholder="Notas o detalles importantes..."></textarea>
                                 </div>
                             </div>
-                        </div>
 
+                        
+                        
                         <div class="tab-pane fade mt-5" id="kt_tab_pane_2" role="tabpanel">
                             <div class="d-flex align-items-center justify-content-between mb-6">
                                 <h4 class="card-title-custom">Expediente Digital</h4>
@@ -164,11 +260,11 @@
                 <div class="card-footer d-flex justify-content-between">
                     <a href="{{ route('cliente.listadocliente') }}" class="btn btn-secondary font-weight-bold">Cancelar</a>
                     <button type="button" id="btnGuardar" class="btn btn-warning font-weight-bold px-10">
-                        <i class="flaticon2-check-mark"></i> Guardar Cliente
+                         <a href="{{ route('cliente.guardarcliente') }}" class=" flaticon2-check-mark btn-warning font-weight-bold">Guardar</a>
                     </button>
                 </div>
             </form>
         </div>
-    </div>
+    </div>s
 </div>
 @endsection
