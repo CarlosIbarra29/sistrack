@@ -1,107 +1,101 @@
 @extends('layouts.app')
-
 @section('title')
     Catálogo de clientes inactivos
 @endsection
-
 @push('scripts')
-  <script src="{{ asset('js/cliente/CatalogoClientes.js') }}"></script>
-  <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <script src="{{ asset('js/cliente/CatalogoClientes.js') }}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
-
-
 @section('content')
-    <div class="d-flex flex-row">
 
-    <!--begin::List-->
-    <div class="flex-row-fluid">
-        <div class="d-flex flex-column flex-grow-1">
+<div class="container-fluid">
 
-            <!--begin::Row-->
-            <div class="row">
-                <div class="col-xl-12">
-
-                <!--begin::Card-->
-                    <div class="card card-custom">
-                        <div class="card-header">
-                            <div class="card-title">
-                      <span class="card-icon">
-                        <i class="flaticon2-file text-warning"></i>
-                      </span>
-                                <h3 class="card-label">Inventario de clientes inactivos</h3>
-                            </div>
-                            <div class="card-toolbar">
-
-                                <!--begin::Button-->
-                                <a href="{{ route('cliente.listadocliente') }}"class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black">Regresar</a>
-                                <!--end::Button-->
-
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <!--begin: Datatable-->
-                            <table class="table table-hover table-checkable" id="kdatatable_clientes_inactivos">
-
-
-
-                                <thead>
-                                <tr>
-                                  {{-- <th>No.</th> --}}
-                                  <th>Razon social</th>
-                                  <th>Nombre cliente</th>
-                                  <th>Grupo</th>
-                                  <th class="text-center">Acciones</th>
-                                </tr>
-                                </thead>
-
-                                <tbody>
-                                  @foreach($data as $unid)
-                                    <tr>
-                                      {{-- <td>{{ $unid->id }}</td> --}}
-                                      <td>{{ $unid->razon_social }}</td>
-                                      <td>{{ $unid->nombre_cliente }}</td>
-                                      <td>{{ $unid->grupo }}</td>
-
-                                      <td class="text-center">
-                                        <button class="btn btn-clean btn-icon btn-outline-warning mt-1 activar-cliente" data-id="{{ $unid->id }}" data-nombre="{{ $unid->razon_social }}" data-toggle="tooltip" data-theme="dark" title="Activar Cliente" ><i class="flaticon2-reply "></i></button>
-                                      </td>
-                                    </tr>
-                                  @endforeach
-                                </tbody>
-
-                                <tfoot>
-                                <tr>
-                                  {{-- <th>No.</th> --}}
-                                  <th>Razon social</th>
-                                  <th>Nombre cliente</th>
-                                  <th>Grupo</th>
-                                  <th class="text-center">Acciones</th>
-                                </tr>
-                                </tfoot>
-
-                            </table>
-                            <!--end: Datatable-->
-
-                            <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
-
-                        </div>
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-6">
+        <div>
+            <h2 class="font-weight-bold mb-1">Inventario de clientes inactivos</h2>
                     </div>
-                    <!--end::Card-->
-                    <!--end::Card-->
-                </div>
 
+        <a href="{{ route('cliente.listadocliente') }}"
+           class="btn btn-light-warning font-weight-bold">
+            <i class="flaticon2-back mr-2"></i> Regresar
+        </a>
+    </div>
+
+    <!-- Card -->
+    <div class="card card-custom shadow-sm">
+        <div class="card-body">
+
+            <!-- Table -->
+            <div class="table-responsive">
+                <table class="table table-hover table-separate table-head-custom table-checkable"
+                       id="kdatatable_clientes_inactivos">
+
+                    <thead>
+                        <tr>
+                            <th>Razón social</th>
+                            <th>Nombre del cliente</th>
+                            <th>Grupo</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach($data as $unid)
+                            <tr>
+                                <td>
+                                    <span class="font-weight-bold text-dark">
+                                        {{ $unid->razon_social }}
+                                    </span>
+                                </td>
+
+                                <td>{{ $unid->nombre_cliente }}</td>
+
+                                <td>
+                                    <span class="label label-inline label-light-primary font-weight-bold">
+                                        {{ $unid->grupo }}
+                                    </span>
+                                </td>
+
+                                <td class="text-center">
+                                    <button
+                                        class="btn btn-icon btn-light-warning activar-cliente"
+                                        data-id="{{ $unid->id }}"
+                                        data-nombre="{{ $unid->razon_social }}"
+                                        data-toggle="tooltip"
+                                        title="Activar cliente">
+                                        <i class="flaticon2-reply"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <th>Razón social</th>
+                            <th>Nombre del cliente</th>
+                            <th>Grupo</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </tfoot>
+
+                </table>
             </div>
-            <!--end::Row-->
+
+            <input type="hidden"
+                   id="datatable_i18n"
+                   value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
         </div>
     </div>
-    <!--end::List-->
 </div>
 
-  <form method="post" id="cliente_act_form" action="{{ route('cliente.activarcliente') }}" enctype="multipart/form-data">
+<!-- Form Activar Cliente -->
+<form method="post"
+      id="cliente_act_form"
+      action="{{ route('cliente.activarcliente') }}">
     @csrf
-    <input type="hidden" name="id" id="id_delete" value="">
-  </form>
-
-
+    <input type="hidden" name="id" id="id_delete">
+</form>
 
 @endsection
