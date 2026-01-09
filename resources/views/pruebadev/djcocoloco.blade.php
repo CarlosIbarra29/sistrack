@@ -2,164 +2,408 @@
 @push('scripts')
     <script src="{{ asset('js/cliente/AgregarCliente.js') }}"></script>
 @endpush
+<<<<<<< HEAD
 @section('title')
     Agregar cliente
 @endsection
 @section('content')
     
 
+=======
+@section('title', 'Agregar cliente')
+@section('content')
+
+
+
+<style>
+    .form-control-solid { background-color: #F3F6F9; border-color: transparent; font-weight: 500; }
+    .form-control-solid:focus { background-color: #EBEDF3; border-color: transparent; }
+    label { font-weight: 600; color: #3F4254; margin-bottom: .5rem; }
+    .separator.separator-dashed { border-bottom: 1px dashed #EBEDF3; }
+    .card-title-custom { font-size: 1.2rem; font-weight: 700; color: #181C32; }
+</style>
+>>>>>>> 719c3c7ceb471f3fda88fa9d71d849d40bbfedff
 
 <div class="row">
-    <div class="col-lg-12">
-        <div class="card card-custom gutter-b">
-            <div class="card-header flex-wrap border-0 pt-6 pb-0">
-                <div class="card-title">
-                    <h3 class="card-label">Agregar Cliente
-                    
-                </div>
-                <div class="card-toolbar">
-                    <a href="{{ route('cliente.listadocliente') }}" class="btn btn-light-danger font-weight-bold btn-sm" data-toggle="tooltip" title="Salir">
-                        <i class="flaticon2-reply"></i> Regresar
+<div class="col-lg-12">
+<div class="card card-custom gutter-b">
+
+    <div class="card-header border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">Agregar Cliente</h3>
+        </div>
+        <div class="card-toolbar">
+            <a href="{{ route('cliente.listadocliente') }}" class="btn btn-light-danger btn-sm">
+                <i class="flaticon2-reply"></i> Regresar
+            </a>
+        </div>
+    </div>
+
+    <form action="{{ route('cliente.guardarcliente') }}" method="POST" id="submit_cliente" enctype="multipart/form-data">
+        @csrf
+
+        <div class="card-body">
+
+            {{-- TABS --}}
+            <ul class="nav nav-tabs nav-tabs-line nav-tabs-primary">
+                <li class="nav-item">
+                    <a class="nav-link active font-weight-bold" data-toggle="tab" href="#tab_cliente">
+                        <i class="flaticon2-user mr-2"></i> Información del Cliente
                     </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link font-weight-bold" data-toggle="tab" href="#tab_documentos">
+                        <i class="flaticon2-file mr-2"></i> Documentación
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content mt-8">
+
+                {{-- TAB CLIENTE --}}
+                <div class="tab-pane fade show active" id="tab_cliente">
+
+                    <div class="row mb-6">
+                        <div class="col-lg-4">
+                            <label>Razón social <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-solid" name="razon_social" required>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Nombre comercial <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-solid" name="cliente" required>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Grupo</label>
+                            <input type="text" class="form-control form-control-solid" name="grupo">
+                        </div>
+                    </div>
+
+                    <div class="separator separator-dashed my-8"></div>
+
+                    <h4 class="card-title-custom mb-4">Información Técnica</h4>
+
+                    <div class="row mb-6">
+                        <div class="col-lg-3">
+                            <label>Días de crédito</label>
+                            <input type="number" class="form-control form-control-solid" name="dias_credito">
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Costo estadía</label>
+                            <input type="text" class="form-control form-control-solid" name="costo_estadia">
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Costo km extra</label>
+                            <input type="text" class="form-control form-control-solid" name="costo_km">
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Costo estadía no armada</label>
+                            <input type="text" class="form-control form-control-solid" name="costo_estadia_armada">
+                        </div>
+                    </div>
+
+                    <div class="row mt-6">
+                        <div class="col-lg-12">
+                            <label>Observaciones</label>
+                            <textarea class="form-control form-control-solid" name="observaciones" rows="3"></textarea>
+                        </div>
+                    </div>
+
                 </div>
+
+                {{-- TAB DOCUMENTOS --}}
+                <div class="tab-pane fade mt-10" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
+                                <input type='hidden' id='tipoArchivo' value='{{ $cadenaTipoDocumento }}'>
+                                <div class="row form-group" >
+                                    <div class="col-lg-12" id="tblArchivos2">
+                                        <table class='table table-bordered table-hover' id='tblDocumentos2'>
+                                            <thead>
+                                            <tr>
+                                                <th>Adjuntar Documento</th>
+                                                <th>Tipo de Documento</th>
+                                                <th>Opción</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id='tbodyDocumentos2'>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-lg-12">
+                                        <a href="#" class="btn btn-icon btn-outline-warning btn-circle btn-sm mr-2 hrefAgregarOtro2" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                            <i class="flaticon2-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
             </div>
+        </div>
 
-            <form action="{{ route('cliente.guardarcliente') }}" method="post" id="submit_cliente" enctype="multipart/form-data">
-                @csrf
-                <div class="card-body">
-                    <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-2x nav-tabs-primary" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active font-weight-bold" data-toggle="tab" href="#kt_tab_pane_1">
-                                <i class="flaticon2-user mr-2"></i> Información del Cliente
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link font-weight-bold" data-toggle="tab" href="#kt_tab_pane_2">
-                                <i class="flaticon2-file mr-2"></i> Documentación
-                            </a>
-                        </li>
-                    </ul>
+        {{-- FOOTER --}}
+        <div class="card-footer d-flex justify-content-between">
+            <a href="{{ route('cliente.listadocliente') }}" class="btn btn-secondary">
+                Cancelar
+            </a>
 
-                    <div class="tab-content mt-8" id="myTabContent">
-                        <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel">
-                            
-                            <div class="row mb-6">
-                                <div class="col-lg-4">
-                                    <label>Razón social <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-solid" name="razon_social" id="razon_social" required placeholder="Nombre legal"/>
-                                </div>
-                                <div class="col-lg-4">
-                                    <label>Nombre comercial / Cliente <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-solid" name="cliente" id="cliente" required placeholder="Nombre común"/>
-                                </div>
-                                <div class="col-lg-4">
-                                    <label>Grupo</label>
-                                    <input type="text" class="form-control form-control-solid" name="grupo" id="grupo" placeholder="Si pertenece a un corporativo"/>
-                                </div>
-                            </div>
+            <button type="submit" id="btnGuardar" class="btn btn-warning px-10">
+                <i class="flaticon2-check-mark"></i> Guardar
+            </button>
+        </div>
 
-                            <div class="separator separator-dashed my-10"></div>
+    </form>
 
-                            <h4 class="card-title-custom mb-6">Información Técnica</h4>
-                            <div class="row mb-6">
-                                <div class="col-lg-3">
-                                    <label>Días de Crédito</label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control form-control-solid" name="dias_credito" id="dias_credito" />
-                                        <div class="input-group-append"><span class="input-group-text">días</span></div>
+</div>
+</div>
+</div>
+@endsection
+
+
+
+
+@extends('layouts.app')
+@push('scripts')
+    <script src="{{ asset('js/cliente/AgregarCliente.js') }}"></script>
+@endpush
+@section('title')
+    Agregar cliente
+@endsection
+@section('content')
+
+    <!--begin::Card-->
+    <div class="row">
+        <div class="col-lg-12">
+            <!--begin::Card-->
+            <div class="card card-custom gutter-b">
+                <div class="card-header">
+                    <h3 class="card-title">Agregar Cliente</h3>
+                    <div class="card-toolbar">
+                        <a href="{{ route('cliente.listadocliente') }}" class="btn btn-sm btn-clean btn-hover-icon-success btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
+                    </div>
+                </div>
+                <!--begin::Form-->
+                <form action="{{ route('cliente.guardarcliente') }}" method="post" id="submit_cliente"  enctype="multipart/form-data">
+                    @csrf
+                    <div class="card-body">
+                        <!--begin::tabs-->
+                        <ul class="nav nav-tabs nav-tabs-line">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1">Información del Cliente</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2">Documentación</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content mt-5" id="myTabContent">
+                            <div class="tab-pane fade show active mt-10" id="kt_tab_pane_1" role="tabpanel" aria-labelledby="kt_tab_pane_1">
+
+                                <div class="form-group row">
+                                    <div class="col-lg-6">
+                                        <label>Razón social</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="razon_social" id="razon_social" required/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label>Nombre comercial/ Cliente</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="cliente" id="cliente" required/>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
-                                    <label>Costo de estadía</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend"><span class="input-group-text">$</span></div>
-                                        <input type="text" class="form-control form-control-solid" name="costo_estadia" id="costo_estadia" />
+                                <div class="form-group row">
+                                    <div class="col-lg-6">
+                                        <label>Grupo</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="grupo" id="grupo"  />
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
-                                    <label>Costo km extraordinario</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend"><span class="input-group-text">$</span></div>
-                                        <input type="text" class="form-control form-control-solid" name="costo_km" id="costo_km" />
+
+                                <div class="card card-custom gutter-b">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <h3 class="card-label">
+                                                <small>Información Técnica</small>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <div class="col-lg-6">
+                                                <label>Días de Crédito </label>
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" name="dias_credito" id="dias_credito" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label>Costo de estadía</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="costo_estadia" id="costo_estadia" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-lg-6">
+                                                <label>Costo km extraordinario</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="costo_km" id="costo_km" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label>Costo por estadía no armada</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="costo_estadia_armada" id="costo_estadia_armada" />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
-                                    <label>Estadía no armada</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend"><span class="input-group-text">$</span></div>
-                                        <input type="text" class="form-control form-control-solid" name="costo_estadia_armada" id="costo_estadia_armada" />
+
+<input type='hidden' id='tipoArchivo2' value='{{ $cadenatipocliente }}'>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="card card-custom gutter-b">
+                                            <div class="card-header">
+                                                <div class="card-title">
+                                                    <h3 class="card-label">
+                                                        <small>Contacto operativo</small>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row form-group" >
+                                                    <div class="col-lg-12" id="tblArchivos">
+                                                        
+                                                        <table class='table table-bordered table-hover' id='tblDocumentos'>
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Tipo contacto</th>
+                                                                <th>Nombre contacto</th>
+                                                                <th>Email</th>
+                                                                <th>Telefono</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody id='tbodyDocumentos'>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row form-group">
+                                                    <div class="col-lg-12">
+                                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                                            <i class="flaticon2-plus"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+{{--                                     <div class="col-lg-12">
+                                        <div class="card card-custom gutter-b">
+                                            <div class="card-header">
+                                                <div class="card-title">
+                                                    <h3 class="card-label">
+                                                        <small>Contacto facturación y cobranza</small>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                              <div class="row form-group" >
+                                                    <div class="col-lg-12" id="tblArchivos1">
+                                                        <table class='table table-bordered table-hover' id='tblDocumentos1'>
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Nombre contacto</th>
+                                                                <th>Email</th>
+                                                                <th>Telefono</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody id='tbodyDocumentos1'>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row form-group">
+                                                    <div class="col-lg-12">
+                                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro1" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                                            <i class="flaticon2-plus"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> --}}
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <label for="observaciones">Observaciones</label>
+                                        <textarea class="form-control" name="observaciones" id="observaciones" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="separator separator-dashed my-10"></div>
 
-                            <div class="d-flex align-items-center justify-content-between mb-6">
-                                <h4 class="card-title-custom">Contactos Operativos</h4>
-                                <button type="button" class="btn btn-sm btn-light-primary font-weight-bolder hrefAgregarOtro">
-                                    <i class="flaticon2-plus"></i> Agregar Contacto
-                                </button>
-                            </div>
+                            <div class="tab-pane fade mt-10" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
+                                <input type='hidden' id='tipoArchivo' value='{{ $cadenaTipoDocumento }}'>
+                                <div class="row form-group" >
+                                    <div class="col-lg-12" id="tblArchivos2">
+                                        <table class='table table-bordered table-hover' id='tblDocumentos2'>
+                                            <thead>
+                                            <tr>
+                                                <th>Adjuntar Documento</th>
+                                                <th>Tipo de Documento</th>
+                                                <th>Opción</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id='tbodyDocumentos2'>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
 
-                           
-                            <div class="table-responsive">
-                                <table class="table table-head-custom table-vertical-center" id="tblDocumentos">
-                                    <thead>
-                                        <tr>
-                                            <th>Tipo contacto</th>
-                                            <th>Nombre contacto</th>
-                                            <th>Email</th>
-                                            <th>Teléfono</th>
-                                            <th class="text-right">Acción</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tbodyDocumentos">
-                                        </tbody>
-                                </table>
-                            </div>
-
-                            <div class="row mt-10">
-                                <div class="col-lg-12">
-                                    <label for="observaciones">Observaciones adicionales</label>
-                                    <textarea class="form-control form-control-solid" name="observaciones" id="observaciones" rows="3" placeholder="Notas o detalles importantes..."></textarea>
+                                <div class="row form-group">
+                                    <div class="col-lg-12">
+                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro2" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                            <i class="flaticon2-plus"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
+
+
                         </div>
 
-                        <div class="tab-pane fade mt-5" id="kt_tab_pane_2" role="tabpanel">
-                            <div class="d-flex align-items-center justify-content-between mb-6">
-                                <h4 class="card-title-custom">Expediente Digital</h4>
-                                <button type="button" class="btn btn-sm btn-light-primary font-weight-bolder hrefAgregarOtro2">
-                                    <i class="flaticon2-plus"></i> Adjuntar Documento
-                                </button>
-                            </div>
-                            
-                            <div class="table-responsive">
-                                <table class="table table-head-custom table-vertical-center" id="tblDocumentos2">
-                                    <thead>
-                                        <tr>
-                                            <th>Archivo</th>
-                                            <th>Tipo de Documento</th>
-                                            <th class="text-right">Opción</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tbodyDocumentos2">
-                                        </tbody>
-                                </table>
+
+
+
+
+
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <button type="button"  id="btnGuardar" class="btn btn-primary mr-2">Guardar</button>
+                                <a href="{{ route('cliente.listadocliente') }}"  class="btn btn-secondary">Cancelar</a>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="card-footer d-flex justify-content-between">
-                    <a href="{{ route('cliente.listadocliente') }}" class="btn btn-secondary font-weight-bold">Cancelar</a>
-                    <button type="button" id="btnGuardar" class="btn btn-warning font-weight-bold px-10">
-                        <i class="flaticon2-check-mark"></i> Guardar Cliente
-                    </button>
-                </div>
-            </form>
+                </form>
+                <!--end::Form-->
+            </div>
+            <!--end::Card-->
         </div>
     </div>
+<<<<<<< HEAD
 </div>
 
 <!--end::Card-->
@@ -167,3 +411,10 @@
 
 @endsection
 
+=======
+    <!--end::Card-->
+
+
+
+@endsection
+>>>>>>> 719c3c7ceb471f3fda88fa9d71d849d40bbfedff
