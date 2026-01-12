@@ -1,236 +1,201 @@
 @extends('layouts.app')
 @push('scripts')
-	<script src="{{ asset('js/cliente/EditarCliente.js') }}"></script>
+    <script src="{{ asset('js/cliente/EditarCliente.js') }}"></script>
 @endpush
 @section('title')
     Ver cliente
 @endsection
 @section('content')
 
-    <!--begin::Card-->
-    <div class="row">
-        <div class="col-lg-12">
-            <!--begin::Card-->
-            <div class="card card-custom gutter-b">
-                <div class="card-header">
-                    <h3 class="card-title"> Cliente</h3>
-                    <div class="card-toolbar">
-                    <a href="{{ route('cliente.listadocliente') }}"  class="btn btn-secondary">Regresar</a>
+<div class="container-fluid">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-6">
+        <div>
+            <h2 class="font-weight-bold mb-1">Ver cliente</h2>
+            
+        </div>
+
+        <a href="{{ route('cliente.listadocliente') }}" class="btn btn-light-warning font-weight-bold">
+            <i class="flaticon2-back mr-2"></i> Regresar
+        </a>
+    </div>
+
+    <input type="hidden" id="documentoEliminarOperativo" value="{{ route('cliente.eliminarcontactooperativo') }}">
+    <input type="hidden" id="documentoEliminarFacturacion" value="{{ route('cliente.eliminarcontactofacturacion') }}">
+
+    <!-- Card principal -->
+    <div class="card card-custom shadow-sm">
+        <div class="card-body">
+
+            <input type="hidden" name="cliente_id" value="{{ $data->id }}">
+
+            <!-- Tabs -->
+            <ul class="nav nav-tabs nav-tabs-line mb-6">
+                <li class="nav-item">
+                    <a class="nav-link active font-weight-bold" data-toggle="tab" href="#kt_tab_info">
+                        Información del cliente
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link font-weight-bold" data-toggle="tab" href="#kt_tab_docs">
+                        Documentación
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+
+                <!-- TAB INFO -->
+                <div class="tab-pane fade show active" id="kt_tab_info">
+
+                    <!-- Datos generales -->
+                    <div class="row mb-6">
+                        <div class="col-lg-6">
+                            <label class="text-muted">Razón social</label>
+                            <div class="font-weight-bold text-dark">
+                                {{ $data->razon_social }}
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label class="text-muted">Nombre comercial / Cliente</label>
+                            <div class="font-weight-bold text-dark">
+                                {{ $data->nombre_cliente }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-8">
+                        <div class="col-lg-6">
+                            <label class="text-muted">Grupo</label>
+                            <div>
+                                <span class="label label-inline label-light-primary font-weight-bold">
+                                    {{ $data->grupo }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información técnica -->
+                    <div class="card card-custom bg-light mb-8">
+                        <div class="card-header border-0">
+                            <h4 class="card-title mb-0">Información técnica</h4>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-3 mb-4">
+                                    <label class="text-muted">Días de crédito</label>
+                                    <div class="font-weight-bold">
+                                        {{ $data->dias_credito }}
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 mb-4">
+                                    <label class="text-muted">Costo de estadía</label>
+                                    <div class="font-weight-bold">
+                                        ${{ number_format($data->costo_estadia, 2) }}
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 mb-4">
+                                    <label class="text-muted">Costo km extraordinario</label>
+                                    <div class="font-weight-bold">
+                                        ${{ number_format($data->costo_km, 2) }}
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 mb-4">
+                                    <label class="text-muted">Costo por estadía no armada</label>
+                                    <div class="font-weight-bold">
+                                        ${{ number_format($data->costo_estadia_armada, 2) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card card-custom mb-8">
+                        <div class="card-header">
+                            <h4 class="card-title mb-0">Contactos</h4>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Tipo contacto</th>
+                                            <th>Nombre</th>
+                                            <th>Email</th>
+                                            <th>Teléfono</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($cliente_operativo as $documento)
+                                            <tr>
+                                                <td>
+                                                    @if($documento->id_tipo_contacto == 1)
+                                                        <span class="badge badge-light-info">Operativo</span>
+                                                    @else
+                                                        <span class="badge badge-light-warning">Facturación y cobranza</span>
+                                                    @endif
+                                                </td>
+                                                <td>{{ $documento->nombre_operativo }}</td>
+                                                <td>{{ $documento->email_operativo }}</td>
+                                                <td>{{ $documento->telefono_operativo }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="mb-6">
+                        <label class="text-muted">Observaciones</label>
+                        <div class="border rounded p-4 bg-light">
+                            {{ $data->observaciones ?? 'Sin observaciones' }}
+                        </div>
+                    </div>
+
+                </div>
+
+               
+                <div class="tab-pane fade" id="kt_tab_docs">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Documento</th>
+                                    <th>Tipo de documento</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($documentos as $documento)
+                                    <tr>
+                                        <td>
+                                            <a href="{{ route('archivo.documentoCliente', ['id'=>$documento->id]) }}"
+                                               class="font-weight-bold text-primary"
+                                               target="_blank">
+                                                {{ $documento->clienteTipoDocumento->nombre_documento }}
+                                            </a>
+                                        </td>
+                                        <td>{{ $documento->clienteTipoDocumento->nombre_documento }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <input type="hidden" id="documentoEliminarOperativo" value="{{ route('cliente.eliminarcontactooperativo') }}">
-                <input type="hidden" id="documentoEliminarFacturacion" value="{{ route('cliente.eliminarcontactofacturacion') }}">
-                <!--begin::Form-->
-
-                    <div class="card-body">
-                        <input type="hidden" name="cliente_id" value="{{ $data->id }}">
-
-                        <ul class="nav nav-tabs nav-tabs-line">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1">Información del Cliente</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2">Documentación</a>
-                            </li>
-                        </ul>
-
-                    <div class="tab-content mt-5" id="myTabContent">
-                        <div class="tab-pane fade show active mt-10" id="kt_tab_pane_1" role="tabpanel" aria-labelledby="kt_tab_pane_2">
-
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label>Razón social</label>
-                                    <div class="input-group">
-                                        <p>{{ $data->razon_social }}</p>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>Nombre comercial/ Cliente</label>
-                                    <div class="input-group">
-                                        <p>{{ $data->nombre_cliente }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label>Grupo</label>
-                                    <div class="input-group">
-                                        <p>{{ $data->grupo }}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card card-custom gutter-b">
-                                <div class="card-header">
-                                    <div class="card-title">
-                                        <h3 class="card-label">
-                                            <small>Información Técnica</small>
-                                        </h3>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="form-group row">
-                                        <div class="col-lg-3">
-                                            <label>Días de Crédito </label>
-                                            <div class="input-group">
-                                                <p>{{ $data->dias_credito }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <label>Costo de estadía</label>
-                                            <div class="input-group">
-                                                <p>${{ $data->costo_estadia }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <label>Costo km extraordinario</label>
-                                            <div class="input-group">
-                                                <p>${{ $data->costo_km }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <label>Costo por estadía no armada</label>
-                                            <div class="input-group">
-                                                <p>${{ $data->costo_estadia_armada }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="card card-custom gutter-b">
-                                        <div class="card-header">
-                                            <div class="card-title">
-                                                <h3 class="card-label">
-                                                    <small>Contactos</small>
-                                                </h3>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <table class="table table-hover mb-6 table-responsive-sm" id="tblDocumentos">
-                                                <thead>
-                                                <tr>
-                                                    <th scope="col">Tipo Contacto</th>
-                                                    <th scope="col">Nombre contacto</th>
-                                                    <th scope="col">Email</th>
-                                                    <th scope="col">Telefono</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody id='tbodyDocumentos'>
-                                                    @foreach($cliente_operativo as $documento)
-                                                        <tr id="trDocumento{{ $documento->id }}">
-                                                            <td>
-                                                                @if($documento->id_tipo_contacto == 1)
-                                                                    Operativo
-                                                                @else
-                                                                    Facturación y cobranza
-                                                                @endif
-                                                            </td>
-                                                            <td>{{ $documento->nombre_operativo }}</td>
-                                                            <td>{{ $documento->email_operativo }}</td>
-                                                            <td>{{ $documento->telefono_operativo }}</td>
-
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-
-
-
-                                        </div>
-                                    </div>
-                                </div>
-{{--                                 <div class="col-lg-12">
-                                    <div class="card card-custom gutter-b">
-                                        <div class="card-header">
-                                            <div class="card-title">
-                                                <h3 class="card-label">
-                                                    <small>Contacto facturación y cobranza</small>
-                                                </h3>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <table class="table table-hover mb-6 table-responsive-sm" id="tblDocumentos1">
-                                                <thead>
-                                                <tr>
-                                                    <th scope="col">Nombre contacto</th>
-                                                    <th scope="col">Email</th>
-                                                    <th scope="col">Telefono</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody id='tbodyDocumentos1'>
-                                                    @foreach($cliente_fac as $documento)
-                                                        <tr id="trDocumento{{ $documento->id }}">
-                                                            <td>{{ $documento->nombre_contacto }}</td>
-                                                            <td>{{ $documento->email_contacto }}</td>
-                                                            <td>{{ $documento->telefono_contacto }}</td>
-
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                            </div>
-
-
-                            <div class="form-group">
-                                <div class="col-lg-12">
-                                    <label for="observaciones">Observaciones</label>
-                                    <p><p>{{ $data->observaciones }}</p></p>
-                                </div>
-                            </div>
-
-                        </div>
-
-
-                        <div class="tab-pane fade mt-10" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
-                            <table class="table table-hover mb-6 table-responsive-sm" id="tblDocumentos">
-                                <thead>
-                                <tr>
-                                    <th scope="col">Documento</th>
-                                    <th scope="col">Tipo de Documento</th>
-                                </tr>
-                                </thead>
-                                <tbody id='tbodyDocumentos'>
-                                    @foreach($documentos as $documento)
-                                        <tr id="trDocumento{{ $documento->id }}">
-                                            <td><a href="{{ route('archivo.documentoCliente', ['id'=>$documento->id]) }}" class="link-primary" target="_blank"> {{ $documento->clienteTipoDocumento->nombre_documento }} </a></td>
-                                            <td>{{ $documento->clienteTipoDocumento->nombre_documento }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-
-
-                    </div>
-
-
-
-
-
-                    </div>
-                    <div class="card-footer">
-                        <div class="row">
-                            <div class="col-lg-6">
-                               
-                            </div>
-                        </div>
-                    </div>
-
-                <!--end::Form-->
             </div>
-            <!--end::Card-->
+
         </div>
     </div>
-    <!--end::Card-->
-
-
+</div>
 
 @endsection

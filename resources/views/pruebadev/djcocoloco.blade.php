@@ -1,182 +1,401 @@
 @extends('layouts.app')
 @push('scripts')
-
-  <script src="{{ asset('js/cliente/CatalogoClientes.js') }}"></script>
-  <meta name="csrf-token" content="{{ csrf_token() }}" />
-
-<style>
-    /* Colores del logo */
-    :root {
-        --gold: #D4AF37;
-        --gold-dark: #B8860B;
-        --black: #000000;
-    }
-
-    /* Iconos en dorado */
-    .icon-gold i {
-        color: var(--gold) !important;
-        font-size: 16px;
-    }
-
-    /* Botones outline dorados */
-    .btn-outline-gold {
-        border: 1px solid var(--gold) !important;
-        color: var(--gold) !important;
-    }
-    .btn-outline-gold:hover {
-        background: var(--gold) !important;
-        color: var(--black) !important;
-    }
-
-    /* Badge verde estilo elegante */
-    .badge-active-green {
-        background: #28a745 !important;
-        color: white !important;
-        font-weight: bold;
-        padding: 6px 12px;
-        border-radius: 12px;
-    }
-</style>
-
+    <script src="{{ asset('js/cliente/AgregarCliente.js') }}"></script>
 @endpush
-
-@section('title')
-  Inventario de clientes
-@endsection
-
+@section('title', 'Agregar cliente')
 @section('content')
 
-    <div class="d-flex flex-row">
 
-        <div class="flex-row-fluid">
-        <div class="d-flex flex-column flex-grow-1">
 
-                <div class="row">
-                <div class="col-xl-12">
+<style>
+    .form-control-solid { background-color: #F3F6F9; border-color: transparent; font-weight: 500; }
+    .form-control-solid:focus { background-color: #EBEDF3; border-color: transparent; }
+    label { font-weight: 600; color: #3F4254; margin-bottom: .5rem; }
+    .separator.separator-dashed { border-bottom: 1px dashed #EBEDF3; }
+    .card-title-custom { font-size: 1.2rem; font-weight: 700; color: #181C32; }
+</style>
 
-                    <div class="card card-custom shadow-lg"> 
-                
-                        <div class="card-header bg-white border-0 py-4">
-                            <div class="card-title">
-                                <span class="card-icon">
-                                    <i class="flaticon2-file text-primary"></i>
-                                </span>
-                                <h3 class="card-label font-weight-bolder text-dark">Inventario de clientes</h3>
-                            </div>
-                            <div class="card-toolbar">
+<div class="row">
+<div class="col-lg-12">
+<div class="card card-custom gutter-b">
 
-                                @if (in_array("6", Session::get('permisos'))) 
-                                    <a href="{{ route('cliente.agregarcliente') }}" class="btn btn-primary font-weight-bolder mr-3 ml-3">
-                                        <i class="la la-plus"></i>Nuevo Cliente
-                                    </a>
-                                @endif
-
-                                <a href="{{ route('cliente.listadoclienteinactivo') }}" class="btn btn-light-secondary font-weight-bolder mr-3 ml-3">
-                                    <i class="far fa-trash-alt"></i>Clientes inactivos
-                                </a>
-
-                                <div class="dropdown dropdown-inline mr-2">
-                                    <button type="button" class="btn btn-outline-secondary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Exportar
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                        <ul class="navi flex-column navi-hover py-2">
-                                            <li class="navi-item"><a href="#" class="navi-link" id="export-excel"><span class="navi-icon"><i class="la la-file-excel-o"></i></span><span class="navi-text">Excel</span></a></li>
-                                            <li class="navi-item"><a href="#" class="navi-link" id="export-csv"><span class="navi-icon"><i class="la la-file-text-o"></i></span><span class="navi-text">CSV</span></a></li>
-                                            <li class="navi-item"><a href="#" class="navi-link" id="export-print"><span class="navi-icon"><i class="la la-file-text-o"></i></span><span class="navi-text">Imprimir</span></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-body">
-
-                            <table class="table table-striped table-borderless table-hover" id="kdatatable_clientes">
-                                <thead>
-                                <tr>
-                                    <th>Folio.</th>
-                                    <th>Razon social</th>
-                                    <th>Nombre cliente</th>
-                                    <th>Grupo</th>
-                                    <th class="text-center">Estado</th>
-                                    <th class="text-center">Opciones</th>
-                                </tr>
-                                </thead>
-
-                                <tbody> 
-                                @php $num = 1; @endphp
-                                @foreach($data as $unid)
-                                    <tr>
-                                        <td>{{ $unid->num_list }}</td>
-                                        <td>{{ $unid->razon_social }}</td>
-                                        <td>{{ $unid->nombre_cliente }}</td>
-                                        <td>{{ $unid->grupo }}</td>
-
-                                        {{-- Estado Activo verde --}}
-                                        <td class="text-center">
-                                            <span class="badge-active-green">
-                                                <i class="fas fa-check-circle"></i> Activo
-                                            </span>
-                                        </td>
-
-                                        <td>
-                                            {{-- Ver --}}
-                                            <a href="{{ route('cliente.vercliente', $unid->id) }}" 
-                                               class="btn btn-sm btn-icon btn-outline-gold mr-1" 
-                                               title="Ver cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
-                                                <i class="flaticon-eye icon-gold"></i>
-                                            </a>
-
-                                            {{-- Editar --}}
-                                            <a href="{{ route('cliente.editarcliente', $unid->id) }}" 
-                                               class="btn btn-sm btn-icon btn-outline-gold mr-1" 
-                                               title="Editar cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
-                                                <i class="flaticon-edit icon-gold"></i>
-                                            </a>
-
-                                            {{-- Eliminar --}}
-                                            <button class="btn btn-sm btn-icon btn-outline-gold" 
-                                                    onClick="deletecliente(`{{ $unid->id }} `,`{{ $unid->id }}`)" 
-                                                    data-toggle="modal" data-target="#model_delete_user" 
-                                                    data-toggle="tooltip" data-theme="dark" title="Desactivar cliente">
-                                                <i class="flaticon-delete icon-gold"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    @php $num ++; @endphp
-                                @endforeach
-                                </tbody>
-
-                                <tfoot>
-                                <tr>
-                                    <th>Folio.</th>
-                                    <th>Razon social</th>
-                                    <th>Nombre cliente</th>
-                                    <th>Grupo</th>
-                                    <th class="text-center">Estado</th>
-                                    <th class="text-center">Opciones</th>
-                                </tr>
-                                </tfoot>
-
-                            </table>
-
-                            <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+    <div class="card-header border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">Agregar Cliente</h3>
         </div>
+        <div class="card-toolbar">
+            <a href="{{ route('cliente.listadocliente') }}" class="btn btn-light-danger btn-sm">
+                <i class="flaticon2-reply"></i> Regresar
+            </a>
         </div>
     </div>
 
-{{-- M O D A L S --}}
-<form method="post" id="cliente_delete_form" action="{{ route('cliente.desactivarclientelistado') }}" enctype="multipart/form-data">
-    @csrf
-    <input type="hidden" name="id" id="id_cliente_delete" value="">
-</form>
+    <form action="{{ route('cliente.guardarcliente') }}" method="POST" id="submit_cliente" enctype="multipart/form-data">
+        @csrf
 
-<input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
+        <div class="card-body">
+
+            {{-- TABS --}}
+            <ul class="nav nav-tabs nav-tabs-line nav-tabs-primary">
+                <li class="nav-item">
+                    <a class="nav-link active font-weight-bold" data-toggle="tab" href="#tab_cliente">
+                        <i class="flaticon2-user mr-2"></i> Información del Cliente
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link font-weight-bold" data-toggle="tab" href="#tab_documentos">
+                        <i class="flaticon2-file mr-2"></i> Documentación
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content mt-8">
+
+                {{-- TAB CLIENTE --}}
+                <div class="tab-pane fade show active" id="tab_cliente">
+
+                    <div class="row mb-6">
+                        <div class="col-lg-4">
+                            <label>Razón social <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-solid" name="razon_social" required>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Nombre comercial <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-solid" name="cliente" required>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Grupo</label>
+                            <input type="text" class="form-control form-control-solid" name="grupo">
+                        </div>
+                    </div>
+
+                    <div class="separator separator-dashed my-8"></div>
+
+                    <h4 class="card-title-custom mb-4">Información Técnica</h4>
+
+                    <div class="row mb-6">
+                        <div class="col-lg-3">
+                            <label>Días de crédito</label>
+                            <input type="number" class="form-control form-control-solid" name="dias_credito">
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Costo estadía</label>
+                            <input type="text" class="form-control form-control-solid" name="costo_estadia">
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Costo km extra</label>
+                            <input type="text" class="form-control form-control-solid" name="costo_km">
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Costo estadía no armada</label>
+                            <input type="text" class="form-control form-control-solid" name="costo_estadia_armada">
+                        </div>
+                    </div>
+
+                    <div class="row mt-6">
+                        <div class="col-lg-12">
+                            <label>Observaciones</label>
+                            <textarea class="form-control form-control-solid" name="observaciones" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+
+                {{-- TAB DOCUMENTOS --}}
+                <div class="tab-pane fade mt-10" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
+                                <input type='hidden' id='tipoArchivo' value='{{ $cadenaTipoDocumento }}'>
+                                <div class="row form-group" >
+                                    <div class="col-lg-12" id="tblArchivos2">
+                                        <table class='table table-bordered table-hover' id='tblDocumentos2'>
+                                            <thead>
+                                            <tr>
+                                                <th>Adjuntar Documento</th>
+                                                <th>Tipo de Documento</th>
+                                                <th>Opción</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id='tbodyDocumentos2'>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-lg-12">
+                                        <a href="#" class="btn btn-icon btn-outline-warning btn-circle btn-sm mr-2 hrefAgregarOtro2" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                            <i class="flaticon2-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+            </div>
+        </div>
+
+        {{-- FOOTER --}}
+        <div class="card-footer d-flex justify-content-between">
+            <a href="{{ route('cliente.listadocliente') }}" class="btn btn-secondary">
+                Cancelar
+            </a>
+
+            <button type="submit" id="btnGuardar" class="btn btn-warning px-10">
+                <i class="flaticon2-check-mark"></i> Guardar
+            </button>
+        </div>
+
+    </form>
+
+</div>
+</div>
+</div>
+@endsection
+
+
+
+
+@extends('layouts.app')
+@push('scripts')
+    <script src="{{ asset('js/cliente/AgregarCliente.js') }}"></script>
+@endpush
+@section('title')
+    Agregar cliente
+@endsection
+@section('content')
+
+    <!--begin::Card-->
+    <div class="row">
+        <div class="col-lg-12">
+            <!--begin::Card-->
+            <div class="card card-custom gutter-b">
+                <div class="card-header">
+                    <h3 class="card-title">Agregar Cliente</h3>
+                    <div class="card-toolbar">
+                        <a href="{{ route('cliente.listadocliente') }}" class="btn btn-sm btn-clean btn-hover-icon-success btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
+                    </div>
+                </div>
+                <!--begin::Form-->
+                <form action="{{ route('cliente.guardarcliente') }}" method="post" id="submit_cliente"  enctype="multipart/form-data">
+                    @csrf
+                    <div class="card-body">
+                        <!--begin::tabs-->
+                        <ul class="nav nav-tabs nav-tabs-line">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1">Información del Cliente</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2">Documentación</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content mt-5" id="myTabContent">
+                            <div class="tab-pane fade show active mt-10" id="kt_tab_pane_1" role="tabpanel" aria-labelledby="kt_tab_pane_1">
+
+                                <div class="form-group row">
+                                    <div class="col-lg-6">
+                                        <label>Razón social</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="razon_social" id="razon_social" required/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label>Nombre comercial/ Cliente</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="cliente" id="cliente" required/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-6">
+                                        <label>Grupo</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="grupo" id="grupo"  />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card card-custom gutter-b">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <h3 class="card-label">
+                                                <small>Información Técnica</small>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <div class="col-lg-6">
+                                                <label>Días de Crédito </label>
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" name="dias_credito" id="dias_credito" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label>Costo de estadía</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="costo_estadia" id="costo_estadia" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-lg-6">
+                                                <label>Costo km extraordinario</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="costo_km" id="costo_km" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label>Costo por estadía no armada</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="costo_estadia_armada" id="costo_estadia_armada" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+<input type='hidden' id='tipoArchivo2' value='{{ $cadenatipocliente }}'>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="card card-custom gutter-b">
+                                            <div class="card-header">
+                                                <div class="card-title">
+                                                    <h3 class="card-label">
+                                                        <small>Contacto operativo</small>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row form-group" >
+                                                    <div class="col-lg-12" id="tblArchivos">
+                                                        
+                                                        <table class='table table-bordered table-hover' id='tblDocumentos'>
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Tipo contacto</th>
+                                                                <th>Nombre contacto</th>
+                                                                <th>Email</th>
+                                                                <th>Telefono</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody id='tbodyDocumentos'>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row form-group">
+                                                    <div class="col-lg-12">
+                                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                                            <i class="flaticon2-plus"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+{{--                                     <div class="col-lg-12">
+                                        <div class="card card-custom gutter-b">
+                                            <div class="card-header">
+                                                <div class="card-title">
+                                                    <h3 class="card-label">
+                                                        <small>Contacto facturación y cobranza</small>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                              <div class="row form-group" >
+                                                    <div class="col-lg-12" id="tblArchivos1">
+                                                        <table class='table table-bordered table-hover' id='tblDocumentos1'>
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Nombre contacto</th>
+                                                                <th>Email</th>
+                                                                <th>Telefono</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody id='tbodyDocumentos1'>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row form-group">
+                                                    <div class="col-lg-12">
+                                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro1" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                                            <i class="flaticon2-plus"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> --}}
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <label for="observaciones">Observaciones</label>
+                                        <textarea class="form-control" name="observaciones" id="observaciones" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="tab-pane fade mt-10" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
+                                <input type='hidden' id='tipoArchivo' value='{{ $cadenaTipoDocumento }}'>
+                                <div class="row form-group" >
+                                    <div class="col-lg-12" id="tblArchivos2">
+                                        <table class='table table-bordered table-hover' id='tblDocumentos2'>
+                                            <thead>
+                                            <tr>
+                                                <th>Adjuntar Documento</th>
+                                                <th>Tipo de Documento</th>
+                                                <th>Opción</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id='tbodyDocumentos2'>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-lg-12">
+                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro2" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                            <i class="flaticon2-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+
+
+
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <button type="button"  id="btnGuardar" class="btn btn-primary mr-2">Guardar</button>
+                                <a href="{{ route('cliente.listadocliente') }}"  class="btn btn-secondary">Cancelar</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!--end::Form-->
+            </div>
+            <!--end::Card-->
+        </div>
+    </div>
+    <!--end::Card-->
+
+
 
 @endsection
