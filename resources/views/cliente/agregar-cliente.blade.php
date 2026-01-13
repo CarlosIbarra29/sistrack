@@ -91,6 +91,85 @@
                             <input type="text" class="form-control form-control-solid" name="costo_estadia_armada">
                         </div>
                     </div>
+<input type='hidden' id='tipoArchivo2' value='{{ $cadenatipocliente }}'>
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="card card-custom gutter-b">
+                                            <div class="card-header">
+                                                <div class="card-title">
+                                                    <h3 class="card-label">
+                                                        <small>Contactos</small>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row form-group" >
+                                                    <div class="col-lg-12" id="tblArchivos">
+                                                        
+                                                        <table class='table table-bordered table-hover' id='tblDocumentos'>
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Tipo contacto</th>
+                                                                <th>Nombre contacto</th>
+                                                                <th>Email</th>
+                                                                <th>Telefono</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody id='tbodyDocumentos'>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row form-group">
+                                                    <div class="col-lg-12">
+                                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                                            <i class="flaticon2-plus"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+{{--                                     <div class="col-lg-12">
+                                        <div class="card card-custom gutter-b">
+                                            <div class="card-header">
+                                                <div class="card-title">
+                                                    <h3 class="card-label">
+                                                        <small>Contacto facturación y cobranza</small>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                              <div class="row form-group" >
+                                                    <div class="col-lg-12" id="tblArchivos1">
+                                                        <table class='table table-bordered table-hover' id='tblDocumentos1'>
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Nombre contacto</th>
+                                                                <th>Email</th>
+                                                                <th>Telefono</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody id='tbodyDocumentos1'>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row form-group">
+                                                    <div class="col-lg-12">
+                                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro1" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                                            <i class="flaticon2-plus"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> --}}
+                                </div>
 
                     <div class="row mt-6">
                         <div class="col-lg-12">
@@ -102,7 +181,7 @@
                 </div>
 
                 {{-- TAB DOCUMENTOS --}}
-                <div class="tab-pane fade mt-10" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
+                <div class="tab-pane fade mt-10" id="tab_documentos" role="tabpanel" aria-labelledby="tab_documentos">
                                 <input type='hidden' id='tipoArchivo' value='{{ $cadenaTipoDocumento }}'>
                                 <div class="row form-group" >
                                     <div class="col-lg-12" id="tblArchivos2">
@@ -114,7 +193,7 @@
                                                 <th>Opción</th>
                                             </tr>
                                             </thead>
-                                            <tbody id='tbodyDocumentos2'>
+                                            <tbody id='trDocumento2'>
                                             </tbody>
                                         </table>
                                     </div>

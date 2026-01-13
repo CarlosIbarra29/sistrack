@@ -78,11 +78,11 @@ var Modulo = function() {
         });
         delArchivo();
 
-        $( ".hrefAgregarOtro1" ).on( "click", function(event) {
-            event.preventDefault();
-            addArchivo1();
-        });
-        delArchivo1();
+        // $( ".hrefAgregarOtro1" ).on( "click", function(event) {
+        //     event.preventDefault();
+        //     addArchivo1();
+        // });
+        // delArchivo1();
 
         $( ".hrefAgregarOtro2" ).on( "click", function(event) {
             event.preventDefault();
@@ -194,7 +194,7 @@ var Modulo = function() {
             var idDocumento = $(this).attr("data-id"); //indice del elemento
             KTApp.hideTooltips(); //oculta tooltip
             //elimina la validación del elemento
-            validador.addField('id_tipocontacto[' + contadorDocumentos + ']', archivoValidador);
+            validador.removeField('id_tipocontacto[' + idDocumento + ']');
             validador.removeField('nombre[' + idDocumento + ']');
             validador.removeField('email[' + idDocumento + ']');
             validador.removeField('telefono[' + idDocumento + ']');
@@ -203,56 +203,56 @@ var Modulo = function() {
     };
 
 
-    var addArchivo1 = function () {
-        contadorDocumentos++;
-        var html = '';
-        html += ([    "",
-            "<tr id='trDocumento1"+contadorDocumentos+"'>",
-            "    <td>" +
-            "       <div class='form-group mb-0'>" +
-            "               <input type='text' class='form-control' id='nombre_fac"+contadorDocumentos+"' name='nombre_fac["+contadorDocumentos+"]' required />",
-            "       </div>" +
-            "    </td>",
-            "    <td>" +
-            "       <div class='form-group mb-0'>" +
-            "               <input type='text' class='form-control' id='email_fac"+contadorDocumentos+"' name='email_fac["+contadorDocumentos+"]' required />",
-            "       </div>" +
-            "    </td>",
-            "    <td>" +
-            "       <div class='form-group mb-0'>" +
-            "               <input type='text' class='form-control' id='telefono_fac"+contadorDocumentos+"' name='telefono_fac["+contadorDocumentos+"]' required />",
-            "       </div>" +
-            "    </td>",
-            "    <td>",
-            "       <a href='#' class='btn btn-clean btn-icon btn-outline-success mt-1 hrefEliminarfac' data-id='"+contadorDocumentos+"' data-toggle='tooltip' data-theme='dark' title='Eliminar'>",
-            "           <i class='flaticon-delete'></i>",
-            "       </a>",
-            "    </td>",
-            "</tr>",
+    // var addArchivo1 = function () {
+    //     contadorDocumentos++;
+    //     var html = '';
+    //     html += ([    "",
+    //         "<tr id='trDocumento1"+contadorDocumentos+"'>",
+    //         "    <td>" +
+    //         "       <div class='form-group mb-0'>" +
+    //         "               <input type='text' class='form-control' id='nombre_fac"+contadorDocumentos+"' name='nombre_fac["+contadorDocumentos+"]' required />",
+    //         "       </div>" +
+    //         "    </td>",
+    //         "    <td>" +
+    //         "       <div class='form-group mb-0'>" +
+    //         "               <input type='text' class='form-control' id='email_fac"+contadorDocumentos+"' name='email_fac["+contadorDocumentos+"]' required />",
+    //         "       </div>" +
+    //         "    </td>",
+    //         "    <td>" +
+    //         "       <div class='form-group mb-0'>" +
+    //         "               <input type='text' class='form-control' id='telefono_fac"+contadorDocumentos+"' name='telefono_fac["+contadorDocumentos+"]' required />",
+    //         "       </div>" +
+    //         "    </td>",
+    //         "    <td>",
+    //         "       <a href='#' class='btn btn-clean btn-icon btn-outline-success mt-1 hrefEliminarfac' data-id='"+contadorDocumentos+"' data-toggle='tooltip' data-theme='dark' title='Eliminar'>",
+    //         "           <i class='flaticon-delete'></i>",
+    //         "       </a>",
+    //         "    </td>",
+    //         "</tr>",
 
-            ""].join(""));
-        $("#tblDocumentos1 tbody").append(html); //agrega el html creado
-        //agrega validación del elemento creado
-        validador.addField('nombre_fac[' + contadorDocumentos + ']', archivoValidador);
-        validador.addField('email_fac[' + contadorDocumentos + ']', archivoValidador);
-        validador.addField('telefono_fac[' + contadorDocumentos + ']', archivoValidador);
-        KTApp.initTooltips(); //inicia tooltip del elemento creado
-        KTApp.initFileInput(); //inicia el elemento archivo del elemento creado
-    };
+    //         ""].join(""));
+    //     $("#tblDocumentos1 tbody").append(html); //agrega el html creado
+    //     //agrega validación del elemento creado
+    //     validador.addField('nombre_fac[' + contadorDocumentos + ']', archivoValidador);
+    //     validador.addField('email_fac[' + contadorDocumentos + ']', archivoValidador);
+    //     validador.addField('telefono_fac[' + contadorDocumentos + ']', archivoValidador);
+    //     KTApp.initTooltips(); //inicia tooltip del elemento creado
+    //     KTApp.initFileInput(); //inicia el elemento archivo del elemento creado
+    // };
 
-    //elimina un elemento
-    var delArchivo1 = function () {
-        jQuery(document).on("click", ".hrefEliminarfac" , function(e) {
-            e.preventDefault();
-            var idDocumento = $(this).attr("data-id"); //indice del elemento
-            KTApp.hideTooltips(); //oculta tooltip
-            //elimina la validación del elemento
-            validador.removeField('nombre_fac[' + idDocumento + ']');
-            validador.removeField('email_fac[' + idDocumento + ']');
-            validador.removeField('telefono_fac[' + idDocumento + ']');
-            $('#trDocumento1'+idDocumento).remove();//elimina el elemento
-        });
-    };
+    // //elimina un elemento
+    // var delArchivo1 = function () {
+    //     jQuery(document).on("click", ".hrefEliminarfac" , function(e) {
+    //         e.preventDefault();
+    //         var idDocumento = $(this).attr("data-id"); //indice del elemento
+    //         KTApp.hideTooltips(); //oculta tooltip
+    //         //elimina la validación del elemento
+    //         validador.removeField('nombre_fac[' + idDocumento + ']');
+    //         validador.removeField('email_fac[' + idDocumento + ']');
+    //         validador.removeField('telefono_fac[' + idDocumento + ']');
+    //         $('#trDocumento1'+idDocumento).remove();//elimina el elemento
+    //     });
+    // };
 
     //agrega el elemento archivo y lista desplegable
     var addArchivo2 = function () {
