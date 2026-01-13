@@ -184,7 +184,7 @@
         <div class="alert-card">
             <div class="alert-header">
                 <i class="fas fa-wallet"></i>
-                <span class="alert-title">Pagos próximos</span>
+                <span class="alert-title">Pendientes</span>
             </div>
             <div class="alert-value">12</div>
             <div class="divider"></div>
@@ -229,8 +229,7 @@
 
 
 
-<div class="row mt-5">
-<div class="col-lg-7">
+<div class="col-xl-12">
                             <!--begin: Datatable-->
                             <table class="table table-hover table-checkable" id="kdatatable_clientes">
                                 <thead>
@@ -289,175 +288,6 @@
 
 
 
-
-<div class="col-lg-4"> 
-
-<div class="row mt-8">
-
-
-  <div class="card card-custom">
-  <div class="card-header">
-    <div class="card-title">
-      <span class="card-icon">
-        <i class="flaticon2-chat-1 coloricono"></i>
-      </span>
-      <h3 class="card-label">Pendientes</h3>
-    </div>
-  </div>
-
-  <div class="card-body">
-
-    <div class="form-group row">
-      <div class="col-lg-12">
-        <label>Nombre del pendiente</label>
-        <div class="input-group">
-          <input type="text" class="form-control" id="pendiente">
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <div class="col-lg-6">
-        <label>Fecha inicial</label>
-        <div class="input-group">
-          <input type="text" class="form-control" id="fecha_inicial">
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <label>Fecha final</label>
-        <div class="input-group">
-          <input type="text" class="form-control" id="fecha_final">
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <div class="col-lg-9"></div>
-      <div class="col-lg-3 text-right">
-        <a href="#" class="btn btn-light-warning font-weight-bold mr-3 ml-3"
-           style="color:black" onclick="guardarPendiente()">
-          Guardar
-        </a>
-      </div>
-    </div>
-
-    <hr>
-
-    <div id="listaPendientes"></div>
-
-  </div>
-</div>
-
-<script>
-function guardarPendiente() {
-  const nombre = document.getElementById("pendiente").value;
-  const inicio = document.getElementById("fecha_inicial").value;
-  const final = document.getElementById("fecha_final").value;
-
-  if (!nombre || !inicio || !final) {
-    alert("Todos los campos son obligatorios");
-    return;
-  }
-
-  let pendientes = JSON.parse(localStorage.getItem("pendientes")) || [];
-
-  pendientes.push({
-    nombre: nombre,
-    inicio: inicio,
-    final: final,
-    completado: false
-  });
-
-  localStorage.setItem("pendientes", JSON.stringify(pendientes));
-
-  document.getElementById("pendiente").value = "";
-  document.getElementById("fecha_inicial").value = "";
-  document.getElementById("fecha_final").value = "";
-
-  mostrarPendientes();
-}
-
-function completarPendiente(index) {
-  let pendientes = JSON.parse(localStorage.getItem("pendientes")) || [];
-  pendientes[index].completado = true;
-  localStorage.setItem("pendientes", JSON.stringify(pendientes));
-  mostrarPendientes();
-}
-
-function borrarPendiente(index) {
-  if (!confirm("¿Deseas eliminar este pendiente?")) return;
-
-  let pendientes = JSON.parse(localStorage.getItem("pendientes")) || [];
-  pendientes.splice(index, 1);
-  localStorage.setItem("pendientes", JSON.stringify(pendientes));
-  mostrarPendientes();
-}
-
-function mostrarPendientes() {
-  let pendientes = JSON.parse(localStorage.getItem("pendientes")) || [];
-  let html = "";
-
-  if (pendientes.length === 0) {
-    html = "<p class='text-muted'>No hay pendientes registrados</p>";
-  } else {
-    html += `
-      <table class="table table-bordered table-hover">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Fecha inicial</th>
-            <th>Fecha final</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-    `;
-
-    pendientes.forEach((p, index) => {
-      html += `
-        <tr class="${p.completado ? 'table-success' : ''}">
-          <td style="${p.completado ? 'text-decoration:line-through;' : ''}">
-            ${p.nombre}
-          </td>
-          <td>${p.inicio}</td>
-          <td>${p.final}</td>
-          <td>
-            ${p.completado
-              ? '<span class="badge badge-success">Completado</span>'
-              : '<span class="badge badge-warning">Pendiente</span>'}
-          </td>
-          <td>
-            ${p.completado ? '' : `
-              <button class="btn btn-sm btn-light-success mb-1"
-                onclick="completarPendiente(${index})">
-                Completar
-              </button>
-            `}
-            <button class="btn btn-sm btn-light-danger"
-              onclick="borrarPendiente(${index})">
-              Borrar
-            </button>
-          </td>
-        </tr>
-      `;
-    });
-
-    html += "</tbody></table>";
-  }
-
-  document.getElementById("listaPendientes").innerHTML = html;
-}
-
-document.addEventListener("DOMContentLoaded", mostrarPendientes);
-</script>
-
-                                  
-</div>
-
-
-
-</div>
 
 
                             <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
