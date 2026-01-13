@@ -55,4 +55,18 @@ class TableroController extends Controller
         return view('tablero.notificacion-concursos', compact('licitacion', 'info', 'proposicioneconomica', 'segmento', 'cliente'));
 
     }
+
+    public function viajeprogramado($id)
+    {
+        
+        $programcion = Programacion::select('programacion.id','programacion.folio', 'programacion.tipo_servicio', 'pe.estatus_programacion', 'cli.nombre_cliente', 'programacion.dom_origen', 'programacion.dom_destino', 'programacion.fecha_servicio', 'programacion.programacion_estatus_id', 'programacion.op_monitoreo_id',  'programacion.custodio_id', 'cli.razon_social')
+            ->leftjoin("programacion_estatus as pe","pe.id","programacion.programacion_estatus_id")
+            ->leftjoin("cliente as cli","cli.id","programacion.cliente_id")
+            ->where('programacion.id', $id)
+            ->get();
+        // dd($programcion);
+
+        return view('tablero.viaje-custodio', compact('programcion'));
+    }
+
 }
