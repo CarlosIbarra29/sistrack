@@ -36,6 +36,6 @@ Route::get('/tablero', [App\Http\Controllers\Tablero\TableroController::class, '
 
 Route::get('/tablero/{licitacion}', [App\Http\Controllers\Tablero\TableroController::class, 'vernotconcurso'])->name('tablero.vernotconcurso');
 
-
+Route::get('/tablero-viaje-programado/{id}', [App\Http\Controllers\Tablero\TableroController::class, 'viajeprogramado'])->name('tablero.viajeprogramado');
 
 require __DIR__.'/auth.php';

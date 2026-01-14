@@ -111,7 +111,8 @@
                   </td>
 
                   <td class="text-center">
-                    <button class="btn btn-sm btn-clean btn-hover-icon-success btn-icon activar-agencia" data-toggle="modal" data-target="#kt_modal_1" data-id="{{ $unid->id }}" data-nombre="{{ $unid->razon_social }}" data-toggle="tooltip" data-theme="dark" title="Ver viaje" ><i class="flaticon-eye"></i></button>
+                    <a href="{{ route('tablero.viajeprogramado', $unid->id) }}"><i class="flaticon-eye"></i></a>
+                    <button class="btn btn-sm btn-clean btn-hover-icon-success btn-icon activar-agencia" data-toggle="modal" data-target="#kt_modal_1" data-id="{{ $unid->id }}" data-nombre="{{ $unid->razon_social }}" data-toggle="tooltip" data-theme="dark" title="Ver viaje" ></button>
                   </td>
                 </tr>
               @endforeach
