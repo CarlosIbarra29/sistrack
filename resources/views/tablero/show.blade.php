@@ -107,7 +107,11 @@
                   <td>{{ $unid->dom_destino }}</td>
                   <td>{{ $unid->fecha_servicio }}</td>
                   <td>
-                    <span class="label font-weight-bold  label-outline label-inline" style="color: green; border: 1px solid green !important">Programado</span>
+                    @if($unid->estatus_viaje_id == 1)
+                      <span class="label font-weight-bold  label-outline label-inline" style="color: #3699FF ; border: 1px solid #3699FF  !important; font-size: 12px;width: 134px;height: 34px;">{{ $unid->estatusViaje->estatus_viaje }}</span>
+                    @else
+                      <span class="label font-weight-bold  label-outline label-inline" style="color: green; border: 1px solid green !important;font-size: 12px;">{{ $unid->estatusViaje->estatus_viaje }}</span>
+                    @endif
                   </td>
 
                   <td class="text-center">

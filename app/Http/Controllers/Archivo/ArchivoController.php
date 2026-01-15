@@ -14,6 +14,7 @@ use App\Models\Usuarios\UsuarioDocRegistro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Programacion\BitacoraViaje;
 
 class ArchivoController extends Controller
 {
@@ -135,6 +136,19 @@ class ArchivoController extends Controller
         }else{
             return abort('403');
         }           
+    }
+
+    public function bitacoraviaje(Request $request)
+    {
+        $user = auth()->user();
+        $id = $request->id;
+        $documento = BitacoraViaje::findOrFail($id);
+        $existeArchivo = Storage::exists('programacion/'.$documento->programacion_id.'/'.$documento->imagen);
+        if($user && $documento && $existeArchivo) {
+            return Storage::download('programacion/'.$documento->programacion_id.'/'.$documento->imagen, $documento->imagen, ['Content-Disposition'=>'inline; filename="'.$documento->imagen.'"']);
+        }else{
+            return abort('403');
+        }            
     }
 
 }
