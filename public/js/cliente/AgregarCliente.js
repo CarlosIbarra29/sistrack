@@ -148,7 +148,7 @@ var Modulo = function() {
             "<tr id='trDocumento"+contadorDocumentos+"'>",
             "    <td>" +
             "       <div class='form-group mb-0'>" +
-            "          <select class='form-control' name='id_tipocontacto["+contadorDocumentos+"]' id='id_tipocontacto"+contadorDocumentos+"' required>",
+            "          <select class='form-control  st-input' name='id_tipocontacto["+contadorDocumentos+"]' id='id_tipocontacto"+contadorDocumentos+"' required>",
             "              <option value=''>Selecciona un opción</option>",
             lista_dos,
             "          </select>",
@@ -156,21 +156,21 @@ var Modulo = function() {
             "    </td>",
             "    <td>" +
             "       <div class='form-group mb-0'>" +
-            "               <input type='text' class='form-control' id='nombre"+contadorDocumentos+"' name='nombre["+contadorDocumentos+"]' required />",
+            "               <input type='text' class='form-control  st-input' id='nombre"+contadorDocumentos+"' name='nombre["+contadorDocumentos+"]' required />",
             "       </div>" +
             "    </td>",
             "    <td>" +
             "       <div class='form-group mb-0'>" +
-            "               <input type='text' class='form-control' id='email"+contadorDocumentos+"' name='email["+contadorDocumentos+"]' required />",
+            "               <input type='text' class='form-control  st-input' id='email"+contadorDocumentos+"' name='email["+contadorDocumentos+"]' required />",
             "       </div>" +
             "    </td>",
             "    <td>" +
             "       <div class='form-group mb-0'>" +
-            "               <input type='text' class='form-control' id='telefono"+contadorDocumentos+"' name='telefono["+contadorDocumentos+"]' required />",
+            "               <input type='text' class='form-control  st-input' id='telefono"+contadorDocumentos+"' name='telefono["+contadorDocumentos+"]' required />",
             "       </div>" +
             "    </td>",
             "    <td>",
-            "       <a href='#' class='btn btn-clean btn-icon btn-outline-success mt-1 hrefEliminar' data-id='"+contadorDocumentos+"' data-toggle='tooltip' data-theme='dark' title='Eliminar'>",
+            "       <a href='#' class='btn btn-clean btn-icon btn-outline-danger mt-1 hrefEliminar' data-id='"+contadorDocumentos+"' data-toggle='tooltip' data-theme='dark' title='Eliminar'>",
             "           <i class='flaticon-delete'></i>",
             "       </a>",
             "    </td>",
@@ -263,21 +263,21 @@ var Modulo = function() {
             "    <td>",
             "        <div class='form-group mb-0'>",
             "           <div class='custom-file'>",
-            "               <input type='file' class='custom-file-input' id='archivo"+contadorDocumentos+"' name='archivo["+contadorDocumentos+"]' required />",
+            "               <input type='file' class='custom-file-input st-input' id='archivo"+contadorDocumentos+"' name='archivo["+contadorDocumentos+"]' required />",
             "               <label class='custom-file-label' for='archivo"+contadorDocumentos+"'>Selecciona un archivo</label>",
             "           </div>",
             "        </div>",
             "    </td>",
             "    <td>" +
             "       <div class='form-group mb-0'>" +
-            "          <select class='form-control' name='id_documento["+contadorDocumentos+"]' id='id_documento"+contadorDocumentos+"' required>",
+            "          <select class='form-control st-input' name='id_documento["+contadorDocumentos+"]' id='id_documento"+contadorDocumentos+"' required>",
             "              <option value=''>Selecciona un opción</option>",
             lista,
             "          </select>",
             "       </div>" +
             "    </td>",
             "    <td>",
-            "       <a href='#' class='btn btn-sm btn-clean btn-hover-icon-success btn-icon hrefEliminar2' data-id='"+contadorDocumentos+"' data-toggle='tooltip' data-theme='dark' title='Eliminar'>",
+            "       <a href='#' class='btn btn-clean btn-icon btn-outline-danger btn-icon hrefEliminar2' data-id='"+contadorDocumentos+"' data-toggle='tooltip' data-theme='dark' title='Eliminar'>",
             "           <i class='flaticon-delete'></i>",
             "       </a>",
             "    </td>",

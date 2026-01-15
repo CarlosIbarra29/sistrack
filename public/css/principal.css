@@ -1,3 +1,18 @@
+    .st-input {
+        background-color: #F3F6F9;
+        border-color: transparent;
+        font-weight: 500;
+    }
+    .st-input:focus {
+        background-color: #EBEDF3;
+        border-color: transparent;
+    }
+.titulo-lb {
+        font-weight: 600;
+        color: #3F4254;
+        margin-bottom: .5rem;
+    }
+
 .btn.btn-login {
     color: #ffffff;
     background-color: #cc0c73;
