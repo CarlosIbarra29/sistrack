@@ -1,23 +1,42 @@
 @extends('layouts.app')
 @push('scripts')
     <script src="{{ asset('js/cliente/AgregarCliente.js') }}"></script>
+
 @endpush
 @section('title')
     Agregar cliente
 @endsection
 @section('content')
 
+
+<style>
+
+    
+    .separator.separator-dashed {
+        border-bottom: 1px dashed #EBEDF3;
+    }
+
+    .card-title-custom {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #181C32;
+    }
+</style>
+
+ <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-8">
+        <h2 class="font-weight-bold">Agregar Cliente</h2>
+
+        <a href="{{ route('cliente.listadocliente') }}" class="btn btn-warning font-weight-bold">
+            <i class="flaticon2-back"></i> Regresar
+        </a>
+    </div>
     <!--begin::Card-->
     <div class="row">
         <div class="col-lg-12">
             <!--begin::Card-->
             <div class="card card-custom gutter-b">
-                <div class="card-header">
-                    <h3 class="card-title">Agregar Cliente</h3>
-                    <div class="card-toolbar">
-                        <a href="{{ route('cliente.listadocliente') }}" class="btn btn-sm btn-clean btn-hover-icon-success btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
-                    </div>
-                </div>
+                
                 <!--begin::Form-->
                 <form action="{{ route('cliente.guardarcliente') }}" method="post" id="submit_cliente"  enctype="multipart/form-data">
                     @csrf
@@ -36,66 +55,64 @@
                             <div class="tab-pane fade show active mt-10" id="kt_tab_pane_1" role="tabpanel" aria-labelledby="kt_tab_pane_1">
 
                                 <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label>Razón social</label>
+                                    <div class="col-lg-4">
+                                        <spam class="titulo-lb" >Razón social</spam>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="razon_social" id="razon_social" required/>
+                                            <input type="text" class="form-control st-input" name="razon_social" id="razon_social" required/>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <label>Nombre comercial/ Cliente</label>
+                                    <div class="col-lg-4">
+                                        <spam class="titulo-lb">Nombre comercial/ Cliente<spaml>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="cliente" id="cliente" required/>
+                                            <input type="text" class="form-control st-input" name="cliente" id="cliente" required/>
+                                        </div>
+                                    </div>
+                                     <div class="col-lg-4">
+                                        <spam class="titulo-lb">Grupo</spam>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control st-input" name="grupo" id="grupo"  />
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label>Grupo</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="grupo" id="grupo"  />
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="separator separator-dashed my-8"></div>
 
                                 <div class="card card-custom gutter-b">
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h3 class="card-label">
-                                                <small>Información Técnica</small>
+                                            <h3 class="card-label card-title-custom ">
+                                                <spam class="titulo-lb" >Información Técnica</spam >
                                             </h3>
                                         </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group row">
-                                            <div class="col-lg-6">
-                                                <label>Días de Crédito </label>
+                                            <div class="col-lg-3">
+                                                <spam class="titulo-lb">Días de Crédito </spam >
                                                 <div class="input-group">
-                                                    <input type="number" class="form-control" name="dias_credito" id="dias_credito" />
+                                                    <input type="number" class="form-control st-input" name="dias_credito" id="dias_credito" />
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <label>Costo de estadía</label>
+                                            <div class="col-lg-3">
+                                                <spam class="titulo-lb">Costo de estadía</spam >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="costo_estadia" id="costo_estadia" />
+                                                    <input type="text" class="form-control st-input" name="costo_estadia" id="costo_estadia" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <spam class="titulo-lb">Costo km extraordinario</spam >
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control st-input" name="costo_km" id="costo_km" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <spam class="titulo-lb">Costo por estadía no armada</spam >
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control st-input" name="costo_estadia_armada" id="costo_estadia_armada" />
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="form-group row">
-                                            <div class="col-lg-6">
-                                                <label>Costo km extraordinario</label>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" name="costo_km" id="costo_km" />
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <label>Costo por estadía no armada</label>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" name="costo_estadia_armada" id="costo_estadia_armada" />
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </div>
 
@@ -106,7 +123,7 @@
                                             <div class="card-header">
                                                 <div class="card-title">
                                                     <h3 class="card-label">
-                                                        <small>Contacto operativo</small>
+                                                        <spam class="titulo-lb">Contacto operativo</spam>
                                                     </h3>
                                                 </div>
                                             </div>
@@ -131,7 +148,7 @@
 
                                                 <div class="row form-group">
                                                     <div class="col-lg-12">
-                                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                                        <a href="#" class="btn btn-icon btn-outline-warning btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
                                                             <i class="flaticon2-plus"></i>
                                                         </a>
                                                     </div>
@@ -181,8 +198,8 @@
 
                                 <div class="form-group">
                                     <div class="col-lg-12">
-                                        <label for="observaciones">Observaciones</label>
-                                        <textarea class="form-control" name="observaciones" id="observaciones" rows="3"></textarea>
+                                        <spam class="titulo-lb">Observaciones</spam>
+                                        <textarea class="form-control st-input" name="observaciones" id="observaciones" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -208,7 +225,7 @@
 
                                 <div class="row form-group">
                                     <div class="col-lg-12">
-                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro2" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                        <a href="#" class="btn btn-icon btn-outline-warning btn-circle btn-sm mr-2 hrefAgregarOtro2" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
                                             <i class="flaticon2-plus"></i>
                                         </a>
                                     </div>
@@ -227,8 +244,8 @@
                     </div>
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col-lg-6">
-                                <button type="button"  id="btnGuardar" class="btn btn-primary mr-2">Guardar</button>
+                            <div class="col-lg-12 text-right">
+                                <button type="button"  id="btnGuardar" class="btn btn-warning mr-2"><i class="flaticon2-check-mark"></i>Guardar</button>
                                 <a href="{{ route('cliente.listadocliente') }}"  class="btn btn-secondary">Cancelar</a>
                             </div>
                         </div>
