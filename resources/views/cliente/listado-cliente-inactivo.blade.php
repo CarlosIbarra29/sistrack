@@ -16,9 +16,8 @@
             <h2 class="font-weight-bold mb-1">Inventario de clientes inactivos</h2>
                     </div>
 
-        <a href="{{ route('cliente.listadocliente') }}"
-           class="btn btn-light-warning font-weight-bold">
-            <i class="flaticon2-back mr-2"></i> Regresar
+        <a href="{{ route('cliente.listadocliente') }}" class="btn btn-warning font-weight-bold">
+            <i class="flaticon2-back"></i> Regresar
         </a>
     </div>
 
