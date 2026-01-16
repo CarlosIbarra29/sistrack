@@ -64,26 +64,26 @@
                             <div class="card-body">
 
                                 <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label>Razón social</label>
-                                        <input type="text" class="form-control" name="razon_social"
+                                    <div class="col-lg-4">
+                                        <spam class="titulo-lb" >Razón social</spam>
+                                        <input type="text" class="form-control st-input" name="razon_social"
                                                id="razon_social" value="{{ $data->razon_social }}" required>
                                     </div>
 
-                                    <div class="col-lg-6">
-                                        <label>Nombre comercial / Cliente</label>
-                                        <input type="text" class="form-control" name="cliente"
+                                    <div class="col-lg-4">
+                                        <spam class="titulo-lb">Nombre comercial / Cliente</spam>
+                                        <input type="text" class="form-control st-input" name="cliente"
                                                id="cliente" value="{{ $data->nombre_cliente }}" required>
                                     </div>
-                                </div>
 
-                                <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label>Grupo</label>
-                                        <input type="text" class="form-control" name="grupo"
+                                    <div class="col-lg-4">
+                                        <spam class="titulo-lb">Grupo</spam >
+                                        <input type="text" class="form-control st-input" name="grupo"
                                                id="grupo" value="{{ $data->grupo }}">
                                     </div>
                                 </div>
+
+                                
 
                             </div>
                         </div>
@@ -91,54 +91,47 @@
                         {{-- INFORMACIÓN TÉCNICA --}}
                         <div class="card card-custom mb-8">
                             <div class="card-header">
-                                <h3 class="card-title">Información técnica</h3>
+                                <h3 class="card-title card-title-custom ">Información técnica</h3>
                             </div>
                             <div class="card-body">
 
                                 <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label>Días de crédito</label>
-                                        <input type="number" class="form-control"
+                                    <div class="col-lg-3">
+                                        <spam class="titulo-lb">Días de crédito</spam>
+                                        <input type="number" class="form-control st-input"
                                                name="dias_credito" id="dias_credito"
                                                value="{{ $data->dias_credito }}">
                                     </div>
 
-                                    <div class="col-lg-6">
-                                        <label>Costo de estadía</label>
-                                        <input type="text" class="form-control"
+                                    <div class="col-lg-3">
+                                        <spam class="titulo-lb">Costo de estadía</spam>
+                                        <input type="text" class="form-control st-input"
                                                name="costo_estadia" id="costo_estadia"
                                                value="{{ $data->costo_estadia }}">
                                     </div>
-                                </div>
 
-                                <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label>Costo km extraordinario</label>
-                                        <input type="text" class="form-control"
+                                    <div class="col-lg-3">
+                                        <spam class="titulo-lb">Costo km extraordinario</spam >
+                                        <input type="text" class="form-control st-input"
                                                name="costo_km" id="costo_km"
                                                value="{{ $data->costo_km }}">
                                     </div>
-
-                                    <div class="col-lg-6">
-                                        <label>Costo por estadía no armada</label>
-                                        <input type="text" class="form-control"
+                                    <div class="col-lg-3">
+                                        <spam class="titulo-lb">Costo por estadía no armada</spam>
+                                        <input type="text" class="form-control st-input"
                                                name="costo_estadia_armada" id="costo_estadia_armada"
                                                value="{{ $data->costo_estadia_armada }}">
                                     </div>
                                 </div>
 
+                                
                             </div>
                         </div>
 
                         {{-- CONTACTOS --}}
                         <div class="card card-custom mb-8">
                             <div class="card-header d-flex justify-content-between">
-                                <h3 class="card-title">Contactos</h3>
-
-                                <a href="#" class="btn btn-icon btn-outline-warning btn-sm hrefAgregarOtro"
-                                   data-toggle="tooltip" title="Agregar contacto">
-                                    <i class="flaticon2-plus"></i>
-                                </a>
+                                <h3 class="card-title">Contactos</h3>   
                             </div>
 
                             <div class="card-body p-0">
@@ -166,9 +159,16 @@
                                                     </a>
                                                 </td>
                                             </tr>
+
                                         @endforeach
                                     </tbody>
                                 </table>
+                            </div>
+
+                        <div class=mt-4>
+                                <a href="#" class="btn btn-icon btn-outline-warning  btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                    <i class="flaticon2-plus"></i>
+                                </a>
                             </div>
                         </div>
 
@@ -191,11 +191,6 @@
                         <div class="card card-custom">
                             <div class="card-header d-flex justify-content-between">
                                 <h3 class="card-title">Documentación</h3>
-
-                                <a href="#" class="btn btn-icon btn-outline-warning btn-sm hrefAgregarOtro2"
-                                   data-toggle="tooltip" title="Agregar documento">
-                                    <i class="flaticon2-plus"></i>
-                                </a>
                             </div>
 
                             <div class="card-body p-0">
@@ -228,8 +223,18 @@
                                     </tbody>
                                 </table>
                             </div>
+                            
 
-                        </div>
+                            <div class="row form-group">
+                                <div class="col-lg-12 mt-4">
+                                    <a href="#" class="btn btn-icon btn-outline-warning btn-sm hrefAgregarOtro2" data-toggle="tooltip" title="Agregar documento">
+                                         <i class="flaticon2-plus"></i>
+                                    </a>
+                                </div>
+                               </div>
+
+                            
+
 
                     </div>
 
@@ -238,13 +243,13 @@
 
             {{-- FOOTER --}}
             <div class="card-footer">
-                <button type="button" id="btnGuardar" class="btn btn-warning mr-3">
-                    Guardar cambios
-                </button>
-                <a href="{{ route('cliente.listadocliente') }}" class="btn btn-secondary">
-                    Cancelar
-                </a>
-            </div>
+                        <div class="row">
+                            <div class="col-lg-12 text-right">
+                                <button type="button"  id="btnGuardar" class="btn btn-warning mr-2"><i class="flaticon2-check-mark"></i>Guardar</button>
+                                <a href="{{ route('cliente.listadocliente') }}"  class="btn btn-secondary">Cancelar</a>
+                            </div>
+                        </div>
+                    </div>
 
         </div>
     </form>

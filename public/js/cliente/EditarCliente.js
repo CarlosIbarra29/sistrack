@@ -342,7 +342,7 @@ var Modulo = function() {
             "       </div>" +
             "    </td>",
             "    <td>",
-            "       <a href='#' class='btn btn-clean btn-icon btn-outline-success mt-1 hrefEliminar' data-id='"+contadorDocumentos+"' data-toggle='tooltip' data-theme='dark' title='Eliminar'>",
+            "       <a href='#' class='btn btn-clean btn-icon btn-outline-danger mt-1 hrefEliminar' data-id='"+contadorDocumentos+"' data-toggle='tooltip' data-theme='dark' title='Eliminar'>",
             "           <i class='flaticon-delete'></i>",
             "       </a>",
             "    </td>",
@@ -396,7 +396,7 @@ var Modulo = function() {
             "       </div>" +
             "    </td>",
             "    <td>",
-            "       <a href='#' class='btn btn-clean btn-icon btn-outline-success mt-1 hrefEliminarfac' data-id='"+contadorDocumentos+"' data-toggle='tooltip' data-theme='dark' title='Eliminar'>",
+            "       <a href='#' class='btn btn-clean btn-icon btn-outline-danger mt-1 hrefEliminarfac' data-id='"+contadorDocumentos+"' data-toggle='tooltip' data-theme='dark' title='Eliminar'>",
             "           <i class='flaticon-delete'></i>",
             "       </a>",
             "    </td>",
@@ -449,7 +449,7 @@ var Modulo = function() {
             "       </div>" +
             "    </td>",
             "    <td>",
-            "       <a href='#' class='btn btn-sm btn-clean btn-hover-icon-success btn-icon hrefEliminar2' data-id='"+contadorDocumentos+"' data-toggle='tooltip' data-theme='dark' title='Eliminar'>",
+            "       <a href='#' class='btn btn-clean btn-icon btn-outline-danger btn-icon hrefEliminar2' data-id='"+contadorDocumentos+"' data-toggle='tooltip' data-theme='dark' title='Eliminar'>",
             "           <i class='flaticon-delete'></i>",
             "       </a>",
             "    </td>",
