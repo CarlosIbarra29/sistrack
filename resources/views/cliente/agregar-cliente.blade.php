@@ -40,6 +40,9 @@
                 <!--begin::Form-->
                 <form action="{{ route('cliente.guardarcliente') }}" method="post" id="submit_cliente"  enctype="multipart/form-data">
                     @csrf
+
+
+
                     <div class="card-body">
                         <!--begin::tabs-->
                         <ul class="nav nav-tabs nav-tabs-line">
