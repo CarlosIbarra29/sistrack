@@ -1,495 +1,321 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <a href="https://gopichakradhar.me" target="_blank" id="super-btn" title="Visit gopichakradhar.me">
-  <img src="https://ik.imagekit.io/gopichakradhar/assets/super.jpg?updatedAt=1748004690247" alt="Super" /><style>
-  #super-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px; /* change to left if needed */
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    z-index: 9999;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
+@extends('layouts.app')
+@push('scripts')
 
-  #super-btn img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    display: block;
-  }
+  <script src="{{ asset('js/cliente/CatalogoClientes.js') }}"></script>
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
+@endpush
+@section('title')
+  Inventario de clientes
+@endsection
+@section('content')
+<style>
+  .alert-card {
+        background: white;
+        border: 1px solid #e8e8e8;
+        padding: 22px;
+        border-radius: 14px;
+        transition: 0.3s ease;
+    }
 
-  #super-btn:hover {
-    transform: scale(1.08);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.45);
-  }
+    .alert-card:hover {
+        border-color: #eaeaea;
+        box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .alert-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .alert-header i {
+        font-size: 25px;
+        color: #B9770E;
+    }
+
+    .alert-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #000000
+    }
+
+    .alert-value {
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--);
+        margin-top: 4px;
+    }
+    .divider {
+        height: 1px;
+        background: #eaeaea;
+        margin: 14px 0;
+    }
+
+    .coloricono {
+      color:#B9770E!important;
+    }
 </style>
+    <div class="d-flex flex-row">
 
-</a>
+    <!--begin::List-->
+    <div class="flex-row-fluid">
+        <div class="d-flex flex-column flex-grow-1">
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CSE Student Portfolio - by GOPI CHAKRADHAR</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://ik.imagekit.io">
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700;900&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="c.css">
-  
-  <!-- Preload gallery images -->
-  <link rel="preload" as="image" href="https://ik.imagekit.io/gopichakradhar/songa/1.png">
-  <link rel="preload" as="image" href="https://ik.imagekit.io/gopichakradhar/songa/2.png">
-  <link rel="preload" as="image" href="https://ik.imagekit.io/gopichakradhar/songa/3.png">
-  <link rel="preload" as="image" href="https://ik.imagekit.io/gopichakradhar/songa/4.png">
-  <link rel="preload" as="image" href="https://ik.imagekit.io/gopichakradhar/songa/5.png">
-  <link rel="preload" as="image" href="https://ik.imagekit.io/gopichakradhar/songa/6.png">
-  <link rel="preload" as="image" href="https://ik.imagekit.io/gopichakradhar/songa/7.png">
-  <link rel="preload" as="image" href="https://ik.imagekit.io/gopichakradhar/songa/8.png">
-</head>
-<body>
-  <!-- Section 1: Full Screen Hover Reveal -->
-  <section class="section-1">
-    <div class="image-frame">
-      <!-- Bottom image (revealed on hover) -->
-      <div class="image-layer image-bottom">
-        <img src="https://ik.imagekit.io/gopichakradhar/assets/1.png" alt="Bottom Image">
-      </div>
-      
-      <!-- Top image (default visible) -->
-      <div class="image-layer image-top">
-        <img src="https://ik.imagekit.io/gopichakradhar/assets/2.png" alt="Top Image">
-      </div>
-      
-      <!-- Glass blob indicator -->
-      <div class="blob"></div>
-      
-      <!-- Editorial Text Overlay -->
-      <div class="hero-label-top">COMPUTER SCIENCE ENGINEERING</div>
-      
-      <!-- Hero Name -->
-      <div class="hero-name">GOPI CHAKRADHAR</div>
-      
-      <div class="hero-keywords-bottom">
-        <span class="keyword">ALGORITHMS</span>
-        <span class="keyword-divider">×</span>
-        <span class="keyword">PASSION</span>
-        <span class="keyword-divider">×</span>
-        <span class="keyword">CREATIVITY</span>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Section 2: About Section -->
-  <section class="section-2">
-    <div class="about-container">
-      <div class="about-image">
-        <img src="https://ik.imagekit.io/gopichakradhar/assets/ABOUT1%20(2).png" alt="AI Agent">
-      </div>
-      <div class="about-content">
-        <h2>A Journey of Passion</h2>
-        <p>I'm a devoted Computer Science dreamer, enchanted by the poetry hidden within code. Each algorithm is a sonnet, every function a verse in the grand symphony of creation. My heart beats in binary, my soul speaks in syntax.</p>
-        <p>From moonlit debugging sessions to sunrise deployments, I craft digital love letters that bridge imagination and reality. Every commit is a promise, every merge a union of ideas dancing in perfect harmony.</p>
-        <a href="#" class="cta-button">My Story ♥</a>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Section 3: Gallery -->
-  <section class="section-3">
-    <div class="container">
-      <h1>Love Letters in Code</h1>
+            <!--begin::Row-->
+            <div class="row">
+                <div class="col-xl-12">
 
-      <div class="gallery-wrap">
-        <div class="item item-1">
-          <div class="item-content">
-            <h3 class="item-title">AI-Powered Chatbot</h3>
-            <p class="item-description">Intelligent conversational agent using NLP</p>
-          </div>
-        </div>
-        <div class="item item-2">
-          <div class="item-content">
-            <h3 class="item-title">E-Commerce Platform</h3>
-            <p class="item-description">Full-stack marketplace with real-time updates</p>
-          </div>
-        </div>
-        <div class="item item-3">
-          <div class="item-content">
-            <h3 class="item-title">Data Visualization Dashboard</h3>
-            <p class="item-description">Interactive analytics with D3.js</p>
-          </div>
-        </div>
-        <div class="item item-4">
-          <div class="item-content">
-            <h3 class="item-title">Social Media App</h3>
-            <p class="item-description">Connect and share with real-time feeds</p>
-          </div>
-        </div>
-        <div class="item item-5">
-          <div class="item-content">
-            <h3 class="item-title">Machine Learning Model</h3>
-            <p class="item-description">Predictive analytics for business insights</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Section 4: Location -->
-  <section class="section-4">
-    <div class="location-container">
-      <div class="globe-section">
-        <div class="page">
-          <div class="title">✨ explore connections across the universe ✨</div>
-          <div class="globe-wrapper">
-            <canvas id="globe-3d"></canvas>
-            <canvas id="globe-2d-overlay"></canvas>
-            <div id="globe-popup-overlay">
-              <div class="globe-popup"></div>
+                <!--begin::Card-->
+                    <div class="card card-custom">
+                        <div class="card-header">
+                            <div class="card-title">
+                      <span class="card-icon">
+                        <i class="flaticon2-file coloricono"></i>
+                      </span>
+                                <h3 class="card-label">Inventario de clientes</h3>
+                            </div>
+                            <div class="card-toolbar">
+
+{{--                                 <a class="btn btn-link-primary font-weight-bold mr-2 busqueda" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    Busqueda
+                                </a> --}}
+
+                                <!--begin::Button-->
+                                @if (in_array("6", Session::get('permisos', []))) 
+                                  
+                                  <a href="{{ route('cliente.agregarcliente') }}"class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black"><i class="la la-plus"></i>Nuevo</a>
+                                @endif
+                                <!--end::Button-->
+
+                                
+
+                                    <a href="{{ route('cliente.listadoclienteinactivo') }}" class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black"><i class="far fa-trash-alt"></i>Clientes inactivos</a>
+
+                                <!--begin::Dropdown-->
+                                <div class="dropdown dropdown-inline mr-2">
+{{--                                     <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <span class="svg-icon svg-icon-md">
+                                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                          <rect x="0" y="0" width="24" height="24" />
+                                          <path d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z" fill="#000000" opacity="0.3" />
+                                          <path d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z" fill="#000000" />
+                                        </g>
+                                      </svg>
+                                      </span>Exportar
+                                    </button> --}}
+                                    <!--begin::Dropdown Menu-->
+                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                        <!--begin::Navigation-->
+                                        <ul class="navi flex-column navi-hover py-2">
+                                            <li class="navi-item">
+                                              <a href="#" class="navi-link" id="export-excel">
+                                                <span class="navi-icon">
+                                                  <i class="la la-file-excel-o"></i>
+                                                </span>
+                                                <span class="navi-text">Excel</span>
+                                              </a>
+                                            </li>
+{{--                                             <li class="navi-item">
+                                              <a href="#" class="navi-link" id="export-pdf">
+                                                <span class="navi-icon">
+                                                  <i class="la la-file-pdf-o"></i>
+                                                </span>
+                                                <span class="navi-text">PDF</span>
+                                              </a>
+                                            </li> --}}
+                                            <li class="navi-item">
+                                              <a href="#" class="navi-link" id="export-csv">
+                                                <span class="navi-icon">
+                                                  <i class="la la-file-text-o"></i>
+                                                </span>
+                                                <span class="navi-text">CSV</span>
+                                              </a>
+                                            </li>
+                                            <li class="navi-item">
+                                              <a href="#" class="navi-link" id="export-print">
+                                                <span class="navi-icon">
+                                                  <i class="la la-file-text-o"></i>
+                                                </span>
+                                                <span class="navi-text">Imprimir</span>
+                                              </a>
+                                            </li>
+
+                                        </ul>
+                                        <!--end::Navigation-->
+                                    </div>
+                                    <!--end::Dropdown Menu-->
+                                </div>
+                                <!--end::Dropdown-->
+                            </div>
+                        </div>
+                        <div class="card-body">
+
+                          <div class="collapse" id="collapseExample">
+                              <div class="card card-body">
+                                <!--begin: Search Form-->
+                                <form class="mb-15">
+                                  <div class="row mb-6">
+                                    <div class="col-lg-6 mb-lg-0 mb-6">
+                                      <label>Nombre del cliente:</label>
+                                      <input type="text" class="form-control datatable-input" data-col-index="1" />
+                                    </div>
+                                  </div>
+
+                                  <div class="row mt-8">
+                                    <div class="col-lg-12">
+                                      <button class="btn btn-primary btn-primary--icon" id="kt_search">
+                                        <span><i class="la la-search"></i><span>Buscar</span></span>
+                                      </button>&#160;&#160;
+                                      <button class="btn btn-secondary btn-secondary--icon" id="kt_reset">
+                                        <span><i class="la la-close"></i><span>Limpiar</span></span>
+                                      </button>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                          </div>
+
+
+
+<div class="row">
+  <div class="col-lg-3">
+        <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-wallet"></i>
+                <span class="alert-title">Pendientes</span>
             </div>
-          </div>
+            <div class="alert-value">12</div>
+            <div class="divider"></div>
+            <small>Clientes con pagos programados los próximos 7 días.</small>
         </div>
-      </div>
-      <div class="location-content">
-        <h2>Where Hearts Meet Code</h2>
-        <p>In this vast digital universe, every connection is a constellation waiting to be discovered. Click the globe and let our paths intertwine across the stars of possibility.</p>
-        <p>Whether you're seeking a collaborator who codes with passion, or simply a kindred spirit who sees poetry in Python, my inbox awaits your message like a love letter yet to be written.</p>
-      </div>
+  </div>
+  <div class="col-lg-3">
+<div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-user-clock"></i>
+                <span class="alert-title">Clientes inactivos</span>
+            </div>
+            <div class="alert-value">8</div>
+            <div class="divider"></div>
+            <small>Clientes sin actividad en más de 30 días.</small>
+        </div>
+  </div>
+  <div class="col-lg-3">
+  <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-exclamation-circle"></i>
+                <span class="alert-title">Tareas vencidas</span>
+            </div>
+            <div class="alert-value">3</div>
+            <div class="divider"></div>
+            <small>Tareas importantes que requieren atención inmediata.</small>
+        </div>
+  </div>
+  <div class="col-lg-3">
+  <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-user-shield"></i>
+                <span class="alert-title">Clientes en riesgo</span>
+            </div>
+            <div class="alert-value">4</div>
+            <div class="divider"></div>
+            <small>Clientes con señales de abandono o retrasos.</small>
+        </div>
+  </div>
+
+</div>
+
+
+
+<div class="col-xl-12">
+                            <!--begin: Datatable-->
+                            <table class="table table-hover table-checkable" id="kdatatable_clientes">
+                                <thead>
+                                <tr>
+                                  <th>Folio.</th>
+                                  <th>Razon social</th>
+                                  <th>Nombre cliente</th>
+                                  <th>Grupo</th>
+                                  <th class="text-center">Opciones</th>
+                                </tr>
+                                </thead>
+                                <tbody> 
+                                  @php $num = 1; @endphp
+                                  @foreach($data as $unid)
+                                    <tr>
+                                      <td>{{ $unid->num_list }}</td>
+                                      <td>{{ $unid->razon_social }}</td>
+                                      <td>{{ $unid->nombre_cliente }}</td>
+                                      <td>{{ $unid->grupo }}</td>
+                                      <td>
+                                        <a href="{{ route('cliente.vercliente', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mr-2" title="Ver cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
+                                            <span class="svg-icon svg-icon-md">
+                                                <i class="flaticon-eye"></i>
+                                            </span>
+                                        </a>
+
+                                        <a href="{{ route('cliente.editarcliente', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mr-2" title="Editar cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
+                                            <span class="svg-icon svg-icon-md">
+                                                <i class="flaticon-edit"></i>
+                                            </span>
+                                        </a>
+
+                                        <button class="btn btn-clean btn-sm btn-icon btn-outline-warning mt-1" onClick="deletecliente(`{{ $unid->id }} `,`{{ $unid->id }}`)" data-toggle="modal" data-target="#model_delete_user" data-toggle="tooltip" data-theme="dark" title="Desactivar cliente">
+                                            <span class="svg-icon svg-icon-md">
+                                                <i class="flaticon-delete"></i>
+                                            </span>
+                                         </button>
+                                      </td>
+                                    </tr>
+                                     @php $num ++; @endphp
+                                  @endforeach
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                  <th>Folio.</th>
+                                  <th>Razon social</th>
+                                  <th>Nombre cliente</th>
+                                  <th>Grupo</th>
+                                  <th class="text-center">Opciones</th>
+                                </tr>
+                                </tfoot>
+
+                            </table>
+                            <!--end: Datatable-->
+</div>
+
+
+
+
+
+                            <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
+                            {{-- <input type="hidden" id="clientedatatable" value="{{ route('cliente.clientelistadodatatable') }}"> --}}
+
+                        </div>
+                    </div>
+                    <!--end::Card-->
+                    <!--end::Card-->
+                </div>
+
+            </div>
+            <!--end::Row-->
+        </div>
     </div>
-  </section>
-  
-  <!-- Section 5: Romantic Contact & Footer -->
-  <section class="section-5">
-    <div class="hearts-background">
-      <div class="heart"></div>
-      <div class="heart"></div>
-      <div class="heart"></div>
-      <div class="heart"></div>
-      <div class="heart"></div>
-      <div class="heart"></div>
-    </div>
-    
-    <div class="contact-container">
-      <div class="romantic-footer">
-        <div class="footer-divider"></div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Section 6: Infinite Scrolling Gallery -->
-  <section class="section-6">
-    <div class="wrapper-images">
-      <!-- 5 images by row -->
-      <div class="images-line">
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/1.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/1.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/2.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/2.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/3.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/3.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/4.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/4.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/5.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/5.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/6.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/6.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/7.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/7.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/8.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/8.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/9.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/9.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/10.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/10.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/11.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/11.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/12.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/12.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/13.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/13.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/14.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/14.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/15.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/15.png)"></div>
-        </div>
-      </div>
-      
-      <!-- 5 images by row -->
-      <div class="images-line">
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/16.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/16.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/17.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/17.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/18.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/18.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/19.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/19.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/20.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/20.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/21.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/21.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/22.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/22.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/23.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/23.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/24.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/24.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/25.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/25.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/26.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/26.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/27.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/27.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/28.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/28.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/29.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/29.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/30.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/30.png)"></div>
-        </div>
-      </div>
-      
-      <!-- 5 images by row -->
-      <div class="images-line">
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/31.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/31.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/32.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/32.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/33.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/33.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/34.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/34.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/35.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/35.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/36.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/36.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/37.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/37.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/38.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/38.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/39.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/39.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/40.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/40.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/41.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/41.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/42.png)">
-          <div class="img" style="background-image:url(https://ik.imagekit.io/gopichakradhar/songa/42.png)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://i.scdn.co/image/ab67706f00000002b43eac9f01f8b865662b5c29)">
-          <div class="img" style="background-image:url(https://i.scdn.co/image/ab67706f00000002b43eac9f01f8b865662b5c29)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://i.scdn.co/image/ab67706f000000029385ce8e365c6b8ba3f70d4b)">
-          <div class="img" style="background-image:url(https://i.scdn.co/image/ab67706f000000029385ce8e365c6b8ba3f70d4b)"></div>
-        </div>
-        <div class="line" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd6SzQFYpzLRahb-WpPIRduJJyqsaKO2OgmIvLcTdYYQazVQ3lfSQStSaVE7wZ9qL9fAo&usqp=CAU)">
-          <div class="img" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd6SzQFYpzLRahb-WpPIRduJJyqsaKO2OgmIvLcTdYYQazVQ3lfSQStSaVE7wZ9qL9fAo&usqp=CAU)"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Section 8: Meet My Friends -->
-  <section class="section-8">
-    <span>meet my</span>
-    <h2>Fav's</h2>
-    <p>These amazing people inspire me every day with their creativity, passion, and dedication to the craft of code.</p>
-    <span class="bg-watermark">friends</span>
-    <div class="cards">
-      <div class="card">
-        <img src="https://ik.imagekit.io/gopichakradhar/assets/left.jfif" alt="Franklin Carlson">
-        <div class="card-content">
-          <h3>Bae Suzy</h3>
-          <p>South Korean singer</p>
-          <ul>
-            <li><a href=""><i class="fa-brands fa-x-twitter"></i></a></li>
-            <li><a href=""><i class="fa-brands fa-linkedin-in"></i></a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://ik.imagekit.io/gopichakradhar/assets/middle.jfif" alt="Antonia Moore">
-        <div class="card-content">
-          <h3>PRABHAS</h3>
-          <p>TFI HEROO</p>
-          <ul>
-            <li><a href=""><i class="fa-brands fa-x-twitter"></i></a></li>
-            <li><a href=""><i class="fa-brands fa-linkedin-in"></i></a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://ik.imagekit.io/gopichakradhar/assets/right.jfif" alt="Travis Lynch">
-        <div class="card-content">
-          <h3>Moon Ga-young</h3>
-          <p>South Korean actress</p>
-          <ul>
-            <li><a href=""><i class="fa-brands fa-x-twitter"></i></a></li>
-            <li><a href=""><i class="fa-brands fa-linkedin-in"></i></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Section 7: Love Yourself Interactive Hero -->
-  <section class="section-7">
-    <div class="love-hero-container">
-      <h1 class="love-title">Love Yourself</h1>
-      
-      <div class="love-hero-images">
-        <div class="love-hero-image"></div>
-        <div class="love-hero-image"></div>
-        <div class="love-hero-image"></div>
-        <div class="love-hero-image"></div>
-        <div class="love-hero-image"></div>
-        <div class="love-hero-image"></div>
-        <div class="love-hero-image"></div>
-        <div class="love-hero-image"></div>
-        <div class="love-hero-image"></div>
-        <div class="love-hero-image"></div>
-        <div class="love-hero-image"></div>
-        <div class="love-hero-image"></div>
-        <div class="love-hero-image"></div>
-        <div class="love-hero-image"></div>
-        <div class="love-hero-image"></div>
-        <div class="love-hero-image"></div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Shaders -->
-  <script type="x-shader/x-fragment" id="fragment-shader-map">
-    uniform sampler2D u_map_tex;
+    <!--end::List-->
+</div>
 
-    varying float vOpacity;
-    varying vec2 vUv;
+{{-- M O D A L S --}}
+  <form method="post" id="cliente_delete_form" action="{{ route('cliente.desactivarclientelistado') }}" enctype="multipart/form-data">
+    @csrf
+    <input type="hidden" name="id" id="id_cliente_delete" value="">
+  </form>
 
-    void main() {
-        vec3 color = texture2D(u_map_tex, vUv).rgb;
-        color -= .2 * length(gl_PointCoord.xy - vec2(.5));
-        float dot = 1. - smoothstep(.38, .4, length(gl_PointCoord.xy - vec2(.5)));
-        if (dot < 0.5) discard;
-        gl_FragColor = vec4(color, dot * vOpacity);
-    }
-  </script>
+  <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
 
-  <script type="x-shader/x-vertex" id="vertex-shader-map">
-    uniform sampler2D u_map_tex;
-    uniform float u_dot_size;
-    uniform float u_time_since_click;
-    uniform vec3 u_pointer;
 
-    #define PI 3.14159265359
 
-    varying float vOpacity;
-    varying vec2 vUv;
 
-    void main() {
 
-        vUv = uv;
-
-        // mask with world map
-        float visibility = step(.2, texture2D(u_map_tex, uv).r);
-        gl_PointSize = visibility * u_dot_size;
-
-        // make back dots semi-transparent
-        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-        vOpacity = (1. / length(mvPosition.xyz) - .7);
-        vOpacity = clamp(vOpacity, .03, 1.);
-
-        // add ripple
-        float t = u_time_since_click - .1;
-        t = max(0., t);
-        float max_amp = .15;
-        float dist = 1. - .5 * length(position - u_pointer); // 0 .. 1
-        float damping = 1. / (1. + 20. * t); // 1 .. 0
-        float delta = max_amp * damping * sin(5. * t * (1. + 2. * dist) - PI);
-        delta *= 1. - smoothstep(.8, 1., dist);
-        vec3 pos = position;
-        pos *= (1. + delta);
-
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.);
-    }
-  </script>
-  
-  <script>
-    // Preload all 42 gallery images ASAP
-    const imageCache = new Map();
-    const totalImages = 42;
-    
-    // Start preloading immediately
-    for (let i = 1; i <= totalImages; i++) {
-      const img = new Image();
-      const url = `https://ik.imagekit.io/gopichakradhar/songa/${i}.png`;
-      img.src = url;
-      img.onload = () => imageCache.set(url, true);
-      img.onerror = () => {
-        // If image fails to load, try loading a fallback
-        console.warn(`Image ${i} failed to load, will use available images`);
-      };
-    }
-    
-    // Function to check if image is loaded
-    window.isImageLoaded = (url) => imageCache.has(url);
-    
-    // Cursor-driven mask reveal
-    const maskLayer = document.getElementById("mask-layer");
-    
-    if (maskLayer) {
-      window.addEventListener("mousemove", (e) => {
-        const x = (e.clientX / window.innerWidth) * 100;
-        const y = (e.clientY / window.innerHeight) * 100;
-        
-        maskLayer.style.webkitMaskPosition = `${x}% ${y}%`;
-        maskLayer.style.maskPosition = `${x}% ${y}%`;
-      });
-    }
-  </script>
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-  <script type="module" src="s.js"></script>
-</body>
-</html>
+@endsection
