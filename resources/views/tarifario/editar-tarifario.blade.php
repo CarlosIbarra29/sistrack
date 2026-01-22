@@ -3,7 +3,7 @@
     <script src="{{ asset('js/tarifario/AgregarTarifario.js') }}"></script>
 @endpush
 @section('title')
-Editar tarifa
+Editar tarifario
 @endsection
 @section('content')
 
@@ -19,7 +19,7 @@ Editar tarifa
             <div class="card-header bg-white border-bottom">
                 <div class="d-flex align-items-center justify-content-between w-100">
                     <h3 class="card-title font-weight-bold text-dark mb-0">
-                        Editar Tarifa
+                        Editar Tarifario
                     </h3>
                     <a href="{{ route('tarifario.listadotarifario') }}"
                        class="btn btn-icon btn-light btn-hover-warning"

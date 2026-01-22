@@ -34,7 +34,7 @@
                             <div class="card-toolbar">
 
                                 <!--begin::Button-->
-                                <a href="{{ route('tarifario.listadotarifario') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
+                                <a href="{{ route('tarifario.listadotarifario') }}" class="btn btn-light-warning font-weight-bolder mr-3 ml-3">
                                   Regresar</a>
                                 <!--end::Button-->
 
@@ -70,7 +70,7 @@
                                       <td>{{ $unid->ppkm_cust }}</td>
 
                                       <td class="text-center">
-                                        <button class="btn btn-clean btn-icon btn-outline-success mt-1 activar-tarifa" data-id="{{ $unid->id }}" data-nombre="{{ $unid->id }}" data-toggle="tooltip" data-theme="dark" title="Activar tarifa" ><i class="flaticon2-reply "></i></button>
+                                        <button class="btn btn-clean btn-icon btn-outline-warning mt-1 activar-tarifa" data-id="{{ $unid->id }}" data-nombre="{{ $unid->id }}" data-toggle="tooltip" data-theme="dark" title="Activar tarifa" ><i class="flaticon2-reply "></i></button>
                                       </td>
                                     </tr>
                                   @endforeach
