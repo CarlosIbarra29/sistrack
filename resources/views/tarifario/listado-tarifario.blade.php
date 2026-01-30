@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('scripts')
-{{-- <script src="{{ asset('js/Usuarios.js') }}"></script> --}}
+
   <script src="{{ asset('js/tarifario/CatalogoTarifario.js') }}"></script>
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
@@ -8,6 +8,8 @@
   Listado del tarifario
 @endsection
 @section('content')
+
+
 
     <div class="d-flex flex-row">
 
@@ -24,7 +26,7 @@
                         <div class="card-header">
                             <div class="card-title">
                       <span class="card-icon">
-                        <i class="flaticon2-file text-primary"></i>
+                        <i class="flaticon2-file coloricono"></i>
                       </span>
                                 <h3 class="card-label">Inventario de tarifario</h3>
                             </div>
@@ -35,14 +37,18 @@
                                 </a> --}}
 
                                 <!--begin::Button-->
-                                @if (in_array("6", Session::get('permisos'))) 
-                                  <a href="{{ route('tarifario.agregartarifario') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3" >
-                                  <i class="la la-plus"></i>Nuevo</a>
+
+                                <div class="col-lg-12 text-right">
+                                  <div class="col-lg-12">
+                                    @if (in_array("6", Session::get('permisos'))) 
+                                  <a href="{{ route('tarifario.agregartarifario') }}"class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black"><i class="la la-plus"></i>Nuevo</a>
                                 @endif
                                 <!--end::Button-->
 
-                                <a href="{{ route('tarifario.listadotarifarioinactivo') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
-                                    <i class="far fa-trash-alt"></i>Tarifario inactivos</a>
+                                <a href="{{ route('tarifario.listadotarifarioinactivo') }}" class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black"><i class="far fa-trash-alt"></i>Tarifario inactivos</a>
+                                  </div>
+                                </div>
+                                
 
                                 <!--begin::Dropdown-->
                                 <div class="dropdown dropdown-inline mr-2">
@@ -134,6 +140,57 @@
                               </div>
                           </div>
 
+
+<div class="row">                                   
+  <div class="col-lg-3">
+        <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-wallet"></i>
+                <span class="alert-title">Pendientes</span>
+            </div>
+            <div class="alert-value">12</div>
+            <div class="divider"></div>
+            <small>Clientes con pagos programados los próximos 7 días.</small>
+        </div>
+  </div>
+  <div class="col-lg-3">
+<div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-user-clock"></i>
+                <span class="alert-title">Clientes</span>
+            </div>
+            <div class="alert-value">8</div>
+            <div class="divider"></div>
+            <small>Tarifas inactivas en más de 30 días.</small>
+        </div>
+  </div>
+  <div class="col-lg-3">
+  <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-exclamation-circle"></i>
+                <span class="alert-title">Tipo de viaje </span>
+            </div>
+            <div class="alert-value">3</div>
+            <div class="divider"></div>
+            <small>Tareas importantes que requieren atención inmediata.</small>
+        </div>
+  </div>
+  <div class="col-lg-3">
+  <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-user-shield"></i>
+                <span class="alert-title">Grafica</span>
+            </div>
+            <div class="alert-value">4</div>
+            <div class="divider"></div>
+            <small>Clientes con señales de abandono o retrasos.</small>
+        </div>
+  </div>
+
+</div>
+
+
+
                             <!--begin: Datatable-->
                             <table class="table table-hover table-checkable" id="kdatatable_tarifario_dos">
                                 <thead>
@@ -172,17 +229,17 @@
 
                                       <td>
 
-                                        <a href="{{ route('tarifario.vertarifa', $unid->id ) }}" class="btn btn-sm btn-outline-success btn-icon mr-2" title="Ver tarifario" data-theme="dark" data-toggle="tooltip" data-placement="top">
+                                        <a href="{{ route('tarifario.vertarifa', $unid->id ) }}" class="btn btn-sm btn-outline-warning btn-icon mr-2" title="Ver tarifario" data-theme="dark" data-toggle="tooltip" data-placement="top">
                                             <span class="svg-icon svg-icon-md">
                                                 <i class="flaticon-eye"></i>
                                             </span>
                                         </a>
-                                        <a href="{{ route('tarifario.editartarifario', $unid->id ) }}" class="btn btn-sm btn-outline-success btn-icon mr-2" title="Editar tarifario" data-theme="dark" data-toggle="tooltip" data-placement="top">
+                                        <a href="{{ route('tarifario.editartarifario', $unid->id ) }}" class="btn btn-sm btn-outline-warning btn-icon mr-2" title="Editar tarifario" data-theme="dark" data-toggle="tooltip" data-placement="top">
                                             <span class="svg-icon svg-icon-md">
                                                 <i class="flaticon-edit"></i>
                                             </span>
                                         </a>
-                                        <button class="btn btn-clean btn-sm btn-icon btn-outline-success mt-1" onClick="deletetarifario(`{{ $unid->origen }} `,`{{ $unid->id }}`)" data-toggle="modal" data-target="#model_delete_user" data-toggle="tooltip" data-theme="dark" title="Desactivar tarifario">
+                                        <button class="btn btn-clean btn-sm btn-icon btn-outline-warning mt-1" onClick="deletetarifario(`{{ $unid->origen }} `,`{{ $unid->id }}`)" data-toggle="modal" data-target="#model_delete_user" data-toggle="tooltip" data-theme="dark" title="Desactivar tarifario">
                                             <span class="svg-icon svg-icon-md">
                                                 <i class="flaticon-delete"></i>
                                             </span>
