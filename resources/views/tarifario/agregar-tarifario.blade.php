@@ -132,9 +132,9 @@ Agregar tarifa
                                     </div>
 
                                     <!-- Botón calcular -->
-                                    <div class="form-group text-center mt-6">
+                                    <div class="form-group text-right mt-6">
                                         <a id="calcular_tarifa"
-                                           class="btn btn-warning font-weight-bold px-12 py-4">
+                                           class="btn btn-warning  text-right">
                                             <i class="flaticon2-pie-chart mr-2"></i>
                                             Calcular tarifa
                                         </a>

@@ -184,7 +184,7 @@
 
 <div class="col-xl-12">
                             <!--begin: Datatable-->
-                            <table class="table table-hover table-checkable" id="kdatatable_clientes">
+                            <table class="table table-hover table-checkable inventory-table" id="kdatatable_usuarios2">
                                 <thead>
                                 <tr>
                                   <th>Folio.</th>

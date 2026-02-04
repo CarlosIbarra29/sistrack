@@ -173,19 +173,67 @@
                         <div class="card-header">
                             <div class="card-title">
                       <span class="card-icon">
-                        <i class="flaticon2-file text-primary"></i>
+                        <i class="flaticon2-file text-warning"></i>
                       </span>
-                                <h3 class="card-label">Inventario de monitoreo</h3>
+                                <h3 class="card-label">Inventario de programacion</h3>
                             </div>
                             <div class="card-toolbar">
 
-                                                                <a href="{{ route('programacion.nuevaprogramacion') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3" >
+                                                                <a href="{{ route('programacion.nuevaprogramacion') }}" class="btn btn-light-warning font-weight-bolder mr-3 ml-3" >
                                   <i class="la la-plus"></i>Nuevo</a>
                             </div>
                         </div>
                         <div class="card-body">
+                          <div class="row">                                   
+  <div class="col-lg-3">
+        <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-wallet"></i>
+                <span class="alert-title">Pendientes</span>
+            </div>
+            <div class="alert-value">12</div>
+            <div class="divider"></div>
+            <small>Clientes con pagos programados los próximos 7 días.</small>
+        </div>
+  </div>
+  <div class="col-lg-3">
+<div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-user-clock"></i>
+                <span class="alert-title">Tarifario Inactivo</span>
+            </div>
+            <div class="alert-value">8</div>
+            <div class="divider"></div>
+            <small>Tarifas inactivas en más de 30 días.</small>
+        </div>
+  </div>
+  <div class="col-lg-3">
+  <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-exclamation-circle"></i>
+                <span class="alert-title">Tipo de viaje </span>
+            </div>
+            <div class="alert-value">3</div>
+            <div class="divider"></div>
+            <small>Tareas importantes que requieren atención inmediata.</small>
+        </div>
+  </div>
+  <div class="col-lg-3">
+  <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-user-shield"></i>
+                <span class="alert-title">Grafica</span>
+            </div>
+            <div class="alert-value">4</div>
+            <div class="divider"></div>
+            <small>Clientes con señales de abandono o retrasos.</small>
+        </div>
+  </div>
+
+</div>
+
                             <!--begin: Datatable-->
-                            <table class="table table-hover table-checkable" id="kdatatable_programacion_activo">
+                             <table class="table table-hover table-checkable inventory-table" id="kdatatable_usuarios2">
                                 <thead>
                                 <tr>
                                   <th>No.</th>
@@ -265,24 +313,24 @@
                                       </td>
 
                                       <td class="text-center">
-                                        <a href="{{ route('programacion.verprogramacion', $unid->id) }}" class="btn btn-sm btn-outline-success btn-icon mt-2" title="Ver programación" data-theme="dark" data-toggle="tooltip" data-placement="top">
+                                        <a href="{{ route('programacion.verprogramacion', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mt-2" title="Ver programación" data-theme="dark" data-toggle="tooltip" data-placement="top">
                                             <span class="svg-icon svg-icon-md">
                                                 <i class="flaticon-eye"></i>
                                             </span>
                                         </a>
-                                        <a href="{{ route('programacion.editarprogramacion', $unid->id) }}" class="btn btn-sm btn-outline-success btn-icon mt-2" title="Editar programación" data-theme="dark" data-toggle="tooltip" data-placement="top">
+                                        <a href="{{ route('programacion.editarprogramacion', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mt-2" title="Editar programación" data-theme="dark" data-toggle="tooltip" data-placement="top">
                                             <span class="svg-icon svg-icon-md">
                                                 <i class="flaticon-edit"></i>
                                             </span>
                                         </a>
 
 
-                                        <button class="btn btn-sm btn-outline-success btn-icon mt-2" onClick="addincidenciaid({{ $unid->id }})" data-toggle="modal" data-target="#model_add_incidencia" data-toggle="tooltip" data-theme="dark" title="Observaciones">
+                                        <button class="btn btn-sm btn-outline-warning btn-icon mt-2" onClick="addincidenciaid({{ $unid->id }})" data-toggle="modal" data-target="#model_add_incidencia" data-toggle="tooltip" data-theme="dark" title="Observaciones">
                                                 <i class="flaticon-notepad"></i>
                                         </button>
 
 
-                                        <button class="btn btn-clean btn-sm btn-icon btn-outline-success mt-1" onClick="deleteprogramacion('{{$unid->id}}', '{{$unid->id }}')" data-theme="dark" data-toggle="tooltip" data-placement="top" title="Desactivar programación">
+                                        <button class="btn btn-clean btn-sm btn-icon btn-outline-warning mt-1" onClick="deleteprogramacion('{{$unid->id}}', '{{$unid->id }}')" data-theme="dark" data-toggle="tooltip" data-placement="top" title="Desactivar programación">
                                             <span class="svg-icon svg-icon-md">
                                                 <i class="flaticon-delete"></i>
                                             </span>

@@ -157,7 +157,7 @@
 <div class="alert-card">
             <div class="alert-header">
                 <i class="fas fa-user-clock"></i>
-                <span class="alert-title">Clientes</span>
+                <span class="alert-title">Tarifario Inactivo</span>
             </div>
             <div class="alert-value">8</div>
             <div class="divider"></div>
@@ -192,7 +192,7 @@
 
 
                             <!--begin: Datatable-->
-                            <table class="table table-hover table-checkable" id="kdatatable_tarifario_dos">
+                            <table class="table table-hover table-checkable inventory-table" id="kdatatable_usuarios2">
                                 <thead>
                                 <tr>
                                   <th>Folio.</th>

@@ -9,19 +9,7 @@
 @section('content')
 
 
-<style>
 
-    
-    .separator.separator-dashed {
-        border-bottom: 1px dashed #EBEDF3;
-    }
-
-    .card-title-custom {
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: #181C32;
-    }
-</style>
 
  <!-- HEADER -->
     <div class="d-flex justify-content-between align-items-center mb-8">

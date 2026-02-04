@@ -13,15 +13,19 @@
 			<h3 class="card-label">
 				Información del custodio
 			</h3>
-
 		</div>
+
         <div class="card-toolbar">
-				<a type="submit" href="{{ route('custodio.fichatecnica', $custodio->id) }}"   class="btn btn-outline-warning">
-	   	 			<i class="flaticon2-poll-symbol"></i> Ficha técnica
-				</a>
-				                            <a href="{{ route('custodio.listadocustodio') }}" class="btn btn-sm btn-clean btn-hover-icon-warning btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
-        </div>
+    <a href="{{ route('custodio.fichatecnica', $custodio->id) }}"
+       class="btn btn-outline-warning mr-4">
+        <i class="flaticon2-poll-symbol"></i> Ficha técnica
+    </a>
+
+    <a href="{{ route('custodio.listadocustodio') }}"class="btn btn-warning font-weight-bold"><i class="flaticon2-back"></i> Regresar</a>
+</div>
+
 	</div>
+
 	<div class="card-body">
 		<div class="row">
 			<div class="col-lg-4">

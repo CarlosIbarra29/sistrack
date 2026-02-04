@@ -1,12 +1,9 @@
 @extends('layouts.app')
-
 @section('title')
     Catálogo de tarifas inactivas
 @endsection
-
 @push('scripts')
   <script src="{{ asset('js/tarifario/CatalogoTarifario.js') }}"></script>
-
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
 

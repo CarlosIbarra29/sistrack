@@ -355,7 +355,7 @@
 
               <div class="modal-footer">
                 <button type="button" class="btn btn btn-secondary font-weight-bold" data-dismiss="modal"><i class="la la-times"></i>Cancelar</button>
-                <button type="button" id="edit_observacion" class="btn btn-success"><i class="la la-plus"></i>Guardar</button>
+                <button type="button" id="edit_observacion" class="btn btn-warning"><i class="la la-plus"></i>Guardar</button>
               </div>
           </div>
       </div>

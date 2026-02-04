@@ -27,9 +27,7 @@
 
             <!-- Table -->
             <div class="table-responsive">
-                <table class="table table-hover table-separate table-head-custom table-checkable"
-                       id="kdatatable_clientes_inactivos">
-
+                <table class="table table-hover table-checkable inventory-table" id="kdatatable_usuarios2">
                     <thead>
                         <tr>
                             <th>Razón social</th>
