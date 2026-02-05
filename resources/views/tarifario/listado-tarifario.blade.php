@@ -40,7 +40,8 @@
 
                                 <div class="col-lg-12 text-right">
                                   <div class="col-lg-12">
-                                    @if (in_array("6", Session::get('permisos'))) 
+                                    @if(true)
+
                                   <a href="{{ route('tarifario.agregartarifario') }}"class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black"><i class="la la-plus"></i>Nuevo</a>
                                 @endif
                                 <!--end::Button-->

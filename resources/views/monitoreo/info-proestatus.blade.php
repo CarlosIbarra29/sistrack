@@ -21,7 +21,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Programación</h3>
                     <div class="card-toolbar">
-                        <a href="{{ route('monitoreo.listamonitoreo') }}" class="btn btn-sm btn-clean btn-hover-icon-success btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
+                        <a href="{{ route('monitoreo.listamonitoreo') }}" class="btn btn-sm btn-clean btn-hover-icon-danger btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
                     </div>
                 </div>
 

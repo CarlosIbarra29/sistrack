@@ -196,7 +196,7 @@
 <div class="alert-card">
             <div class="alert-header">
                 <i class="fas fa-user-clock"></i>
-                <span class="alert-title">Tarifario Inactivo</span>
+                <span class="alert-title">Monitoreo Inactivo</span>
             </div>
             <div class="alert-value">8</div>
             <div class="divider"></div>
@@ -352,7 +352,7 @@
           <div class="modal-content">
               <div class="modal-header">
                   <h5 class="modal-title">Incidencia</h5>
-                  <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                  <div class="btn btn-icon btn-sm btn-active-light-warning ms-2" data-bs-dismiss="modal" aria-label="Close">
                       <span class="svg-icon svg-icon-2x"></span>
                   </div>
               </div>
@@ -372,7 +372,7 @@
 
               <div class="modal-footer">
                 <button type="button" class="btn btn btn-secondary font-weight-bold" data-dismiss="modal"><i class="la la-times"></i>Cancelar</button>
-                <button type="button" id="send_incidencia" class="btn btn-success"><i class="la la-plus"></i>Guardar</button>
+                <button type="button" id="send_incidencia" class="btn btn-warning"><i class="la la-plus"></i>Guardar</button>
               </div>
           </div>
       </div>

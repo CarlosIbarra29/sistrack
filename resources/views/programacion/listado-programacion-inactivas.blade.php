@@ -27,15 +27,14 @@
                         <div class="card-header">
                             <div class="card-title">
                       <span class="card-icon">
-                        <i class="flaticon2-file text-primary"></i>
+                        <i class="flaticon2-file text-warning"></i>
                       </span>
                                 <h3 class="card-label">Inventario de programación inactivas</h3>
                             </div>
                             <div class="card-toolbar">
 
                                 <!--begin::Button-->
-                                <a href="{{ route('programacion.listadoprogramacion') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
-                                  Regresar</a>
+                                <a href="{{ route('programacion.listadoprogramacion') }}" class="btn btn-light-warning font-weight-bold mr-3 ml-3"><i class="flaticon2-back"></i> Regresar</a>
                                 <!--end::Button-->
 
                             </div>
@@ -76,7 +75,7 @@
                                       <td>{{ $unid->estatus_programacion }}</td>
 
                                       <td class="text-center">
-                                        <button class="btn btn-clean btn-icon btn-outline-success mt-1 activar-programacion" data-id="{{ $unid->id }}" data-nombre="{{ $unid->id }}" data-toggle="tooltip" data-theme="dark" title="Activar programación" ><i class="flaticon2-reply "></i></button>
+                                        <button class="btn btn-clean btn-icon btn-outline-warning mt-1 activar-programacion" data-id="{{ $unid->id }}" data-nombre="{{ $unid->id }}" data-toggle="tooltip" data-theme="dark" title="Activar programación" ><i class="flaticon2-reply "></i></button>
                                       </td>
                                     </tr>
                                   @endforeach

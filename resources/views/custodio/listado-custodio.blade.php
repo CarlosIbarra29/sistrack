@@ -35,7 +35,7 @@
                                 </a> --}}
 
                                 <!--begin::Button-->
-                                @if (in_array("6", Session::get('permisos'))) 
+                                @if(true)
                                   <a href="{{ route('custodio.agregarcustodio') }}"class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black"><i class="la la-plus"></i>Nuevo</a>
                                 @endif
                                 <!--end::Button-->
