@@ -21,7 +21,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Programación</h3>
                     <div class="card-toolbar">
-                        <a href="{{ route('monitoreo.listamonitoreo') }}" class="btn btn-sm btn-clean btn-hover-icon-danger btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
+                        <a href="{{ route('monitoreo.listamonitoreo') }}" class="btn btn-warning font-weight-bold"> <i class="flaticon2-back"></i> Regresar</a>
                     </div>
                 </div>
 
@@ -59,7 +59,7 @@
                                         <label>Tipo de servicio</label>
                                         @if($programacion->tipo_servicio == 0)
                                             <div class="radio-inline">
-                                                <label class="radio">
+                                                <label class="radio radio-warning">
                                                     <input type="radio" {{($programacion->tipo_servicio == 0) ? 'checked' : ''}} name="tipo_servicio" value="0" />
                                                     <span></span>
                                                     Foraneo
@@ -67,7 +67,7 @@
                                             </div>
                                         @else
                                             <div class="radio-inline">
-                                                <label class="radio">
+                                                <label class="radio radio-warning">
                                                     <input type="radio" {{($programacion->tipo_servicio == 1) ? 'checked' : ''}} name="tipo_servicio" value="1" />
                                                     <span></span>
                                                     Local
@@ -115,27 +115,35 @@
                                             @endforeach
                                     </div>
 
-                                    <div class="col-lg-6">
-                                        <label>Acompañantes</label>
-                                        @if($programacion->acompanantes == 0)
+                                <div class="col-lg-6">
+                                    <label>Acompañantes</label>
+                                    @if($programacion->acompanantes == 0)
                                             <div class="radio-inline">
-                                                <label class="radio">
-                                                    <input type="radio" {{($programacion->acompanantes == 0) ? 'checked' : ''}} name="op_custodios" id="op_c_uno" value="0" />
-                                                    <span></span>
-                                                    Si
-                                                </label>
-                                            </div>
-                                        @else
-                                            <div class="radio-inline">
-                                                <label class="radio">
-                                                    <input type="radio" {{($programacion->acompanantes == 1) ? 'checked' : ''}} name="op_custodios" id="op_c_dos" value="1" />
-                                                    <span></span>
-                                                    No
-                                                </label>
-                                            </div>
-                                        @endif
-
+                                            <label class="radio radio-warning">
+                                            <input type="radio"
+                                                {{($programacion->acompanantes == 0) ? 'checked' : ''}}
+                                                name="op_custodios"
+                                                id="op_c_uno"
+                                                value="0" />
+                                            <span></span>
+                                            Sí
+                                        </label>
                                     </div>
+                                @else
+                                    <div class="radio-inline">
+                                        <label class="radio radio-warning">
+                                            <input type="radio"
+                                                {{($programacion->acompanantes == 1) ? 'checked' : ''}}
+                                                name="op_custodios"
+                                                id="op_c_dos"
+                                                value="1" />
+                                            <span></span>
+                                            No
+                                        </label>
+                                    </div>
+                                @endif
+                            </div>
+
                                 </div>
 
                                 <div class="card card-custom gutter-b {{($programacion->acompanantes == 1) ? 'oculto' : ''}}" id="div_custodios" style="background-color:  #f1f1f1;"  >
@@ -181,7 +189,7 @@
                             </div>
 
                             <div class="col-lg-3">
-                                <div class="card card-custom gutter-b" style="background-color:  #f1f1f1;" >
+                                <div class="card card-custom gutter-b" style="background-color:  #0000;" >
                                     <div class="card-header">
                                         <div class="card-title">
                                             <h3 class="card-label">
@@ -207,7 +215,7 @@
                                             </div>
                                             <div class="row text-center">
                                                 <div class="col-lg-12">
-                                                    <button type="button"  id="btnupdatestatus" class="btn btn-primary mr-2">Guardar</button>
+                                                    <button type="button"  id="btnupdatestatus" class="btn btn-warning mr-2">Guardar</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -247,7 +255,7 @@
                                       <td>{{ $unid->userCreated->name }}</td>
 
 {{--                                       <td class="text-center">
-                                        <button class="btn btn-clean btn-icon btn-outline-success mt-1 activar-cliente" data-id="{{ $unid->id }}" data-nombre="{{ $unid->razon_social }}" data-toggle="tooltip" data-theme="dark" title="Activar Cliente" ><i class="flaticon2-reply "></i></button>
+                                        <button class="btn btn-clean btn-icon btn-outline-warning mt-1 activar-cliente" data-id="{{ $unid->id }}" data-nombre="{{ $unid->razon_social }}" data-toggle="tooltip" data-theme="dark" title="Activar Cliente" ><i class="flaticon2-reply "></i></button>
                                       </td> --}}
                                     </tr>
                                   @endforeach
@@ -327,9 +335,9 @@
                     </div>
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col-lg-6">
-                                {{-- <button type="button"  id="btnGuardar" class="btn btn-primary mr-2">Guardar</button> --}}
-                                <a href="{{ route('monitoreo.listamonitoreo') }}"  class="btn btn-secondary">Regresar</a>
+                            <div class="col-lg-12 text-right">
+                                {{-- <button type="button"  id="btnGuardar" class="btn btn-danger mr-2">Guardar</button> --}}
+                                <a href="{{ route('monitoreo.listamonitoreo') }}" class="btn btn-light-warning font-weight-bold mr-3 ml-3"><i class="flaticon2-back"></i> Regresar</a>
                             </div>
                         </div>
                     </div>

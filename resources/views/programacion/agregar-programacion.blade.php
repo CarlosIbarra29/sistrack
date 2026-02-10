@@ -19,10 +19,7 @@
             <div class="card-header">
                 <h3 class="card-title">Agregar Programación</h3>
                 <div class="card-toolbar">
-                    <a href="{{ route('programacion.listadoprogramacion') }}"
-                       class="btn btn-light-warning font-weight-bold mr-3 ml-3">
-                        <i class="flaticon2-back"></i> Regresar
-                    </a>
+                    <a href="{{ route('programacion.listadoprogramacion') }}"class="btn btn-light-warning font-weight-bold mr-3 ml-3"><i class="flaticon2-back"></i> Regresar</a>
                 </div>
             </div>
 

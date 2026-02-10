@@ -41,7 +41,7 @@
                         </div>
                         <div class="card-body">
                             <!--begin: Datatable-->
-                            <table class="table table-hover table-checkable" id="kdatatable_programacion_inactivos">
+                            <table class="table table-hover table-checkable inventory-table" id="kdatatable_programacion_inactivos">
                                 <thead>
                                 <tr>
                                   <th>No.</th>

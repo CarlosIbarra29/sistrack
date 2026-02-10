@@ -135,7 +135,7 @@
 
 
                         <!--begin: Datatable-->
-                          <table class="table table-hover table-checkable" id="kdatatable_documento">
+                          <table class="table table-hover table-checkable inventory-table" id="kdatatable_documento">
                             <thead>
                               <tr>
                                 <th>No.</th>
