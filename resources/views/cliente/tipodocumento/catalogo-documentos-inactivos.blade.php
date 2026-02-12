@@ -23,15 +23,16 @@
                         <div class="card-header">
                             <div class="card-title">
                       <span class="card-icon">
-                        <i class="flaticon2-file text-primary"></i>
+                        <i class="flaticon2-file text-warning"></i>
                       </span>
                                 <h3 class="card-label">Inventario de tipo de documentos</h3>
                             </div>
                             <div class="card-toolbar">
 
                                 <!--begin::Button-->
-                                <a href="{{ route('user.catalogousuarios') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
-                                  Regresar</a>
+
+                                  <a href="{{ route('doccliente.catalogoDocumentos') }}" class="btn btn-warning font-weight-bold"><i class="flaticon2-back"></i> Regresar</a>
+
                                 <!--end::Button-->
 
                             </div>
@@ -54,7 +55,7 @@
                                         <td>{{ $doc->nombre_documento }}</td>
 
                                       <td class="text-center">
-                                        <a class="btn btn-sm btn-clean btn-hover-icon-success btn-icon activar-documento" data-id="{{ $doc->id }}" data-nombre="{{ $doc->nombre_documento }}" data-toggle="tooltip" data-theme="dark" title="Activar Tipo de Documento" ><i class="flaticon2-reply "></i></a>
+                                        <a class="btn btn-clean btn-icon btn-outline-warning mt-1 activar-documento" data-id="{{ $doc->id }}" data-nombre="{{ $doc->nombre_documento }}" data-toggle="tooltip" data-theme="dark" title="Activar Tipo de Documento" ><i class="flaticon2-reply "></i></a>
                                       </td>
                                     </tr>
                                   @endforeach

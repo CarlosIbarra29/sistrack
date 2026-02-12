@@ -126,7 +126,7 @@
 
                                   <div class="row mt-8">
                                     <div class="col-lg-12">
-                                      <button class="btn btn-primary btn-primary--icon" id="kt_search">
+                                      <button class="btn btn-primary btn-warning--icon" id="kt_search">
                                         <span><i class="la la-search"></i><span>Buscar</span></span>
                                       </button>&#160;&#160;
                                       <button class="btn btn-secondary btn-secondary--icon" id="kt_reset">
