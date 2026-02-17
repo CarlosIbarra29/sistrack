@@ -1,4 +1,4 @@
-/* boton para indicar un campo*/
+/* boton para indicar*/
 .radio.radio-warning input:checked ~ span {
     background-color: #ffc107; /* Bootstrap warning */
     border-color: #ffc107;

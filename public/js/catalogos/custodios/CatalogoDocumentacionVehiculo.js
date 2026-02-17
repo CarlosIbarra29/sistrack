@@ -54,7 +54,7 @@ var Tabla = function() {
                     render: function(data, type, full, meta) {
 
                             return '\
-                                <button class="btn btn-clean btn-icon btn-outline-warning mt-1" onClick="editardocumento(\'' + full.nombre + '\', '+full.id+')" data-toggle="modal" data-target="#model_edit_tipodocumento" data-toggle="tooltip" data-theme="dark" title="Editar documento">\
+                                <button class="btn btn-clean btn-icon btn-light-warning mt-1" onClick="editardocumento(\'' + full.nombre + '\', '+full.id+')" data-toggle="modal" data-target="#model_edit_tipodocumento" data-toggle="tooltip" data-theme="dark" title="Editar documento">\
                                     <i class="flaticon-edit"></i></button>\
                                 <button class="btn btn-clean btn-icon btn-outline-warning mt-1" onClick="deletedocumento(\'' + full.nombre + '\', '+full.id+')" data-toggle="tooltip" data-theme="dark" title="Desactivar documento">\
                                     <i class="flaticon-delete "></i>\
