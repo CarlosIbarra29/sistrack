@@ -33,15 +33,14 @@
                             <div class="card-toolbar">
 
                                 <!--begin::Button-->
-                                <a href="{{ route('doccustodio.listadodoccustodio') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
-                                  Regresar</a>
+                                <a href="{{ route('doccustodio.listadodoccustodio') }}" class="btn btn-warning font-weight-bold"><i class="flaticon2-back"></i> Regresar</a>
                                 <!--end::Button-->
 
                             </div>
                         </div>
                         <div class="card-body">
                             <!--begin: Datatable-->
-                            <table class="table table-hover table-checkable" id="kdatatable_documentos_inactivos">
+                            <table class="table table-hover table-checkable inventory-table" id="kdatatable_documentos_inactivos">
                                 <thead>
                                 <tr>
                                   <th>No.</th>
@@ -57,7 +56,7 @@
                                       <td>{{ $unid->tipo_documento }}</td>
 
                                       <td class="text-center">
-                                        <button class="btn btn-clean btn-icon btn-outline-success mt-1 activar-documento" data-id="{{ $unid->id }}" data-nombre="{{ $unid->tipo_documento }}" data-toggle="tooltip" data-theme="dark" title="Activar Documento" ><i class="flaticon2-reply "></i></button>
+                                        <button class="btn btn-clean btn-icon btn-outline-warning mt-1 activar-documento" data-id="{{ $unid->id }}" data-nombre="{{ $unid->tipo_documento }}" data-toggle="tooltip" data-theme="dark" title="Activar Documento" ><i class="flaticon2-reply "></i></button>
                                       </td>
                                     </tr>
                                   @endforeach

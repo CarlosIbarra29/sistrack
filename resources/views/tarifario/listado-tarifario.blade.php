@@ -40,7 +40,8 @@
 
                                 <div class="col-lg-12 text-right">
                                   <div class="col-lg-12">
-                                    @if (in_array("6", Session::get('permisos'))) 
+                                    @if(true)
+
                                   <a href="{{ route('tarifario.agregartarifario') }}"class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black"><i class="la la-plus"></i>Nuevo</a>
                                 @endif
                                 <!--end::Button-->
@@ -157,7 +158,7 @@
 <div class="alert-card">
             <div class="alert-header">
                 <i class="fas fa-user-clock"></i>
-                <span class="alert-title">Clientes</span>
+                <span class="alert-title">Tarifario Inactivo</span>
             </div>
             <div class="alert-value">8</div>
             <div class="divider"></div>
@@ -192,7 +193,7 @@
 
 
                             <!--begin: Datatable-->
-                            <table class="table table-hover table-checkable" id="kdatatable_tarifario_dos">
+                            <table class="table table-hover table-checkable inventory-table" id="kdatatable_usuarios2">
                                 <thead>
                                 <tr>
                                   <th>Folio.</th>

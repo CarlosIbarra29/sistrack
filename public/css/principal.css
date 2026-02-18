@@ -1,3 +1,167 @@
+/* boton para indicar*/
+.radio.radio-warning input:checked ~ span {
+    background-color: #ffc107; /* Bootstrap warning */
+    border-color: #ffc107;
+}
+
+.radio.radio-warning span {
+    border-color: #ffc107;
+}
+
+
+/* ===== TABLA MODERNA CON ANIMACIÓN EXISTENTE ===== */
+
+.inventory-table{
+    border-collapse: separate;
+    border-spacing: 0 14px;   /* espacio entre filas */
+}
+
+/* encabezados limpios */
+.inventory-table thead th{
+    border: none;
+    font-weight: 600;
+    font-size: 13px;
+    color: #777;
+    text-transform: uppercase;
+}
+
+/* cada fila como tarjeta */
+.inventory-table tbody tr{
+    background: #ffffff;
+    transition: all .28s ease;
+    box-shadow: 0 6px 14px rgba(0,0,0,.06);
+}
+
+/* hover (tu animación se mantiene y se ve más pro) */
+.inventory-table tbody tr:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px rgba(0,0,0,.14);
+}
+
+/* eliminar bordes viejos */
+.inventory-table td{
+    border: none !important;
+    padding: 14px 12px;
+}
+
+/* ===== BORDES REDONDOS REALES ===== */
+
+.inventory-table tbody td:first-child{
+    border-radius: 14px 0 0 14px;
+}
+
+.inventory-table tbody td:last-child{
+    border-radius: 0 14px 14px 0;
+}
+
+
+
+
+
+
+.inventory-wrapper{
+    padding:30px;
+    background:#f6f7fb;
+}
+
+.inventory-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.inventory-header h2{
+    font-weight:700;
+}
+
+.inventory-header span{
+    color:#777;
+    font-size:14px;
+}
+
+.btn-gold{
+    background:linear-gradient(135deg,#d4af37,#f3d26a);
+    border:none;
+    padding:10px 22px;
+    border-radius:12px;
+    font-weight:600;
+    color:#000;
+    box-shadow:0 6px 16px rgba(212,175,55,.35);
+}
+
+.btn-outline-gold{
+    border:1.5px solid #d4af37;
+    color:#d4af37;
+    padding:10px 20px;
+    border-radius:12px;
+    background:transparent;
+}
+
+.inventory-card{
+    background:white;
+    border-radius:18px;
+    box-shadow:0 20px 45px rgba(0,0,0,.06);
+    padding:20px;
+}
+
+.inventory-table{
+    border-collapse:separate;
+    border-spacing:0 12px;
+}
+
+.inventory-table tbody tr{
+    background:white;
+    box-shadow:0 4px 12px rgba(0,0,0,.05);
+    border-radius:14px;
+    transition:.25s;
+}
+
+.inventory-table tbody tr:hover{
+    transform:translateY(-3px);
+}
+
+.inventory-table td,
+.inventory-table th{
+    padding:14px;
+}
+
+.action{
+    background:#f1f1f1;
+    border-radius:10px;
+    padding:6px 10px;
+    margin:0 2px;
+    transition:.2s;
+}
+
+.action:hover{
+    background:#d4af37;
+}
+
+.action.delete:hover{
+    background:#ff5c5c;
+    color:white;
+}
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   .alert-card {
         background: white;
         border: 1px solid #e8e8e8;

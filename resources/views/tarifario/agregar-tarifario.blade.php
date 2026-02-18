@@ -21,10 +21,8 @@ Agregar tarifa
                     <h3 class="card-title font-weight-bold text-dark mb-0">
                         Agregar Tarifa
                     </h3>
-                    <a href="{{ route('tarifario.listadotarifario') }}"
-                       class="btn btn-icon btn-light btn-hover-warning"
-                       data-toggle="tooltip" title="Salir">
-                        <i class="flaticon2-reply"></i>
+                    <a href="{{ route('tarifario.listadotarifario') }}" class="btn btn-warning font-weight-bold">
+                    <i class="flaticon2-back"></i> Regresar
                     </a>
                 </div>
             </div>
@@ -132,9 +130,9 @@ Agregar tarifa
                                     </div>
 
                                     <!-- Botón calcular -->
-                                    <div class="form-group text-center mt-6">
+                                    <div class="form-group text-right mt-6">
                                         <a id="calcular_tarifa"
-                                           class="btn btn-warning font-weight-bold px-12 py-4">
+                                           class="btn btn-warning  text-right">
                                             <i class="flaticon2-pie-chart mr-2"></i>
                                             Calcular tarifa
                                         </a>

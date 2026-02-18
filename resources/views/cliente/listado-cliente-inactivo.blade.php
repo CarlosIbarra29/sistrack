@@ -16,9 +16,7 @@
             <h2 class="font-weight-bold mb-1">Inventario de clientes inactivos</h2>
                     </div>
 
-        <a href="{{ route('cliente.listadocliente') }}" class="btn btn-warning font-weight-bold">
-            <i class="flaticon2-back"></i> Regresar
-        </a>
+        <a href="{{ route('cliente.listadocliente') }}" class="btn btn-warning font-weight-bold"><i class="flaticon2-back"></i> Regresar</a>
     </div>
 
     <!-- Card -->
@@ -27,9 +25,7 @@
 
             <!-- Table -->
             <div class="table-responsive">
-                <table class="table table-hover table-separate table-head-custom table-checkable"
-                       id="kdatatable_clientes_inactivos">
-
+                <table class="table table-hover table-checkable inventory-table" id="kdatatable_usuarios2">
                     <thead>
                         <tr>
                             <th>Razón social</th>

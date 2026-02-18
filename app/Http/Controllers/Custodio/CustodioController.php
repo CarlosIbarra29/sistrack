@@ -264,7 +264,8 @@ class CustodioController extends Controller
         }
         $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
 
-         $users_custodio = User::where('id_status_delete', 1)->where('op_custodio', 0)->where('role', 16)->get();
+         $users_custodio = User::where('id_status_delete', 1)->where('role', 16)->get();
+
          // dd($data);
 
         return view('custodio.agregar-custodio', compact('data', 'cadenaTipoDocumento', 'users_custodio'));

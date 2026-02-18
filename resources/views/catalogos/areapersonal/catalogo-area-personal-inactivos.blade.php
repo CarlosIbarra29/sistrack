@@ -30,9 +30,7 @@
                                 <div class="card-toolbar">
 
                                     <!--begin::Button-->
-                                    <a href="{{ route('area.listadoarea') }}"
-                                        class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
-                                        Regresar</a>
+                                         <a href="{{ route('area.listadoarea') }}"class="btn btn-light-warning font-weight-bold mr-3 ml-3"><i class="flaticon2-back"></i> Regresar</a>
                                     <!--end::Button-->
 
                                 </div>

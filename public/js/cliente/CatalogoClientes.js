@@ -52,26 +52,27 @@ var Tabla = function() {
                     title: 'Acciones',
                     orderable: false,
                     render: function(data, type, full, meta) {
+    return `
+        <a href="/cliente/ver-cliente/${full.id}" 
+           class="btn btn-sm btn-warning btn-icon mr-2"
+           title="Ver cliente">
+            <i class="flaticon-eye text-white"></i>
+        </a>
 
-                           return `
-                                <a href="/cliente/ver-cliente/`+full.id+`" class="btn btn-sm btn-outline-success btn-icon mr-2" title="Ver cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
-                                    <span class="svg-icon svg-icon-md">
-                                        <i class="flaticon-eye"></i>
-                                    </span>
-                                </a>
-                                <a href="/cliente/editar-cliente/`+full.id+`" class="btn btn-sm btn-outline-success btn-icon mr-2" title="Editar cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
-                                    <span class="svg-icon svg-icon-md">
-                                        <i class="flaticon-edit"></i>
-                                    </span>
-                                </a>
-                                <button class="btn btn-clean btn-sm btn-icon btn-outline-success mt-1" onClick="deletecliente(`+ full.id +`,`+full.id+`)" data-toggle="modal" data-target="#model_delete_user" data-toggle="tooltip" data-theme="dark" title="Desactivar cliente">
-                                    <span class="svg-icon svg-icon-md">
-                                        <i class="flaticon-delete"></i>
-                                    </span>
-                                 </button>
-                            `;
-                        
-                    },
+        <a href="/cliente/editar-cliente/${full.id}" 
+           class="btn btn-sm btn-warning btn-icon mr-2"
+           title="Editar cliente">
+            <i class="flaticon-edit text-white"></i>
+        </a>
+
+        <button class="btn btn-sm btn-warning btn-icon"
+            onClick="deletecliente(${full.id},${full.id})"
+            title="Desactivar cliente">
+            <i class="flaticon-delete text-white"></i>
+        </button>
+    `;
+}
+
                 }
 
             ],

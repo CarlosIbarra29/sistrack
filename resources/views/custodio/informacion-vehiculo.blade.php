@@ -15,7 +15,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Agregar información vehículo</h3>
                         <div class="card-toolbar">
-                            <a href="{{ route('custodio.listadocustodio') }}" class="btn btn-sm btn-clean btn-hover-icon-success btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
+                            <a href="{{ route('custodio.listadocustodio') }}"class="btn btn-warning font-weight-bold"><i class="flaticon2-back"></i> Regresar</a>
                         </div>
                     </div>
                     <!--begin::Form-->
@@ -177,9 +177,9 @@
                         </div>
                         <div class="card-footer">
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <button type="button"  id="btnGuardar" class="btn btn-primary mr-2">Guardar</button>
-                                    <a href="{{ route('custodio.listadocustodio') }}"  class="btn btn-secondary">Cancelar</a>
+                                <div class="col-lg-12 text-right">
+                                    <button type="button"  id="btnGuardar" class="btn btn-warning mr-2"><i class="flaticon2-check-mark"></i>Guardar</button>
+                                <a href="{{ route('custodio.listadocustodio') }}"  class="btn btn-secondary">Cancelar</a>
                                 </div>
                             </div>
                         </div>

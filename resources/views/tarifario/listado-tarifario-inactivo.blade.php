@@ -1,12 +1,9 @@
 @extends('layouts.app')
-
 @section('title')
     Catálogo de tarifas inactivas
 @endsection
-
 @push('scripts')
   <script src="{{ asset('js/tarifario/CatalogoTarifario.js') }}"></script>
-
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
 
@@ -42,7 +39,7 @@
                         </div>
                         <div class="card-body">
                             <!--begin: Datatable-->
-                            <table class="table table-hover table-checkable" id="kdatatable_tarifas_inactivos">
+                            <table class="table table-hover table-checkable inventory-table" id="kdatatable_tarifas_inactivos">
                                 <thead>
                                 <tr>
                                   <th>No.</th>
