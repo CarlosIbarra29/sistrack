@@ -9,7 +9,7 @@
 
 @section('content')
 
-<<<<<<< HEAD
+
 <style>
     .form-control-solid {
         background-color: #F3F6F9;
@@ -28,7 +28,7 @@
     .separator.separator-dashed {
         border-bottom: 1px dashed #EBEDF3;
     }
-=======
+
 
 <style>
 
@@ -37,15 +37,14 @@
         border-bottom: 1px dashed #EBEDF3;
     }
 
->>>>>>> 9f7373ad738e51fdcfda16ac83aa291304678035
+
     .card-title-custom {
         font-size: 1.2rem;
         font-weight: 700;
         color: #181C32;
     }
 </style>
-<<<<<<< HEAD
-=======
+
 
  <!-- HEADER -->
     <div class="d-flex justify-content-between align-items-center mb-8">
@@ -77,13 +76,13 @@
                                 <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2">Documentación</a>
                             </li>
                         </ul>
->>>>>>> 9f7373ad738e51fdcfda16ac83aa291304678035
+
 
 <div class="row">
 <div class="col-lg-12">
 <div class="card card-custom gutter-b">
 
-<<<<<<< HEAD
+
     {{-- HEADER --}}
     <div class="card-header border-0 pt-6 pb-0">
         <div class="card-title">
@@ -93,7 +92,7 @@
             <a href="{{ route('cliente.listadocliente') }}" class="btn btn-light-danger btn-sm">
                 <i class="flaticon2-reply"></i> Regresar
             </a>
-=======
+
                                 <div class="form-group row">
                                     <div class="col-lg-4">
                                         <spam class="titulo-lb" >Razón social</spam>
@@ -294,7 +293,7 @@
                 <!--end::Form-->
             </div>
             <!--end::Card-->
->>>>>>> 9f7373ad738e51fdcfda16ac83aa291304678035
+
         </div>
     </div>
 
