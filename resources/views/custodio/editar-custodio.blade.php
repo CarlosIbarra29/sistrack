@@ -924,7 +924,7 @@
                                                 <td><a href="{{ route('archivo.documentocustodio', ['id'=>$documento->id]) }}" class="link-primary" target="_blank"> {{ $documento->documento }} </a></td>
                                                 <td>{{ $documento->custodioDocumentacion->tipo_documento }}</td>
                                                 <td>
-                                                    <a href='#' class='btn btn-clean btn-icon btn-outline-success mt-1 hrefEliminarDocumento' data-id='{{ $documento->id }}' data-documento='{{ $documento->documento }}'  data-toggle='tooltip' data-theme='dark' title='Eliminar'>
+                                                    <a href='#' class='btn btn-clean btn-icon btn-outline-danger mt-1 hrefEliminarDocumento' data-id='{{ $documento->id }}' data-documento='{{ $documento->documento }}'  data-toggle='tooltip' data-theme='dark' title='Eliminar'>
                                                         <i class='flaticon-delete'></i>
                                                     </a>
                                                 </td>
@@ -935,7 +935,7 @@
 
                                 <div class="row form-group">
                                     <div class="col-lg-12">
-                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                        <a href="#" class="btn btn-icon btn-outline-warning btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
                                             <i class="flaticon2-plus"></i>
                                         </a>
                                     </div>
@@ -948,7 +948,7 @@
                         <div class="row">
                             <div class="col-lg-12 text-right">
                                 <button type="button"  id="btnGuardar" class="btn btn-outline-warning mr-2">Guardar</button>
-                                <a href="{{ route('custodio.listadocustodio') }}"  class="btn btn-warning">Cancelar</a>
+                                <a href="{{ route('custodio.listadocustodio') }}"  class="btn btn-secondary">Cancelar</a>
                             </div>
                         </div>
                     </div>
