@@ -24,27 +24,23 @@
                             <div class="card-header">
                                 <div class="card-title">
                                     <span class="card-icon">
-                                        <i class="flaticon2-file text-primary"></i>
+                                        <i class="flaticon2-file text-warning"></i>
                                     </span>
                                     <h3 class="card-label">Inventario de area personal</h3>
                                 </div>
                                 <div class="card-toolbar">
 
 
-                                    <a class="btn btn-link-primary font-weight-bold mr-2 busqueda" data-toggle="collapse"
+                                    <a class="btn btn-link-warning font-weight-bold mr-2 busqueda" data-toggle="collapse"
                                         href="#collapseExample" role="button" aria-expanded="false"
                                         aria-controls="collapseExample">
                                         Busqueda
                                     </a>
 
                                     <!--begin::Button-->
-                                    <a href="#" class="btn btn-light-primary font-weight-bolder mr-3 ml-3"
-                                        data-toggle="modal" data-target="#kt_modal_1">
-                                        <i class="la la-plus"></i>Nuevo</a>
+                                    <a href="#" class="btn btn-light-warning font-weight-bolder mr-3 ml-3"data-toggle="modal" data-target="#kt_modal_1"><i class="la la-plus"></i>Nuevo</a>
 
-                                    <a href="{{ route('area.catalogoareainactivas') }}"
-                                        class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
-                                        <i class="far fa-trash-alt"></i>Areas personales inactivos</a>
+                                    <a href="{{ route('area.catalogoareainactivas') }}"class="btn btn-light-warning font-weight-bolder mr-3 ml-3"><i class="far fa-trash-alt"></i>Areas personales inactivos</a>
 
                                     <!--end::Button-->
 
@@ -52,7 +48,7 @@
                                     <!--begin::Dropdown-->
                                     <div class="dropdown dropdown-inline mr-2">
                                         <button type="button"
-                                            class="btn btn-light-primary font-weight-bolder dropdown-toggle"
+                                            class="btn btn-light-warning font-weight-bolder dropdown-toggle"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <span class="svg-icon svg-icon-md">
                                                 <!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg-->
@@ -126,7 +122,7 @@
                                             </div>
                                             <div class="row mt-8">
                                                 <div class="col-lg-12">
-                                                    <button class="btn btn-primary btn-primary--icon" id="kt_search">
+                                                    <button class="btn btn-warning btn-primary--icon" id="kt_search">
                                                         <span><i class="la la-search"></i><span>Buscar</span></span>
                                                     </button>&#160;&#160;
                                                     <button class="btn btn-secondary btn-secondary--icon" id="kt_reset">
@@ -140,7 +136,7 @@
 
 
                                 <!--begin: Datatable-->
-                                <table class="table table-hover table-checkable" id="catalogo_table">
+                                <table class="table table-hover table-checkable inventory-table" id="catalogo_table">
                                     <thead>
                                         <tr>
                                             <th>No.</th>
@@ -184,7 +180,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title">Agregar area personal</h5>
 
-                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                    <div class="btn btn-icon btn-sm btn-active-light-warning ms-2" data-bs-dismiss="modal"
                         aria-label="Close">
                         <span class="svg-icon svg-icon-2x"></span>
                     </div>
@@ -206,7 +202,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn btn-secondary font-weight-bold"
                         data-dismiss="modal">Cancelar</button>
-                    <button type="button" id="guardar_nuevo" class="btn btn-primary">Guardar</button>
+                    <button type="button" id="guardar_nuevo" class="btn btn-warning">Guardar</button>
                 </div>
             </div>
         </div>
@@ -218,7 +214,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Editar area personal</h5>
-                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                    <div class="btn btn-icon btn-sm btn-active-light-warning ms-2" data-bs-dismiss="modal"
                         aria-label="Close">
                         <span class="svg-icon svg-icon-2x"></span>
                     </div>
@@ -242,14 +238,13 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn btn-secondary font-weight-bold"
                         data-dismiss="modal">Cancelar</button>
-                    <button type="button" id="guardar_editar_registro" class="btn btn-primary">Guardar</button>
+                    <button type="button" id="guardar_editar_registro" class="btn btn-warning">Guardar</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <form method="post" id="form_desactivar" action="{{ route('area.desactivararea') }}"
-        enctype="multipart/form-data">
+    <form method="post" id="form_desactivar" action="{{ route('area.desactivararea') }}"enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="id" id="id_tipo_documento_desactivar" value="">
     </form>

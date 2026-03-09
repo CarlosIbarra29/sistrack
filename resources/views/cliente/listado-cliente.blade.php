@@ -8,54 +8,7 @@
   Inventario de clientes
 @endsection
 @section('content')
-<style>
-  .alert-card {
-        background: white;
-        border: 1px solid #e8e8e8;
-        padding: 22px;
-        border-radius: 14px;
-        transition: 0.3s ease;
-    }
 
-    .alert-card:hover {
-        border-color: #eaeaea;
-        box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
-    }
-
-    .alert-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 12px;
-    }
-
-    .alert-header i {
-        font-size: 25px;
-        color: #B9770E;
-    }
-
-    .alert-title {
-        font-size: 20px;
-        font-weight: 700;
-        color: #000000
-    }
-
-    .alert-value {
-        font-size: 32px;
-        font-weight: 800;
-        color: var(--);
-        margin-top: 4px;
-    }
-    .divider {
-        height: 1px;
-        background: #eaeaea;
-        margin: 14px 0;
-    }
-
-    .coloricono {
-      color:#B9770E!important;
-    }
-</style>
     <div class="d-flex flex-row">
 
     <!--begin::List-->
@@ -82,7 +35,8 @@
                                 </a> --}}
 
                                 <!--begin::Button-->
-                                @if (in_array("6", Session::get('permisos', []))) 
+                                @if(true)
+
                                   
                                   <a href="{{ route('cliente.agregarcliente') }}"class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black"><i class="la la-plus"></i>Nuevo</a>
                                 @endif
@@ -231,7 +185,7 @@
 
 <div class="col-xl-12">
                             <!--begin: Datatable-->
-                            <table class="table table-hover table-checkable" id="kdatatable_clientes">
+                            <table class="table table-hover table-checkable inventory-table" id="kdatatable_usuarios2">
                                 <thead>
                                 <tr>
                                   <th>Folio.</th>

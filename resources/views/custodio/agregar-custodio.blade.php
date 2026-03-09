@@ -1,127 +1,149 @@
 @extends('layouts.app')
 @push('scripts')
-	<script src="{{ asset('js/custodios/AgregarCustodio.js') }}"></script>
+    <script src="{{ asset('js/custodios/AgregarCustodio.js') }}"></script>
 @endpush
+
 @section('title')
     Agregar custodio
 @endsection
+
 @section('content')
 
+<div class="container-fluid">
 
-    <!--begin::Card-->
-    <div class="row mt-2">
+    <!-- ENCABEZADO -->
+    <div class="row mb-6">
         <div class="col-lg-12">
-            <!--begin::Card-->
-            <div class="card card-custom gutter-b">
-                <div class="card-header">
-                    <h3 class="card-title">Agregar Custodio</h3>
-                    <div class="card-toolbar">
-                        <a href="{{ route('custodio.listadocustodio') }}" class="btn btn-sm btn-clean btn-hover-icon-success btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
-                    </div>
+            <div class="d-flex justify-content-between align-items-center bg-white rounded shadow-sm px-6 py-5 border-left border-warning" style="border-left-width:5px !important;">
+                <div>
+                    <h2 class="mb-1 font-weight-bold text-dark">Agregar custodio</h2>
+                    <span class="text-muted">Complete la información correspondiente del custodio</span>
                 </div>
 
+                <a href="{{ route('custodio.listadocustodio') }}" class="btn btn-outline-warning font-weight-bold">
+                    <i class="flaticon2-back"></i> Regresar
+                </a>
+            </div>
+        </div>
+    </div>
 
+    <!-- CARD PRINCIPAL -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-custom shadow-sm border-0">
 
-                    
-                <!--begin::Form-->
                 <form action="{{ route('custodio.guardarcustodio') }}" method="post" id="submit_cliente" enctype="multipart/form-data">
                     @csrf
 
                     <input type='hidden' id='tipoArchivo' value='{{ $cadenaTipoDocumento }}'>
                     <input type='hidden' id='tipoArchivov' value='{{ $cadenaTipoDocumento }}'>
-                    <div class="card-body">
 
-                        <ul class="nav nav-tabs nav-tabs-line">
+                    <div class="card-body px-10 py-8">
+
+                        <!-- TABS ESTILIZADAS -->
+                        <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-warning mb-8">
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1">Información básica</a>
+                                <a class="nav-link active font-weight-bold" data-toggle="tab" href="#kt_tab_pane_1">
+                                    Información básica
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3">Domicilio</a>
+                                <a class="nav-link font-weight-bold" data-toggle="tab" href="#kt_tab_pane_3">
+                                    Domicilio
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_4">Selección</a>
+                                <a class="nav-link font-weight-bold" data-toggle="tab" href="#kt_tab_pane_4">
+                                    Selección
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_5">Control de confianza</a>
+                                <a class="nav-link font-weight-bold" data-toggle="tab" href="#kt_tab_pane_5">
+                                    Control de confianza
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2">Documentos personales</a>
+                                <a class="nav-link font-weight-bold" data-toggle="tab" href="#kt_tab_pane_2">
+                                    Documentos personales
+                                </a>
                             </li>
                         </ul>
 
-                        <div class="tab-content mt-5" id="myTabContent">
-                            <div class="tab-pane fade show active mt-10" id="kt_tab_pane_1" role="tabpanel" aria-labelledby="kt_tab_pane_1">
+                        <div class="tab-content">
 
-                                <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label>Usuario / Custodio</label>
-                                        <select class="form-control" id="users_custodios" name="users_custodios" required >
-                                            <option value="">Selecciona una opción</option>
-                                            @foreach($users_custodio as $estado)
-                                                <option value="{{ $estado->id }}" data-nombre="{{ $estado->name }}">Nombre:{{ $estado->name }}, Correo:{{ $estado->email }}</option>
-                                            @endforeach
-                                        </select>
+                                <div class="bg-light rounded p-6 mb-6 border">
+                                    
+                                   
+
+                    <div class="tab-content mt-5">
+
+                        
+                        <div class="tab-pane fade show active mt-10" id="kt_tab_pane_1">
+
+                            <div class="form-group row">
+                                <div class="col-lg-6">
+                                    <label>Usuario / Custodio</label>
+                                    <select class="form-control" id="users_custodios" name="users_custodios" required >
+                                        <option value="">Selecciona una opción</option>
+                                        @foreach($users_custodio as $estado)
+                                            <option value="{{ $estado->id }}" data-nombre="{{ $estado->name }}">
+                                                Nombre:{{ $estado->name }}, Correo:{{ $estado->email }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="separator separator-dashed my-8"></div>
+
+                            <div class="form-group row">
+                                <div class="col-lg-6 form-group">
+                                    <label>Fotografía</label>
+                                    <div class='custom-file'>
+                                        <input type='file' class='custom-file-input' id='file_carga' name='file_carga[]'/>
+                                        <label class='custom-file-label'>Selecciona un archivo</label>
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
-                                    <div class="col-lg-6  form-group">
-                                        <label>Fotografía</label>
-                                        <div class='custom-file'>
-                                            <input type='file' class='custom-file-input' id='file_carga' name='file_carga[]'/>
-                                            <label class='custom-file-label' for='foto"+contadorFotografia+"'>Selecciona un archivo</label>
-                                        </div>
-                                    </div>
+                                <div class="col-lg-6">
+                                    <label>Fecha de ingreso</label>
+                                    <input type="text" class="form-control" name="fecha_ingreso" id="fecha_ingreso" required/>
+                                </div>
+                            </div>
 
-                                    <div class="col-lg-6">
-                                        <label>Fecha de ingreso</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="fecha_ingreso" id="fecha_ingreso"  required/>
-                                        </div>
-                                    </div>
+                            <div class="form-group row">
+                                <div class="col-lg-6">
+                                    <label>Apellido paterno</label>
+                                    <input type="text" class="form-control" name="ape_paterno" id="ape_paterno" required/>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Apellido materno</label>
+                                    <input type="text" class="form-control" name="ape_materno" id="ape_materno" required/>
+                                </div>
+                            </div>
 
+                            <div class="form-group row">
+                                <div class="col-lg-6">
+                                    <label>Nombre(s)</label>
+                                    <input type="text" class="form-control" name="nombre_custodio" id="nombre_custodio" required/>
                                 </div>
 
-                                <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label>Apellido paterno</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="ape_paterno" id="ape_paterno" required/>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label>Apellido materno</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="ape_materno" id="ape_materno" required/>
-                                        </div>
-                                    </div>
+                                <div class="col-lg-3">
+                                    <label>Edad</label>
+                                    <input type="number" class="form-control" name="edad" id="edad" />
                                 </div>
 
-                                <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label>Nombre(s)</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="nombre_custodio" id="nombre_custodio" required/>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-3">
-                                        <label>Edad</label>
-                                        <div class="input-group">
-                                            <input type="number" class="form-control" name="edad" id="edad" />
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <label>Sexo</label>
-                                        <select class="form-control" name="sexo" id="sexo">
-                                            <option value="">Selecciona un opción</option>
-                                            <option value="1">Masculino</option>
-                                            <option value="2">Femenino</option>
-                                            <option value="3">Otro</option>
-                                        </select>
-                                    </div>
-
+                                <div class="col-lg-3">
+                                    <label>Sexo</label>
+                                    <select class="form-control" name="sexo" id="sexo">
+                                        <option value="">Selecciona un opción</option>
+                                        <option value="1">Masculino</option>
+                                        <option value="2">Femenino</option>
+                                        <option value="3">Otro</option>
+                                    </select>
                                 </div>
+                            </div>
+
                                 <div class="form-group row">
                                     <div class="col-lg-6">
                                         <label>Fecha de nacimiento</label>
@@ -254,7 +276,7 @@
                                 </div>
                             </div>
 
-                    {{--  Seleccion --}}
+                    
                             <div class="tab-pane fade mt-10" id="kt_tab_pane_4" role="tabpanel" aria-labelledby="kt_tab_pane_4">
                                 <div class="form-group row">
                                     <div class="col-lg-2">
@@ -310,9 +332,9 @@
                                     </div>
                                 </div>
                             </div>
-                    {{-- END Seleccion --}}
+                    
 
-                    {{-- Control de confianza --}}
+                    
                             <div class="tab-pane fade mt-10" id="kt_tab_pane_5" role="tabpanel" aria-labelledby="kt_tab_pane_5">  
                                 <div class="form-group row">
                                     <div class="col-lg-2">
@@ -519,9 +541,9 @@
                                     </div>
                                 </div>
                             </div>
-                    {{-- END Control de confianza --}}
+                   
 
-                    {{-- Documentos --}}
+
                             <div class="tab-pane fade mt-10" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
                                 <div class="row form-group" >
                                     <div class="col-lg-12" id="tblArchivos">
@@ -541,20 +563,20 @@
 
                                 <div class="row form-group">
                                     <div class="col-lg-12">
-                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                        <a href="#" class="btn btn-icon btn-outline-warning btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
                                             <i class="flaticon2-plus"></i>
                                         </a>
                                     </div>
                                 </div>
                             </div>
-                {{-- END Documentos --}}
+            
                         </div>
 
                     </div>
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col-lg-6">
-                                <button type="button"  id="btnGuardar" class="btn btn-primary mr-2">Guardar</button>
+                            <div class="col-lg-12 text-right">
+                                <button type="button"  id="btnGuardar" class="btn btn-warning mr-2"><i class="flaticon2-check-mark"></i>Guardar</button>
                                 <a href="{{ route('custodio.listadocustodio') }}"  class="btn btn-secondary">Cancelar</a>
                             </div>
                         </div>

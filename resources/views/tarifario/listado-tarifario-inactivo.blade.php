@@ -1,12 +1,9 @@
 @extends('layouts.app')
-
 @section('title')
     Catálogo de tarifas inactivas
 @endsection
-
 @push('scripts')
   <script src="{{ asset('js/tarifario/CatalogoTarifario.js') }}"></script>
-
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
 
@@ -34,7 +31,7 @@
                             <div class="card-toolbar">
 
                                 <!--begin::Button-->
-                                <a href="{{ route('tarifario.listadotarifario') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
+                                <a href="{{ route('tarifario.listadotarifario') }}" class="btn btn-light-warning font-weight-bolder mr-3 ml-3">
                                   Regresar</a>
                                 <!--end::Button-->
 
@@ -42,7 +39,7 @@
                         </div>
                         <div class="card-body">
                             <!--begin: Datatable-->
-                            <table class="table table-hover table-checkable" id="kdatatable_tarifas_inactivos">
+                            <table class="table table-hover table-checkable inventory-table" id="kdatatable_tarifas_inactivos">
                                 <thead>
                                 <tr>
                                   <th>No.</th>
@@ -70,7 +67,7 @@
                                       <td>{{ $unid->ppkm_cust }}</td>
 
                                       <td class="text-center">
-                                        <button class="btn btn-clean btn-icon btn-outline-success mt-1 activar-tarifa" data-id="{{ $unid->id }}" data-nombre="{{ $unid->id }}" data-toggle="tooltip" data-theme="dark" title="Activar tarifa" ><i class="flaticon2-reply "></i></button>
+                                        <button class="btn btn-clean btn-icon btn-outline-warning mt-1 activar-tarifa" data-id="{{ $unid->id }}" data-nombre="{{ $unid->id }}" data-toggle="tooltip" data-theme="dark" title="Activar tarifa" ><i class="flaticon2-reply "></i></button>
                                       </td>
                                     </tr>
                                   @endforeach

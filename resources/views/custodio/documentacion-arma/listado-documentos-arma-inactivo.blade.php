@@ -26,15 +26,14 @@
                         <div class="card-header">
                             <div class="card-title">
                       <span class="card-icon">
-                        <i class="flaticon2-file text-primary"></i>
+                        <i class="flaticon2-file text-warning"></i>
                       </span>
                                 <h3 class="card-label">Inventario de documentación del arma inactivos</h3>
                             </div>
                             <div class="card-toolbar">
 
                                 <!--begin::Button-->
-                                <a href="{{ route('docarma.listadodocarma') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
-                                  Regresar</a>
+                                <a href="{{ route('docarma.listadodocarma') }}" class="btn btn-warning font-weight-bold"><i class="flaticon2-back"></i> Regresar</a>
                                 <!--end::Button-->
 
                             </div>

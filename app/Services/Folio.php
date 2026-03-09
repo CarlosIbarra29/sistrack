@@ -81,7 +81,10 @@ class Folio
 
         $folio = TarifarioFolio::latest('id')->first();
         // dd($folio);
-        $folio = $folio->folio ? ++$folio->folio : 1;
+        $folioRegistro = TarifarioFolio::latest('id')->first();
+
+      $folio = $folioRegistro ? $folioRegistro->folio + 1 : 1;
+
          
         $folioModel = new TarifarioFolio();
         $folioModel->folio = $folio;

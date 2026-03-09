@@ -24,7 +24,7 @@
                         <div class="card-header">
                             <div class="card-title">
                       <span class="card-icon">
-                        <i class="flaticon2-file text-primary"></i>
+                        <i class="flaticon2-file coloricono"></i>
                       </span>
                                 <h3 class="card-label">Inventario de custodios</h3>
                             </div>
@@ -35,14 +35,12 @@
                                 </a> --}}
 
                                 <!--begin::Button-->
-                                @if (in_array("6", Session::get('permisos'))) 
-                                  <a href="{{ route('custodio.agregarcustodio') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3" >
-                                  <i class="la la-plus"></i>Nuevo</a>
+                                @if(true)
+                                  <a href="{{ route('custodio.agregarcustodio') }}"class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black"><i class="la la-plus"></i>Nuevo</a>
                                 @endif
                                 <!--end::Button-->
 
-                                <a href="{{ route('custodio.listadocustodioinactivo') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
-                                    <i class="far fa-trash-alt"></i>Custodios inactivos</a>
+                                <a href="{{ route('custodio.listadocustodioinactivo') }}" class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black"><i class="far fa-trash-alt"></i>Clientes inactivos</a>
 
 
 {{--                                 <div class="dropdown dropdown-inline mr-2">
@@ -128,7 +126,7 @@
 
                                   <div class="row mt-8">
                                     <div class="col-lg-12">
-                                      <button class="btn btn-primary btn-primary--icon" id="kt_search">
+                                      <button class="btn btn-primary btn-warning--icon" id="kt_search">
                                         <span><i class="la la-search"></i><span>Buscar</span></span>
                                       </button>&#160;&#160;
                                       <button class="btn btn-secondary btn-secondary--icon" id="kt_reset">
@@ -139,9 +137,57 @@
                                 </form>
                               </div>
                           </div>
+                          <div class="row">                                   
+  <div class="col-lg-3">
+        <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-wallet"></i>
+                <span class="alert-title">Pendientes</span>
+            </div>
+            <div class="alert-value">12</div>
+            <div class="divider"></div>
+            <small>Clientes con pagos programados los próximos 7 días.</small>
+        </div>
+  </div>
+  <div class="col-lg-3">
+<div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-user-clock"></i>
+                <span class="alert-title">Custodios Inactivo</span>
+            </div>
+            <div class="alert-value">8</div>
+            <div class="divider"></div>
+            <small>Tarifas inactivas en más de 30 días.</small>
+        </div>
+  </div>
+  <div class="col-lg-3">
+  <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-exclamation-circle"></i>
+                <span class="alert-title">Tipo de viaje </span>
+            </div>
+            <div class="alert-value">3</div>
+            <div class="divider"></div>
+            <small>Tareas importantes que requieren atención inmediata.</small>
+        </div>
+  </div>
+  <div class="col-lg-3">
+  <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-user-shield"></i>
+                <span class="alert-title">Grafica</span>
+                
+            </div>
+            <div class="alert-value">4</div>
+            <div class="divider"></div>
+            <small>Clientes con señales de abandono o retrasos.</small>
+        </div>
+  </div>
+
+</div>
 
                             <!--begin: Datatable-->
-                            <table class="table table-hover table-checkable" id="kdatatable_usuarios2">
+                            <table class="table table-hover table-checkable inventory-table" id="kdatatable_usuarios2">
                                 <thead>
                                 <tr>
                                   <th>Folio.</th>
@@ -170,26 +216,26 @@
                                       <td>{{ $unid->correo_electronico }}</td> 
 
                                       <td class="text-center">
-                                        <a href="{{ route('custodio.vercustodio', $unid->id) }}" class="btn btn-sm btn-outline-success btn-icon mt-2" title="Ver custodio" data-theme="dark" data-toggle="tooltip" data-placement="top">
+                                        <a href="{{ route('custodio.vercustodio', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mt-2" title="Ver custodio" data-theme="dark" data-toggle="tooltip" data-placement="top">
                                             <span class="svg-icon svg-icon-md">
                                                 <i class="flaticon-eye"></i>
                                             </span>
                                         </a>
 
-                                        <a href="{{ route('custodio.editarcustodio', $unid->id) }}" class="btn btn-sm btn-outline-success btn-icon mt-2" title="Editar custodio" data-theme="dark" data-toggle="tooltip" data-placement="top">
+                                        <a href="{{ route('custodio.editarcustodio', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mt-2" title="Editar custodio" data-theme="dark" data-toggle="tooltip" data-placement="top">
                                             <span class="svg-icon svg-icon-md">
                                                 <i class="flaticon-edit"></i>
                                             </span>
                                         </a>
 
                                         @if($unid->op_vehiculo == 1)
-                                          <a href="{{ route('custodio.agregarvehiculo', $unid->id) }}" class="btn btn-sm btn-outline-success btn-icon mt-2" title="Información vehículo" data-theme="dark" data-toggle="tooltip" data-placement="top">
+                                          <a href="{{ route('custodio.agregarvehiculo', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mt-2" title="Información vehículo" data-theme="dark" data-toggle="tooltip" data-placement="top">
                                               <span class="svg-icon svg-icon-md">
                                                   <i class="flaticon-truck"></i>
                                               </span>
                                           </a>
                                         @else
-                                          <a href="{{ route('custodio.editarvehiculo', $unid->id) }}" class="btn btn-sm btn-outline-success btn-icon mt-2" title="Información vehículo" data-theme="dark" data-toggle="tooltip" data-placement="top">
+                                          <a href="{{ route('custodio.editarvehiculo', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mt-2" title="Información vehículo" data-theme="dark" data-toggle="tooltip" data-placement="top">
                                               <span class="svg-icon svg-icon-md">
                                                   <i class="flaticon-truck"></i>
                                               </span>
@@ -197,20 +243,20 @@
                                         @endif
 
                                         @if($unid->op_arma == 1)
-                                          <a href="{{ route('custodio.agregararma', $unid->id) }}" class="btn btn-sm btn-outline-success btn-icon mt-2" title="Información arma" data-theme="dark" data-toggle="tooltip" data-placement="top">
+                                          <a href="{{ route('custodio.agregararma', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mt-2" title="Información arma" data-theme="dark" data-toggle="tooltip" data-placement="top">
                                               <span class="svg-icon svg-icon-md">
                                                   <i class="flaticon-notepad"></i>
                                               </span>
                                           </a>
                                         @else
-                                          <a href="{{ route('custodio.editararma', $unid->id) }}" class="btn btn-sm btn-outline-success btn-icon mt-2" title="Información arma" data-theme="dark" data-toggle="tooltip" data-placement="top">
+                                          <a href="{{ route('custodio.editararma', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mt-2" title="Información arma" data-theme="dark" data-toggle="tooltip" data-placement="top">
                                               <span class="svg-icon svg-icon-md">
                                                   <i class="flaticon-notepad"></i>
                                               </span>
                                           </a>
                                         @endif
 
-                                        <button class="btn btn-clean btn-sm btn-icon btn-outline-success mt-1" onClick="deletecustodio(` {{ $unid->nombre_custodio }} `,`{{ $unid->id }}`)" data-toggle="modal" data-target="#model_delete_user" data-toggle="tooltip" data-theme="dark" title="Desactivar custodio">
+                                        <button class="btn btn-clean btn-sm btn-icon btn-outline-warning mt-1" onClick="deletecustodio(` {{ $unid->nombre_custodio }} `,`{{ $unid->id }}`)" data-toggle="modal" data-target="#model_delete_user" data-toggle="tooltip" data-theme="dark" title="Desactivar custodio">
                                             <span class="svg-icon svg-icon-md">
                                                 <i class="flaticon-delete"></i>
                                             </span>
