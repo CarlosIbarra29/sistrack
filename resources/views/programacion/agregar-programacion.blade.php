@@ -136,72 +136,80 @@
                         </div>
 
                         <!-- ================= ASIGNACIÓN ================= -->
-                        <div class="bg-light rounded p-6 mb-8 border">
+                        
+                         <div class="form-group row">
+                                    <div class="col-lg-6">
+                                        <label>Custodio</label>
+                                        <select class="form-control" id="custodio_id" name="custodio_id" required >
+                                            <option value="">Selecciona una custodio</option>
+                                            @foreach($custodio as $cli)
+                                                <option value="{{ $cli->id }}" >{{ $cli->nombre_custodio }} {{ $cli->ap_paterno }} {{ $cli->ap_materno }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
 
-                            <h5 class="font-weight-bold text-dark mb-6">Asignación de custodio</h5>
-
-                            <div class="form-group row">
-
-                                <div class="col-lg-6">
-                                    <label class="font-weight-bold">Custodio</label>
-                                    <select class="form-control form-control-lg"
-                                            id="custodio_id"
-                                            name="custodio_id"
-                                            required>
-                                        <option value="">Selecciona un custodio</option>
-                                        @foreach($custodio as $cli)
-                                            <option value="{{ $cli->id }}">
-                                                {{ $cli->nombre_custodio }} 
-                                                {{ $cli->ap_paterno }} 
-                                                {{ $cli->ap_materno }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <label class="font-weight-bold">Acompañantes</label>
-                                    <div class="radio-inline mt-2">
-                                        <label class="radio">
-                                            <input type="radio" name="op_custodios" value="0">
-                                            <span></span> Si
-                                        </label>
-                                        <label class="radio">
-                                            <input type="radio" checked name="op_custodios" value="1">
-                                            <span></span> No
-                                        </label>
+                                    <div class="col-lg-6">
+                                        <label>Acompañantes</label>
+                                        <div class="radio-inline">
+                                            <label class="radio">
+                                                <input type="radio"  name="op_custodios" id="op_c_uno" value="0" />
+                                                <span></span>
+                                                Si
+                                            </label>
+                                            <label class="radio">
+                                                <input type="radio" checked name="op_custodios" id="op_c_dos" value="1" />
+                                                <span></span>
+                                                No
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
 
+                                <div class="card card-custom gutter-b" id="div_custodios" style="background-color:  #f1f1f1; display: none;" >
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <h3 class="card-label">
+                                                Acompañantes
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row form-group" >
+                                            <div class="col-lg-12" id="tblArchivos">
+                                                <table class='table table-bordered table-hover' id='tblDocumentos'>
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Custodio</th>
+                                                        <th>Opción</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id='tbodyDocumentos'>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group">
+                                            <div class="col-lg-12">
+                                                <a href="#" class="btn btn-icon btn-outline-warning btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                                    <i class="flaticon2-plus"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+{{-- 
+
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <label for="observaciones">Observaciones</label>
+                                        <textarea class="form-control" name="observaciones" placeholder="*Opcional" id="observaciones" rows="5"></textarea>
+                                    </div>
+                                </div> --}}
                             </div>
+
                         </div>
-
-                        <!-- ================= ACOMPAÑANTES DINÁMICOS ================= -->
-                        <div class="bg-light rounded p-6 border"
-                             id="div_custodios"
-                             style="display:none;">
-
-                            <div class="d-flex justify-content-between align-items-center mb-6">
-                                <h5 class="font-weight-bold text-dark mb-0">Acompañantes</h5>
-
-                                <a href="#"
-                                   class="btn btn-outline-warning btn-sm hrefAgregarOtro">
-                                    <i class="flaticon2-plus"></i> Agregar
-                                </a>
-                            </div>
-
-                            <div class="table-responsive">
-                                <table class="table table-head-custom table-bordered table-hover"
-                                       id="tblDocumentos">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th>Custodio</th>
-                                            <th>Opción</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tbodyDocumentos"></tbody>
-                                </table>
-                            </div>
 
                         </div>
 
