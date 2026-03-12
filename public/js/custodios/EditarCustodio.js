@@ -62,6 +62,15 @@ var Modulo = function() {
             format: "dd/mm/yyyy",
         });
 
+        $("#fecha_baja").datepicker({
+            todayHighlight: true,
+            orientation: "bottom left",
+            templates: arrows,
+            language: "es",
+            format: "dd/mm/yyyy",
+        });
+
+
         $("#fecha_nacimiento").datepicker({
             todayHighlight: true,
             orientation: "bottom left",

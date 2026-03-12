@@ -104,24 +104,38 @@
                                     </div>
 
                                     <div class="col-lg-3">
-                                        <spam class="titulo-lb">Costo de estadía</spam>
-                                        <input type="text" class="form-control st-input"
-                                               name="costo_estadia" id="costo_estadia"
-                                               value="{{ $data->costo_estadia }}">
-                                    </div>
-
-                                    <div class="col-lg-3">
                                         <spam class="titulo-lb">Costo km extraordinario</spam >
                                         <input type="text" class="form-control st-input"
                                                name="costo_km" id="costo_km"
                                                value="{{ $data->costo_km }}">
                                     </div>
+
                                     <div class="col-lg-3">
-                                        <spam class="titulo-lb">Costo por estadía no armada</spam>
+                                        <spam class="titulo-lb">Horas de estadía armada</spam>
+                                        <input type="text" class="form-control st-input"
+                                               name="costo_estadia" id="costo_estadia"
+                                               value="{{ $data->costo_estadia }}">
+                                    </div>
+
+                                    
+                                    <div class="col-lg-3">
+                                        <spam class="titulo-lb">Horas de estadía no armada</spam>
                                         <input type="text" class="form-control st-input"
                                                name="costo_estadia_armada" id="costo_estadia_armada"
                                                value="{{ $data->costo_estadia_armada }}">
                                     </div>
+
+                                    <div class="col-lg-6">
+                                            <spam class="titulo-lb">Servicio con arma</spam>
+                                            <input type="text" class="form-control form-control-lg st-input"
+                                                   name="servicio_arma" id="servicio_arma"/>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <spam class="titulo-lb">Servicio sin arma</spam>
+                                            <input type="text" class="form-control form-control-lg st-input"
+                                                   name="servicio_sin_arma" id="servicio_sin_arma"/>
+                                        </div>
                                 </div>
 
                                 

@@ -105,9 +105,13 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <label>Fecha de ingreso</label>
                                     <input type="text" class="form-control" name="fecha_ingreso" id="fecha_ingreso" required/>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>Fecha de baja</label>
+                                    <input type="text" class="form-control" name="fecha_baja" id="fecha_baja" required/>
                                 </div>
                             </div>
 

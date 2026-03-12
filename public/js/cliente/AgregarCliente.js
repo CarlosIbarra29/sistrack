@@ -64,6 +64,14 @@ var Modulo = function() {
             numericInput: true
         });
 
+        $("#servicio_arma").inputmask('$ 999,999,999.99', {
+            numericInput: true
+        });
+
+        $("#servicio_sin_arma").inputmask('$ 999,999,999.99', {
+            numericInput: true
+        });
+
         $("#costo_estadia_armada").inputmask('$ 999,999,999.99', {
             numericInput: true
         });

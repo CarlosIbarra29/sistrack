@@ -142,6 +142,15 @@
                                                             <input type="text" class="form-control" value="" name="fecha_ingreso" id="fecha_ingreso" required />
                                                         @endif
                                                     </div>
+
+                                                    <label>Fecha de Baja</label>
+                                                    <div class="input-group">
+                                                        @if($custodio->fecha_baja != null || $custodio->fecha_baja != "")
+                                                            <input type="text" class="form-control" value="{{ date('d/m/Y', strtotime($custodio->fecha_baja))}}" name="fecha_baja" id="fecha_baja" required />
+                                                        @else
+                                                            <input type="text" class="form-control" value="" name="fecha_baja" id="fecha_baja" required />
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
