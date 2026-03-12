@@ -278,8 +278,8 @@
 </div>
 
                             <!--begin: Datatable-->
-                             <table class="table table-hover table-checkable inventory-table" id="kdatatable_usuarios2">
-                                <thead>
+                             <div clases=“table-responsive”>
+ <table> <thead>
                                 <tr>
                                   <th>No.</th>
                                   <th>Folio</th>
@@ -458,5 +458,7 @@
           </div>
       </div>
   </div>
+</div>
+                                
 
 @endsection

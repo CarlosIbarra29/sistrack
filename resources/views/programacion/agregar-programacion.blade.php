@@ -148,19 +148,39 @@
                                     </select>
                                 </div>
 
-                                <div class="col-lg-6">
-                                    <label>Acompañantes</label>
-                                    <div class="radio-inline">
-                                        <label class="radio">
-                                            <input type="radio" name="op_custodios" value="0">
-                                            <span></span> Si
-                                        </label>
-                                        <label class="radio">
-                                            <input type="radio" checked name="op_custodios" value="1">
-                                            <span></span> No
-                                        </label>
-                                    </div>
-                                </div>
+                               <div class="col-lg-6">
+    <label>Acompañantes</label>
+    <div class="radio-inline">
+        <label class="radio">
+            <input type="radio" name="op_custodios" value="1">
+            <span></span> Si
+        </label>
+        <label class="radio">
+            <input type="radio" name="op_custodios" value="0" checked>
+            <span></span> No
+        </label>
+    </div>
+</div>
+
+<!-- Select de acompañante -->
+<div class="form-group row" id="select_acompanante" style="display:none;">
+   <div class="col-lg-6">
+<label>Seleccionar acompañante</label>
+
+<select class="form-control" name="acompanante_id">
+
+<option value="">Selecciona un acompañante</option>
+
+@foreach($custodio as $cli)
+<option value="{{ $cli->id }}">
+{{ $cli->nombre_custodio }} {{ $cli->ap_paterno }} {{ $cli->ap_materno }}
+</option>
+@endforeach
+
+</select>
+
+</div>
+</div>
 
                             </div>
 

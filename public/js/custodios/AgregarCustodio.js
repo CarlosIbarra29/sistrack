@@ -418,3 +418,20 @@ jQuery(document).ready(function() {
     Modulo.init();
 });
 
+$(document).ready(function(){
+
+    $('input[name="op_custodios"]').change(function(){
+
+        if($(this).val() == "1"){
+
+            $('#select_acompanante').slideDown();
+
+        }else{
+
+            $('#select_acompanante').slideUp();
+
+        }
+
+    });
+
+});

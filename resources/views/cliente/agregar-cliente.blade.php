@@ -9,8 +9,6 @@
 
 @section('content')
 
-
-<<<<<<< HEAD
 <style>
     .form-control-solid {
         background-color: #F3F6F9;
@@ -45,10 +43,6 @@
         color: #181C32;
     }
 </style>
-=======
-
->>>>>>> b0b2f27fe57de5ed60394f578365006983c78de3
-
 
  <!-- HEADER -->
     <div class="d-flex justify-content-between align-items-center mb-8">
