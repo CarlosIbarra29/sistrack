@@ -31,20 +31,21 @@ class Folio
     }
 
 
-    public function getFolioCliente(){
+    public function getFolioCliente()
+{
+    $ultimo = ClienteFolio::latest('id')->first();
 
-        $folio = ClienteFolio::latest('id')->first();
-        // dd($folio);
-        $folio = $folio->folio ? ++$folio->folio : 1;
-         
-        $folioModel = new ClienteFolio();
-        $folioModel->folio = $folio;
-        $folioModel->anio = date('Y');
-        $folioModel->save();
+    $numero = $ultimo ? ((int)$ultimo->folio + 1) : 1;
 
-        return "CL".str_pad($folio,4,"0", STR_PAD_LEFT);
+    $folioFormateado = 'CL' . str_pad($numero, 4, '0', STR_PAD_LEFT);
 
-    }
+    $folioModel = new ClienteFolio();
+    $folioModel->folio = $numero; // 👈 SOLO EL NÚMERO
+    $folioModel->anio = date('Y');
+    $folioModel->save();
+
+    return $folioFormateado;
+}
 
     public function getFolioCustodio(){
 
@@ -80,7 +81,10 @@ class Folio
 
         $folio = TarifarioFolio::latest('id')->first();
         // dd($folio);
-        $folio = $folio->folio ? ++$folio->folio : 1;
+        $folioRegistro = TarifarioFolio::latest('id')->first();
+
+      $folio = $folioRegistro ? $folioRegistro->folio + 1 : 1;
+
          
         $folioModel = new TarifarioFolio();
         $folioModel->folio = $folio;

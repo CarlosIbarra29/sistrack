@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $programacion_estatus_id
  * @property integer $op_monitoreo_id
  * @property integer $siaf_status
+ * @property integer $estatus_viaje_id
  * @property string $folio
  * @property integer $tipo_servicio
  * @property string $fecha_servicio
@@ -23,16 +24,21 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $updated_at
  * @property integer $iduserCreated
  * @property integer $iduserUpdated
+ * @property BitacoraViaje[] $bitacoraViajes
  * @property User $user
  * @property Cliente $cliente
- * @property ProgramacionEstatus $programacionEstatus
- * @property SiafStatus $siafStatus
- * @property User $user
- * @property Custodio $custodio
+ * @property EstatusViaje $estatusViaje
  * @property ProgramacionMonitoreo $programacionMonitoreo
  * @property Tarifario $tarifario
+ * @property User $user
+ * @property Custodio $custodio
+ * @property ProgramacionEstatus $programacionEstatus
+ * @property SiafStatus $siafStatus
  * @property ProgramacionAcompanante[] $programacionAcompanantes
+ * @property ProgramacionDatosMonitoreo[] $programacionDatosMonitoreos
  * @property ProgramacionEstadia[] $programacionEstadias
+ * @property ProgramacionMonitoreoIncidencia[] $programacionMonitoreoIncidencias
+ * @property ProgramacionObservacione[] $programacionObservaciones
  */
 class Programacion extends Model
 {
@@ -46,7 +52,7 @@ class Programacion extends Model
     /**
      * @var array
      */
-    protected $fillable = ['cliente_id', 'tarifario_id', 'custodio_id', 'programacion_estatus_id', 'op_monitoreo_id', 'siaf_status', 'folio', 'tipo_servicio', 'fecha_servicio', 'acompanantes', 'dom_origen', 'dom_destino', 'observaciones', 'created_at', 'updated_at', 'iduserCreated', 'iduserUpdated'];
+    protected $fillable = ['cliente_id', 'tarifario_id', 'custodio_id', 'programacion_estatus_id', 'op_monitoreo_id', 'siaf_status', 'estatus_viaje_id', 'folio', 'tipo_servicio', 'fecha_servicio', 'acompanantes', 'dom_origen', 'dom_destino', 'observaciones', 'created_at', 'updated_at', 'iduserCreated', 'iduserUpdated'];
 
     public function cliente()
     {
@@ -93,5 +99,11 @@ class Programacion extends Model
     {
         return $this->belongsTo('App\Models\Programacion\MonitoreoProgramacion', 'op_monitoreo_id');
     }
+    
+    public function estatusViaje()
+    {
+        return $this->belongsTo('App\Models\Programacion\EstatusViaje');
+    }
+
 
 }

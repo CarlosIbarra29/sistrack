@@ -26,8 +26,8 @@
     <!--begin::Layout Themes(used by all pages)-->
     <link href="{{ asset('theme/assets/css/themes/layout/header/base/light.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('theme/assets/css/themes/layout/header/menu/light.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('theme/assets/css/themes/layout/brand/dark.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('theme/assets/css/themes/layout/aside/dark.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('theme/assets/css/themes/layout/brand/light.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('theme/assets/css/themes/layout/aside/light.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Layout Themes-->
 
     <!--begin::Custom Theme(used by all pages)-->
@@ -51,7 +51,7 @@
 <div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
     <!--begin::Logo-->
     <a href="{{ route('tablero.show') }}">
-        <img alt="Logo" class="h-55px brand-logo" src="{{ asset('img/logos/LogoSis.png') }}" />
+        <img alt="Logo" class="h-50px brand-logo" src="{{ asset('img/logos/logonuevo1.png') }}" />
     </a>
     <!--end::Logo-->
     <!--begin::Toolbar-->
@@ -89,7 +89,7 @@
             <div class="brand flex-column-auto" id="kt_brand" style="height: 85px; background-color: {{ Session::get('menu_color') }} !important" >
                 <!--begin::Logo-->
                 <a href="{{ route('tablero.show') }}" class="brand-logo">
-                    <img alt="Logo" class="h-55px brand-logo" src="{{ asset('img/logos/LogoSis.png') }}" />
+                    <img alt="Logo" class="h-50px brand-logo" src="{{ asset('img/logos/logonuevo1.png') }}" />
                 </a>
                 <!--end::Logo-->
                 <!--begin::Toggle-->
@@ -127,7 +127,7 @@
                                 <span class="menu-text">Tablero</span>
                             </a>
                         </li>
-                        @if (in_array("1", Session::get('permisos')) || in_array("2", Session::get('permisos')) || in_array("5", Session::get('permisos')) || in_array("6", Session::get('permisos')) )
+                        @if (in_array("1", Session::get('permisos', [])) || in_array("2", Session::get('permisos', [])))
                             <li id="menuAdministracion" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="javascript:;" class="menu-link menu-toggle">
                                     <i class="flaticon2-user-1 menu-icon"></i>
@@ -139,7 +139,7 @@
                                     <ul class="menu-subnav">
 
                                         {{-- USUARIOS --}}
-                                        @if (in_array("5", Session::get('permisos')) || in_array("6", Session::get('permisos')) )  
+                                        @if (in_array("3", Session::get('permisos', [])) || in_array("6", Session::get('permisos', []))) 
                                             <li id="menuUsuarios" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                                 <a href="{{ route('user.catalogousuarios') }}" class="menu-link menu-toggle">
                                                     <i class="flaticon-users-1 menu-icon"></i>

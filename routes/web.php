@@ -33,9 +33,9 @@ Route::get('/dashboard', function () {
 // });
 
 Route::get('/tablero', [App\Http\Controllers\Tablero\TableroController::class, 'show'])->name('tablero.show');
-
 Route::get('/tablero/{licitacion}', [App\Http\Controllers\Tablero\TableroController::class, 'vernotconcurso'])->name('tablero.vernotconcurso');
-
-
+Route::get('/tablero-viaje-programado/{id}', [App\Http\Controllers\Tablero\TableroController::class, 'viajeprogramado'])->name('tablero.viajeprogramado');
+Route::post('/evidencia-bitacora', [App\Http\Controllers\Tablero\TableroController::class, 'evidenciabitacora'])->name('tablero.evidenciabitacora');
+Route::post('/viaje-cambiostatus', [App\Http\Controllers\Tablero\TableroController::class, 'viajecambiostatus'])->name('tablero.viajecambiostatus');
 
 require __DIR__.'/auth.php';

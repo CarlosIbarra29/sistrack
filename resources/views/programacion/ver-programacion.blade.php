@@ -23,7 +23,7 @@
                     <div class="card-toolbar">
                         <span style="font-size: 15px; font-weight: bold; color:red;">Estatus: {{ $programacion->programacionEstatus->estatus_programacion }}</span>
                          <div class="card-toolbar">
-                        <a href="{{ route('programacion.listadoprogramacion') }}" class="btn btn-sm btn-clean btn-hover-icon-success btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
+                        <a href="{{ route('programacion.listadoprogramacion') }}" class="btn btn-light-warning font-weight-bold mr-3 ml-3"><i class="flaticon2-back"></i> Regresar</a>
                     </div>
                     </div>
                 </div>
@@ -305,9 +305,9 @@
                     </div>
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-12 text-right">
                                 {{-- <button type="button"  id="btnGuardar" class="btn btn-primary mr-2">Guardar</button> --}}
-                                <a href="{{ route('programacion.listadoprogramacion') }}"  class="btn btn-secondary">Regresar</a>
+                                <a href="{{ route('programacion.listadoprogramacion') }}"  class="btn btn-warning">Regresar</a>
                             </div>
                         </div>
                     </div>
@@ -355,7 +355,7 @@
 
               <div class="modal-footer">
                 <button type="button" class="btn btn btn-secondary font-weight-bold" data-dismiss="modal"><i class="la la-times"></i>Cancelar</button>
-                <button type="button" id="edit_observacion" class="btn btn-success"><i class="la la-plus"></i>Guardar</button>
+                <button type="button" id="edit_observacion" class="btn btn-warning"><i class="la la-plus"></i>Guardar</button>
               </div>
           </div>
       </div>

@@ -28,3 +28,6 @@
 
     //Documento Usuario
     Route::get('/documento-usuario/{id}', [App\Http\Controllers\Archivo\ArchivoController::class, 'documentoUsuario'])->name('archivo.documentoUsuario');
+
+   //Bitacora viaje
+    Route::get('/documento-bitacora-viaje/{id}', [App\Http\Controllers\Archivo\ArchivoController::class, 'bitacoraviaje'])->name('archivo.bitacoraviaje');

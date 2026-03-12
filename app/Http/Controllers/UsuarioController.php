@@ -245,6 +245,7 @@ class UsuarioController extends Controller
             'id_status_delete' =>1,
             'estatus_asignacion' => 1,
             'tipo_usuario_id'=>4,
+            'op_custodio' =>0,
             'created_at' =>date('Y-m-d H:i:s'),
             'updated_at' =>date('Y-m-d H:i:s')
         ];

@@ -25,7 +25,7 @@
                         <div class="card-header">
                             <div class="card-title">
                       <span class="card-icon">
-                        <i class="flaticon2-file text-primary"></i>
+                        <i class="flaticon2-file text-warning"></i>
                       </span>
                                 <h3 class="card-label">Inventario de usuarios</h3>
                             </div>
@@ -36,13 +36,11 @@
                                 </a> --}}
 
                                 <!--begin::Button-->
-                                @if (in_array("6", Session::get('permisos'))) 
-                                  <a href="{{ route('user.agregarusuario') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3" >
+                                  <a href="{{ route('user.agregarusuario') }}" class="btn btn-light-warning font-weight-bolder mr-3 ml-3" >
                                   <i class="la la-plus"></i>Nuevo</a>
-                                @endif
                                 <!--end::Button-->
 
-                                <a href="{{ route('user.usuariosinactivos') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
+                                <a href="{{ route('user.usuariosinactivos') }}" class="btn btn-light-warning font-weight-bolder mr-3 ml-3">
                                     <i class="far fa-trash-alt"></i>Usuarios inactivos</a>
 
                                 <!--begin::Dropdown-->

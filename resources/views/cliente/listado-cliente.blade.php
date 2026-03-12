@@ -24,7 +24,7 @@
                         <div class="card-header">
                             <div class="card-title">
                       <span class="card-icon">
-                        <i class="flaticon2-file text-primary"></i>
+                        <i class="flaticon2-file coloricono"></i>
                       </span>
                                 <h3 class="card-label">Inventario de clientes</h3>
                             </div>
@@ -35,14 +35,16 @@
                                 </a> --}}
 
                                 <!--begin::Button-->
-                                @if (in_array("6", Session::get('permisos'))) 
-                                  <a href="{{ route('cliente.agregarcliente') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3" >
-                                  <i class="la la-plus"></i>Nuevo</a>
+                                @if(true)
+
+                                  
+                                  <a href="{{ route('cliente.agregarcliente') }}"class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black"><i class="la la-plus"></i>Nuevo</a>
                                 @endif
                                 <!--end::Button-->
 
-                                <a href="{{ route('cliente.listadoclienteinactivo') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
-                                    <i class="far fa-trash-alt"></i>Clientes inactivos</a>
+                                
+
+                                    <a href="{{ route('cliente.listadoclienteinactivo') }}" class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black"><i class="far fa-trash-alt"></i>Clientes inactivos</a>
 
                                 <!--begin::Dropdown-->
                                 <div class="dropdown dropdown-inline mr-2">
@@ -129,8 +131,61 @@
                               </div>
                           </div>
 
+
+
+<div class="row">
+  <div class="col-lg-3">
+        <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-wallet"></i>
+                <span class="alert-title">Pendientes</span>
+            </div>
+            <div class="alert-value">12</div>
+            <div class="divider"></div>
+            <small>Clientes con pagos programados los próximos 7 días.</small>
+        </div>
+  </div>
+  <div class="col-lg-3">
+<div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-user-clock"></i>
+                <span class="alert-title">Clientes inactivos</span>
+            </div>
+            <div class="alert-value">8</div>
+            <div class="divider"></div>
+            <small>Clientes sin actividad en más de 30 días.</small>
+        </div>
+  </div>
+  <div class="col-lg-3">
+  <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-exclamation-circle"></i>
+                <span class="alert-title">Tareas vencidas</span>
+            </div>
+            <div class="alert-value">3</div>
+            <div class="divider"></div>
+            <small>Tareas importantes que requieren atención inmediata.</small>
+        </div>
+  </div>
+  <div class="col-lg-3">
+  <div class="alert-card">
+            <div class="alert-header">
+                <i class="fas fa-user-shield"></i>
+                <span class="alert-title">Clientes en riesgo</span>
+            </div>
+            <div class="alert-value">4</div>
+            <div class="divider"></div>
+            <small>Clientes con señales de abandono o retrasos.</small>
+        </div>
+  </div>
+
+</div>
+
+
+
+<div class="col-xl-12">
                             <!--begin: Datatable-->
-                            <table class="table table-hover table-checkable" id="kdatatable_clientes">
+                            <table class="table table-hover table-checkable inventory-table" id="kdatatable_usuarios2">
                                 <thead>
                                 <tr>
                                   <th>Folio.</th>
@@ -149,19 +204,19 @@
                                       <td>{{ $unid->nombre_cliente }}</td>
                                       <td>{{ $unid->grupo }}</td>
                                       <td>
-                                        <a href="{{ route('cliente.vercliente', $unid->id) }}" class="btn btn-sm btn-outline-success btn-icon mr-2" title="Ver cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
+                                        <a href="{{ route('cliente.vercliente', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mr-2" title="Ver cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
                                             <span class="svg-icon svg-icon-md">
                                                 <i class="flaticon-eye"></i>
                                             </span>
                                         </a>
 
-                                        <a href="{{ route('cliente.editarcliente', $unid->id) }}" class="btn btn-sm btn-outline-success btn-icon mr-2" title="Editar cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
+                                        <a href="{{ route('cliente.editarcliente', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mr-2" title="Editar cliente" data-theme="dark" data-toggle="tooltip" data-placement="top">
                                             <span class="svg-icon svg-icon-md">
                                                 <i class="flaticon-edit"></i>
                                             </span>
                                         </a>
 
-                                        <button class="btn btn-clean btn-sm btn-icon btn-outline-success mt-1" onClick="deletecliente(`{{ $unid->id }} `,`{{ $unid->id }}`)" data-toggle="modal" data-target="#model_delete_user" data-toggle="tooltip" data-theme="dark" title="Desactivar cliente">
+                                        <button class="btn btn-clean btn-sm btn-icon btn-outline-warning mt-1" onClick="deletecliente(`{{ $unid->id }} `,`{{ $unid->id }}`)" data-toggle="modal" data-target="#model_delete_user" data-toggle="tooltip" data-theme="dark" title="Desactivar cliente">
                                             <span class="svg-icon svg-icon-md">
                                                 <i class="flaticon-delete"></i>
                                             </span>
@@ -183,6 +238,11 @@
 
                             </table>
                             <!--end: Datatable-->
+</div>
+
+
+
+
 
                             <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
                             {{-- <input type="hidden" id="clientedatatable" value="{{ route('cliente.clientelistadodatatable') }}"> --}}

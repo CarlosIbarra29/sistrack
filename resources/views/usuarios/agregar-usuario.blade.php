@@ -40,7 +40,7 @@
                                     <div class="col-lg-6">
                                         <label>Nombre del usuario</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="name_user" id="name_user" required onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"/>
+                                            <input type="text" class="form-control  st-input" name="name_user" id="name_user" required onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
