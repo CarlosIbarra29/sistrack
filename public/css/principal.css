@@ -1,3 +1,14 @@
+
+    /* Hace que el contenido use casi todo el ancho */
+    .custom-full-width {
+        width: 98%;
+        margin: 0 auto;
+    }
+
+
+
+
+
 /* boton para indicar*/
 .radio.radio-warning input:checked ~ span {
     background-color: #ffc107; /* Bootstrap warning */

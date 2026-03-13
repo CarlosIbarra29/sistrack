@@ -215,20 +215,12 @@ class ProgramacionController extends Controller
             'iduserUpdated' =>auth()->user()->id,
         ];
 
-        $id_programacion= Programacion::insertGetId($data);
 
         $colIdDocumento = $request->id_documento;
         if($request->op_custodios == 0){
-            foreach($request->id_documento as $indice => $archivo)
             {
-                $data = [
-                    'programacion_id' => $id_programacion,
-                    'custodio_id' =>$colIdDocumento[$indice],
-                    'created_at' =>date('Y-m-d H:i:s'),
-                    'updated_at' =>date('Y-m-d H:i:s')
-                ];
+                
 
-                AcompanantesProgramacion::insert($data);
             }
         }
 

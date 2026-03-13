@@ -52,6 +52,26 @@ var Modulo = function () {
             numericInput: true
         });
 
+<<<<<<< HEAD
+=======
+        $("#costo_km").inputmask('$ 999,999,999.99', {
+            numericInput: true
+        });
+
+        $("#servicio_arma").inputmask('$ 999,999,999.99', {
+            numericInput: true
+        });
+
+        $("#servicio_sin_arma").inputmask('$ 999,999,999.99', {
+            numericInput: true
+        });
+
+        $("#costo_estadia_armada").inputmask('$ 999,999,999.99', {
+            numericInput: true
+        });
+        
+
+>>>>>>> d039a95fbd0fd75c838ecc8adbd7165591c0b552
         lista = construyeElementosLista();
         lista_dos = construyeElementosListados();
 
