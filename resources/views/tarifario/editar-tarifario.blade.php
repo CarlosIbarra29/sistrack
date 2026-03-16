@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('scripts')
-    <script src="{{ asset('js/tarifario/AgregarTarifario.js') }}"></script>
+    <script src="{{ asset('js/tarifario/AgregarTarifario.js?v=' . time()) }}"></script>
 @endpush
 @section('title')
 Editar tarifario
@@ -114,13 +114,50 @@ Editar tarifario
                                         </div>
                                     </div>
 
-                                    <!-- Caseta -->
                                     <div class="form-group row">
                                         <div class="col-lg-6">
                                             <label class="font-weight-semibold">Caseta</label>
                                             <input type="text" class="form-control form-control-solid"
                                                    name="caseta" id="caseta"
                                                    value="{{ $tarifario->caseta }}" required>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label class="font-weight-semibold">Acompañantes</label>
+                                            <input type="number" class="form-control form-control-solid" name="acompanantes" id="acompanantes"/  value="{{ $tarifario->acompanantes }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-lg-6">
+                                            <label class="font-weight-semibold">Estadías</label>
+                                            <input type="number" class="form-control form-control-solid" name="estadias" id="estadias"/ value="{{ $tarifario->estadias }}">
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label class="font-weight-semibold">Apoyos</label>
+                                            <input type="number" class="form-control form-control-solid" name="monto_apoyos" id="monto_apoyos" / value="{{ $tarifario->monto_apoyos }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group border-top pt-5">
+                                        <label class="font-weight-bold text-dark">Modalidad de Servicio</label>
+                                        <div class="radio-inline mt-2">
+                                            <label class="radio radio-outline radio-warning">
+                                                <input type="radio" name="modalidad_arma" value="1" 
+                                                    {{ $tarifario->modalidad_arma == 1 ? 'checked' : '' }}/>
+                                                <span></span> Sin Arma
+                                            </label>
+                                            
+                                            <label class="radio radio-outline radio-warning">
+                                                <input type="radio" name="modalidad_arma" value="2" 
+                                                    {{ $tarifario->modalidad_arma == 2 ? 'checked' : '' }}/>
+                                                <span></span> Con Arma
+                                            </label>
+                                            
+                                            <label class="radio radio-outline radio-warning">
+                                                <input type="radio" name="modalidad_arma" value="3" 
+                                                    {{ $tarifario->modalidad_arma == 3 ? 'checked' : '' }}/>
+                                                <span></span> Personal Armado
+                                            </label>
                                         </div>
                                     </div>
 
@@ -156,6 +193,8 @@ Editar tarifario
                                     @foreach([
                                         ['Cliente','monto_cliente',$tarifario->monto_cliente],
                                         ['Custodio','monto_custodio',$tarifario->monto_custodio],
+                                        ['Estadías','resumen_estadias',$tarifario->estadias],
+                                        ['Apoyos','resumen_apoyos',$tarifario->monto_apoyos],
                                         ['Pago de custodia sin arma','subtotal_sis',$tarifario->subtotal],
                                         ['Ganancia','ganancia',$tarifario->ganancia],
                                         ['% Custodio','porcentaje_custodio',$tarifario->porcentaje_custodio],

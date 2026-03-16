@@ -206,8 +206,13 @@ class ProgramacionController extends Controller
             'acompanantes'=> $request->op_custodios,
             'dom_origen' => $request->dom_origen,
             'dom_destino' => $request->dom_destino,
-            // 'observaciones' => $request->observaciones,
+            'observaciones' => $request->observaciones,
             'op_monitoreo_id' => $request->op_monitoreo_id,
+
+            // Nuevo
+            'folio_interno' => $request->folio_interno,
+            'linea_transportista' => $request->linea_transportista,
+            'estatus_viaje_id' => 1,
             'siaf_status' =>1,
             'created_at' =>date('Y-m-d H:i:s'),
             'updated_at' =>date('Y-m-d H:i:s'),
@@ -215,14 +220,30 @@ class ProgramacionController extends Controller
             'iduserUpdated' =>auth()->user()->id,
         ];
 
+        $id_programacion= Programacion::insertGetId($data);
 
         $colIdDocumento = $request->id_documento;
         if($request->op_custodios == 0){
+            foreach($request->id_documento as $indice => $archivo)
             {
-                
+                $data = [
+                    'programacion_id' => $id_programacion,
+                    'custodio_id' =>$colIdDocumento[$indice],
+                    'created_at' =>date('Y-m-d H:i:s'),
+                    'updated_at' =>date('Y-m-d H:i:s')
+                ];
 
+                AcompanantesProgramacion::insert($data);
             }
         }
+
+        // $colIdDocumento = $request->id_documento;
+        // if($request->op_custodios == 0){
+        //     {
+                
+
+        //     }
+        // }
 
 
         session()->flash('success', 'La programación se creo correctamente');

@@ -163,9 +163,11 @@ class TarifarioController extends Controller
     {
     	$total_sis = $request->kms * $request->ppkm_sis; // Total cliente
     	$total_cust = $request->kms * $request->ppkm_cust; // Total custodio
-    	$subtotal = $request->caseta + $total_cust; //Subtotal
-    	$ganancia = $total_sis - $total_cust - $request->caseta; //Ganancia
-    	$porcentaje_custodio_suma = ($request->caseta + $total_cust) * 100;
+        $total_extras = $request->acompanantes + $request->estadias + $request->monto_apoyos;
+
+    	$subtotal = $request->caseta + $total_cust + $total_extras; //Subtotal
+    	$ganancia = $total_sis - $total_cust - $request->caseta - $total_extras; //Ganancia
+    	$porcentaje_custodio_suma = ($request->caseta + $total_cust + $total_extras) * 100;
     	$porcentaje_custodio = $porcentaje_custodio_suma / $total_sis; // Porcentaje custodio
     	$porcentaje_sisprotec = 100 - $porcentaje_custodio;
     	
@@ -178,8 +180,14 @@ class TarifarioController extends Controller
             'ppkm_sis' => $request->ppkm_sis,
             'ppkm_cust' => $request->ppkm_cust,
             'caseta' => $request->caseta,
-            'tipo_viaje' => $request->tipo_viaje,
 
+            // NUEVO
+            'modalidad_arma' => $request->modalidad_arma,
+            'acompanantes' => $request->acompanantes,
+            'estadias' => $request->estadias,
+            'monto_apoyos' => $request->monto_apoyos,
+
+            'tipo_viaje' => $request->tipo_viaje,
             'monto_cliente'=> $total_sis,
             'monto_custodio'=> $total_cust,
             'subtotal'=> $subtotal,
@@ -214,9 +222,10 @@ class TarifarioController extends Controller
     {
     	$total_sis = $request->kms * $request->ppkm_sis; // Total cliente
     	$total_cust = $request->kms * $request->ppkm_cust; // Total custodio
-    	$subtotal = $request->caseta + $total_cust; //Subtotal
-    	$ganancia = $total_sis - $total_cust - $request->caseta; //Ganancia
-    	$porcentaje_custodio_suma = ($request->caseta + $total_cust) * 100;
+        $total_extras = $request->acompanantes + $request->estadias + $request->monto_apoyos;
+    	$subtotal = $request->caseta + $total_cust + $total_extras; //Subtotal
+    	$ganancia = $total_sis - $total_cust - $request->caseta - $total_extras; //Ganancia
+    	$porcentaje_custodio_suma = ($request->caseta + $total_cust + $total_extras) * 100;
     	$porcentaje_custodio = $porcentaje_custodio_suma / $total_sis; // Porcentaje custodio
     	$porcentaje_sisprotec = 100 - $porcentaje_custodio;
     	
@@ -229,6 +238,13 @@ class TarifarioController extends Controller
             'ppkm_sis' => $request->ppkm_sis,
             'ppkm_cust' => $request->ppkm_cust,
             'caseta' => $request->caseta,
+
+            // NUEVO
+            'modalidad_arma' => $request->modalidad_arma,
+            'acompanantes' => $request->acompanantes,
+            'estadias' => $request->estadias,
+            'monto_apoyos' => $request->monto_apoyos,
+
             'monto_cliente'=> $total_sis,
             'monto_custodio'=> $total_cust,
             'subtotal'=> $subtotal,
