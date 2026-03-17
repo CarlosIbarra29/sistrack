@@ -176,22 +176,37 @@ $("#calcular_tarifa").click(function(){
     var ppkm_sis = document.getElementById("ppkm_sis").value;
     var ppkm_cust = document.getElementById("ppkm_cust").value;
     var caseta = document.getElementById("caseta").value;
+    var apoyos = document.getElementById("monto_apoyos").value;
+    var estadias = document.getElementById("estadias").value;
+    var acompanantes = document.getElementById("acompanantes").value;
 
     var total_sis = kms * ppkm_sis;
     var total_cliente = document.getElementById("monto_cliente").value = formatoMexico(total_sis.toFixed(2)); //total cliente
+            
+    var total_apoyo = document.getElementById("resumen_apoyos").value = formatoMexico(parseFloat(apoyos).toFixed(2)); //apoyos
 
+    var total_estadias = document.getElementById("resumen_estadias").value = formatoMexico(parseFloat(estadias).toFixed(2)); //estadias
+    
     var total_cust = kms * ppkm_cust;
     document.getElementById("monto_custodio").value = formatoMexico(total_cust.toFixed(2)); //total custodio
 
-    var subtotal = parseInt(caseta) + parseInt(total_cust);
+    // var subtotal = parseInt(caseta) + parseInt(total_cust) //Antes
+
+    var suma_extras = parseInt(total_apoyo) + parseInt(total_estadias) + parseInt(acompanantes);
+
+    var subtotal = parseInt(caseta) + parseInt(total_cust) + parseInt(suma_extras);
 
     document.getElementById("subtotal_sis").value = formatoMexico(subtotal.toFixed(2)); //subtotal
 
-    var ganancia = parseInt(total_sis) - parseInt(total_cust) - parseInt(caseta);
+    var ganancia = parseInt(total_sis) - parseInt(total_cust) - parseInt(caseta) - parseInt(suma_extras);
+
     document.getElementById("ganancia").value = formatoMexico(ganancia.toFixed(2)); //ganancia
 
-    var porcentaje_custodio_suma = (parseInt(caseta) + parseInt(total_cust)) * 100;
+    
+
+    var porcentaje_custodio_suma = (parseInt(caseta) + parseInt(total_cust) + parseInt(suma_extras)) * 100;
     var porcentaje_custodio = porcentaje_custodio_suma / parseInt(total_sis);
+    
     document.getElementById("porcentaje_custodio").value = formatoMexico(porcentaje_custodio.toFixed(2)); //porcentaje custodio
 
     var porcentaje_sisprotec = 100 - porcentaje_custodio;
