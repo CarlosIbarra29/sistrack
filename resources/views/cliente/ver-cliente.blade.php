@@ -113,6 +113,22 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label class="text-muted">Servicio con arma</label>
+                                    <div class="font-weight-bold">
+                                        ${{ number_format($data->servicio_arma, 2) }}
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <label class="text-muted">Servicio sin arma</label>
+                                    <div class="font-weight-bold">
+                                        ${{ number_format($data->servicio_sin_arma, 2) }}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
