@@ -52,7 +52,7 @@ class Programacion extends Model
     /**
      * @var array
      */
-    protected $fillable = ['cliente_id', 'tarifario_id', 'custodio_id', 'programacion_estatus_id', 'op_monitoreo_id', 'siaf_status', 'estatus_viaje_id', 'folio', 'tipo_servicio', 'fecha_servicio', 'acompanantes', 'dom_origen', 'dom_destino', 'observaciones', 'created_at', 'updated_at', 'iduserCreated', 'iduserUpdated'];
+    protected $fillable = ['cliente_id', 'tarifario_id', 'custodio_id', 'programacion_estatus_id', 'op_monitoreo_id', 'siaf_status', 'estatus_viaje_id', 'folio', 'tipo_servicio', 'fecha_servicio', 'acompanantes', 'dom_origen', 'dom_destino', 'observaciones', 'created_at', 'updated_at', 'iduserCreated', 'iduserUpdated','folio_interno'];
 
     public function cliente()
     {
