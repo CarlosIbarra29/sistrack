@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('scripts')
-    <script src="{{ asset('js/cliente/AgregarCliente.js') }}"></script>
+    <script src="{{ asset('js/cliente/AgregarCliente.js?v=1.0.2') }}"></script>
 @endpush
 
 @section('title')
