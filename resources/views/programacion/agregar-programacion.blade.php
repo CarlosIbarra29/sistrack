@@ -120,7 +120,7 @@
                                     <select class="form-control form-control-lg"
                                             id="id_tarifa"
                                             name="id_tarifa"
-                                            required></select>
+                                            required></select>                                                                                                                                                                                 
                                 </div>
                             </div>
 
@@ -129,45 +129,24 @@
                                         <label class="font-weight-bold">Folio Interno</label>
                                         <input type="text" class="form-control form-control-lg" 
                                                name="folio_interno" id="folio_interno" required>
-                                    </div>
+                                    </div              <div class= <div class="bg-light rounded p-6 mb-8 border">
 
-                                    <div class="col-lg-6"> 
-                                        <label class="font-weight-bold">Linea Transportista</label>
-                                        <input type="text" class="form-control form-control-lg" 
-                                               name="linea_transportista" id="linea_transportista" required>
-                                    </div>
-                                </div>
-                         </div>
-
-                        <!-- ================= RUTAS ================= -->
-                       <div class="bg-light rounded p-6 mb-8 border"><h5 class="font-weight-bold text-dark mb-6">Rutas del servicio</h5>
+                            <h5 class="font-weight-bold text-dark mb-6">Asignación de custodio</h5>
 
                             <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label class="font-weight-bold">Domicilio origen</label>
-                                    <input type="text" class="form-control form-control-lg"
-                                           name="dom_origen" id="dom_origen" required>
-                                </div>
 
-                                <div class="col-lg-6">
-                                    <label class="font-weight-bold">Domicilio destino</label>
-                                    <input type="text" class="form-control form-control-lg"
-                                           name="dom_destino" id="dom_destino" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-light rounded p-6 mb-8 border">
-                            <h5 class="font-weight-bold text-dark mb-6">Asignación de personal</h5>
-
-                            <div class="form-group row">
                                 <div class="col-lg-6">
                                     <label class="font-weight-bold">Custodio</label>
-                                    <select class="form-control form-control-lg" id="custodio_id" name="custodio_id" required>
-                                        <option value="">Selecciona una custodio</option>
+                                    <select class="form-control form-control-lg"
+                                            id="custodio_id"
+                                            name="custodio_id"
+                                            required>
+                                        <option value="">Selecciona un custodio</option>
                                         @foreach($custodio as $cli)
                                             <option value="{{ $cli->id }}">
-                                                {{ $cli->nombre_custodio }} {{ $cli->ap_paterno }} {{ $cli->ap_materno }}
+                                                {{ $cli->nombre_custodio }} 
+                                                {{ $cli->ap_paterno }} 
+                                                {{ $cli->ap_materno }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -177,31 +156,45 @@
                                     <label class="font-weight-bold">Acompañantes</label>
                                     <div class="radio-inline mt-2">
                                         <label class="radio">
-                                            <input type="radio" name="op_custodios" id="op_c_uno" value="0" />
+                                            <input type="radio" name="op_custodios" value="0">
                                             <span></span> Si
                                         </label>
                                         <label class="radio">
-                                            <input type="radio" checked name="op_custodios" id="op_c_dos" value="1" />
+                                            <input type="radio" checked name="op_custodios" value="1">
                                             <span></span> No
                                         </label>
                                     </div>
                                 </div>
+
+                            </div>
+                        </div>
+
+                        <!-- ================= ACOMPAÑANTES DINÁMICOS ================= -->
+                        <div class="bg-light rounded p-6 border"
+                             id="div_custodios"
+                             style="display:none;">
+
+                            <div class="d-flex justify-content-between align-items-center mb-6">
+                                <h5 class="font-weight-bold text-dark mb-0">Acompañantes</h5>
+
+                                <a href="#"
+                                   class="btn btn-outline-warning btn-sm hrefAgregarOtro">
+                                    <i class="flaticon2-plus"></i> Agregar
+                                </a>
                             </div>
 
-                            <div class="card card-custom gutter-b mt-4" id="div_custodios" style="background-color: #ffffff; display: none; border: 1px solid #ebedf3;">
-                                <div class="card-header">
-                                    <div class="card-title">
-                                        <h3 class="card-label text-dark" style="font-size: 1rem;">Lista de Acompañantes</h3>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row form-group">
-                                        <div class="col-lg-12">
-                                            <table class='table table-bordered table-hover' id='tblDocumentos'>
-                                                <thead>
-                                                    <tr>
-                                                        <th>Custodio</th>
-                                                        <th style="width: 50px;">Opción</th>
+                            <div class="table-responsive">
+                                <table class="table table-head-custom table-bordered table-hover"
+                                       id="tblDocumentos">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Custodio</th>
+                                            <th>Opción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyDocumentos"></tbody>
+                                </table>
+                            </div>: 50px;">Opción</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id='tbodyDocumentos'>
