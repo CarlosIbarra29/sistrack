@@ -83,7 +83,7 @@
                             <div class="form-group row">
                                 <div class="col-lg-6">
                                     <label>Usuario / Custodio</label>
-                                    <select class="form-control" id="users_custodios" name="users_custodios" required >
+                                    <select class="form-control" id="users_custodios" name="users_custodios" >
                                         <option value="">Selecciona una opción</option>
                                         @foreach($users_custodio as $estado)
                                             <option value="{{ $estado->id }}" data-nombre="{{ $estado->name }}">
