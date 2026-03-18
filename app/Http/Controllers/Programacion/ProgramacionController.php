@@ -195,6 +195,7 @@ class ProgramacionController extends Controller
 
     public function guardarprogramacion(Request $request)
     {
+        // dd($request);
         $data = [
             'folio' => $this->folio->getFolioProgramacion(),
             'cliente_id' => $request->cliente_id,
