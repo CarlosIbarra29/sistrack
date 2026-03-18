@@ -187,8 +187,12 @@ class ClienteController extends Controller
             'costo_estadia' => $request->costo_estadia ? $this->money_format->clearFormat($request->costo_estadia):null,
             'costo_km' => $request->costo_km ? $this->money_format->clearFormat($request->costo_km):null,
             'costo_estadia_armada' => $request->costo_estadia_armada ? $this->money_format->clearFormat($request->costo_estadia_armada):null,
+
+            'servicio_arma'  => $request->servicio_arma,
+            'servicio_sin_arma'  => $request->servicio_sin_arma,
             'observaciones' => $request->observaciones,
             'siaf_status' => 1,
+            
             'created_at' =>date('Y-m-d H:i:s'),
             'updated_at' =>date('Y-m-d H:i:s'),
             'iduserCreated' =>auth()->user()->id,
@@ -361,6 +365,8 @@ class ClienteController extends Controller
             'costo_estadia_armada' => $request->costo_estadia_armada ? $this->money_format->clearFormat($request->costo_estadia_armada):null,
             'observaciones' => $request->observaciones,
             'siaf_status' => 1,
+            'servicio_arma'  => $request->servicio_arma,
+            'servicio_sin_arma'  => $request->servicio_sin_arma,
             'updated_at' =>date('Y-m-d H:i:s'),
             'iduserUpdated' =>auth()->user()->id,
         ];
