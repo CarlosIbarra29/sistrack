@@ -111,7 +111,7 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <label>Fecha de baja</label>
-                                    <input type="text" class="form-control" name="fecha_baja" id="fecha_baja" required/>
+                                    <input type="text" class="form-control" name="fecha_baja" id="fecha_baja"/>
                                 </div>
                             </div>
 
@@ -223,6 +223,73 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+                                <div class="form-group row">
+                                      <div class="col-lg-4">
+                                            <label class="font-weight-bold">Tipo de servicio</label>
+                                                 <div class="radio-inline mt-2">
+                                                    <label class="radio">
+                                                        <input type="radio" checked name="tipo_gps" value="0">
+                                                        <span></span> GPS Fijo
+                                                    </label>
+                                                    <label class="radio">
+                                                        <input type="radio" name="tipo_gps" value="1">
+                                                        <span></span> GPS Portatil
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                        <div class="col-lg-4">
+                                            <label class="font-weight-bold">Candados</label>
+                                            <div class="radio-inline mt-2">
+                                                <label class="radio">
+                                                    <input type="radio" checked name="candado_servicio" value="1">
+                                                    <span></span> Si
+                                                </label>
+                                                <label class="radio">
+                                                    <input type="radio" name="candado_servicio" value="2">
+                                                    <span></span>  No
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <label class="font-weight-bold">Chaleco antireflejantes</label>
+                                            <div class="radio-inline mt-2">
+                                                <label class="radio">
+                                                    <input type="radio" checked name="chaleco_servicio" value="1">
+                                                    <span></span> Si
+                                                </label>
+                                                <label class="radio">
+                                                    <input type="radio" name="chaleco_servicio" value="2">
+                                                    <span></span> No
+                                                </label>
+                                            </div>
+                                        </div>
+                                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

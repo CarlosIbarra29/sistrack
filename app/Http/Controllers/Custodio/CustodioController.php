@@ -308,6 +308,12 @@ class CustodioController extends Controller
             'updated_at' =>date('Y-m-d H:i:s'),
             'iduserCreated' =>auth()->user()->id,
             'iduserUpdated' =>auth()->user()->id,
+
+            
+             // Nuevo
+            'tipo_gps' => $request->tipo_gps,
+            'candado_servicio' => $request->candados_servicio,
+            'chaleco_servicio' => $request->chalecos_servicio,
         ];
         // dd($data);
         $id_custodio = Custodio::insertGetId($data);

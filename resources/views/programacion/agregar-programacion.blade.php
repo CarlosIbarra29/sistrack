@@ -55,7 +55,7 @@
                             <div class="form-group row">
 
                                 <div class="col-lg-6">
-                                    <label class="font-weight-bold">Cliente</label>
+                                    <label class="font-weight-bold">Razón Social</label>
                                     <select class="form-control form-control-lg" id="cliente_id" name="cliente_id" required>
                                         <option value="">Selecciona un cliente</option>
                                         @foreach($cliente as $cli)
@@ -137,7 +137,7 @@
                                 </div >
 
                                 <div class="col-lg-6"> 
-                                    <label class="font-weight-bold">Linea Transportista</label>
+                                    <label class="font-weight-bold">Cliente</label>
                                     <input type="text" class="form-control form-control-lg" 
                                            name="linea_transportista" id="linea_transportista" required>
                                 </div >
