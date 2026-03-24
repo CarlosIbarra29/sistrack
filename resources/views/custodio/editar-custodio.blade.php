@@ -148,7 +148,7 @@
                                                         @if($custodio->fecha_baja != null || $custodio->fecha_baja != "")
                                                             <input type="text" class="form-control" value="{{ date('d/m/Y', strtotime($custodio->fecha_baja))}}" name="fecha_baja" id="fecha_baja" required />
                                                         @else
-                                                            <input type="text" class="form-control" value="" name="fecha_baja" id="fecha_baja" required />
+                                                            <input type="text" class="form-control" value="" name="fecha_baja" id="fecha_baja" />
                                                         @endif
                                                     </div>
                                                 </div>
