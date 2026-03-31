@@ -274,12 +274,12 @@
 
                                 <div class="form-group row">
                                     <div class="col-lg-6">
-                                    <label>Correo</label>
+                                    <label>Correo ASSISTCARGO</label>
                                     <input type="email" class="form-control" name="correo_login" id="correo_login"/>
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <label>Contraseña</label>
+                                    <label>Contraseña ASSISTCARGO</label>
                                     <input type="password" class="form-control" name="password_login" id="password_login"/>
                                 </div>
                             </div>
