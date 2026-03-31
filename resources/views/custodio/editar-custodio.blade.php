@@ -290,11 +290,11 @@
                                             <label class="font-weight-bold">Tipo de servicio</label>
                                                  <div class="radio-inline mt-2">
                                                     <label class="radio">
-                                                        <input type="radio" checked name="tipo_gps" value="0">
+                                                        <input type="radio" name="tipo_gps" value="1">
                                                         <span></span> GPS Fijo
                                                     </label>
                                                     <label class="radio">
-                                                        <input type="radio" name="tipo_gps" value="1">
+                                                        <input type="radio" name="tipo_gps" value="2">
                                                         <span></span> GPS Portatil
                                                     </label>
                                                 </div>
@@ -304,7 +304,7 @@
                                             <label class="font-weight-bold">Candados</label>
                                             <div class="radio-inline mt-2">
                                                 <label class="radio">
-                                                    <input type="radio" checked name="candado_servicio" value="1">
+                                                    <input type="radio" name="candado_servicio" value="1">
                                                     <span></span> Si
                                                 </label>
                                                 <label class="radio">
@@ -318,7 +318,7 @@
                                             <label class="font-weight-bold">Chaleco antireflejantes</label>
                                             <div class="radio-inline mt-2">
                                                 <label class="radio">
-                                                    <input type="radio" checked name="chaleco_servicio" value="1">
+                                                    <input type="radio" name="chaleco_servicio" value="1">
                                                     <span></span> Si
                                                 </label>
                                                 <label class="radio">
