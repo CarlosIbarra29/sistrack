@@ -313,8 +313,8 @@ class CustodioController extends Controller
             'tipo_gps' => $request->tipo_gps,
             'candado_servicio' => $request->candados_servicio,
             'chaleco_servicio' => $request->chalecos_servicio,
-            'correo_login' => $request->correo_login,
-            'password_login' => $request->password_login,
+            'correo_assistcargo' => $request->correo_assistcargo,
+            'contraseña_assistcargo' => $request->contraseña_assistcargo,
             'updated_at' => date('Y-m-d H:i:s'),
             'iduserUpdated' => auth()->user()->id,
 
