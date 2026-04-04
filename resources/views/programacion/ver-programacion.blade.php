@@ -38,7 +38,7 @@
                         <div class="col-lg-12">
                             <div class="form-group row">
                                 <div class="col-lg-6">
-                                    <label>Cliente</label>
+                                    <label>Razón Social</label>
                                         @foreach($cliente as $tp)
                                             @if($programacion->cliente_id == $tp->id)
                                                 <p>{{ $tp->nombre_cliente }} / {{ $tp->razon_social }}</p>
@@ -139,7 +139,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <label>Linea Transportista</label>
+                                    <label> Cliente</label>
                                     <div class="input-group">
                                         <p>{{ $programacion->linea_transportista }}</p>
                                     </div>

@@ -275,9 +275,10 @@ class CustodioController extends Controller
     {
 // dd($request);
         $data = [
-            'users_custodios' => $request->users_custodios,
+            // 'users_custodios' => $request->users_custodios,
             'num_list' => $this->folio->getFolioCustodio(),
             'fecha_ingreso' => $request->fecha_ingreso ? Carbon::createFromFormat('d/m/Y', $request->fecha_ingreso)->format('Y-m-d'):null,
+            'fecha_baja' => $request->fecha_baja ? Carbon::createFromFormat('d/m/Y', $request->fecha_baja)->format('Y-m-d'):null,
             'ap_paterno' => $request->ape_paterno,
             'ap_materno' => $request->ape_materno,
             'nombre_custodio' => $request->nombre_custodio,
@@ -307,6 +308,18 @@ class CustodioController extends Controller
             'updated_at' =>date('Y-m-d H:i:s'),
             'iduserCreated' =>auth()->user()->id,
             'iduserUpdated' =>auth()->user()->id,
+
+              // Nuevo
+            'tipo_gps' => $request->tipo_gps,
+            'candado_servicio' => $request->candados_servicio,
+            'chaleco_servicio' => $request->chalecos_servicio,
+            'correo_assistcargo' => $request->correo_assistcargo,
+            'contraseña_assistcargo' => $request->contraseña_assistcargo,
+            'updated_at' => date('Y-m-d H:i:s'),
+            'iduserUpdated' => auth()->user()->id,
+
+           
+            
         ];
         // dd($data);
         $id_custodio = Custodio::insertGetId($data);
@@ -402,10 +415,10 @@ class CustodioController extends Controller
         }
 
 
-        $data_user = [
-            'op_custodio' => 1,
-        ];
-        User::where('id', $request->users_custodios)->update($data_user);
+        // $data_user = [
+        //     'op_custodio' => 1,
+        // ];
+        // User::where('id', $request->users_custodios)->update($data_user);
         
 
         session()->flash('success', 'El custodio se añadió correctamente');
@@ -485,6 +498,7 @@ class CustodioController extends Controller
         // dd($request->id_custodio);
         $data = [
             'fecha_ingreso' => $request->fecha_ingreso ? Carbon::createFromFormat('d/m/Y', $request->fecha_ingreso)->format('Y-m-d'):null,
+            'fecha_baja' => $request->fecha_baja ? Carbon::createFromFormat('d/m/Y', $request->fecha_baja)->format('Y-m-d'):null,
             'ap_paterno' => $request->ape_paterno,
             'ap_materno' => $request->ape_materno,
             'nombre_custodio' => $request->nombre_custodio,

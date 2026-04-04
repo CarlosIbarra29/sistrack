@@ -54,7 +54,7 @@
 
                             <div class="form-group row">
                                 <div class="col-lg-6">
-                                    <label class="font-weight-bold">Cliente</label>
+                                    <label class="font-weight-bold">Razón Social</label>
                                     <select class="form-control form-control-lg" name="cliente_id" required>
                                         @foreach($cliente as $tp)
                                             <option value="{{ $tp->id }}" @selected($programacion->cliente_id == $tp->id)>
@@ -134,7 +134,7 @@
                                 </div>
 
                                 <div class="col-lg-6"> 
-                                    <label class="font-weight-bold">Línea Transportista</label>
+                                    <label class="font-weight-bold">Cliente</label>
                                     <input type="text" class="form-control form-control-lg" 
                                            name="linea_transportista" value="{{ $programacion->linea_transportista }}" required>
                                 </div>

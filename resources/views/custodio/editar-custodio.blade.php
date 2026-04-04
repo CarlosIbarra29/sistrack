@@ -148,7 +148,7 @@
                                                         @if($custodio->fecha_baja != null || $custodio->fecha_baja != "")
                                                             <input type="text" class="form-control" value="{{ date('d/m/Y', strtotime($custodio->fecha_baja))}}" name="fecha_baja" id="fecha_baja" required />
                                                         @else
-                                                            <input type="text" class="form-control" value="" name="fecha_baja" id="fecha_baja" required />
+                                                            <input type="text" class="form-control" value="" name="fecha_baja" id="fecha_baja" />
                                                         @endif
                                                     </div>
                                                 </div>
@@ -270,6 +270,63 @@
                                             <input type="text" class="form-control" name="telefono_custodio" id="telefono_custodio" value="{{ $custodio->numero_telefono }}"/>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-lg-6">
+                                    <label>Correo ASSISTCARGO</label>
+                                    <input type="email" class="form-control" name="correo_assistcargo" id="correo_assistcargo"/>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <label>Contraseña ASSISTCARGO</label>
+                                    <input type="password" class="form-control" name="contraseña_assistcargo" id="contraseña_assistcargo"/>
+                                </div>
+                            </div>
+
+                               
+                                <div class="form-group row">
+                                      <div class="col-lg-4">
+                                            <label class="font-weight-bold">Tipo de servicio</label>
+                                                 <div class="radio-inline mt-2">
+                                                    <label class="radio">
+                                                        <input type="radio" name="tipo_gps" value="1">
+                                                        <span></span> GPS Fijo
+                                                    </label>
+                                                    <label class="radio">
+                                                        <input type="radio" name="tipo_gps" value="2">
+                                                        <span></span> GPS Portatil
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                        <div class="col-lg-4">
+                                            <label class="font-weight-bold">Candados</label>
+                                            <div class="radio-inline mt-2">
+                                                <label class="radio">
+                                                    <input type="radio" name="candado_servicio" value="1">
+                                                    <span></span> Si
+                                                </label>
+                                                <label class="radio">
+                                                    <input type="radio" name="candado_servicio" value="2">
+                                                    <span></span>  No
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <label class="font-weight-bold">Chaleco antireflejantes</label>
+                                            <div class="radio-inline mt-2">
+                                                <label class="radio">
+                                                    <input type="radio" name="chaleco_servicio" value="1">
+                                                    <span></span> Si
+                                                </label>
+                                                <label class="radio">
+                                                    <input type="radio" name="chaleco_servicio" value="2">
+                                                    <span></span> No
+                                                </label>
+                                            </div>
+                                        </div>
                                 </div>
 
                                 <div class="form-group">

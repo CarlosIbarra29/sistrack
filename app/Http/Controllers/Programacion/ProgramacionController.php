@@ -195,6 +195,7 @@ class ProgramacionController extends Controller
 
     public function guardarprogramacion(Request $request)
     {
+        // dd($request);
         $data = [
             'folio' => $this->folio->getFolioProgramacion(),
             'cliente_id' => $request->cliente_id,
@@ -212,6 +213,8 @@ class ProgramacionController extends Controller
             // Nuevo
             'folio_interno' => $request->folio_interno,
             'linea_transportista' => $request->linea_transportista,
+            'armado_servicio' => $request->armado_servicio,
+            
             'estatus_viaje_id' => 1,
             'siaf_status' =>1,
             'created_at' =>date('Y-m-d H:i:s'),
@@ -296,8 +299,13 @@ class ProgramacionController extends Controller
             'acompanantes'=> $request->op_custodios,
             'dom_origen' => $request->dom_origen,
             'dom_destino' => $request->dom_destino,
-            // 'observaciones' => $request->observaciones,
+            'observaciones' => $request->observaciones,
             'op_monitoreo_id' => $request->op_monitoreo_id,
+
+            // Nuevo
+            'folio_interno' => $request->folio_interno,
+            'linea_transportista' => $request->linea_transportista,
+            'armado_servicio' => $request->armado_servicio,
             'siaf_status' =>1,
             'updated_at' =>date('Y-m-d H:i:s'),
             'iduserUpdated' =>auth()->user()->id,

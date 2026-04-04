@@ -1,68 +1,66 @@
 "use strict";
-var Modulo = function () {
+var Modulo = function() {
 
-    var lista = '';
+    var lista = ''; //lista de elementos
     var lista_dos = '';
+    var contadorDocumentos=0; //indice contador de elementos
+    var validador; //validador del formulario
+    var contadorDoc=0; //indice contador de elementos
 
-    // 🔹 CONTADORES SEPARADOS (CLAVE)
-    var contadorContactos = 0;
-    var contadorContactosFac = 0;
-    var contadorDocs = 0;
-
-    var validador;
-
-    /* ================= VALIDACIÓN ================= */
-    var validacion = function () {
-
+    var validacion = function() {
+        //validacion de formulario
         const form = document.getElementById('submit_cliente');
+        validador = FormValidation.formValidation(
+            form,
+            {
+                locale: 'es_ES',
+                localization: FormValidation.locales.es_ES,
+                fields: {
 
-        validador = FormValidation.formValidation(form, {
-            locale: 'es_ES',
-            localization: FormValidation.locales.es_ES,
-            plugins: {
-                trigger: new FormValidation.plugins.Trigger(),
-                submitButton: new FormValidation.plugins.SubmitButton(),
-                declarative: new FormValidation.plugins.Declarative({ html5Input: true }),
-                bootstrap: new FormValidation.plugins.Bootstrap()
+                },
+                plugins: {
+                    trigger: new FormValidation.plugins.Trigger(),
+                    submitButton: new FormValidation.plugins.SubmitButton(),
+                    declarative: new FormValidation.plugins.Declarative({
+                        html5Input: true,
+                    }),
+                    bootstrap: new FormValidation.plugins.Bootstrap({
+                        //  eleInvalidClass: '', // Repace with uncomment to hide bootstrap validation icons
+                        //  eleValidClass: '',   // Repace with uncomment to hide bootstrap validation icons
+                    })
+                }
             }
-        })
-        .on('core.form.valid', function () {
-            toastr.success("Guardando, por favor espere...");
-        })
-        .on('core.form.invalid', function () {
-            toastr.warning("Por favor, ingrese la información marcada en rojo.");
+        ).on('core.form.valid', function() {
+            toastr.success("Guardando, Por favor Espere...");
+        }).on('core.form.invalid', function() {
+            toastr.warning("Por favor, Ingrese la información marcada en rojo.");
             KTUtil.scrollTop();
         });
 
-        $("#btnGuardar").on("click", function (e) {
+        $( "#btnGuardar" ).click(function( e ) {
             e.preventDefault();
-            validador.validate().then(function (status) {
-                if (status === 'Valid') {
-                    KTUtil.btnWait(this, 'spinner spinner-right spinner-white pr-15', 'Espere...', true);
+            validador.validate().then(function(status) {
+                if (status === 'Valid'){
+                    var btnGuardar = document.getElementById('btnGuardar');
+                    KTUtil.btnWait( btnGuardar, 'spinner spinner-right spinner-white pr-15', 'Espere...', true);
                     form.submit();
                 }
-            }.bind(this));
+            });
         });
     };
 
-    /* ================= EVENTOS ================= */
-    var initEvents = function () {
+    var initEvents = function() {
 
-        $("#costo_estadia, #costo_km, #costo_estadia_armada").inputmask('$ 999,999,999.99', {
+        var arrows = {
+            leftArrow: '<i class="la la-angle-left"></i>',
+            rightArrow: '<i class="la la-angle-right"></i>'
+        }
+
+        $("#costo_estadia").inputmask('$ 999,999,999.99', {
             numericInput: true
         });
 
-<<<<<<< HEAD
-=======
         $("#costo_km").inputmask('$ 999,999,999.99', {
-            numericInput: true
-        });
-
-        $("#servicio_arma").inputmask('$ 999,999,999.99', {
-            numericInput: true
-        });
-
-        $("#servicio_sin_arma").inputmask('$ 999,999,999.99', {
             numericInput: true
         });
 
@@ -71,95 +69,77 @@ var Modulo = function () {
         });
         
 
->>>>>>> d039a95fbd0fd75c838ecc8adbd7165591c0b552
         lista = construyeElementosLista();
         lista_dos = construyeElementosListados();
-
-        $(".hrefAgregarOtro").on("click", function (e) {
-            e.preventDefault();
-            addContacto();
+        //botón agregar otro archivo
+        $( ".hrefAgregarOtro" ).on( "click", function(event) {
+            event.preventDefault();
+            addArchivo();
         });
+        delArchivo();
 
-        $(".hrefAgregarOtro2").on("click", function (e) {
-            e.preventDefault();
-            addDocumento();
+        $( ".hrefAgregarOtro1" ).on( "click", function(event) {
+            event.preventDefault();
+            addArchivo1();
         });
+        delArchivo1();
 
-        eliminarContacto();
-        eliminarDocumento();
-
-        // Mostrar nombre del archivo seleccionado
-        $(document).on('change', '.custom-file-input', function () {
-            let fileName = this.files[0]?.name || 'Selecciona un archivo';
-            $(this).next('.custom-file-label').text(fileName);
+        $( ".hrefAgregarOtro2" ).on( "click", function(event) {
+            event.preventDefault();
+            addArchivo2();
         });
+        delArchivo2();
+
     };
 
-    /* ================= LISTAS ================= */
+    //construye  elementos de la lista
     var construyeElementosLista = function () {
-        var col = JSON.parse($("#tipoArchivo").val());
-        return Object.entries(col).map(([k, v]) =>
-            `<option value="${k}">${v}</option>`
-        ).join('');
+        var tipoArchivo = $("#tipoArchivo").val();
+        var colTipoArchivo = JSON.parse(tipoArchivo);
+        var opcion ="";
+
+        $.each(colTipoArchivo, function(i, item) {
+            opcion += "<option value='"+i+"' >"+item+"</option>";
+        });
+
+        return opcion;
     };
 
     var construyeElementosListados = function () {
-        var col = JSON.parse($("#tipoArchivo2").val());
-        return Object.entries(col).map(([k, v]) =>
-            `<option value="${k}">${v}</option>`
-        ).join('');
+        var tipoArchivo = $("#tipoArchivo2").val();
+        var colTipoArchivo = JSON.parse(tipoArchivo);
+        var opcion ="";
+
+        $.each(colTipoArchivo, function(i, item) {
+            opcion += "<option value='"+i+"' >"+item+"</option>";
+        });
+
+        return opcion;
     };
 
-    /* ================= VALIDADORES ================= */
+    //validador de elementos agregados para archivo
     const archivoValidador = {
         validators: {
-            notEmpty: { message: 'Campo obligatorio' }
-        }
-    };
-
-    const fileValidador = {
-        validators: {
-            notEmpty: { message: 'Archivo obligatorio' },
+            notEmpty: {
+                message: 'Por favor introduce un valor',
+            },
             file: {
                 extension: 'jpeg,jpg,png,pdf,docx,xls,gif,ppt,bmp',
-                message: 'Archivo no permitido'
-            }
-        }
+                type: 'image/jpeg,image/png,application/pdf,application/msword,application/vnd.ms-excel,image/gif,application/vnd.ms-powerpoint,image/x-ms-bmp',
+                message: 'Por favor ingrese un archivo válido, solo se permite imágenes, archivos de office y PDF',
+            },
+        },
     };
 
-    /* ================= CONTACTO OPERATIVO ================= */
-    var addContacto = function () {
-        contadorContactos++;
-
-        let html = `
-        <tr id="trContacto${contadorContactos}">
-            <td>
-                <select class="form-control" name="id_tipocontacto[${contadorContactos}]" required>
-                    <option value="">Seleccione</option>${lista_dos}
-                </select>
-            </td>
-            <td><input class="form-control" name="nombre[${contadorContactos}]" required></td>
-            <td><input class="form-control" name="email[${contadorContactos}]" required></td>
-            <td><input class="form-control" name="telefono[${contadorContactos}]" required></td>
-            <td>
-                <a href="#" class="btn btn-icon btn-light-danger hrefEliminar" data-id="${contadorContactos}">
-                    <i class="flaticon-delete"></i>
-                </a>
-            </td>
-        </tr>`;
-
-        $("#tblDocumentos tbody").append(html);
-
-        validador.addField(`id_tipocontacto[${contadorContactos}]`, archivoValidador);
-        validador.addField(`nombre[${contadorContactos}]`, archivoValidador);
-        validador.addField(`email[${contadorContactos}]`, archivoValidador);
-        validador.addField(`telefono[${contadorContactos}]`, archivoValidador);
+    //validador de elementos agregados para archivo
+    const tipoArchivoValidador = {
+        validators: {
+            notEmpty: {
+                message: 'Por favor introduce un valor',
+            },
+        },
     };
 
-<<<<<<< HEAD
-    var eliminarContacto = function () {
-        $(document).on("click", ".hrefEliminar", function (e) {
-=======
     //agrega el elemento archivo y lista desplegable
     var addArchivo = function () {
         contadorDocumentos++;
@@ -210,63 +190,70 @@ var Modulo = function () {
     //elimina un elemento
     var delArchivo = function () {
         jQuery(document).on("click", ".hrefEliminar" , function(e) {
->>>>>>> 9f7373ad738e51fdcfda16ac83aa291304678035
             e.preventDefault();
-            let id = $(this).data("id");
-
-            validador.removeField(`id_tipocontacto[${id}]`);
-            validador.removeField(`nombre[${id}]`);
-            validador.removeField(`email[${id}]`);
-            validador.removeField(`telefono[${id}]`);
-
-            $("#trContacto" + id).remove();
+            var idDocumento = $(this).attr("data-id"); //indice del elemento
+            KTApp.hideTooltips(); //oculta tooltip
+            //elimina la validación del elemento
+            validador.addField('id_tipocontacto[' + contadorDocumentos + ']', archivoValidador);
+            validador.removeField('nombre[' + idDocumento + ']');
+            validador.removeField('email[' + idDocumento + ']');
+            validador.removeField('telefono[' + idDocumento + ']');
+            $('#trDocumento'+idDocumento).remove();//elimina el elemento
         });
     };
 
-    /* ================= DOCUMENTOS ================= */
-    var addDocumento = function () {
-        contadorDocs++;
 
-        let html = `
-        <tr id="trDocumento${contadorDocs}">
-            <td>
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" name="archivo[${contadorDocs}]" required>
-                    <label class="custom-file-label">Selecciona un archivo</label>
-                </div>
-            </td>
-            <td>
-                <select class="form-control" name="id_documento[${contadorDocs}]" required>
-                    <option value="">Seleccione</option>${lista}
-                </select>
-            </td>
-            <td>
-                <a href="#" class="btn btn-icon btn-light-danger hrefEliminarDoc" data-id="${contadorDocs}">
-                    <i class="flaticon-delete"></i>
-                </a>
-            </td>
-        </tr>`;
+    var addArchivo1 = function () {
+        contadorDocumentos++;
+        var html = '';
+        html += ([    "",
+            "<tr id='trDocumento1"+contadorDocumentos+"'>",
+            "    <td>" +
+            "       <div class='form-group mb-0'>" +
+            "               <input type='text' class='form-control' id='nombre_fac"+contadorDocumentos+"' name='nombre_fac["+contadorDocumentos+"]' required />",
+            "       </div>" +
+            "    </td>",
+            "    <td>" +
+            "       <div class='form-group mb-0'>" +
+            "               <input type='text' class='form-control' id='email_fac"+contadorDocumentos+"' name='email_fac["+contadorDocumentos+"]' required />",
+            "       </div>" +
+            "    </td>",
+            "    <td>" +
+            "       <div class='form-group mb-0'>" +
+            "               <input type='text' class='form-control' id='telefono_fac"+contadorDocumentos+"' name='telefono_fac["+contadorDocumentos+"]' required />",
+            "       </div>" +
+            "    </td>",
+            "    <td>",
+            "       <a href='#' class='btn btn-clean btn-icon btn-outline-success mt-1 hrefEliminarfac' data-id='"+contadorDocumentos+"' data-toggle='tooltip' data-theme='dark' title='Eliminar'>",
+            "           <i class='flaticon-delete'></i>",
+            "       </a>",
+            "    </td>",
+            "</tr>",
 
-        $("#tblDocumentos2 tbody").append(html);
-
-        validador.addField(`archivo[${contadorDocs}]`, fileValidador);
-        validador.addField(`id_documento[${contadorDocs}]`, archivoValidador);
+            ""].join(""));
+        $("#tblDocumentos1 tbody").append(html); //agrega el html creado
+        //agrega validación del elemento creado
+        validador.addField('nombre_fac[' + contadorDocumentos + ']', archivoValidador);
+        validador.addField('email_fac[' + contadorDocumentos + ']', archivoValidador);
+        validador.addField('telefono_fac[' + contadorDocumentos + ']', archivoValidador);
+        KTApp.initTooltips(); //inicia tooltip del elemento creado
+        KTApp.initFileInput(); //inicia el elemento archivo del elemento creado
     };
 
-    var eliminarDocumento = function () {
-        $(document).on("click", ".hrefEliminarDoc", function (e) {
+    //elimina un elemento
+    var delArchivo1 = function () {
+        jQuery(document).on("click", ".hrefEliminarfac" , function(e) {
             e.preventDefault();
-            let id = $(this).data("id");
-
-            validador.removeField(`archivo[${id}]`);
-            validador.removeField(`id_documento[${id}]`);
-
-            $("#trDocumento" + id).remove();
+            var idDocumento = $(this).attr("data-id"); //indice del elemento
+            KTApp.hideTooltips(); //oculta tooltip
+            //elimina la validación del elemento
+            validador.removeField('nombre_fac[' + idDocumento + ']');
+            validador.removeField('email_fac[' + idDocumento + ']');
+            validador.removeField('telefono_fac[' + idDocumento + ']');
+            $('#trDocumento1'+idDocumento).remove();//elimina el elemento
         });
     };
 
-<<<<<<< HEAD
-=======
     //agrega el elemento archivo y lista desplegable
     var addArchivo2 = function () {
         contadorDocumentos++;
@@ -323,16 +310,19 @@ var Modulo = function () {
         $('#elemento1').val();
     };
 
->>>>>>> 9f7373ad738e51fdcfda16ac83aa291304678035
     return {
-        init: function () {
+
+        //main function to initiate the module
+        init: function() {
             initEvents();
             validacion();
-        }
+            eventosEspeciales();
+        },
+
     };
 
 }();
 
-jQuery(document).ready(function () {
+jQuery(document).ready(function() {
     Modulo.init();
 });

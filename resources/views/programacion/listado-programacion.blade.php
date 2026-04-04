@@ -230,56 +230,61 @@
                         </div>
                         <div class="card-body">
                           <div class="row">                                   
-  <div class="col-lg-3">
-        <div class="alert-card">
-            <div class="alert-header">
-                <i class="fas fa-wallet"></i>
-                <span class="alert-title">Pendientes</span>
-            </div>
-            <div class="alert-value">12</div>
-            <div class="divider"></div>
-            <small>Clientes con pagos programados los próximos 7 días.</small>
-        </div>
-  </div>
-  <div class="col-lg-3">
-<div class="alert-card">
-            <div class="alert-header">
-                <i class="fas fa-user-clock"></i>
-                <span class="alert-title">Tarifario Inactivo</span>
-            </div>
-            <div class="alert-value">8</div>
-            <div class="divider"></div>
-            <small>Tarifas inactivas en más de 30 días.</small>
-        </div>
-  </div>
-  <div class="col-lg-3">
-  <div class="alert-card">
-            <div class="alert-header">
-                <i class="fas fa-exclamation-circle"></i>
-                <span class="alert-title">Tipo de viaje </span>
-            </div>
-            <div class="alert-value">3</div>
-            <div class="divider"></div>
-            <small>Tareas importantes que requieren atención inmediata.</small>
-        </div>
-  </div>
-  <div class="col-lg-3">
-  <div class="alert-card">
-            <div class="alert-header">
-                <i class="fas fa-user-shield"></i>
-                <span class="alert-title">Grafica</span>
-            </div>
-            <div class="alert-value">4</div>
-            <div class="divider"></div>
-            <small>Clientes con señales de abandono o retrasos.</small>
-        </div>
-  </div>
+                                  <div class="col-lg-3">
+                                        <div class="alert-card">
+                                            <div class="alert-header">
+                                                <i class="fas fa-wallet"></i>
+                                                <span class="alert-title">Pendientes</span>
+                                            </div>
+                                            <div class="alert-value">12</div>
+                                            <div class="divider"></div>
+                                            <small>Clientes con pagos programados los próximos 7 días.</small>
+                                        </div>
+                                  </div>
+                                  <div class="col-lg-3">
+                                <div class="alert-card">
+                                            <div class="alert-header">
+                                                <i class="fas fa-user-clock"></i>
+                                                <span class="alert-title">Tarifario Inactivo</span>
+                                            </div>
+                                            <div class="alert-value">8</div>
+                                            <div class="divider"></div>
+                                            <small>Tarifas inactivas en más de 30 días.</small>
+                                        </div>
+                                  </div>
+                                  <div class="col-lg-3">
+                                  <div class="alert-card">
+                                            <div class="alert-header">
+                                                <i class="fas fa-exclamation-circle"></i>
+                                                <span class="alert-title">Tipo de viaje </span>
+                                            </div>
+                                            <div class="alert-value">3</div>
+                                            <div class="divider"></div>
+                                            <small>Tareas importantes que requieren atención inmediata.</small>
+                                        </div>
+                                  </div>
+                                  <div class="col-lg-3">
+                                  <div class="alert-card">
+                                            <div class="alert-header">
+                                                <i class="fas fa-user-shield"></i>
+                                                <span class="alert-title">Grafica</span>
+                                            </div>
+                                            <div class="alert-value">4</div>
+                                            <div class="divider"></div>
+                                            <small>Clientes con señales de abandono o retrasos.</small>
+                                        </div>
+                                  </div>
 
-</div>
+                                </div>
 
                             <!--begin: Datatable-->
-                             <div clases=“table-responsive”>
- <table> <thead>
+
+
+
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="thead-light">
                                 <tr>
                                   <th>No.</th>
                                   <th>Folio</th>
@@ -407,6 +412,8 @@
                             <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
 
                         </div>
+</div>
+                             
                     </div>
                     <!--end::Card-->
                     <!--end::Card-->

@@ -126,16 +126,16 @@
                                     </div>
 
                                     <div class="col-lg-6">
-                                            <spam class="titulo-lb">Servicio con arma</spam>
-                                            <input type="text" class="form-control form-control-lg st-input"
-                                                   name="servicio_arma" id="servicio_arma"/>
-                                        </div>
+                                        <spam class="titulo-lb">Servicio con arma</spam>
+                                        <input type="text" class="form-control form-control-lg st-input"
+                                               name="servicio_arma" id="servicio_arma" value="{{ $data->servicio_arma }}" />
+                                    </div>
 
-                                        <div class="col-lg-6">
-                                            <spam class="titulo-lb">Servicio sin arma</spam>
-                                            <input type="text" class="form-control form-control-lg st-input"
-                                                   name="servicio_sin_arma" id="servicio_sin_arma"/>
-                                        </div>
+                                    <div class="col-lg-6">
+                                        <spam class="titulo-lb">Servicio sin arma</spam>
+                                        <input type="text" class="form-control form-control-lg st-input"
+                                               name="servicio_sin_arma" id="servicio_sin_arma" value="{{ $data->servicio_sin_arma }}"/>
+                                    </div>
                                 </div>
 
                                 

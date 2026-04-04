@@ -163,17 +163,6 @@
   <div class="col-lg-3">
   <div class="alert-card">
             <div class="alert-header">
-                <i class="fas fa-exclamation-circle"></i>
-                <span class="alert-title">Tipo de viaje </span>
-            </div>
-            <div class="alert-value">3</div>
-            <div class="divider"></div>
-            <small>Tareas importantes que requieren atención inmediata.</small>
-        </div>
-  </div>
-  <div class="col-lg-3">
-  <div class="alert-card">
-            <div class="alert-header">
                 <i class="fas fa-user-shield"></i>
                 <span class="alert-title">Grafica</span>
                 
@@ -183,6 +172,22 @@
             <small>Clientes con señales de abandono o retrasos.</small>
         </div>
   </div>
+
+  <div class="col-lg-3">
+    <div class="alert-card" style="cursor: pointer; border: 1px solid #ffcc00;" data-toggle="modal" data-target="#modalVencimientos">
+        <div class="alert-header">
+            <i class="fas fa-bell "></i>
+            <span class="alert-title">Vencimientos Proximos</span>
+        </div>
+        <div class="alert-value text-warning">
+            <div class="alert-value text-warning">
+    {{ $data->where('tiene_vencimientos_proximos', true)->count() }}
+</div>
+        </div>
+        <div class="divider"></div>
+        <small>Documentos (Licencia, Seguro, etc.) por vencer en 30 días.</small>
+    </div>
+</div>
 
 </div>
 
@@ -308,6 +313,117 @@
   </form>
 
   <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
+
+<div class="modal fade" id="modalPorcentajes" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Gestión de Administración: <span id="nombre_custodio_modal" class="text-primary"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form id="formPorcentajes">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Administrador Responsable (Dueño):</label>
+                        <select class="form-control select2" name="admin_principal">
+                            <option value="1">Admin Persona A</option>
+                            <option value="2">Admin Persona B</option>
+                        </select>
+                        <span class="form-text text-muted">Es quien figura como contacto directo.</span>
+                    </div>
+                    
+                    <hr>
+                    <h6>Repartición de Porcentajes</h6>
+                    <div id="contenedor_porcentajes">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="flex-grow-1">Persona A</div>
+                            <div style="width: 100px;">
+                                <input type="number" class="form-control" placeholder="%" value="50">
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="flex-grow-1">Persona B</div>
+                            <div style="width: 100px;">
+                                <input type="number" class="form-control" placeholder="%" value="50">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-custom alert-light-danger p-2" id="error_porcentaje" style="display:none;">
+                        La suma debe ser exactamente 100%.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-warning" style="color:black">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+  {{-- MODAL DE VENCIMIENTOS --}}
+<div class="modal fade" id="modalVencimientos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-exclamation-triangle text-warning mr-2"></i> Documentos Próximos a Vencer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-head-custom table-vertical-center" id="tabla_vencimientos">
+                        <thead>
+                            <tr>
+                                <th>Custodio</th>
+                                <th>Documento</th>
+                                <th>Fecha Vencimiento</th>
+                                <th>Días Circulación</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            @foreach($data as $unid)
+                                <tr>
+                                    <td>{{ $unid->nombre_custodio }} {{ $unid->ap_paterno }}</td>
+                                    <td>
+                                        <span class="d-block"><b>Licencia:</b> {{ $unid->fecha_licencia ?? 'N/A' }}</span>
+                                        <span class="d-block"><b>Póliza:</b> {{ $unid->fecha_seguro ?? 'N/A' }}</span>
+                                        <span class="d-block"><b>Verificación:</b> {{ $unid->fecha_verificacion ?? 'N/A' }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="label label-light-danger label-inline">Próximo</span>
+                                    </td>
+                                    <td>{{ $unid->dias_circulacion ?? 'Lunes-Viernes' }}</td>
+                                    <td>
+                                        <a href="{{ route('custodio.editarcustodio', $unid->id) }}" class="btn btn-sm btn-clean btn-icon">
+                                            <i class="flaticon-edit text-primary"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @endsection
