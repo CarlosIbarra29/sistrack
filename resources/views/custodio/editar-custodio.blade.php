@@ -290,43 +290,50 @@
                                             <label class="font-weight-bold">Tipo de servicio</label>
                                                  <div class="radio-inline mt-2">
                                                     <label class="radio">
-                                                        <input type="radio" checked name="tipo_gps" value="0">
+                                                        <input type="radio" name="tipo_gps" value="0"
+                                                            {{ $custodio->tipo_gps == 0 ? 'checked' : '' }}>
                                                         <span></span> GPS Fijo
                                                     </label>
+
                                                     <label class="radio">
-                                                        <input type="radio" name="tipo_gps" value="1">
+                                                        <input type="radio" name="tipo_gps" value="1"
+                                                            {{ $custodio->tipo_gps == 1 ? 'checked' : '' }}>
                                                         <span></span> GPS Portatil
                                                     </label>
                                                 </div>
                                             </div>
 
-                                        <div class="col-lg-4">
-                                            <label class="font-weight-bold">Candados</label>
-                                            <div class="radio-inline mt-2">
-                                                <label class="radio">
-                                                    <input type="radio" checked name="candado_servicio" value="1">
-                                                    <span></span> Si
-                                                </label>
-                                                <label class="radio">
-                                                    <input type="radio" name="candado_servicio" value="2">
-                                                    <span></span>  No
-                                                </label>
-                                            </div>
+                                       <div class="col-lg-4">
+                                        <label class="font-weight-bold">Candados</label>
+                                        <div class="radio-inline mt-2">
+                                            <label class="radio">
+                                                <input type="radio" name="candado_servicio" value="1"
+                                                    {{ old('candado_servicio', optional($custodio)->candado_servicio) == 1 ? 'checked' : '' }}>
+                                                <span></span> Si
+                                            </label>
+                                            <label class="radio">
+                                                <input type="radio" name="candado_servicio" value="2"
+                                                    {{ old('candado_servicio', optional($custodio)->candado_servicio) == 2 ? 'checked' : '' }}>
+                                                <span></span> No
+                                            </label>
                                         </div>
+                                    </div>
 
-                                        <div class="col-lg-4">
-                                            <label class="font-weight-bold">Chaleco antireflejantes</label>
-                                            <div class="radio-inline mt-2">
-                                                <label class="radio">
-                                                    <input type="radio" checked name="chaleco_servicio" value="1">
-                                                    <span></span> Si
-                                                </label>
-                                                <label class="radio">
-                                                    <input type="radio" name="chaleco_servicio" value="2">
-                                                    <span></span> No
-                                                </label>
-                                            </div>
+                                    <div class="col-lg-4">
+                                        <label class="font-weight-bold">Chaleco antireflejantes</label>
+                                        <div class="radio-inline mt-2">
+                                            <label class="radio">
+                                                <input type="radio" name="chaleco_servicio" value="1"
+                                                    {{ old('chaleco_servicio', optional($custodio)->chaleco_servicio) == 1 ? 'checked' : '' }}>
+                                                <span></span> Si
+                                            </label>
+                                            <label class="radio">
+                                                <input type="radio" name="chaleco_servicio" value="2"
+                                                    {{ old('chaleco_servicio', optional($custodio)->chaleco_servicio) == 2 ? 'checked' : '' }}>
+                                                <span></span> No
+                                            </label>
                                         </div>
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
