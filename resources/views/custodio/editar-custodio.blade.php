@@ -123,9 +123,28 @@
                                         @endforeach
                                     </select>
                                 </div> --}}
-
+                                        <div class="col-lg-6">
+                                            <label class="font-weight-bold">Tipo de custodio</label>
+                                            <div class="radio-inline mt-2">
+                                                <label class="radio">
+                                                    <input type="radio" checked name="tipo_custodio" value="1" {{ $custodio->tipo_custodio == 1 ? 'checked' : '' }}>
+                                                    <span></span> Custodio
+                                                </label>
+                                                <label class="radio">
+                                                    <input type="radio" name="tipo_custodio" value="2" {{ $custodio->tipo_custodio == 2 ? 'checked' : '' }}>
+                                                    <span></span>  Armados
+                                                </label>
+                                                <label class="radio">
+                                                    <input type="radio" name="tipo_custodio" value="3" {{ $custodio->tipo_custodio == 3 ? 'checked' : '' }}>
+                                                    <span></span>  Segundos
+                                                </label>
+                                            </div>
+                                        </div>
 
                                 <div class="col-lg-6">
+
+
+
                                     <label>Usuario / Responsable</label>
                                     <select class="form-control" id="users_responsable" name="users_responsable" >
                                         <option value="">Selecciona una opción</option>

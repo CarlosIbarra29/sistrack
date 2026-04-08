@@ -276,6 +276,7 @@ class CustodioController extends Controller
     {
 // dd($request);
         $data = [
+            'tipo_custodio' => $request->tipo_custodio,
             'users_custodios' => $request->users_custodios,
             'users_responsable' => $request->users_responsable,
             'num_list' => $this->folio->getFolioCustodio(),
@@ -500,6 +501,7 @@ class CustodioController extends Controller
         // dd($request->id_custodio);
         $data = [
             // 'users_custodios' => $request->users_custodios,
+            'tipo_custodio' => $request->tipo_custodio,
             'users_responsable' => $request->users_responsable,
             'fecha_ingreso' => $request->fecha_ingreso ? Carbon::createFromFormat('d/m/Y', $request->fecha_ingreso)->format('Y-m-d'):null,
             'fecha_baja' => $request->fecha_baja ? Carbon::createFromFormat('d/m/Y', $request->fecha_baja)->format('Y-m-d'):null,
