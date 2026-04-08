@@ -264,18 +264,20 @@ class CustodioController extends Controller
         }
         $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
 
-         $users_custodio = User::where('id_status_delete', 1)->where('role', 16)->get();
+        $users_custodio = User::where('id_status_delete', 1)->where('role', 16)->get();
+        $users_responsable = User::where('id_status_delete', 1)->get();
 
          // dd($data);
 
-        return view('custodio.agregar-custodio', compact('data', 'cadenaTipoDocumento', 'users_custodio'));
+        return view('custodio.agregar-custodio', compact('data', 'cadenaTipoDocumento', 'users_custodio', 'users_responsable'));
     }
 
     public function guardarcustodio(Request $request)
     {
 // dd($request);
         $data = [
-            // 'users_custodios' => $request->users_custodios,
+            'users_custodios' => $request->users_custodios,
+            'users_responsable' => $request->users_responsable,
             'num_list' => $this->folio->getFolioCustodio(),
             'fecha_ingreso' => $request->fecha_ingreso ? Carbon::createFromFormat('d/m/Y', $request->fecha_ingreso)->format('Y-m-d'):null,
             'fecha_baja' => $request->fecha_baja ? Carbon::createFromFormat('d/m/Y', $request->fecha_baja)->format('Y-m-d'):null,
@@ -487,7 +489,9 @@ class CustodioController extends Controller
         if($custodio_confianza->tessob_fecha == null){ $por_tessob_fecha =0; }else{ $por_tessob_fecha =1; };
         $porcentaje_confianza = $por_valdat_fecha + $por_verref_fecha + $por_verlab_fecha + $por_anasoc_fecha + $por_exafis_fecha + $por_examed_fecha + $por_exapsi_fecha + $por_exatox_fecha + $por_tesver_fecha + $por_tesrob_fecha + $por_tesnor_fecha + $por_tessob_fecha;
 
-        return view('custodio.editar-custodio', compact('custodio','cadenaTipoDocumento','documentos', 'custodio_seleccion', 'custodio_confianza', 'porcentaje_domicilio', 'porcentaje_info', 'porcentaje_seleccion', 'porcentaje_confianza'));
+        $users_responsable = User::where('id_status_delete', 1)->get();
+
+        return view('custodio.editar-custodio', compact('custodio','cadenaTipoDocumento','documentos', 'custodio_seleccion', 'custodio_confianza', 'porcentaje_domicilio', 'porcentaje_info', 'porcentaje_seleccion', 'porcentaje_confianza', 'users_responsable'));
 
     }
 
@@ -495,6 +499,8 @@ class CustodioController extends Controller
     {
         // dd($request->id_custodio);
         $data = [
+            // 'users_custodios' => $request->users_custodios,
+            'users_responsable' => $request->users_responsable,
             'fecha_ingreso' => $request->fecha_ingreso ? Carbon::createFromFormat('d/m/Y', $request->fecha_ingreso)->format('Y-m-d'):null,
             'fecha_baja' => $request->fecha_baja ? Carbon::createFromFormat('d/m/Y', $request->fecha_baja)->format('Y-m-d'):null,
             'ap_paterno' => $request->ape_paterno,

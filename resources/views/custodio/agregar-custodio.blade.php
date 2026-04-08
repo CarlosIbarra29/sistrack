@@ -92,6 +92,19 @@
                                         @endforeach
                                     </select>
                                 </div>
+
+
+                                <div class="col-lg-6">
+                                    <label>Usuario / Responsable</label>
+                                    <select class="form-control" id="users_responsable" name="users_responsable" >
+                                        <option value="">Selecciona una opción</option>
+                                        @foreach($users_responsable as $estado)
+                                            <option value="{{ $estado->id }}" data-nombre="{{ $estado->name }}">
+                                                Nombre:{{ $estado->name }}, Correo:{{ $estado->email }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="separator separator-dashed my-8"></div>
