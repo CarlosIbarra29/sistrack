@@ -110,6 +110,52 @@
 
                         <div class="tab-content mt-5" id="myTabContent">
                             <div class="tab-pane fade show active mt-10" id="kt_tab_pane_1" role="tabpanel" aria-labelledby="kt_tab_pane_1">
+
+                            <div class="form-group row">
+{{--                                 <div class="col-lg-6">
+                                    <label>Usuario / Custodio</label>
+                                    <select class="form-control" id="users_custodios" name="users_custodios" >
+                                        <option value="">Selecciona una opción</option>
+                                        @foreach($users_custodio as $estado)
+                                            <option value="{{ $estado->id }}" data-nombre="{{ $estado->name }}">
+                                                Nombre:{{ $estado->name }}, Correo:{{ $estado->email }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div> --}}
+                                        <div class="col-lg-6">
+                                            <label class="font-weight-bold">Tipo de custodio</label>
+                                            <div class="radio-inline mt-2">
+                                                <label class="radio">
+                                                    <input type="radio" checked name="tipo_custodio" value="1" {{ $custodio->tipo_custodio == 1 ? 'checked' : '' }}>
+                                                    <span></span> Custodio
+                                                </label>
+                                                <label class="radio">
+                                                    <input type="radio" name="tipo_custodio" value="2" {{ $custodio->tipo_custodio == 2 ? 'checked' : '' }}>
+                                                    <span></span>  Armados
+                                                </label>
+                                                <label class="radio">
+                                                    <input type="radio" name="tipo_custodio" value="3" {{ $custodio->tipo_custodio == 3 ? 'checked' : '' }}>
+                                                    <span></span>  Segundos
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                <div class="col-lg-6">
+
+
+
+                                    <label>Usuario / Responsable</label>
+                                    <select class="form-control" id="users_responsable" name="users_responsable" >
+                                        <option value="">Selecciona una opción</option>
+                                        @foreach($users_responsable as $estado)
+                                            <option value="{{ $estado->id }}" data-nombre="{{ $estado->name }}" @selected($custodio->users_responsable == $estado->id)> Nombre:{{ $estado->name }}, Correo:{{ $estado->email }} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+
                                 <div class="card card-custom gutter-b">
                                     <div class="card-header">
                                         <div class="card-title">
@@ -290,14 +336,12 @@
                                             <label class="font-weight-bold">Tipo de servicio</label>
                                                  <div class="radio-inline mt-2">
                                                     <label class="radio">
-                                                        <input type="radio" name="tipo_gps" value="0"
-                                                            {{ $custodio->tipo_gps == 0 ? 'checked' : '' }}>
+                                                        <input type="radio" name="tipo_gps" value="0" {{ $custodio->tipo_gps == 0 ? 'checked' : '' }}>
                                                         <span></span> GPS Fijo
                                                     </label>
 
                                                     <label class="radio">
-                                                        <input type="radio" name="tipo_gps" value="1"
-                                                            {{ $custodio->tipo_gps == 1 ? 'checked' : '' }}>
+                                                        <input type="radio" name="tipo_gps" value="1" {{ $custodio->tipo_gps == 1 ? 'checked' : '' }}>
                                                         <span></span> GPS Portatil
                                                     </label>
                                                 </div>
@@ -307,13 +351,12 @@
                                         <label class="font-weight-bold">Candados</label>
                                         <div class="radio-inline mt-2">
                                             <label class="radio">
-                                                <input type="radio" name="candado_servicio" value="1"
-                                                    {{ old('candado_servicio', optional($custodio)->candado_servicio) == 1 ? 'checked' : '' }}>
+                                                <input type="radio" name="candado_servicio" value="1" {{ $custodio->candado_servicio == 1 ? 'checked' : '' }}>
                                                 <span></span> Si
                                             </label>
                                             <label class="radio">
-                                                <input type="radio" name="candado_servicio" value="2"
-                                                    {{ old('candado_servicio', optional($custodio)->candado_servicio) == 2 ? 'checked' : '' }}>
+                                                {{-- {{ old('candado_servicio', optional($custodio)->candado_servicio) == 2 ? 'checked' : '' }} --}}
+                                                <input type="radio" name="candado_servicio" value="2" {{ $custodio->candado_servicio == 2 ? 'checked' : '' }}>
                                                 <span></span> No
                                             </label>
                                         </div>
@@ -323,13 +366,11 @@
                                         <label class="font-weight-bold">Chaleco antireflejantes</label>
                                         <div class="radio-inline mt-2">
                                             <label class="radio">
-                                                <input type="radio" name="chaleco_servicio" value="1"
-                                                    {{ old('chaleco_servicio', optional($custodio)->chaleco_servicio) == 1 ? 'checked' : '' }}>
+                                                <input type="radio" name="chaleco_servicio" value="1" {{ $custodio->chaleco_servicio == 1 ? 'checked' : '' }}>
                                                 <span></span> Si
                                             </label>
                                             <label class="radio">
-                                                <input type="radio" name="chaleco_servicio" value="2"
-                                                    {{ old('chaleco_servicio', optional($custodio)->chaleco_servicio) == 2 ? 'checked' : '' }}>
+                                                <input type="radio" name="chaleco_servicio" value="2" {{ $custodio->chaleco_servicio == 2 ? 'checked' : '' }} >
                                                 <span></span> No
                                             </label>
                                         </div>

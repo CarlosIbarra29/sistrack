@@ -80,12 +80,45 @@
                         
                         <div class="tab-pane fade show active mt-10" id="kt_tab_pane_1">
 
+                            <div class="row form-group">
+                                        <div class="col-lg-6">
+                                            <label class="font-weight-bold">Tipo de custodio</label>
+                                            <div class="radio-inline mt-2">
+                                                <label class="radio">
+                                                    <input type="radio" checked name="tipo_custodio" value="1">
+                                                    <span></span> Custodio
+                                                </label>
+                                                <label class="radio">
+                                                    <input type="radio" name="tipo_custodio" value="2">
+                                                    <span></span>  Armados
+                                                </label>
+                                                <label class="radio">
+                                                    <input type="radio" name="tipo_custodio" value="3">
+                                                    <span></span>  Segundos
+                                                </label>
+                                            </div>
+                                        </div>
+                            </div>
+
                             <div class="form-group row">
                                 <div class="col-lg-6">
                                     <label>Usuario / Custodio</label>
                                     <select class="form-control" id="users_custodios" name="users_custodios" >
                                         <option value="">Selecciona una opción</option>
                                         @foreach($users_custodio as $estado)
+                                            <option value="{{ $estado->id }}" data-nombre="{{ $estado->name }}">
+                                                Nombre:{{ $estado->name }}, Correo:{{ $estado->email }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+                                <div class="col-lg-6">
+                                    <label>Usuario / Responsable</label>
+                                    <select class="form-control" id="users_responsable" name="users_responsable" >
+                                        <option value="">Selecciona una opción</option>
+                                        @foreach($users_responsable as $estado)
                                             <option value="{{ $estado->id }}" data-nombre="{{ $estado->name }}">
                                                 Nombre:{{ $estado->name }}, Correo:{{ $estado->email }}
                                             </option>

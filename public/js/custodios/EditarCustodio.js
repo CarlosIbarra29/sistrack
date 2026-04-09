@@ -207,8 +207,8 @@ var Modulo = function() {
         
 
 
-                lista = construyeElementosLista();
-        lista_vehiculos = construyeavancevehiculosLista();
+        lista = construyeElementosLista();
+        // lista_vehiculos = construyeavancevehiculosLista();
         //botón agregar otro archivo
         $( ".hrefAgregarOtro" ).on( "click", function(event) {
             event.preventDefault();
@@ -216,11 +216,11 @@ var Modulo = function() {
         });
         delArchivo();
 
-        $( ".hrefAgregarOtro2" ).on( "click", function(event) {
-            event.preventDefault();
-            addArchivoVehiculo();
-        });
-        delArchivoVehiculo();
+        // $( ".hrefAgregarOtro2" ).on( "click", function(event) {
+        //     event.preventDefault();
+        //     addArchivoVehiculo();
+        // });
+        // delArchivoVehiculo();
 
 
 
@@ -388,13 +388,13 @@ var Modulo = function() {
 
     };
 
-    $('input[name="tipo_gps"]').change(function(){
-    if($(this).val() == "1"){
-        $('#select_tipo_gps').slideDown();
-    }else{
-        $('#select_tipo_gps').slideUp();
-    }
-});
+//     $('input[name="tipo_gps"]').change(function(){
+//     if($(this).val() == "1"){
+//         $('#select_tipo_gps').slideDown();
+//     }else{
+//         $('#select_tipo_gps').slideUp();
+//     }
+// });
 
 }();
 
