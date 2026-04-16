@@ -314,12 +314,14 @@ class CustodioController extends Controller
 
               // Nuevo
             'tipo_gps'         => $request->tipo_gps,
-    'candado_servicio' => $request->candado_servicio,
-    'chaleco_servicio' => $request->chaleco_servicio,
+            'candado_servicio' => $request->candado_servicio,
+            'chaleco_servicio' => $request->chaleco_servicio,
             'correo_assistcargo' => $request->correo_assistcargo,
             'contraseña_assistcargo' => $request->contraseña_assistcargo,
             'updated_at' => date('Y-m-d H:i:s'),
             'iduserUpdated' => auth()->user()->id,
+            'credenciales' => $request->credenciales_custodio,
+            'contrato' => $request->contrato_custodio,
 
         ];
         // dd($data);
@@ -513,6 +515,8 @@ class CustodioController extends Controller
             'tipo_gps' => $request->tipo_gps,
             'candado_servicio' => $request->candado_servicio,
             'chaleco_servicio' => $request->chaleco_servicio,
+            'credenciales' => $request->credenciales_custodio,
+            'contrato' => $request->contrato_custodio,
             'fecha_nacimiento' =>  $request->fecha_nacimiento ? Carbon::createFromFormat('d/m/Y', $request->fecha_nacimiento)->format('Y-m-d'):null,
             'lugar_nacimiento' => $request->lugar_nacimiento,
             'nacionalidad' => $request->nacionalidad,

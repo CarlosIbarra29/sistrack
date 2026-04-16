@@ -270,6 +270,38 @@
                             </div>
 
 
+
+                            <div class="form-group row">
+                                      <div class="col-lg-5">
+                                            <label class="font-weight-bold">Credenciales</label>
+                                                 <div class="radio-inline mt-2">
+                                                    <label class="radio">
+                                                        <input type="radio" checked name="credenciales_custodio" value="0">
+                                                        <span></span> Si
+                                                    </label>
+                                                    <label class="radio">
+                                                        <input type="radio" name="credenciales_custodio" value="1">
+                                                        <span></span> No
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                        <div class="col-lg-5">
+                                            <label class="font-weight-bold">Contrato</label>
+                                            <div class="radio-inline mt-2">
+                                                <label class="radio">
+                                                    <input type="radio" checked name="contrato_custodio" value="1">
+                                                    <span></span> Si
+                                                </label>
+                                                <label class="radio">
+                                                    <input type="radio" name="contrato_custodio" value="2">
+                                                    <span></span>  No
+                                                </label>
+                                            </div>
+                                        </div>
+                                </div>
+
+
                                 <div class="form-group row">
                                       <div class="col-lg-4">
                                             <label class="font-weight-bold">Tipo de servicio</label>

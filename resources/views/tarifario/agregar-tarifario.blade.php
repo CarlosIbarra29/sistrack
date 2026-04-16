@@ -92,12 +92,51 @@ Agregar tarifa
 
                                     <div class="form-group row">
                                         <div class="col-lg-6">
-                                            <label class="font-weight-semibold">Estadías</label>
+                                            <label class="font-weight-semibold">Estadías Generales</label>
                                             <input type="number" class="form-control form-control-solid" name="estadias" id="estadias"/>
                                         </div>
                                         <div class="col-lg-6">
                                             <label class="font-weight-semibold">Apoyos</label>
                                             <input type="number" class="form-control form-control-solid" name="monto_apoyos" id="monto_apoyos" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-lg-6">
+                                            <label class="font-weight-semibold">Estadías Custodio</label>
+                                            <input type="number" class="form-control form-control-solid" name="estadias" id="estadias"/>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label class="font-weight-semibold">Estadías Clientes</label>
+                                            <input type="number" class="form-control form-control-solid" name="monto_apoyos" id="monto_apoyos" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-lg-6">
+                                            <label class="font-weight-semibold">Horas de Estadia</label>
+                                            <input type="number" class="form-control form-control-solid" name="estadias" id="estadias"/>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label class="font-weight-semibold">SIS pago custodio II</label>
+                                            <input type="number" class="form-control form-control-solid" name="monto_apoyos" id="monto_apoyos" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-lg-6">
+                                            <label class="font-weight-semibold">SIS pago custodio III</label>
+                                            <input type="number" class="form-control form-control-solid" name="estadias" id="estadias"/>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label class="font-weight-semibold">Pago de custodio segundo</label>
+                                            <input type="number" class="form-control form-control-solid" name="monto_apoyos" id="monto_apoyos" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-lg-6">
+                                            <label class="font-weight-semibold">SIS pago custodio tercero</label>
+                                            <input type="number" class="form-control form-control-solid" name="estadias" id="estadias"/>
                                         </div>
                                     </div>
 
@@ -140,13 +179,24 @@ Agregar tarifa
                                     @foreach([
                                         ['Cliente','monto_cliente'],
                                         ['Custodio','monto_custodio'],
-                                        ['Estadías','resumen_estadias'],
+                                        ['Estadías Generales','resumen_estadias'],
                                         ['Apoyos','resumen_apoyos'],
+                                        ['Estadías Custodio','estadia_custodio'],
+                                        ['Estadías Clientes','resumen_apoyos'],
+                                        ['Horas de Estadia','resumen_apoyos'],
+                                        ['SIS pago custodio II','resumen_apoyos'],
+                                        ['SIS pago custodio III','resumen_apoyos'],
+                                        ['Pago de custodio segundo','resumen_apoyos'],
+                                        ['Pago de custodio tercero','resumen_apoyos'],
+                                        
+                                        
+
                                         ['Costo Operativo Total','subtotal_sis'],
                                         ['Ganancia','ganancia'],
                                         ['% Costo','porcentaje_custodio'],
                                         ['% Utilidad','porcentaje_sisprotec'],
-                                        ['Total','total']
+                                        [' Total con IVA','iva'],
+                                        ['Total','total'],
                                     ] as $item)
                                     <div class="form-group mb-4">
                                         <label class="text-muted small mb-1">{{ $item[0] }}</label>
