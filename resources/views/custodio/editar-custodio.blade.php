@@ -333,14 +333,14 @@
 
                             <div class="form-group row">
                                       <div class="col-lg-5">
-                                            <label class="font-weight-bold">Credenciales</label>
+                                            <label class="font-weight-bold">Identificacion</label>
                                                  <div class="radio-inline mt-2">
                                                     <label class="radio">
-                                                        <input type="radio" checked name="credenciales" value="0">
+                                                        <input type="radio" checked name="identificacion" value="0">
                                                         <span></span> Si
                                                     </label>
                                                     <label class="radio">
-                                                        <input type="radio" name="credenciales" value="1">
+                                                        <input type="radio" name="identificacion" value="1">
                                                         <span></span> No
                                                     </label>
                                                 </div>

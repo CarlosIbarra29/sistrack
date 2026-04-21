@@ -273,14 +273,14 @@
 
                             <div class="form-group row">
                                       <div class="col-lg-5">
-                                            <label class="font-weight-bold">Credenciales</label>
+                                            <label class="font-weight-bold">Identificacion</label>
                                                  <div class="radio-inline mt-2">
                                                     <label class="radio">
-                                                        <input type="radio" checked name="credenciales_custodio" value="0">
+                                                        <input type="radio" checked name="identificacion_custodio" value="0">
                                                         <span></span> Si
                                                     </label>
                                                     <label class="radio">
-                                                        <input type="radio" name="credenciales_custodio" value="1">
+                                                        <input type="radio" name="identificacion_custodio" value="1">
                                                         <span></span> No
                                                     </label>
                                                 </div>
