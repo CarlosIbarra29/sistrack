@@ -321,7 +321,7 @@ class CustodioController extends Controller
             'updated_at' => date('Y-m-d H:i:s'),
             'iduserUpdated' => auth()->user()->id,
             'identificacion_custodio' => $request->identificacion_custodio,
-            'contrato' => $request->contrato_custodio,
+            'contrato_custodio' => $request->contrato_custodio,
 
         ];
         // dd($data);
@@ -518,7 +518,7 @@ class CustodioController extends Controller
             'candado_servicio' => $request->candado_servicio,
             'chaleco_servicio' => $request->chaleco_servicio,
             'identificacion_custodio' => $request->identificacion_custodio,
-            'contrato' => $request->contrato_custodio,
+            'contrato_custodio' => $request->contrato_custodio,
             'fecha_nacimiento' =>  $request->fecha_nacimiento ? Carbon::createFromFormat('d/m/Y', $request->fecha_nacimiento)->format('Y-m-d'):null,
             'lugar_nacimiento' => $request->lugar_nacimiento,
             'nacionalidad' => $request->nacionalidad,
