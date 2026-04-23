@@ -56,7 +56,7 @@ class Custodio extends Model
     /**
      * @var array
      */
-    protected $fillable = ['siaf_status', 'fecha_ingreso', 'nombre_custodio', 'ap_paterno', 'ap_materno', 'edad', 'sexo', 'fecha_nacimiento', 'lugar_nacimiento', 'nacionalidad', 'estado_civil', 'numero_telefono', 'correo_electronico', 'rfc', 'curp', 'base', 'escolaridad', 'fotografia_custodio', 'observaciones', 'op_vehiculo', 'op_arma', 'dom_calle', 'dom_num', 'dom_municipio', 'dom_estado', 'dom_cp', 'dom_colonia' , 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at', 'num_list','fecha_baja', 'correo_assistcargo', 'contraseña_assistcargo', 'tipo_gps', 'candado_servicio', 'chaleco_servicio', 'users_responsable', 'users_custodios', 'tipo_custodio'];
+    protected $fillable = ['siaf_status', 'fecha_ingreso', 'nombre_custodio', 'ap_paterno', 'ap_materno', 'edad', 'sexo', 'fecha_nacimiento', 'lugar_nacimiento', 'nacionalidad', 'estado_civil', 'numero_telefono', 'correo_electronico', 'rfc', 'curp', 'base', 'escolaridad', 'fotografia_custodio', 'observaciones', 'op_vehiculo', 'op_arma', 'dom_calle', 'dom_num', 'dom_municipio', 'dom_estado', 'dom_cp', 'dom_colonia' , 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at', 'num_list','fecha_baja', 'correo_assistcargo', 'contraseña_assistcargo', 'tipo_gps', 'candado_servicio', 'chaleco_servicio', 'users_responsable', 'users_custodios', 'tipo_custodio', 'identificacion_custodio', 'contrato_custodio'];
 
 
     public function siafStatus()

@@ -320,7 +320,7 @@ class CustodioController extends Controller
             'contraseña_assistcargo' => $request->contraseña_assistcargo,
             'updated_at' => date('Y-m-d H:i:s'),
             'iduserUpdated' => auth()->user()->id,
-            'identificacion' => $request->identificacion_custodio,
+            'identificacion_custodio' => $request->identificacion_custodio,
             'contrato' => $request->contrato_custodio,
 
         ];
@@ -339,8 +339,8 @@ class CustodioController extends Controller
             'updated_at' =>date('Y-m-d H:i:s'),
             'iduserCreated' =>auth()->user()->id,
             'iduserUpdated' =>auth()->user()->id,
-            'identificacion' => $request->identificacion_custodio,
-            'contrato' => $request->contrato_custodio,
+            // 'identificacion' => $request->identificacion_custodio,
+            // 'contrato' => $request->contrato_custodio,
         ];
         CustodioSeleccion::insert($data_seleccion);
 
@@ -517,7 +517,7 @@ class CustodioController extends Controller
             'tipo_gps' => $request->tipo_gps,
             'candado_servicio' => $request->candado_servicio,
             'chaleco_servicio' => $request->chaleco_servicio,
-            'identificacion' => $request->identificacion_custodio,
+            'identificacion_custodio' => $request->identificacion_custodio,
             'contrato' => $request->contrato_custodio,
             'fecha_nacimiento' =>  $request->fecha_nacimiento ? Carbon::createFromFormat('d/m/Y', $request->fecha_nacimiento)->format('Y-m-d'):null,
             'lugar_nacimiento' => $request->lugar_nacimiento,
