@@ -24,10 +24,10 @@
     <!--end::Global Stylesheets Bundle-->
 
     <!--begin::Layout Themes(used by all pages)-->
-    <link href="{{ asset('theme/assets/css/themes/layout/header/base/light.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('theme/assets/css/themes/layout/header/menu/light.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('theme/assets/css/themes/layout/brand/light.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('theme/assets/css/themes/layout/aside/light.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('theme/assets/css/themes/layout/header/base/dark.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('theme/assets/css/themes/layout/header/menu/dark.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('theme/assets/css/themes/layout/brand/dark.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('theme/assets/css/themes/layout/aside/dark.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Layout Themes-->
 
     <!--begin::Custom Theme(used by all pages)-->
@@ -86,7 +86,7 @@
         <!--begin::Aside-->
         <div class="aside aside-left aside-fixed d-flex flex-column flex-row-auto" id="kt_aside" >
             <!--begin::Brand-->
-            <div class="brand flex-column-auto" id="kt_brand" style="height: 85px; background-color: {{ Session::get('menu_color') }} !important" >
+            <div class="brand flex-column-auto" id="kt_brand" >
                 <!--begin::Logo-->
                 <a href="{{ route('tablero.show') }}" class="brand-logo">
                     <img alt="Logo" class="h-50px brand-logo" src="{{ asset('img/logos/logonuevo1.png') }}" />

@@ -6,8 +6,34 @@
     }
 
 
+.content
+{
+    background-color: currentcolor;
+}
+
+.footer{
+    background-color: currentcolor !important;
+}
+
+.card{
+    background-color: #000000ad !important;
+}
+
+.card-label
+{
+    color: white !important;
+    font-size: 17px;
+}
+
+tr{
+    color: white !important;
+}
 
 
+.menu-item .menu-item-submenu .menu-item-active .menu-item-open
+{
+    background-color: red !important;
+}
 
 /* boton para indicar*/
 .radio.radio-warning input:checked ~ span {
@@ -155,34 +181,16 @@
 }
         
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   .alert-card {
-        background: white;
-        border: 1px solid #e8e8e8;
+        background: #000000ad;
+        /*border: 1px solid #e8e8e8;*/
         padding: 22px;
-        border-radius: 14px;
+        /*border-radius: 14px;*/
         transition: 0.3s ease;
     }
 
     .alert-card:hover {
-        border-color: #eaeaea;
+        /*border-color: #eaeaea;*/
         box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
     }
 
@@ -201,7 +209,7 @@
     .alert-title {
         font-size: 20px;
         font-weight: 700;
-        color: #000000
+        color: white;
     }
 
     .alert-value {
@@ -397,7 +405,7 @@ body {
 .dataTables_wrapper .dataTable tfoot th,
 .dataTables_wrapper .dataTable thead th {
     font-weight: 600;
-    color: #575962;
+    color: white;
 }
 
 .form-group label {
@@ -427,7 +435,7 @@ body {
 
 .dataTables_wrapper .dataTable th,
 .dataTables_wrapper .dataTable td {
-    color: #2F3941;
+    color: white;
 }
 
 @media (max-width: 967px) {
