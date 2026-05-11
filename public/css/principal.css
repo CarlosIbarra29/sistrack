@@ -1,4 +1,34 @@
+/* --- CSS PARA ELIMINAR EL FONDO BLANCO --- */
 
+/* Forzamos a que todas las celdas sean transparentes en hover para que se vea el fondo de la fila */
+#kdatatable_usuarios2.table-hover tbody tr:hover td,
+#kdatatable_usuarios2.table-hover tbody tr:hover th {
+    background-color: #10305D !important; /* El azul marino que elegimos */
+    color: #ffffff !important;           /* Texto en blanco para contraste */
+    border-top: 1px solid #D4AF37 !important; /* Línea sutil oro arriba */
+    border-bottom: 1px solid #D4AF37 !important; /* Línea sutil oro abajo */
+}
+
+/* Efecto de la fila completa */
+#kdatatable_usuarios2 tbody tr {
+    transition: all 0.2s ease;
+}
+
+#kdatatable_usuarios2 tbody tr:hover {
+    transform: translateX(5px); /* Pequeño desplazamiento */
+    cursor: pointer;
+}
+
+/* Forzar que los iconos se vean bien en el hover */
+#kdatatable_usuarios2 tbody tr:hover i {
+    color: #ffffff !important;
+}
+
+/* Quitar cualquier sombra o fondo que DataTables ponga por defecto */
+.table.dataTable.display tbody tr.odd > .sorting_1, 
+.table.dataTable.display tbody tr:hover > .sorting_1 {
+    background-color: transparent !important;
+}
     /* Hace que el contenido use casi todo el ancho */
     .custom-full-width {
         width: 98%;
