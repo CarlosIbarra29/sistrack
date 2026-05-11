@@ -78,7 +78,7 @@
       <div class="card-header">
         <div class="card-title">
                 <span class="card-icon">
-                    <i class="flaticon2-delivery-truck"></i>
+                    {{-- <i class="flaticon2-delivery-truck"></i> --}}
                 </span>
           <h3 class="card-label">
             Estructura Organizacional
@@ -99,7 +99,7 @@
                     <span class="alert-title">Dirección de operaciones</span>
                 </div>
                 <div class="divider"></div>
-                <ul>
+                  <ul>
                             <li id="menuProgramacion" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="{{ route('programacion.listadoprogramacion') }}" class="menu-link menu-toggle">
                                     <i class="flaticon-notepad menu-icon"></i>
@@ -140,26 +140,55 @@
                 </ul>
 
             </div>
-
-
-
           </div>
+
+          
           <div class="col-lg-6">
-            <div class="card card-custom">
-              <div class="card-header">
-                <div class="card-title">
-                        <span class="card-icon">
-                            <i class="flaticon2-delivery-truck"></i>
-                        </span>
-                  <h3 class="card-label">
-                    Dirección de administración
-                  </h3>
+            <div class="alert-card">
+                <div class="alert-header">
+                    <i class="fas fa-wallet"></i>
+                    <span class="alert-title">Dirección de operaciones</span>
                 </div>
+                <div class="divider"></div>
+                  <ul>
+                            <li id="menuProgramacion" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="{{ route('programacion.listadoprogramacion') }}" class="menu-link menu-toggle">
+                                    <i class="flaticon-notepad menu-icon"></i>
+                                    <span class="menu-text">Programación</span>
+                                </a>
 
-              </div>
-              <div class="card-body">
+                            </li>
 
-              </div>
+                            <li id="menuMonitoreo" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="{{ route('monitoreo.listamonitoreo') }}" class="menu-link menu-toggle">
+                                    <i class="flaticon2-console menu-icon"></i>
+                                    <span class="menu-text">Monitoreo</span>
+                                </a>
+
+                            </li>
+
+                            <li id="menuCustodios" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="javascript:;" class="menu-link menu-toggle">
+                                    <i class="flaticon2-user-1 menu-icon"></i>
+                                    <span class="menu-text">Analisis de rutas</span>
+                                    <i class="menu-arrow"></i>
+                                </a>
+                                <div class="menu-submenu">
+                                    <i class="menu-arrow"></i>
+                                    <ul class="menu-subnav">
+
+                                        <li id="menuRegistroCustodios" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                            <a href="" class="menu-link menu-toggle">
+                                                <i class="flaticon-users-1 menu-icon"></i>
+                                                <span class="menu-text">Analisis de rutas</span>
+                                                <!--<i class="menu-arrow"></i>-->
+                                            </a>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                </ul>
 
             </div>
           </div>

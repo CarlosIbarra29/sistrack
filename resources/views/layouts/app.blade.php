@@ -51,7 +51,7 @@
 <div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
     <!--begin::Logo-->
     <a href="{{ route('tablero.show') }}">
-        <img alt="Logo" class="h-50px brand-logo" src="{{ asset('img/logos/logonuevo1.png') }}" />
+        <img alt="Logo" class="h-50px brand-logo" src="{{ asset('theme/assets/media/logos/nuevo.png') }}" />
     </a>
     <!--end::Logo-->
     <!--begin::Toolbar-->
@@ -89,7 +89,7 @@
             <div class="brand flex-column-auto" id="kt_brand" >
                 <!--begin::Logo-->
                 <a href="{{ route('tablero.show') }}" class="brand-logo">
-                    <img alt="Logo" class="h-50px brand-logo" src="{{ asset('img/logos/logonuevo1.png') }}" />
+                    <img alt="Logo" class="h-50px brand-logo" src="{{ asset('theme/assets/media/logos/nuevo.png') }}" />
                 </a>
                 <!--end::Logo-->
                 <!--begin::Toggle-->

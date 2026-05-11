@@ -25,6 +25,12 @@
     font-size: 17px;
 }
 
+.card-header
+{
+    border-bottom: 1px solid #FFA800! important;
+}
+
+
 tr{
     color: white !important;
 }
@@ -220,7 +226,7 @@ tr{
     }
     .divider {
         height: 1px;
-        background: #eaeaea;
+        background: #FFA800;
         margin: 14px 0;
     }
 
