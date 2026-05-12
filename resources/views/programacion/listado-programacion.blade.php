@@ -283,7 +283,7 @@
 
 
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table table-hover table-checkable">
                             <thead class="thead-light">
                                 <tr>
                                   <th>No.</th>

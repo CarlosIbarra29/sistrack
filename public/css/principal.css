@@ -1,3 +1,122 @@
+/* Paleta de Colores: Dorado: #CCA43B | Fondo: #121212 | Card: #1B1B1B */
+
+.org-header-card {
+    background-color: #121212;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.org-content-wrapper { display: flex; align-items: center; }
+
+.org-icon-main {
+    border: 1px solid #CCA43B;
+    padding: 18px;
+    border-radius: 10px;
+    font-size: 28px;
+    color: #CCA43B;
+    margin-right: 20px;
+}
+
+.org-title { font-weight: 600; margin-bottom: 4px; font-size: 1.6rem; }
+.org-description { color: #888; margin: 0; font-size: 0.95rem; }
+
+/* Tarjetas de Direcciones */
+.dir-card-container {
+    background-color: #1B1B1B;
+    border: 1px solid #222;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.dir-card-header {
+    padding: 18px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+}
+
+.dir-icon-badge {
+    color: #CCA43B;
+    font-size: 20px;
+    margin-right: 15px;
+}
+
+.dir-label {
+    color: #FFF;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.areas-badge {
+    background: rgba(204, 164, 59, 0.1);
+    color: #CCA43B;
+    border: 1px solid #CCA43B;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+/* Listado de items */
+.dir-menu-list { list-style: none; padding: 0; margin: 0; }
+
+.dir-menu-list li a {
+    display: flex;
+    align-items: center;
+    padding: 16px 25px;
+    color: #BBB;
+    text-decoration: none;
+    border-bottom: 1px solid #2a2a2a;
+    transition: all 0.2s ease;
+}
+
+.dir-menu-list li a:hover {
+    background-color: #252525;
+    color: #FFF;
+}
+
+.gold-icon {
+    width: 30px;
+    color: #CCA43B;
+    font-size: 1.1rem;
+    margin-right: 15px;
+}
+
+.arrow-nav {
+    margin-left: auto;
+    font-size: 0.8rem;
+    color: #444;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* --- CSS PARA ELIMINAR EL FONDO BLANCO --- */
 
 /* Forzamos a que todas las celdas sean transparentes en hover para que se vea el fondo de la fila */
