@@ -72,7 +72,7 @@
 </div>
 
 
-        <!-- SECCIÓN: ESTRUCTURA ORGANIZACIONAL -->
+        
 <div class="row mb-6">
     <div class="col-lg-12">
         <div class="org-header-card">
@@ -93,9 +93,9 @@
     </div>
 </div>
 
-<!-- SECCIÓN: TARJETAS DE DIRECCIONES -->
+
 <div class="row">
-    <!-- Dirección de Operaciones -->
+    
     <div class="col-lg-6">
         <div class="dir-card-container">
             <div class="dir-card-header">
@@ -146,7 +146,7 @@
         </div>
     </div>
 
-    <!-- Dirección de Administración -->
+    
     <div class="col-lg-6">
         <div class="dir-card-container">
             <div class="dir-card-header">
