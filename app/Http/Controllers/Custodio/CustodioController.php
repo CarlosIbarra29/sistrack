@@ -312,7 +312,6 @@ class CustodioController extends Controller
             'iduserCreated' =>auth()->user()->id,
             'iduserUpdated' =>auth()->user()->id,
 
-              // Nuevo
             'tipo_gps'         => $request->tipo_gps,
             'candado_servicio' => $request->candado_servicio,
             'chaleco_servicio' => $request->chaleco_servicio,
@@ -339,8 +338,7 @@ class CustodioController extends Controller
             'updated_at' =>date('Y-m-d H:i:s'),
             'iduserCreated' =>auth()->user()->id,
             'iduserUpdated' =>auth()->user()->id,
-            // 'identificacion' => $request->identificacion_custodio,
-            // 'contrato' => $request->contrato_custodio,
+
         ];
         CustodioSeleccion::insert($data_seleccion);
 
@@ -378,21 +376,34 @@ class CustodioController extends Controller
         CustodioControlConfianza::insert($data_control_confianza);
 
 
-        if($request->hasfile('file_carga')){
-            $archivos = $request->file('file_carga');
-
-            foreach($archivos as $indice => $archivo)
-            {
-                $archivoNombre = $archivo->hashName();
-                $mimeType = $archivo->getMimeType();
-                Storage::putFileAs('custodio/'.$id_custodio, $archivo, $archivoNombre);
+        if($request->hasFile('profile_avatar')){
+            $archivo = $request->file('profile_avatar');
+            $archivoNombre = $archivo->hashName();
+            Storage::putFileAs('custodio/'.$id_custodio, $archivo, $archivoNombre);
                 $data = [
                     'fotografia_custodio' => $archivoNombre,
                 ];
 
                 Custodio::where('id', $id_custodio)->update($data);
-            }
         }
+
+
+        // if($request->hasfile('profile_avatar')){
+        //     $archivos = $request->file('profile_avatar');
+            
+        //     foreach($archivos as $indice => $archivo)
+        //     {
+
+        //         $archivoNombre = $archivo->hashName();
+        //         $mimeType = $archivo->getMimeType();
+        //         Storage::putFileAs('custodio/'.$id_custodio, $archivo, $archivoNombre);
+        //         $data = [
+        //             'fotografia_custodio' => $archivoNombre,
+        //         ];
+
+        //         Custodio::where('id', $id_custodio)->update($data);
+        //     }
+        // }
 
 
         $colIdDocumento = $request->id_documento;
@@ -475,24 +486,37 @@ class CustodioController extends Controller
         $porcentaje_domicilio = $por_calle + $por_num + $por_municipio + $por_estado + $por_cp + $por_colonia;
 
         // dd($custodio_seleccion);
-        if($custodio_seleccion->entin_fecha == null){ $por_entin_fecha = 0; }else{ $por_entin_fecha = 1; };
-        if($custodio_seleccion->verdoc_fecha == null){ $por_verdoc_fecha = 0; }else{ $por_verdoc_fecha = 1; };
-        if($custodio_seleccion->entope_fecha == null){ $por_entope_fecha = 0; }else{ $por_entope_fecha = 1; };
-        $porcentaje_seleccion = $por_entin_fecha + $por_verdoc_fecha + $por_entope_fecha;
+        // dd();
+        if($custodio_seleccion != null){
+            if($custodio_seleccion->entin_fecha == null){ $por_entin_fecha = 0; }else{ $por_entin_fecha = 1; };
+            if($custodio_seleccion->verdoc_fecha == null){ $por_verdoc_fecha = 0; }else{ $por_verdoc_fecha = 1; };
+            if($custodio_seleccion->entope_fecha == null){ $por_entope_fecha = 0; }else{ $por_entope_fecha = 1; };
+            $porcentaje_seleccion = $por_entin_fecha + $por_verdoc_fecha + $por_entope_fecha;
 
-        if($custodio_confianza->valdat_fecha == null){ $por_valdat_fecha =0; }else{ $por_valdat_fecha =1; };
-        if($custodio_confianza->verref_fecha == null){ $por_verref_fecha =0; }else{ $por_verref_fecha =1; };
-        if($custodio_confianza->verlab_fecha == null){ $por_verlab_fecha =0; }else{ $por_verlab_fecha =1; };
-        if($custodio_confianza->anasoc_fecha == null){ $por_anasoc_fecha =0; }else{ $por_anasoc_fecha =1; };
-        if($custodio_confianza->exafis_fecha == null){ $por_exafis_fecha =0; }else{ $por_exafis_fecha =1; };
-        if($custodio_confianza->examed_fecha == null){ $por_examed_fecha =0; }else{ $por_examed_fecha =1; };
-        if($custodio_confianza->exapsi_fecha == null){ $por_exapsi_fecha =0; }else{ $por_exapsi_fecha =1; };
-        if($custodio_confianza->exatox_fecha == null){ $por_exatox_fecha =0; }else{ $por_exatox_fecha =1; };
-        if($custodio_confianza->tesver_fecha == null){ $por_tesver_fecha =0; }else{ $por_tesver_fecha =1; };
-        if($custodio_confianza->tesrob_fecha == null){ $por_tesrob_fecha =0; }else{ $por_tesrob_fecha =1; };
-        if($custodio_confianza->tesnor_fecha == null){ $por_tesnor_fecha =0; }else{ $por_tesnor_fecha =1; };
-        if($custodio_confianza->tessob_fecha == null){ $por_tessob_fecha =0; }else{ $por_tessob_fecha =1; };
-        $porcentaje_confianza = $por_valdat_fecha + $por_verref_fecha + $por_verlab_fecha + $por_anasoc_fecha + $por_exafis_fecha + $por_examed_fecha + $por_exapsi_fecha + $por_exatox_fecha + $por_tesver_fecha + $por_tesrob_fecha + $por_tesnor_fecha + $por_tessob_fecha;
+            if($custodio_confianza->valdat_fecha == null){ $por_valdat_fecha =0; }else{ $por_valdat_fecha =1; };
+            if($custodio_confianza->verref_fecha == null){ $por_verref_fecha =0; }else{ $por_verref_fecha =1; };
+            if($custodio_confianza->verlab_fecha == null){ $por_verlab_fecha =0; }else{ $por_verlab_fecha =1; };
+            if($custodio_confianza->anasoc_fecha == null){ $por_anasoc_fecha =0; }else{ $por_anasoc_fecha =1; };
+            if($custodio_confianza->exafis_fecha == null){ $por_exafis_fecha =0; }else{ $por_exafis_fecha =1; };
+            if($custodio_confianza->examed_fecha == null){ $por_examed_fecha =0; }else{ $por_examed_fecha =1; };
+            if($custodio_confianza->exapsi_fecha == null){ $por_exapsi_fecha =0; }else{ $por_exapsi_fecha =1; };
+            if($custodio_confianza->exatox_fecha == null){ $por_exatox_fecha =0; }else{ $por_exatox_fecha =1; };
+            if($custodio_confianza->tesver_fecha == null){ $por_tesver_fecha =0; }else{ $por_tesver_fecha =1; };
+            if($custodio_confianza->tesrob_fecha == null){ $por_tesrob_fecha =0; }else{ $por_tesrob_fecha =1; };
+            if($custodio_confianza->tesnor_fecha == null){ $por_tesnor_fecha =0; }else{ $por_tesnor_fecha =1; };
+            if($custodio_confianza->tessob_fecha == null){ $por_tessob_fecha =0; }else{ $por_tessob_fecha =1; };
+            $porcentaje_confianza = $por_valdat_fecha + $por_verref_fecha + $por_verlab_fecha + $por_anasoc_fecha + $por_exafis_fecha + $por_examed_fecha + $por_exapsi_fecha + $por_exatox_fecha + $por_tesver_fecha + $por_tesrob_fecha + $por_tesnor_fecha + $por_tessob_fecha;
+        }else{
+            $por_entin_fecha = 0;  $por_verdoc_fecha = 0; $por_entope_fecha = 0;
+            $porcentaje_seleccion = $por_entin_fecha + $por_verdoc_fecha + $por_entope_fecha;
+
+            $por_valdat_fecha =0; $por_verref_fecha =0; $por_verlab_fecha =0; $por_anasoc_fecha =0; $por_exafis_fecha =0; $por_examed_fecha =0;  $por_exapsi_fecha =0; $por_exatox_fecha =0; $por_tesver_fecha =0; 
+            $por_tesrob_fecha =0; $por_tesnor_fecha =0; $por_tessob_fecha =0; 
+
+            $porcentaje_confianza = $por_valdat_fecha + $por_verref_fecha + $por_verlab_fecha + $por_anasoc_fecha + $por_exafis_fecha + $por_examed_fecha + $por_exapsi_fecha + $por_exatox_fecha + $por_tesver_fecha + $por_tesrob_fecha + $por_tesnor_fecha + $por_tessob_fecha; 
+
+        }
+        
 
         $users_responsable = User::where('id_status_delete', 1)->get();
 
