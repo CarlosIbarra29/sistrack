@@ -72,423 +72,109 @@
 </div>
 
 
+        <!-- SECCIÓN: ESTRUCTURA ORGANIZACIONAL -->
+<div class="row mb-6">
+    <div class="col-lg-12">
+        <div class="org-header-card">
+            <div class="org-content-wrapper">
+                <div class="org-icon-main">
+                    <i class="fas fa-sitemap"></i>
+                </div>
+                <div class="org-text-info">
+                    <h2 class="org-title">Estructura Organizacional</h2>
+                    <p class="org-description">Visualiza la estructura de las direcciones y sus áreas.</p>
+                </div>
+            </div>
+            <!-- Decoración gráfica derecha -->
+            <div class="org-visual-decor d-none d-md-block">
+                <i class="fas fa-users-cog"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECCIÓN: TARJETAS DE DIRECCIONES -->
 <div class="row">
-  <div class="col-lg-12">
-    <div class="card card-custom">
-      <div class="card-header">
-        <div class="card-title">
-                <span class="card-icon">
-                    {{-- <i class="flaticon2-delivery-truck"></i> --}}
-                </span>
-          <h3 class="card-label">
-            Estructura Organizacional
-          </h3>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-
-        <div class="row mt-3">
-          <div class="col-lg-6">
-            <div class="alert-card">
-                <div class="alert-header">
-                    <i class="fas fa-wallet"></i>
-                    <span class="alert-title">Dirección de operaciones</span>
+    <!-- Dirección de Operaciones -->
+    <div class="col-lg-6">
+        <div class="dir-card-container">
+            <div class="dir-card-header">
+                <div class="d-flex align-items-center">
+                    <div class="dir-icon-badge"><i class="fas fa-shield-alt"></i></div>
+                    <h4 class="dir-label">DIRECCIÓN DE OPERACIONES</h4>
                 </div>
-                <div class="divider"></div>
-                  <ul>
-                            <li id="menuProgramacion" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="{{ route('programacion.listadoprogramacion') }}" class="menu-link menu-toggle">
-                                    <i class="flaticon-notepad menu-icon"></i>
-                                    <span class="menu-text">Programación</span>
-                                </a>
-
-                            </li>
-
-                            <li id="menuMonitoreo" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="{{ route('monitoreo.listamonitoreo') }}" class="menu-link menu-toggle">
-                                    <i class="flaticon2-console menu-icon"></i>
-                                    <span class="menu-text">Monitoreo</span>
-                                </a>
-
-                            </li>
-
-                            <li id="menuCustodios" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="javascript:;" class="menu-link menu-toggle">
-                                    <i class="flaticon2-user-1 menu-icon"></i>
-                                    <span class="menu-text">Analisis de rutas</span>
-                                    <i class="menu-arrow"></i>
-                                </a>
-                                <div class="menu-submenu">
-                                    <i class="menu-arrow"></i>
-                                    <ul class="menu-subnav">
-
-                                        <li id="menuRegistroCustodios" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                            <a href="" class="menu-link menu-toggle">
-                                                <i class="flaticon-users-1 menu-icon"></i>
-                                                <span class="menu-text">Analisis de rutas</span>
-                                                <!--<i class="menu-arrow"></i>-->
-                                            </a>
-
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                </ul>
-
+                <div class="areas-badge">5 ÁREAS <i class="fas fa-chevron-down ml-1"></i></div>
             </div>
-          </div>
+            
+            <ul class="dir-menu-list">
+                <li>
+                    <a href="{{ route('programacion.listadoprogramacion') }}">
+                        <i class="far fa-calendar-alt gold-icon"></i>
+                        <span>Programación</span>
+                        <i class="fas fa-chevron-right arrow-nav"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('monitoreo.listamonitoreo') }}">
+                        <i class="fas fa-desktop gold-icon"></i>
+                        <span>Monitoreo</span>
+                        <i class="fas fa-chevron-right arrow-nav"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-map-marked-alt gold-icon"></i>
+                        <span>Análisis de rutas</span>
+                        <i class="fas fa-chevron-right arrow-nav"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-search-plus gold-icon"></i>
+                        <span>Investigación de Incidentes</span>
+                        <i class="fas fa-chevron-right arrow-nav"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-tools gold-icon"></i>
+                        <span>Mantenimiento</span>
+                        <i class="fas fa-chevron-right arrow-nav"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-          
-          <div class="col-lg-6">
-            <div class="alert-card">
-                <div class="alert-header">
-                    <i class="fas fa-wallet"></i>
-                    <span class="alert-title">Dirección de operaciones</span>
+    <!-- Dirección de Administración -->
+    <div class="col-lg-6">
+        <div class="dir-card-container">
+            <div class="dir-card-header">
+                <div class="d-flex align-items-center">
+                    <div class="dir-icon-badge"><i class="fas fa-city"></i></div>
+                    <h4 class="dir-label">DIRECCIÓN DE ADMINISTRACIÓN</h4>
                 </div>
-                <div class="divider"></div>
-                  <ul>
-                            <li id="menuProgramacion" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="{{ route('programacion.listadoprogramacion') }}" class="menu-link menu-toggle">
-                                    <i class="flaticon-notepad menu-icon"></i>
-                                    <span class="menu-text">Programación</span>
-                                </a>
-
-                            </li>
-
-                            <li id="menuMonitoreo" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="{{ route('monitoreo.listamonitoreo') }}" class="menu-link menu-toggle">
-                                    <i class="flaticon2-console menu-icon"></i>
-                                    <span class="menu-text">Monitoreo</span>
-                                </a>
-
-                            </li>
-
-                            <li id="menuCustodios" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="javascript:;" class="menu-link menu-toggle">
-                                    <i class="flaticon2-user-1 menu-icon"></i>
-                                    <span class="menu-text">Analisis de rutas</span>
-                                    <i class="menu-arrow"></i>
-                                </a>
-                                <div class="menu-submenu">
-                                    <i class="menu-arrow"></i>
-                                    <ul class="menu-subnav">
-
-                                        <li id="menuRegistroCustodios" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                            <a href="" class="menu-link menu-toggle">
-                                                <i class="flaticon-users-1 menu-icon"></i>
-                                                <span class="menu-text">Analisis de rutas</span>
-                                                <!--<i class="menu-arrow"></i>-->
-                                            </a>
-
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                </ul>
-
+                <div class="areas-badge">11 ÁREAS <i class="fas fa-chevron-down ml-1"></i></div>
             </div>
-          </div>
+            <!-- Se repite la misma estructura de <ul> que la anterior -->
+            <ul class="dir-menu-list">
+                <li><a href="#"><i class="fas fa-clipboard-check gold-icon"></i><span>Control de Servicios</span><i class="fas fa-chevron-right arrow-nav"></i></a></li>
+                <li><a href="#"><i class="fas fa-user-edit gold-icon"></i><span>Admon de personal</span><i class="fas fa-chevron-right arrow-nav"></i></a></li>
+                 <li><a href="#"><i class="fas fa-search-plus gold-icon"></i><span>Reclutamiento y selección</span><i class="fas fa-chevron-right arrow-nav"></i></a></li>
+                <li><a href="#"><i class="fas fa-user-friends gold-icon"></i><span>Capacitación y desarrollo</span><i class="fas fa-chevron-right arrow-nav"></i></a></li>
+                <li><a href="#"><i class="fas fa-shopping-cart gold-icon"></i><span>Compras</span><i class="fas fa-chevron-right arrow-nav"></i></a></li>
+                <li><a href="#"><i class="fas fa-bullhorn gold-icon"></i><span>Comercialización</span><i class="fas fa-chevron-right arrow-nav"></i></a></li>
+                <li><a href="#"><i class="fas fa-file-invoice-dollar gold-icon"></i><span>Cuentas por Pagar</span><i class="fas fa-chevron-right arrow-nav"></i></a></li>
+                <li><a href="#"><i class="fas fa-file-invoice gold-icon"></i><span>Facturación y Cobranza</span><i class="fas fa-chevron-right arrow-nav"></i></a></li>
+                <li><a href="#"><i class="fas fa-comment-dots gold-icon"></i><span>Comunicación.</span><i class="fas fa-chevron-right arrow-nav"></i></a></li>
+                <li><a href="#"><i class="fas fa-award gold-icon"></i><span>Gestión de calidad</span><i class="fas fa-chevron-right arrow-nav"></i></a></li>
+                <li><a href="#"><i class="fas fa-dollar-sign gold-icon"></i><span>Finanzas</span><i class="fas fa-chevron-right arrow-nav"></i></a></li>
+                <li><a href="#"><i class="fas fa-balance-scale gold-icon"></i><span>Legal</span><i class="fas fa-chevron-right arrow-nav"></i></a></li>
+                <!-- ... agregar los demás campos del diseño ... -->
+            </ul>
         </div>
-
-
-
-<div class="row mt-2">
-  <div class="col-lg-9">
-    <div class="card card-custom">
-      <div class="card-header">
-        <div class="card-title">
-                <span class="card-icon">
-                    <i class="flaticon2-delivery-truck"></i>
-                </span>
-          <h3 class="card-label">
-            Viajes programados
-          </h3>
-        </div>
-
-      </div>
-      <div class="card-body">
-        <table class="table table-hover table-checkable" id="kdatatable_agencias_inactivas">
-            <thead>
-            <tr>
-              {{-- <th>No.</th> --}}
-              <th>Domicilio Origen</th>
-              <th>Domicilio Destino</th>
-              <th>Fecha y hora</th>
-              <th>Estatus</th>
-              <th class="text-center">Opciones</th>
-            </tr>
-            </thead>
-              @foreach($programcion as $unid)
-                <tr>
-                   {{-- <td>{{ $unid->id }}</td> --}}
-                  <td>{{ $unid->dom_origen }}</td>
-                  <td>{{ $unid->dom_destino }}</td>
-                  <td>{{ $unid->fecha_servicio }}</td>
-                  <td>
-                    @if($unid->estatus_viaje_id == 1)
-                      <span class="label font-weight-bold  label-outline label-inline" style="color: #3699FF ; border: 1px solid #3699FF  !important; font-size: 12px;width: 134px;height: 34px;">{{ $unid->estatusViaje->estatus_viaje }}</span>
-                    @else
-                      <span class="label font-weight-bold  label-outline label-inline" style="color: green; border: 1px solid green !important;font-size: 12px;">{{ $unid->estatusViaje->estatus_viaje }}</span>
-                    @endif
-                  </td>
-
-                  <td class="text-center">
-                    <a href="{{ route('tablero.viajeprogramado', $unid->id) }}"><i class="flaticon-eye"></i></a>
-                    <button class="btn btn-sm btn-clean btn-hover-icon-success btn-icon activar-agencia" data-toggle="modal" data-target="#kt_modal_1" data-id="{{ $unid->id }}" data-nombre="{{ $unid->razon_social }}" data-toggle="tooltip" data-theme="dark" title="Ver viaje" ></button>
-                  </td>
-                </tr>
-              @endforeach
-            <tbody>
-
-            </tbody>
-
-        </table>
-      </div>
-
     </div>
-
-  </div>
-
-
-  <div class="col-lg-3">
-    <div class="card card-custom">
-      <div class="card-header">
-        <div class="card-title">
-                <span class="card-icon">
-                    <i class="flaticon2-chart text-primary"></i>
-                </span>
-          <h3 class="card-label">
-            Mis viajes
-          </h3>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-lg-12 text-center">
-            <img  class="brand-logo" width="120" src="{{ asset('img/grafica.jpg') }}" id="mis_viajes"/>
-          </div>
-        </div> 
-      </div>
-
-    </div>
-  </div>
-
 </div>
-
-
-<div class="row mt-3" id="div_mis_viajes">
-  <div class="col-lg-12">
-    <div class="card card-custom">
-      <div class="card-header">
-        <div class="card-title">
-
-          <h3 class="card-label">
-            Mis viajes
-          </h3>
-        </div>
-
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-lg-4">
-            <div class="card card-custom">
-              <div class="card-header">
-                <div class="card-title">
-                        <span class="card-icon">
-                            <i class="flaticon2-chat-1 text-primary"></i>
-                        </span>
-                  <h3 class="card-label">
-                    <small>Información</small>
-                  </h3>
-                </div>
-
-              </div>
-              <div class="card-body">
-
-                <table class="table">
-
-                    <tbody>
-                        <tr>
-                            
-                            <td>Total de viajes</td>
-                            <td><span style="font-size: 19px; font-weight: bold;">43</span></td>
-
-                        </tr>
-
-                    </tbody>
-                </table>
-              </div>
-            </div>
-
-          </div>
-          <div class="col-lg-8">
-            <canvas id="myChartpedidos" style="width: 100px;"></canvas> 
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
-
-{{-- M O D A L S --}}
-  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-hidden="true" id="kt_modal_1">
-      <div class="modal-dialog  modal-xl">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title">Información del viaje</h5>
-                  <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                      <span class="svg-icon svg-icon-2x"></span>
-                  </div>
-              </div>
-
-              <div class="modal-body">
-                <form  method="post" id="submit_estatus">
-                @csrf
-                  <div class="row ">
-                    <div class="col-lg-12">
-                      <div class="progress">
-                          <div class="progress-bar" role="progressbar" style="width: 14%; font-size: 14px;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">10%</div>
-                      </div>
-                    </div>
-                  </div>
-
-
-                    <div class="row">
-                      <div class="col-lg-6">
-                        <div class="card card-custom">
-                          <div class="card-header">
-                            <div class="card-title">
-                              <h3 class="card-label">
-                                Información del viaje
-                              </h3>
-                            </div>
-                          </div>
-                          <div class="card-body">
-                            <table class="table table-hover table-checkable" id="kdatatable_agencias_inactivas">
-                                <thead>
-                                <tr>
-                                  <th>Cliente</th>
-                                  <th>Domicilio Origen</th>
-                                  <th>Domicilio Destino</th>
-                                  <th>Fecha y hora</th>
-                                  <th>Estatus</th>
-                                </tr>
-                                </thead>
-                                  @foreach($programcion as $unid)
-                                    <tr>
-                                       <td>{{ $unid->razon_social }}</td>
-                                      <td>{{ $unid->dom_origen }}</td>
-                                      <td>{{ $unid->dom_destino }}</td>
-                                      <td>{{ $unid->fecha_servicio }}</td>
-                                      <td>
-                                        <span class="label font-weight-bold  label-outline label-inline" style="color: green; border: 1px solid green !important">Programado</span>
-                                      </td>
-                                    </tr>
-                                  @endforeach
-                                <tbody>
-
-                                </tbody>
-
-                            </table>
-                          </div>
-
-                        </div>
-
-
-                      </div>
-                      <div class="col-lg-6">
-                        <div class="card card-custom">
-                          <div class="card-header">
-                            <div class="card-title">
-                              <h3 class="card-label">
-                                Bitacora
-                              </h3>
-                            </div>
-                          </div>
-                          <div class="card-body">
-                            ...
-                          </div>
-
-                        </div>
-
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-lg-12">
-                        <div class="card card-custom">
-                          <div class="card-header">
-                            <div class="card-title">
-                              <h3 class="card-label">
-                                Detralle del vehiculo
-                              </h3>
-                            </div>
-                          </div>
-                          <div class="card-body">
-                            <div class="row">
-                              <div class="col-lg-6">
-                                <img  class="brand-logo" width="450" src="{{ asset('img/img_custodio.jpg') }}" /> 
-                              </div>
-                              <div class="col-lg-4">
-
-                                <table class="table">
-
-                                    <tbody>
-                                        <tr>
-                                            <td>Marca</td>
-                                            <td><span style="font-size: 15px; font-weight: bold;">Nissan</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Modelo</td>
-                                            <td><span style="font-size: 15px; font-weight: bold;">Sentra</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Año</td>
-                                            <td><span style="font-size: 15px; font-weight: bold;">2020</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Placas</td>
-                                            <td><span style="font-size: 15px; font-weight: bold;">HFC-3345</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>                                
-                              </div>
-
-                              <div class="col-lg-2">
-                                <a href="#" class="btn btn-light-success font-weight-bold mt-2">Disponible</a>
-                                <a href="#" class="btn btn-light-warning font-weight-bold mt-2">No disponible</a>   
-                                <a href="#" class="btn btn-light-primary font-weight-bold mt-2">En viaje</a>       
-                                <a href="#" class="btn btn-light-danger font-weight-bold mt-2">En taller</a>              
-                              </div>
-
-
-                            </div>
-                            
-
-                          </div>
-
-                        </div>
-
-                      </div>
-                    </div>
-
-                </form>
-              </div>
-
-              <div class="modal-footer">
-                <button type="button" class="btn btn btn-secondary font-weight-bold" data-dismiss="modal"><i class="la la-times"></i>Cerrar</button>
-                {{-- <button type="button" id="send_estatus" class="btn btn-success"><i class="la la-plus"></i>Guardar</button> --}}
-              </div>
-          </div>
-      </div>
-  </div>
 
 {{--     @if (in_array("110", Session::get('permisos')))
 
