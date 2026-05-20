@@ -1,43 +1,57 @@
 @extends('layouts.app')
 
 @push('scripts')
-  <script src="{{ asset('js/usuarios/CatalogoUsuarios.js') }}"></script>
-  <meta name="csrf-token" content="{{ csrf_token() }}" />
-
- 
+    <script src="{{ asset('js/usuarios/CatalogoUsuarios.js') }}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
 
+@section('title')
+    Inventario de clientes
+@endsection
+
 @section('content')
+<style>
+    /* Forzamos la desaparición del buscador asimétrico automático de DataTables */
+    .dataTables_filter {
+        display: none !important;
+    }
+    /* Aseguramos que el marcador de posición mantenga buena legibilidad */
+    #global_search_input::placeholder {
+        color: #a0aec0;
+        opacity: 0.7;
+    }
+</style>
+
 <div class="bg-dashboard-dark">
 
     <div class="mb-5">
-        <h1 class="font-weight-bolder text-white m-0" style="font-size: 24px; letter-spacing: -0.5px;"> Inventario de Usuarios</h1>
+        <h1 class="font-weight-bolder text-white m-0" style="font-size: 24px; letter-spacing: -0.5px;">Inventario de Usuarios</h1>
         <p class="text-muted font-size-sm m-0">Gestiona el alta, control y seguimiento de tus usuarios de plataforma.</p>
     </div>
 
     <div class="row mb-10">
-                        @php
-                            $buttons = [
-                                ['t' => 'ALTA DE CUSTODIOS', 'i' => 'fas fa-user-plus', 'c' => '#f6a924', 'bg' => 'rgba(246, 169, 36, 0.05)', 'r' => route('user.agregarusuario')],
-                                ['t' => 'FICHA TÉCNICA', 'i' => 'fas fa-id-card', 'c' => '#1bc5bd', 'bg' => 'rgba(27, 197, 189, 0.05)', 'r' => '#'],
-                                ['t' => 'SEGUIMIENTO DE DOCTOS.', 'i' => 'fas fa-file-signature', 'c' => '#8950fc', 'bg' => 'rgba(137, 80, 252, 0.05)', 'r' => '#'],
-                                ['t' => 'IMPRESIÓN DE CREDENCIAL', 'i' => 'fas fa-print', 'c' => '#ffa800', 'bg' => 'rgba(255, 168, 0, 0.05)', 'r' => '#']
-                            ];
-                        @endphp
-                        @foreach($buttons as $btn)
-                        <div class="col px-2">
-                            <div class="text-center p-4 h-100 d-flex flex-column justify-content-between" style="border: 1px solid {{ $btn['c'] }}; background: {{ $btn['bg'] }}; border-radius: 4px;">
-                                <div>
-                                    <i class="{{ $btn['i'] }} mb-3" style="color: {{ $btn['c'] }}; font-size: 2.2rem;"></i>
-                                    <div class="font-weight-bolder mb-3" style="color: {{ $btn['c'] }}; font-size: 0.75rem;">{{ $btn['t'] }}</div>
-                                </div>
-                                <a href="{{ $btn['r'] }}" class="btn btn-sm btn-block p-2 font-weight-bolder d-flex justify-content-between align-items-center" style="background: {{ $btn['c'] }}; color: #000; font-size: 0.75rem;">
-                                    ACCEDER <i class="fas fa-chevron-right ml-2" style="font-size: 0.6rem;"></i>
-                                </a>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
+        @php
+            $buttons = [
+                ['t' => 'ALTA DE CUSTODIOS', 'i' => 'fas fa-user-plus', 'c' => '#f6a924', 'bg' => 'rgba(246, 169, 36, 0.05)', 'r' => route('user.agregarusuario')],
+                ['t' => 'FICHA TÉCNICA', 'i' => 'fas fa-id-card', 'c' => '#1bc5bd', 'bg' => 'rgba(27, 197, 189, 0.05)', 'r' => '#'],
+                ['t' => 'SEGUIMIENTO DE DOCTOS.', 'i' => 'fas fa-file-signature', 'c' => '#8950fc', 'bg' => 'rgba(137, 80, 252, 0.05)', 'r' => '#'],
+                ['t' => 'IMPRESIÓN DE CREDENCIAL', 'i' => 'fas fa-print', 'c' => '#ffa800', 'bg' => 'rgba(255, 168, 0, 0.05)', 'r' => '#']
+            ];
+        @endphp
+        @foreach($buttons as $btn)
+        <div class="col px-2">
+            <div class="text-center p-4 h-100 d-flex flex-column justify-content-between" style="border: 1px solid {{ $btn['c'] }}; background: {{ $btn['bg'] }}; border-radius: 4px;">
+                <div>
+                    <i class="{{ $btn['i'] }} mb-3" style="color: {{ $btn['c'] }}; font-size: 2.2rem;"></i>
+                    <div class="font-weight-bolder mb-3" style="color: {{ $btn['c'] }}; font-size: 0.75rem;">{{ $btn['t'] }}</div>
+                </div>
+                <a href="{{ $btn['r'] }}" class="btn btn-sm btn-block p-2 font-weight-bolder d-flex justify-content-between align-items-center" style="background: {{ $btn['c'] }}; color: #000; font-size: 0.75rem;">
+                    ACCEDER <i class="fas fa-chevron-right ml-2" style="font-size: 0.6rem;"></i>
+                </a>
+            </div>
+        </div>
+        @endforeach
+    </div>
 
     <div class="row">
         <div class="col-xl-9 col-lg-8 pr-md-2">
@@ -83,23 +97,23 @@
                 </div>
             </div>
 
-            <form class="horizontal-filter-bar mb-4">
+            <form class="horizontal-filter-bar mb-4" onsubmit="return false;">
                 <div style="flex: 1; min-width: 160px; position: relative;">
-                    <input type="text" class="form-control input-premium-dark datatable-input pl-8" placeholder="Buscar usuario..." data-col-index="1" />
+                    <input type="text" id="global_search_input" class="form-control input-premium-dark pl-8" placeholder="Buscar usuario..." />
                     <i class="la la-search text-muted position-absolute" style="left: 10px; top: 12px; font-size: 13px;"></i>
                 </div>
                 <div style="width: 130px;">
-                    <select class="form-control input-premium-dark datatable-input py-0" data-col-index="5">
-                        <option value="0">Estatus: Todos</option>
-                        <option value="1">Activo</option>
-                        <option value="2">Inactivo</option>
+                    <select class="form-control input-premium-dark datatable-input py-0" data-col-index="6">
+                        <option value="">Estatus: Todos</option>
+                        <option value="ACTIVO">Activo</option>
+                        <option value="INACTIVO">Inactivo</option>
                     </select>
                 </div>
                 <div style="width: 150px;">
                     <select class="form-control input-premium-dark datatable-input py-0" name="roles" data-col-index="5">
-                        <option value="0">Rol: Todos</option>
+                        <option value="">Rol: Todos</option>
                         @foreach($rol as $co)
-                          <option value="{{ $co->id }}">{{ $co->name }}</option>
+                          <option value="{{ $co->name }}">{{ $co->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -113,58 +127,63 @@
 
             <div class="text-warning font-weight-bolder font-size-xs mb-3 text-uppercase tracking-wide">Listado de Usuarios</div>
             <div class="card card-premium mb-4">
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-hover table-improved-dark" id="kdatatable_usuarios_dos">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>RFC</th>
-                                    <th>Teléfono</th>
-                                    <th>Email</th>
-                                    <th>Rol</th>
-                                    <th>Estatus</th>
-                                    <th class="text-center" style="width: 100px;">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody> 
-                                @php $num = 1; @endphp
-                                @foreach($usuario as $unid)
-                                <tr>
-                                    <td class="text-muted font-weight-bold">USR-00{{ $unid->num_list }}</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-25 symbol-circle mr-2" style="background-color: var(--bg-input); width:26px; height:26px; display:flex; align-items:center; justify-content:center; border: 1px solid var(--border-color);">
-                                                <i class="la la-user text-muted font-size-xs"></i>
-                                            </div>
-                                            <span class="font-weight-bold text-white">{{ $unid->name }}</span>
-                                        </div>
-                                    </td>
-                                    <td>{{ $unid->rfc ? $unid->rfc : 'N/A' }}</td>
-                                    <td class="text-muted">{{ $unid->telefono ? $unid->telefono : '—' }}</td>
-                                    <td class="text-muted">{{ $unid->email }}</td>
-                                    <td><span class="status-chip chip-info">{{ $unid->name_role }}</span></td>
-                                    <td>
-                                        <span class="status-chip {{ $unid->deleted_at ? 'chip-inactive' : 'chip-active' }}">
-                                            {{ $unid->deleted_at ? 'INACTIVO' : 'ACTIVO' }}
-                                        </span>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="d-flex justify-content-center align-items-center gap-1">
-                                            <a href="{{ route('user.verusuario', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Ver"><i class="la la-eye font-size-lg"></i></a>
-                                            <a href="{{ route('user.editarusuario', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Editar"><i class="la la-edit font-size-lg"></i></a>
-                                            <button class="btn btn-xs btn-icon btn-clean text-muted p-0" onClick="deleteuser(`{{ $unid->name }} `,`{{ $unid->id }}`)" data-toggle="modal" data-target="#model_delete_user" title="Desactivar"><i class="la la-trash font-size-lg"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @php $num ++; @endphp
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover table-improved-dark" id="kdatatable_usuarios_dos">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>RFC</th>
+                        <th>Teléfono</th>
+                        <th>Email</th>
+                        <th>Rol</th>
+                        <th>Estatus</th>
+                        <th class="text-center" style="width: 100px;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    @php $num = 1; @endphp
+                    @foreach($usuario as $unid)
+                    <tr>
+                        <td class="text-muted font-weight-bold">USR-{{ str_pad($unid->num_list ?? $unid->id, 4, '0', STR_PAD_LEFT) }}</td>
+                        
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="symbol symbol-25 symbol-circle mr-2" style="background-color: var(--bg-input); width:26px; height:26px; display:flex; align-items:center; justify-content:center; border: 1px solid var(--border-color); overflow:hidden;">
+                                    <img src="{{ asset('media/users/default.jpg') }}" alt="" style="width:100%; height:100%; object-fit:cover;">
+                                </div>
+                                <span class="font-weight-bold text-white">{{ $unid->name }}</span>
+                            </div>
+                        </td>
+                        
+                        <td>{{ $unid->rfc ? $unid->rfc : 'N/A' }}</td>
+                        <td class="text-muted">{{ $unid->telefono ? $unid->telefono : '—' }}</td>
+                        <td class="text-muted">{{ $unid->email }}</td>
+                        
+                        <td><span class="status-chip chip-info">{{ $unid->name_role }}</span></td>
+                        
+                        <td>
+                            <span class="status-chip {{ $unid->deleted_at ? 'chip-inactive' : 'chip-active' }}">
+                                {{ $unid->deleted_at ? 'INACTIVO' : 'ACTIVO' }}
+                            </span>
+                        </td>
+                        
+                        <td class="text-center">
+                            <div class="d-flex justify-content-center align-items-center gap-1">
+                                <a href="{{ route('user.verusuario', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Ver"><i class="la la-eye font-size-lg"></i></a>
+                                <a href="{{ route('user.editarusuario', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Editar"><i class="la la-edit font-size-lg"></i></a>
+                                <button class="btn btn-xs btn-icon btn-clean text-muted p-0" onClick="deleteuser(`{{ $unid->name }} `,`{{ $unid->id }}`)" data-toggle="modal" data-target="#model_delete_user" title="Desactivar"><i class="la la-trash font-size-lg"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    @php $num ++; @endphp
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
         </div>
 
         <div class="col-xl-3 col-lg-4 pl-md-2">

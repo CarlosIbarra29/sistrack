@@ -41,7 +41,6 @@
         @php
             $buttons = [
                 ['t' => 'ALTA DE CUSTODIOS', 'i' => 'fas fa-user-plus', 'c' => '#f6a924', 'bg' => 'rgba(246, 169, 36, 0.05)', 'r' => route('custodio.agregarcustodio')],
-                ['t' => 'CONTROL DE CONFIANZA MIDOT', 'i' => 'fas fa-shield-alt', 'c' => '#2f80ed', 'bg' => 'rgba(47, 128, 237, 0.05)', 'r' => '#'],
                 ['t' => 'FICHA TÉCNICA', 'i' => 'fas fa-id-card', 'c' => '#00c2a8', 'bg' => 'rgba(0, 194, 168, 0.05)', 'r' => '#'],
                 ['t' => 'SEGUIMIENTO DE DOCTOS.', 'i' => 'fas fa-file-signature', 'c' => '#8950fc', 'bg' => 'rgba(137, 80, 252, 0.05)', 'r' => '#'],
                 ['t' => 'IMPRESIÓN DE CREDENCIAL', 'i' => 'fas fa-print', 'c' => '#ffa800', 'bg' => 'rgba(255, 168, 0, 0.05)', 'r' => '#']
@@ -172,12 +171,12 @@
             <div class="card card-premium p-4 mb-4">
                 <span class="text-warning font-weight-bolder font-size-xs d-block mb-3 text-uppercase">Estado Documentación</span>
                 <div class="d-flex align-items-center justify-content-between">
-                    <!-- Contenedor del gráfico ApexCharts -->
-                    <div id="chart_lateral" style="min-height: 130px;"></div>
+                    <div class="donut-chart-segment"></div>
                     <div class="font-size-xs" style="line-height: 1.8;">
-                        <div style="color: #1BC5BD; font-weight: 600;">● Completa <span class="text-white-50 font-weight-normal">(75.6%)</span></div>
-                        <div style="color: #FFA800; font-weight: 600;">● Pendiente <span class="text-white-50 font-weight-normal">(14.1%)</span></div>
-                        <div style="color: #F64E60; font-weight: 600;">● Incompleta <span class="text-white-50 font-weight-normal">(6.4%)</span></div>
+                        <div style="color: #10b981; font-weight: 600;">● Completa <span class="text-white-50 font-weight-normal">118 (75.6%)</span></div>
+                        <div style="color: #f59e0b; font-weight: 600;">● Pendiente <span class="text-white-50 font-weight-normal">22 (14.1%)</span></div>
+                        <div style="color: #ef4444; font-weight: 600;">● Incompleta <span class="text-white-50 font-weight-normal">10 (6.4%)</span></div>
+                        <div style="color: #3b82f6; font-weight: 600;">● Vencida <span class="text-white-50 font-weight-normal">6 (3.9%)</span></div>
                     </div>
                 </div>
                 <button class="btn btn-xs btn-block btn-outline-secondary font-weight-bold text-white mt-4 py-2" style="border-color: var(--border-color); font-size: 11px;">VER REPORTE COMPLETO</button>
@@ -196,7 +195,7 @@
                     <div class="d-flex align-items-start gap-2 mt-2">
                         <i class="la la-clock text-warning font-size-h3 mt-1"></i>
                         <div>
-                            <span class="text-white font-weight-bold font-size-xs d-block">22 custodios por vencer doctos.</span>
+                            <span class="text-white font-weight-bold font-size-xs d-block">22 usuarios por vencer doctos.</span>
                             <span class="text-muted font-size-xs">Próximos 30 días</span>
                         </div>
                     </div>

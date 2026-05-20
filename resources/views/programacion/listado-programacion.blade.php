@@ -1,378 +1,430 @@
 @extends('layouts.app')
+
 @push('scripts')
   <script src="{{ asset('js/programacion/CatalogoProgramacion.js') }}"></script>
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
+
 @section('title')
   Listado de la programación
 @endsection
+
 @section('content')
 
-{{--     <div class="d-flex flex-row">
-    <div class="flex-row-fluid">
-        <div class="d-flex flex-column flex-grow-1">
+<style>
+    .dashboard-dark {
+        background-color: #0b111e;
+        color: #e2e8f0;
+        font-family: 'Poppins', 'Segoe UI', sans-serif;
+        border-radius: 8px;
+    }
+    .panel-dark {
+        background-color: #121926;
+        border: 1px solid #1e293b;
+        border-radius: 6px;
+        padding: 1.25rem;
+    }
+    .text-gold {
+        color: #cda036 !important;
+    }
+    .btn-gold {
+        background-color: #cda036;
+        color: #000;
+        font-weight: 600;
+        border: none;
+    }
+    .btn-gold:hover {
+        background-color: #b3882b;
+        color: #000;
+    }
+    .custom-input {
+        background-color: #1a2333 !important;
+        border: 1px solid #2e3f56 !important;
+        color: #fff !important;
+    }
+    .custom-input:focus {
+        border-color: #cda036 !important;
+    }
+    .table-custom {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .table-custom th {
+        background-color: #172030;
+        color: #94a3b8;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        padding: 10px;
+        border-bottom: 2px solid #1e293b;
+    }
+    .table-custom td {
+        padding: 12px 10px;
+        border-bottom: 1px solid #1e293b;
+        font-size: 0.875rem;
+    }
+    .table-custom tbody tr:hover {
+        background-color: #1a2436;
+    }
+    /* Badges de Estatus */
+    .badge-status {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        display: inline-block;
+    }
+    .status-programado { background-color: rgba(205, 160, 54, 0.2); color: #cda036; border: 1px solid #cda036; }
+    .status-enruta { background-color: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid #10b981; }
+    .status-encurso { background-color: rgba(59, 130, 246, 0.2); color: #3b82f6; border: 1px solid #3b82f6; }
+    .status-sinasignar { background-color: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid #ef4444; }
+    
+    /* Indicadores de Riesgo y Disponibilidad */
+    .risk-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    .bg-low { background-color: #10b981; }
+    .bg-medium { background-color: #f59e0b; }
+    .bg-high { background-color: #ef4444; }
 
-            <div class="row">
-                <div class="col-xl-12">
+    /* Caja de Alertas Estilo la Imagen */
+    .alert-panel-red {
+        background-color: rgba(239, 68, 68, 0.08);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        border-radius: 6px;
+        padding: 1rem;
+    }
+</style>
 
-                    <div class="card card-custom">
-                        <div class="card-header">
-                            <div class="card-title">
-                      <span class="card-icon">
-                        <i class="flaticon2-file text-primary"></i>
-                      </span>
-                                <h3 class="card-label">Inventario de programación</h3>
-                            </div>
-                            <div class="card-toolbar">
+<input type='hidden' id='url_estatus' value='{{ route('programacion.updatemonitoreoajax') }}'>
 
-                                <a class="btn btn-link-primary font-weight-bold mr-2 busqueda" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                    Busqueda
-                                </a>
-
-                                  <a href="{{ route('programacion.nuevaprogramacion') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3" >
-                                  <i class="la la-plus"></i>Nuevo</a>
-
-                                <a href="{{ route('programacion.programacioninactivas') }}" class="btn btn-light-primary font-weight-bolder mr-3 ml-3">
-                                    <i class="far fa-trash-alt"></i>Programación inactivas</a>
-
-                                <div class="dropdown dropdown-inline mr-2">
-                                    <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      <span class="svg-icon svg-icon-md">
-                                      <!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg-->
-                                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                          <rect x="0" y="0" width="24" height="24" />
-                                          <path d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z" fill="#000000" opacity="0.3" />
-                                          <path d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z" fill="#000000" />
-                                        </g>
-                                      </svg>
-
-                                      </span>Exportar
-                                    </button>
-
-                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-
-                                        <ul class="navi flex-column navi-hover py-2">
-                                            <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-excel">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-excel-o"></i>
-                                                </span>
-                                                <span class="navi-text">Excel</span>
-                                              </a>
-                                            </li>
-                                            <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-csv">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-text-o"></i>
-                                                </span>
-                                                <span class="navi-text">CSV</span>
-                                              </a>
-                                            </li>
-                                            <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-print">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-text-o"></i>
-                                                </span>
-                                                <span class="navi-text">Imprimir</span>
-                                              </a>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-
-                          <div class="collapse" id="collapseExample">
-                              <div class="card card-body">
-                                <form class="mb-15">
-                                  <div class="row mb-6">
-                                    <div class="col-lg-6 mb-lg-0 mb-6">
-                                        <label>Cliente:</label>
-                                        <select class="form-control datatable-input" name="nombre_cliente" data-control="select2" data-placeholder="Estado" data-col-index="0">
-                                            <option value="0">Selecciona un cliente</option>
-                                            @foreach($data as $es)
-                                                <option value="{{ $es->id }}" >{{ $es->nombre_cliente }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                  </div>
-
-                                  <div class="row mt-8">
-                                    <div class="col-lg-12">
-                                      <button class="btn btn-primary btn-primary--icon" id="kt_search">
-                                        <span><i class="la la-search"></i><span>Buscar</span></span>
-                                      </button>&#160;&#160;
-                                      <button class="btn btn-secondary btn-secondary--icon" id="kt_reset">
-                                        <span><i class="la la-close"></i><span>Limpiar</span></span>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </form>
-                              </div>
-                          </div>
-
-                            <table class="table table-hover table-checkable" id="kdatatable_programacion">
-                                <thead>
-                                <tr>
-                                  <th>No.</th>
-                                  <th>Folio</th>
-                                  <th>Cliente</th>
-                                  <th>Domicilio origen</th>
-                                  <th>Domicilio destino</th>
-                                  <th>Fecha y Hora</th>
-                                  <th>Tipo de servicio</th>
-                                  <th>Estatus</th>
-                                  <th class="text-center">Acciones</th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                <tr>
-                                  <th>No.</th>
-                                  <th>Folio</th>
-                                  <th>Cliente</th>
-                                  <th>Domicilio origen</th>
-                                  <th>Domicilio destino</th>
-                                  <th>Fecha y Hora</th>
-                                  <th>Tipo de servicio</th>
-                                  <th>Estatus</th>
-                                  <th class="text-center">Acciones</th>
-                                </tr>
-                                </tfoot>
-
-                            </table>
-
-                            <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
-                            <input type="hidden" id="programaciondatatable" value="{{ route('programacion.programaciondatatable') }}">
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div> --}}
-
-  <input type='hidden' id='url_estatus' value='{{ route('programacion.updatemonitoreoajax') }}'>
-
-    <div class="d-flex flex-row">
-
-    <!--begin::List-->
-    <div class="flex-row-fluid">
-        <div class="d-flex flex-column flex-grow-1">
-
-            <!--begin::Row-->
-            <div class="row">
-                <div class="col-xl-12">
-
-                <!--begin::Card-->
-                    <div class="card card-custom">
-                        <div class="card-header">
-                            <div class="card-title">
-                      <span class="card-icon">
-                        <i class="flaticon2-file text-warning"></i>
-                      </span>
-                                <h3 class="card-label">Inventario de Programación</h3>
-                            </div>
-                            
-
-                                <div class="dashboard-container p-5">
-    <!-- Header Superior -->
+<div class="dashboard-container dashboard-dark p-6">
+    
     <div class="d-flex justify-content-between align-items-center mb-6">
         <div>
-            
-            <p class="text-muted small">Administra y programa los servicios de custodia y traslado.</p>
+            <h2 class="text-white font-weight-bold mb-1">PROGRAMACIÓN DE SERVICIOS</h2>
+            <p class="text-muted m-0">Administra y programa los servicios de custodia y traslado.</p>
         </div>
         <div class="d-flex align-items-center">
-    <!-- Botón Nuevo Servicio (con tu ruta original) -->
-    <a href="{{ route('programacion.nuevaprogramacion') }}" class="btn btn-gold mr-2 d-flex align-items-center">
-        <i class="la la-plus mr-1"></i> NUEVO SERVICIO
-    </a>
-
-    <!-- Botón Clientes Inactivos (con tu ruta original) -->
-    <a href="{{ route('programacion.programacioninactivas') }}" class="btn btn-outline-secondary text-white btn-sm mr-2 d-flex align-items-center">
-        <i class="far fa-trash-alt mr-1"></i> CLIENTES INACTIVOS
-    </a>
-
-    <!-- Botón Importar (se mantiene por diseño) -->
-    <button class="btn btn-outline-secondary text-white btn-sm mr-2">
-        <i class="fa fa-file-excel mr-1"></i> IMPORTAR EXCEL
-    </button>
-
-    <!-- Botón Exportar (se mantiene por diseño) -->
-    <button class="btn btn-outline-secondary text-white btn-sm">
-        <i class="fa fa-download mr-1"></i> EXPORTAR
-    </button>
-</div>
+            <div class="mr-3">
+                <input type="date" class="form-control custom-input form-control-sm" value="2026-04-28">
+            </div>
+            <a href="{{ route('programacion.nuevaprogramacion') }}" class="btn btn-gold btn-sm font-weight-bold mr-2">
+                <i class="la la-plus"></i> NUEVO SERVICIO
+            </a>
+            <button class="btn btn-outline-secondary text-white btn-sm mr-2">
+                <i class="la la-file-excel"></i> IMPORTAR EXCEL
+            </button>
+            <button class="btn btn-outline-secondary text-white btn-sm">
+                <i class="la la-download"></i> EXPORTAR
+            </button>
+        </div>
     </div>
 
     <div class="row">
-        <!-- 1. PANEL IZQUIERDO: FORMULARIO -->
-        <div class="col-xl-3">
+        
+        <div class="col-xl-3 mb-6 mb-xl-0">
             <div class="panel-dark">
                 <h6 class="text-gold mb-4 font-weight-bold">DATOS DEL SERVICIO</h6>
-                <div class="form-group">
-                    <label class="small">Cliente *</label>
-                    <select class="form-control custom-input"><option>Seleccionar cliente</option></select>
-                </div>
-                <div class="form-group">
-                    <label class="small">Origen *</label>
-                    <select class="form-control custom-input"><option>Seleccionar origen</option></select>
-                </div>
-                <div class="row">
-                    <div class="col-6 form-group">
-                        <label class="small">Fecha salida *</label>
-                        <input type="date" class="form-control custom-input">
-                    </div>
-                    <div class="col-6 form-group">
-                        <label class="small">Hora salida *</label>
-                        <input type="time" class="form-control custom-input">
-                    </div>
-                </div>
                 
-                <label class="small">Nivel de riesgo</label>
-                <div class="d-flex mb-4">
-                    <button class="btn btn-sm btn-outline-success flex-grow-1 mr-1">BAJO</button>
-                    <button class="btn btn-sm btn-outline-warning flex-grow-1 mr-1">MEDIO</button>
-                    <button class="btn btn-sm btn-outline-danger flex-grow-1">ALTO</button>
-                </div>
+                <form id="form_guardar_servicio">
+                    <div class="form-group mb-3">
+                        <label class="small text-muted">Cliente *</label>
+                        <select class="form-control custom-input form-control-sm">
+                            <option value="">Seleccionar cliente</option>
+                            @foreach($data as $es)
+                                <option value="{{ $es->id }}">{{ $es->nombre_cliente }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                <div class="form-group">
-                    <label class="small">Observaciones</label>
-                    <textarea class="form-control custom-input" rows="3" placeholder="Ingrese observaciones..."></textarea>
-                </div>
+                    <div class="form-group mb-3">
+                        <label class="small text-muted">No. Embarque</label>
+                        <input type="text" class="form-control custom-input form-control-sm" placeholder="Ingrese número">
+                    </div>
 
-                <div class="d-flex mt-4">
-                    <button class="btn btn-dark btn-sm flex-grow-1 mr-2 border-secondary">LIMPIAR</button>
-                    <button class="btn btn-gold btn-sm flex-grow-1">GUARDAR</button>
-                </div>
-                <button class="btn btn-gold btn-block mt-2 py-3">PROGRAMAR SERVICIO</button>
+                    <div class="form-group mb-3">
+                        <label class="small text-muted">Origen *</label>
+                        <select class="form-control custom-input form-control-sm">
+                            <option>Seleccionar origen</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="small text-muted">Destino *</label>
+                        <select class="form-control custom-input form-control-sm">
+                            <option>Seleccionar destino</option>
+                        </select>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label class="small text-muted">Fecha salida *</label>
+                            <input type="date" class="form-control custom-input form-control-sm">
+                        </div>
+                        <div class="col-6">
+                            <label class="small text-muted">Hora salida *</label>
+                            <input type="time" class="form-control custom-input form-control-sm">
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="small text-muted">Tipo de servicio *</label>
+                        <select class="form-control custom-input form-control-sm">
+                            <option>Custodia</option>
+                            <option>Traslado</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="small text-muted">Unidad</label>
+                        <select class="form-control custom-input form-control-sm">
+                            <option>Seleccionar unidad</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="small text-muted">Custodio asignado</label>
+                        <select class="form-control custom-input form-control-sm">
+                            <option>Seleccionar custodio</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label class="small text-muted d-block mb-2">Nivel de riesgo</label>
+                        <div class="btn-group w-100" role="group">
+                            <input type="radio" class="btn-check" name="risk" id="riskLow" autocomplete="off">
+                            <label class="btn btn-outline-success btn-sm" for="riskLow">BAJO</label>
+
+                            <input type="radio" class="btn-check" name="risk" id="riskMed" autocomplete="off" checked>
+                            <label class="btn btn-outline-warning btn-sm" for="riskMed">MEDIO</label>
+
+                            <input type="radio" class="btn-check" name="risk" id="riskHigh" autocomplete="off">
+                            <label class="btn btn-outline-danger btn-sm" for="riskHigh">ALTO</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label class="small text-muted">Observaciones</label>
+                        <textarea class="form-control custom-input form-control-sm" rows="2" placeholder="Ingrese observaciones..."></textarea>
+                    </div>
+
+                    <div class="row g-2 mb-2">
+                        <div class="col-6">
+                            <button type="reset" class="btn btn-dark btn-sm w-100 text-muted border-secondary">LIMPIAR</button>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn btn-gold btn-sm w-100">GUARDAR</button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-gold btn-block btn-sm py-2">PROGRAMAR SERVICIO</button>
+                </form>
             </div>
         </div>
 
-        <!-- 2. PANEL CENTRAL: TABLA -->
-        <div class="col-xl-6">
+        <div class="col-xl-6 mb-6 mb-xl-0">
             <div class="panel-dark p-0">
-                <div class="p-4 d-flex justify-content-between align-items-center">
-                    <h6 class="text-gold m-0">SERVICIOS PROGRAMADOS ({{ $programcion->count() }})</h6>
-                    <input type="text" class="form-control custom-input w-200px" placeholder="Buscar servicio...">
+                <div class="p-4 d-flex justify-content-between align-items-center border-bottom border-dark">
+                    <h6 class="text-gold m-0 font-weight-bold">SERVICIOS PROGRAMADOS ({{ $programcion->count() }})</h6>
+                    <div class="d-flex align-items-center">
+                        <input type="text" class="form-control custom-input form-control-sm w-180px mr-2" placeholder="Buscar servicio...">
+                        <button class="btn btn-dark btn-sm custom-input"><i class="la la-filter"></i></button>
+                    </div>
                 </div>
-                <table class="table-custom">
-                    <thead>
-                        <tr>
-                            <th>Hora salida</th>
-                            <th>Cliente</th>
-                            <th>Origen</th>
-                            <th>Destino</th>
-                            <th>Custodio</th>
-                            <th>Estatus</th>
-                            <th>Riesgo</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($programcion as $unid)
-                        <tr>
-                            <td class="font-weight-bold">{{ date('H:i', strtotime($unid->fecha_servicio)) }}</td>
-                            <td>{{ $unid->nombre_cliente }}</td>
-                            <td>{{ $unid->dom_origen }}</td>
-                            <td>{{ $unid->dom_destino }}</td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="symbol symbol-25 symbol-circle mr-2 bg-light">
-                                        <span class="text-dark small">{{ substr($unid->custodio->nombre_custodio, 0, 1) }}</span>
+
+                <div class="table-responsive">
+                    <table class="table-custom">
+                        <thead>
+                            <tr>
+                                <th>Hora salida</th>
+                                <th>Cliente</th>
+                                <th>Origen</th>
+                                <th>Destino</th>
+                                <th>Custodio</th>
+                                <th>Estatus</th>
+                                <th>Riesgo</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($programcion as $unid)
+                            <tr>
+                                <td class="font-weight-bold text-white">{{ date('H:i', strtotime($unid->fecha_servicio)) }}</td>
+                                <td>{{ $unid->nombre_cliente }}</td>
+                                <td>{{ $unid->dom_origen }}</td>
+                                <td>{{ $unid->dom_destino }}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="symbol symbol-20 symbol-circle mr-2 bg-secondary d-flex align-items-center justify-content-center" style="width:22px; height:22px;">
+                                            <span class="text-white small font-weight-bold" style="font-size:0.7rem;">
+                                                {{ $unid->custodio ? substr($unid->custodio->nombre_custodio, 0, 1) : '-' }}
+                                            </span>
+                                        </div>
+                                        <span class="small text-white-50">
+                                            {{ $unid->custodio ? $unid->custodio->nombre_custodio : 'Sin asignar' }}
+                                        </span>
                                     </div>
-                                    <span class="small">{{ $unid->custodio->nombre_custodio }}</span>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="badge-status status-programado">PROGRAMADO</span>
-                            </td>
-                            <td><span class="risk-dot bg-medium"></span></td>
-                            <td><i class="flaticon-eye text-muted"></i></td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                                </td>
+                                <td>
+                                    @if($unid->estatus == 1)
+                                        <span class="badge-status status-programado">PROGRAMADO</span>
+                                    @elseif($unid->estatus == 2)
+                                        <span class="badge-status status-enruta">EN RUTA</span>
+                                    @else
+                                        <span class="badge-status status-sinasignar">SIN ASIGNAR</span>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    <span class="risk-dot {{ $unid->estatus == 1 ? 'bg-medium' : 'bg-low' }}"></span>
+                                </td>
+                                <td class="text-center">
+                                    <div class="dropdown dropdown-inline">
+                                        <button class="btn btn-clean btn-hover-light-primary btn-sm btn-icon text-muted" data-toggle="dropdown">
+                                            <i class="la la-ellipsis-v"></i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                            <ul class="navi navi-hover flex-column p-2">
+                                                <li class="navi-item">
+                                                    <a href="#" class="navi-link py-1" onclick="agregarIncidencia({{ $unid->id }})">
+                                                        <i class="la la-comment-alt mr-2"></i> Observación
+                                                    </a>
+                                                </li>
+                                                <li class="navi-item">
+                                                    <a href="#" class="navi-link text-danger py-1" onclick="eliminarProgramacion({{ $unid->id }})">
+                                                        <i class="la la-trash mr-2 text-danger"></i> Desactivar
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="p-3 d-flex justify-content-between align-items-center border-top border-dark fs-xs">
+                    <span class="text-muted small">Mostrando 1 a {{ $programcion->count() }} servicios</span>
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-dark btn-xs custom-input px-2 py-1 mr-1"><i class="la la-angle-left"></i></button>
+                        <button class="btn btn-gold btn-xs px-2 py-1 mr-1">1</button>
+                        <button class="btn btn-dark btn-xs custom-input px-2 py-1 mr-1"><i class="la la-angle-right"></i></button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- 3. PANEL DERECHO: DISPONIBILIDAD Y ALERTAS -->
         <div class="col-xl-3">
             <div class="panel-dark mb-4">
-                <div class="d-flex justify-content-between mb-3">
-                    <h6 class="text-gold small m-0">DISPONIBILIDAD</h6>
-                    <a href="#" class="text-info small">Ver todas</a>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="text-gold m-0 font-weight-bold">DISPONIBILIDAD</h6>
+                    <a href="#" class="text-info small text-decoration-none">Ver todas</a>
                 </div>
-                <p class="text-muted small mb-2">CUSTODIOS</p>
-                <div class="small mb-2"><span class="risk-dot bg-low mr-2"></span> Juan Pérez (Disponible)</div>
-                <div class="small mb-4"><span class="risk-dot bg-medium mr-2"></span> Carlos Ruiz (En servicio)</div>
                 
-                <p class="text-muted small mb-2">UNIDADES</p>
-                <div class="small mb-1"><span class="risk-dot bg-low mr-2"></span> U-01 (Disponible)</div>
+                <p class="text-muted small font-weight-bold mb-2">CUSTODIOS</p>
+                <div class="d-flex flex-column g-2 mb-3">
+                    <div class="small mb-1"><span class="risk-dot bg-low mr-2"></span> Juan Pérez <span class="text-muted">(Disponible)</span></div>
+                    <div class="small mb-1"><span class="risk-dot bg-low mr-2"></span> Carlos Ruiz <span class="text-muted">(Disponible)</span></div>
+                    <div class="small mb-1"><span class="risk-dot bg-medium mr-2"></span> Miguel Torres <span class="text-muted">(En servicio)</span></div>
+                </div>
 
+                <p class="text-muted small font-weight-bold mb-2">UNIDADES</p>
+                <div class="d-flex flex-column g-2">
+                    <div class="small mb-1"><span class="risk-dot bg-low mr-2"></span> U-01 <span class="text-muted">(Disponible)</span></div>
+                    <div class="small mb-1"><span class="risk-dot bg-medium mr-2"></span> U-02 <span class="text-muted">(En ruta)</span></div>
+                    <div class="small mb-1"><span class="risk-dot bg-high mr-2"></span> U-03 <span class="text-muted">(Mantenimiento)</span></div>
+                </div>
                 
-                <h6 class="text-danger small font-weight-bold">ALERTAS DE PROGRAMACIÓN</h6>
-                <div class="d-flex justify-content-between align-items-center mt-3 small">
-                    <span><i class="fa fa-exclamation-triangle text-danger mr-2"></i> 3 servicios sin custodio</span>
-                    <i class="fa fa-chevron-right text-muted"></i>
-                </div>
-                <div class="d-flex justify-content-between align-items-center mt-2 small">
-                    <span><i class="fa fa-exclamation-triangle text-warning mr-2"></i> 2 servicios sin unidad</span>
-                    <i class="fa fa-chevron-right text-muted"></i>
-                </div>
-            
+                <a href="{{ route('programacion.programacioninactivas') }}" class="btn btn-outline-secondary btn-sm text-white w-100 mt-4 border-secondary fs-xs">
+                    <i class="far fa-trash-alt mr-1"></i> CLIENTES INACTIVOS
+                </a>
             </div>
 
-            
+            <div class="alert-panel-red">
+                <h6 class="text-danger font-weight-bold mb-3 small">ALERTAS DE PROGRAMACIÓN</h6>
+                
+                <div class="d-flex justify-content-between align-items-center mb-2 pb-1 border-bottom border-dark row-link">
+                    <span class="small text-white"><i class="fa fa-exclamation-triangle text-danger mr-2"></i> 3 servicios sin custodio</span>
+                    <i class="fa fa-chevron-right text-muted small"></i>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-2 pb-1 border-bottom border-dark row-link">
+                    <span class="small text-white"><i class="fa fa-exclamation-triangle text-warning mr-2"></i> 2 servicios sin unidad</span>
+                    <i class="fa fa-chevron-right text-muted small"></i>
+                </div>
+                <div class="d-flex justify-content-between align-items-center row-link">
+                    <span class="small text-white"><i class="fa fa-exclamation-triangle text-danger mr-2"></i> 1 servicio con riesgo alto</span>
+                    <i class="fa fa-chevron-right text-muted small"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="dashboard-dark p-4 mt-3 rounded d-flex justify-content-between align-items-center panel-dark border-0">
+    <div class="d-flex align-items-center flex-wrap">
+        <span class="small text-muted font-weight-bold mr-3">LEYENDA DE ESTATUS:</span>
+        <span class="badge-status status-programado mr-2">PROGRAMADO</span>
+        <span class="badge-status status-encurso mr-2">EN CURSO</span>
+        <span class="badge-status status-enruta mr-2">EN RUTA</span>
+        <span class="badge-status status-sinasignar">SIN ASIGNAR</span>
+    </div>
+    <div class="d-flex align-items-center">
+        <span class="small text-muted font-weight-bold mr-3">LEYENDA DE RIESGO:</span>
+        <span class="small mr-3"><span class="risk-dot bg-low mr-1"></span> BAJO</span>
+        <span class="small mr-3"><span class="risk-dot bg-medium mr-1"></span> MEDIO</span>
+        <span class="small"><span class="risk-dot bg-high mr-1"></span> ALTO</span>
+    </div>
+</div>
+
+<form method="post" id="programacion_delete_form" action="{{ route('programacion.deasactivarprogramacion') }}" enctype="multipart/form-data">
+    @csrf
+    <input type="hidden" name="id" id="id_programacion_delete" value="">
+</form>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="model_add_incidencia">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark text-white border-secondary">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title text-gold">Observaciones</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('programacion.guardarobservacion') }}" method="post" id="submit_incidencia">
+                    @csrf
+                    <div class="form-group">
+                        <label class="text-white-50">Observación</label>
+                        <textarea class="form-control custom-input" name="observacion" id="observacion" rows="4"></textarea>
+                        <input type="hidden" name="id" id="id_programacion">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-secondary">
+                <button type="button" class="btn btn-secondary font-weight-bold btn-sm" data-dismiss="modal"><i class="la la-times"></i> Cancelar</button>
+                <button type="button" id="send_incidencia" class="btn btn-gold btn-sm"><i class="la la-plus"></i> Guardar</button>
+            </div>
         </div>
     </div>
 </div>
-</div>
 
+<script>
+    // Helpers de interacción básica para complementar tu script CatalogoProgramacion.js
+    function agregarIncidencia(id) {
+        $('#id_programacion').val(id);
+        $('#model_add_incidencia').modal('show');
+    }
 
-
-  <form method="post" id="programacion_delete_form" action="{{ route('programacion.deasactivarprogramacion') }}" enctype="multipart/form-data">
-    @csrf
-    <input type="hidden" name="id" id="id_programacion_delete" value="">
-  </form>
-
-
-
-  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="model_add_incidencia">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title">Observaciones</h5>
-                  <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                      <span class="svg-icon svg-icon-2x"></span>
-                  </div>
-              </div>
-
-              <div class="modal-body">
-                <form action="{{ route('programacion.guardarobservacion') }}" method="post" id="submit_incidencia">
-                @csrf
-                  <div class="row form-group">
-                    <div class="col-lg-12 mt-2">
-                      <label>Observación</label>
-                      <textarea class="form-control" name="observacion" id="observacion" ></textarea>
-                      <input type="hidden" name="id" id="id_programacion">
-                    </div>
-                  </div>
-                </form>
-              </div>
-
-              <div class="modal-footer">
-                <button type="button" class="btn btn btn-secondary font-weight-bold" data-dismiss="modal"><i class="la la-times"></i>Cancelar</button>
-                <button type="button" id="send_incidencia" class="btn btn-warning"><i class="la la-plus"></i>Guardar</button>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>
-                                
+    function eliminarProgramacion(id) {
+        if(confirm('¿Seguro que deseas desactivar esta programación?')) {
+            $('#id_programacion_delete').val(id);
+            $('#programacion_delete_form').submit();
+        }
+    }
+</script>
 
 @endsection
