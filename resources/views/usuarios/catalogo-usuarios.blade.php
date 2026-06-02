@@ -10,17 +10,7 @@
 @endsection
 
 @section('content')
-<style>
-    /* Forzamos la desaparición del buscador asimétrico automático de DataTables */
-    .dataTables_filter {
-        display: none !important;
-    }
-    /* Aseguramos que el marcador de posición mantenga buena legibilidad */
-    #global_search_input::placeholder {
-        color: #a0aec0;
-        opacity: 0.7;
-    }
-</style>
+
 
 <div class="bg-dashboard-dark">
 
@@ -33,8 +23,9 @@
         @php
             $buttons = [
                 ['t' => 'ALTA DE CUSTODIOS', 'i' => 'fas fa-user-plus', 'c' => '#f6a924', 'bg' => 'rgba(246, 169, 36, 0.05)', 'r' => route('user.agregarusuario')],
-                ['t' => 'FICHA TÉCNICA', 'i' => 'fas fa-id-card', 'c' => '#1bc5bd', 'bg' => 'rgba(27, 197, 189, 0.05)', 'r' => '#'],
-                ['t' => 'SEGUIMIENTO DE DOCTOS.', 'i' => 'fas fa-file-signature', 'c' => '#8950fc', 'bg' => 'rgba(137, 80, 252, 0.05)', 'r' => '#'],
+                /* Actualizado con el color verde brillante (#10b981) de la imagen image_3c8643.png */
+                ['t' => 'FICHA TÉCNICA', 'i' => 'fas fa-id-card', 'c' => '#10b981', 'bg' => 'rgba(16, 185, 129, 0.05)', 'r' => '#'],
+                ['t' => 'SEGUIMIENTO DE DOCTOS.', 'i' => 'fas fa-file-signature', 'c' => '#38bdf8', 'bg' => 'rgba(56, 189, 248, 0.05)', 'r' => '#'],
                 ['t' => 'IMPRESIÓN DE CREDENCIAL', 'i' => 'fas fa-print', 'c' => '#ffa800', 'bg' => 'rgba(255, 168, 0, 0.05)', 'r' => '#']
             ];
         @endphp
@@ -127,63 +118,63 @@
 
             <div class="text-warning font-weight-bolder font-size-xs mb-3 text-uppercase tracking-wide">Listado de Usuarios</div>
             <div class="card card-premium mb-4">
-    <div class="card-body p-0">
-        <div class="table-responsive">
-            <table class="table table-hover table-improved-dark" id="kdatatable_usuarios_dos">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>RFC</th>
-                        <th>Teléfono</th>
-                        <th>Email</th>
-                        <th>Rol</th>
-                        <th>Estatus</th>
-                        <th class="text-center" style="width: 100px;">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody> 
-                    @php $num = 1; @endphp
-                    @foreach($usuario as $unid)
-                    <tr>
-                        <td class="text-muted font-weight-bold">USR-{{ str_pad($unid->num_list ?? $unid->id, 4, '0', STR_PAD_LEFT) }}</td>
-                        
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <div class="symbol symbol-25 symbol-circle mr-2" style="background-color: var(--bg-input); width:26px; height:26px; display:flex; align-items:center; justify-content:center; border: 1px solid var(--border-color); overflow:hidden;">
-                                    <img src="{{ asset('media/users/default.jpg') }}" alt="" style="width:100%; height:100%; object-fit:cover;">
-                                </div>
-                                <span class="font-weight-bold text-white">{{ $unid->name }}</span>
-                            </div>
-                        </td>
-                        
-                        <td>{{ $unid->rfc ? $unid->rfc : 'N/A' }}</td>
-                        <td class="text-muted">{{ $unid->telefono ? $unid->telefono : '—' }}</td>
-                        <td class="text-muted">{{ $unid->email }}</td>
-                        
-                        <td><span class="status-chip chip-info">{{ $unid->name_role }}</span></td>
-                        
-                        <td>
-                            <span class="status-chip {{ $unid->deleted_at ? 'chip-inactive' : 'chip-active' }}">
-                                {{ $unid->deleted_at ? 'INACTIVO' : 'ACTIVO' }}
-                            </span>
-                        </td>
-                        
-                        <td class="text-center">
-                            <div class="d-flex justify-content-center align-items-center gap-1">
-                                <a href="{{ route('user.verusuario', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Ver"><i class="la la-eye font-size-lg"></i></a>
-                                <a href="{{ route('user.editarusuario', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Editar"><i class="la la-edit font-size-lg"></i></a>
-                                <button class="btn btn-xs btn-icon btn-clean text-muted p-0" onClick="deleteuser(`{{ $unid->name }} `,`{{ $unid->id }}`)" data-toggle="modal" data-target="#model_delete_user" title="Desactivar"><i class="la la-trash font-size-lg"></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                    @php $num ++; @endphp
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-improved-dark" id="kdatatable_usuarios_dos">
+                            <thead>
+                                <tr>
+                                    <th style="color: #38bdf8 !important;">ID</th>
+                                    <th>Nombre</th>
+                                    <th>RFC</th>
+                                    <th>Teléfono</th>
+                                    <th>Email</th>
+                                    <th>Rol</th>
+                                    <th>Estatus</th>
+                                    <th class="text-center" style="width: 100px;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody> 
+                                @php $num = 1; @endphp
+                                @foreach($usuario as $unid)
+                                <tr>
+                                    <td class="font-weight-bold" style="color: #38bdf8;">USR-{{ str_pad($unid->num_list ?? $unid->id, 4, '0', STR_PAD_LEFT) }}</td>
+                                    
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="symbol symbol-25 symbol-circle mr-2" style="background-color: var(--bg-input); width:26px; height:26px; display:flex; align-items:center; justify-content:center; border: 1px solid var(--border-color); overflow:hidden;">
+                                                <img src="{{ asset('media/users/default.jpg') }}" alt="" style="width:100%; height:100%; object-fit:cover;">
+                                            </div>
+                                            <span class="font-weight-bold text-white">{{ $unid->name }}</span>
+                                        </div>
+                                    </td>
+                                    
+                                    <td>{{ $unid->rfc ? $unid->rfc : 'N/A' }}</td>
+                                    <td class="text-muted">{{ $unid->telefono ? $unid->telefono : '—' }}</td>
+                                    <td class="text-muted">{{ $unid->email }}</td>
+                                    
+                                    <td><span class="status-chip chip-info">{{ $unid->name_role }}</span></td>
+                                    
+                                    <td>
+                                        <span class="status-chip {{ $unid->deleted_at ? 'chip-inactive' : 'chip-active' }}">
+                                            {{ $unid->deleted_at ? 'INACTIVO' : 'ACTIVO' }}
+                                        </span>
+                                    </td>
+                                    
+                                    <td class="text-center">
+                                        <div class="d-flex justify-content-center align-items-center gap-1">
+                                            <a href="{{ route('user.verusuario', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Ver"><i class="la la-eye font-size-lg"></i></a>
+                                            <a href="{{ route('user.editarusuario', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Editar"><i class="la la-edit font-size-lg"></i></a>
+                                            <button class="btn btn-xs btn-icon btn-clean text-muted p-0" onClick="deleteuser(`{{ $unid->name }} `,`{{ $unid->id }}`)" data-toggle="modal" data-target="#model_delete_user" title="Desactivar"><i class="la la-trash font-size-lg"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @php $num ++; @endphp
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="col-xl-3 col-lg-4 pl-md-2">
