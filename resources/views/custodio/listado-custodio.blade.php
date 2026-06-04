@@ -32,7 +32,7 @@
         </div>
         <div>
             <a href="{{ route('custodio.listadocustodioinactivo') }}" class="btn btn-sm font-weight-bold text-white btn-outline-secondary" style="border-color: var(--border-color); height: 38px; display: flex; align-items: center; gap: 6px;">
-                <i class="la la-trash-alt"></i> Clientes inactivos
+                <i class="la la-trash-alt"></i> Custodios inactivos
             </a>
         </div>
     </div>
@@ -156,6 +156,7 @@
                                     <td class="text-right">
                                         <div class="d-flex justify-content-end align-items-center gap-1">
                                             <a href="{{ route('custodio.vercustodio', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Ver Perfil"><i class="la la-eye font-size-lg"></i></a>
+                                            <a href="{{ route('custodio.editarcustodio', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Ver Perfil"><i class="la la-eye font-size-lg"></i></a>
                                         </div>
                                     </td>
                                 </tr>

@@ -20,7 +20,7 @@
         <div class="col-lg-12">
             <div class="d-flex justify-content-between align-items-center cont-title-forms rounded shadow-sm px-6 py-5 border-left border-warning" style="border-left-width:5px !important;">
                 <div>
-                    <h2 class="mb-1 font-weight-bold title-forms">ALTA DE CUSTODIO</h2>
+                    <h2 class="mb-1 font-weight-bold title-forms text-white">ALTA DE CUSTODIO</h2>
                     <span class="text-muted">Registra la información general y administrativa del nuevo custodio</span>
                 </div>
 
@@ -134,12 +134,12 @@
                                 <a class="nav-link font-weight-bold" data-toggle="tab" href="#kt_tab_pane_5">
                                     Control de confianza
                                 </a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item">
                                 <a class="nav-link font-weight-bold" data-toggle="tab" href="#kt_tab_pane_2">
                                     Documentos personales
                                 </a>
-                            </li> --}}
+                            </li>
                         </ul>
 
                         <div class="tab-content mt-5">
@@ -773,12 +773,14 @@
 
                 <div class="card card-custom shadow-sm border-0">
                     <div class="card-header">
-                        <h3 class="card-title">Vehículo asignado</h3>
+                        <h3 class="card-title text-white">Vehículo asignado</h3>
 
                     </div>
                     <div class="card-body px-10 py-8">
-                    
-
+                        
+                        <div class="form-group row">
+                            <span class="text-white">Para registrar el Vehículo es necesario registrar al custodio primero.</span>
+                        </div>
                     </div>
                 </div>
 
@@ -788,38 +790,12 @@
 
                 <div class="card card-custom shadow-sm border-0">
                     <div class="card-header">
-                        <h3 class="card-title">Documentación</h3>
+                        <h3 class="card-title text-white">Datos del Arma</h3>
 
                     </div>
                     <div class="card-body px-10 py-8">
                         <div class="form-group row">
-                            <div class="col-lg-4 form-group">
-                                <div class="alert-card">
-
-                                    <div class="divider"></div>
-                                    <small>INE / Identificación</small>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 form-group">
-                                <div class="alert-card">
-
-                                    <div class="divider"></div>
-                                    <small>Comprobante docimicilio</small>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 form-group">
-                                <div class="alert-card">
-
-                                    <div class="divider"></div>
-                                    <small>Acta de nacimiento</small>
-                                </div>
-                            </div>
-
-
-
-
+                            <span class="text-white">Para registrar el arma es necesario registrar al custodio primero.</span>
                         </div>
 
                     </div>

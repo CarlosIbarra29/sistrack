@@ -446,8 +446,10 @@ class CustodioController extends Controller
 
         $custodio = Custodio::where('id', $custodio_id)->first();
         // dd($custodio);
+        $users_custodio = User::where('id_status_delete', 1)->where('role', 16)->get();
+        $users_responsable = User::where('id_status_delete', 1)->get();
         $custodio_seleccion = CustodioSeleccion::where('custodio_id', $custodio_id)->first();
-        // dd($custodio_id);
+
         $custodio_confianza = CustodioControlConfianza::where('custodio_id', $custodio_id)->first();
         $documento = DocumentacionCustodio::where('siaf_status',1)->get();
         //tipo de documentos en formato json
@@ -517,10 +519,10 @@ class CustodioController extends Controller
 
         }
         
+        
 
-        $users_responsable = User::where('id_status_delete', 1)->get();
 
-        return view('custodio.editar-custodio', compact('custodio','cadenaTipoDocumento','documentos', 'custodio_seleccion', 'custodio_confianza', 'porcentaje_domicilio', 'porcentaje_info', 'porcentaje_seleccion', 'porcentaje_confianza', 'users_responsable'));
+        return view('custodio.editar-custodio', compact('custodio','cadenaTipoDocumento','documentos', 'custodio_seleccion', 'custodio_confianza', 'porcentaje_domicilio', 'porcentaje_info', 'porcentaje_seleccion', 'porcentaje_confianza', 'users_responsable', 'users_custodio'));
 
     }
 
@@ -782,7 +784,7 @@ class CustodioController extends Controller
         Custodio::where('id', $request->custodio_id)->update($data);
 
         session()->flash('success', 'El vehiculo se añadió correctamente');
-        return redirect()->route('custodio.listadocustodio');  
+        return redirect()->route('custodio.agregarvehiculo', $request->custodio_id);  
 
     }
 

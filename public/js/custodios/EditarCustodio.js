@@ -200,11 +200,15 @@ var Modulo = function() {
             format: "dd/mm/yyyy",
         });
 
-           $("#users_custodios").select2({
+        $("#users_custodios").select2({
             placeholder: "Seleccione una opción",
             allowClear: true
         });
         
+        $("#users_responsable").select2({
+            placeholder: "Seleccione una opción",
+            allowClear: true
+        });
 
 
         lista = construyeElementosLista();
