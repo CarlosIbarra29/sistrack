@@ -10,50 +10,82 @@
 
 	<input type="hidden" id="documentoEliminarPath" value="{{ route('custodio.eliminardocumentovehiculo') }}">
     <input type="hidden" id="fotografiaEliminarPath" value="{{ route('custodio.eliminarfotografia') }}">
+                    <!--begin::Form-->
+                    <form action="{{ route('custodio.editinfovehiculo') }}" method="post" id="submit_vehiculo" enctype="multipart/form-data">
+                        @csrf
+                        <input type='hidden' id='tipoArchivo' value='{{ $cadenaTipoDocumento }}'>
+                        <input type='hidden' id='tipoArchivov' value='{{ $cadenaTipoDocumento }}'>
+                        <input type="hidden" name="custodio_id" value="{{ $custodio->id }}">
+
+    <div class="row mb-6">
+        <div class="col-lg-12">
+            <div class="d-flex justify-content-between align-items-center cont-title-forms rounded shadow-sm px-6 py-5 border-left border-warning" style="border-left-width:5px !important;">
+                <div>
+                    <h2 class="mb-1 font-weight-bold title-forms text-white">Editar Registro de vehículo</h2>
+                    <span class="text-muted">Complete la información correspondiente del vehículo asignado al custodio</span>
+                </div>
+
+                <a href="{{ route('custodio.editarcustodio', $custodio->id) }}" class="btn btn-outline-warning font-weight-bold">
+                    <i class="flaticon2-back"></i> Regresar
+                </a>
+
+                <button type="button"  id="btnGuardar" class="btn btn-outline-warning">Guardar</button>
+
+            </div>
+        </div>
+    </div>
+
+
 
         <!--begin::Card-->
         <div class="row">
             <div class="col-lg-12">
                 <!--begin::Card-->
                 <div class="card card-custom gutter-b">
-                    <div class="card-header">
-                        <h3 class="card-title">Agregar información vehículo</h3>
-                        <div class="card-toolbar">
-                            <a href="{{ route('custodio.listadocustodio') }}" class="btn btn-sm btn-clean btn-hover-icon-success btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
-                        </div>
-                    </div>
-                    <!--begin::Form-->
-                    <form action="{{ route('custodio.editinfovehiculo') }}" method="post" id="submit_vehiculo" enctype="multipart/form-data">
-                        @csrf
 
-                        <input type='hidden' id='tipoArchivo' value='{{ $cadenaTipoDocumento }}'>
-                        <input type='hidden' id='tipoArchivov' value='{{ $cadenaTipoDocumento }}'>
-                        <input type="hidden" name="custodio_id" value="{{ $custodio->id }}">
                         <div class="card-body">
-
-                            <ul class="nav nav-tabs nav-tabs-line">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_3">Datos del vehículo</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_4">Documentos del vehículo</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_5">Fotografias</a>
-                                </li>
-                            </ul>
+                        <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-warning mb-8">
+                            <li class="nav-item">
+                                <a class="nav-link active font-weight-bold" data-toggle="tab" href="#kt_tab_pane_3">
+                                    <i class="flaticon2-car mr-2"></i> Datos del vehículo
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link font-weight-bold" data-toggle="tab" href="#kt_tab_pane_4">
+                                    <i class="flaticon2-document mr-2"></i> Documentos
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link font-weight-bold" data-toggle="tab" href="#kt_tab_pane_5">
+                                    <i class="flaticon2-image-file mr-2"></i> Fotografías
+                                </a>
+                            </li>
+                        </ul>
 
                             <div class="tab-content mt-5" id="myTabContent">
                                 <div class="tab-pane fade show active mt-10" id="kt_tab_pane_3" role="tabpanel" aria-labelledby="kt_tab_pane_3">
+
+
                                     <div class="form-group row">
                                         <div class="col-lg-6">
-                                            <label>Marca</label>
+                                            <label class="text-white">Fotografia</label>
+                                            <input type="file" class="form-control form-control-lg" name="fotografia" id="fotografia"/>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <img src="{{ route('archivo.documentovehiculoficha', $vehiculo->id) }}" style="width: 225px;">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-lg-6">
+                                            <label class="text-white">Marca</label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control" name="vehiculo" id="vehiculo" value="{{ $vehiculo->vehiculo }}" required/>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label>Modelo</label>
+                                            <label class="text-white">Modelo</label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control" name="modelo" id="modelo" value="{{ $vehiculo->modelo }}" required/>
                                             </div>
@@ -62,13 +94,13 @@
 
                                     <div class="form-group row">
                                         <div class="col-lg-6">
-                                            <label>Año</label>
+                                            <label class="text-white">Año</label>
                                             <div class="input-group">
                                                 <input type="number" class="form-control" name="year_unidad" id="year_unidad" value="{{ $vehiculo->year_unidad }}" required/>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label>No. serie</label>
+                                            <label class="text-white">No. serie</label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control" name="no_serie" id="no_serie" value="{{ $vehiculo->no_serie }}" required/>
                                             </div>
@@ -77,13 +109,13 @@
 
                                     <div class="form-group row">
                                         <div class="col-lg-6">
-                                            <label>Placa</label>
+                                            <label class="text-white">Placa</label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control" name="placa" id="placa" value="{{ $vehiculo->placa }}" required/>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label>Color</label>
+                                            <label class="text-white">Color</label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control" name="color" value="{{ $vehiculo->color }}" id="color"/>
                                             </div>
@@ -92,7 +124,7 @@
 
                                     <div class="form-group row">
                                         <div class="col-lg-6">
-                                            <label>GPS</label>
+                                            <label class="text-white">GPS</label>
                                             <div class="radio-inline">
                                                 <label class="radio">
                                                     <input type="radio"  name="gps" value="0" {{($vehiculo->gps == 0) ? 'checked' : ''}}/>
@@ -107,7 +139,7 @@
                                             </div> 
                                         </div>
                                         <div class="col-lg-6">
-                                            <label>No. gps</label>
+                                            <label class="text-white">No. gps</label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control" name="no_gps" id="no_gps" value="{{ $vehiculo->no_gps }}"/>
                                             </div>
@@ -116,7 +148,7 @@
 
                                     <div class="form-group row">
                                         <div class="col-lg-12">
-                                            <label for="observaciones">Observaciones</label>
+                                            <label for="observaciones" class="text-white">Observaciones</label>
                                             <textarea class="form-control" name="observaciones" id="observaciones" rows="3">{{ $vehiculo->observaciones }}</textarea>
                                         </div>
                                     </div>
@@ -192,14 +224,7 @@
                             </div>
 
                         </div>
-                        <div class="card-footer">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <button type="button"  id="btnGuardar" class="btn btn-primary mr-2">Guardar</button>
-                                    <a href="{{ route('custodio.listadocustodio') }}"  class="btn btn-secondary">Cancelar</a>
-                                </div>
-                            </div>
-                        </div>
+
                     </form>
                     <!--end::Form-->
                 </div>

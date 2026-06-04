@@ -8,6 +8,8 @@ use App\Models\Custodio\Custodio;
 use App\Models\Custodio\FotografiaVehiculoCustodio;
 use App\Models\Custodio\VehiculoDocCustodio;
 use App\Models\Custodio\ArmaDocCustodio;
+use App\Models\Custodio\CustodioVehiculo;
+use App\Models\Custodio\CustodioArma;
 use App\Models\Custodio\FotografiaArmaCustodio;
 use App\Models\Cliente\DocumentoCliente;
 use App\Models\Usuarios\UsuarioDocRegistro; 
@@ -149,6 +151,32 @@ class ArchivoController extends Controller
         }else{
             return abort('403');
         }            
+    }
+
+    public function documentovehiculoficha(Request $request)
+    {
+        $user = auth()->user();
+        $id = $request->id;
+        $documento = CustodioVehiculo::findOrFail($id);
+        $existeArchivo = Storage::exists('custodio/'.$documento->custodio_id.'/'.$documento->fotografia);
+        if($user && $documento && $existeArchivo) {
+            return Storage::download('custodio/'.$documento->custodio_id.'/'.$documento->fotografia, $documento->fotografia, ['Content-Disposition'=>'inline; filename="'.$documento->fotografia.'"']);
+        }else{
+            return abort('403');
+        }           
+    }
+
+    public function documentoarmaficha(Request $request)
+    {
+        $user = auth()->user();
+        $id = $request->id;
+        $documento = CustodioArma::findOrFail($id);
+        $existeArchivo = Storage::exists('custodio/'.$documento->custodio_id.'/'.$documento->fotografia);
+        if($user && $documento && $existeArchivo) {
+            return Storage::download('custodio/'.$documento->custodio_id.'/'.$documento->fotografia, $documento->fotografia, ['Content-Disposition'=>'inline; filename="'.$documento->fotografia.'"']);
+        }else{
+            return abort('403');
+        }         
     }
 
 }

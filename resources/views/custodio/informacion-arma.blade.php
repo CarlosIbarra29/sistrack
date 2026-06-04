@@ -73,6 +73,14 @@
 
                                     <div class="form-group row">
                                         <div class="col-lg-6">
+                                            <label class="text-white">Fotografia</label>
+                                            <input type="file" class="form-control form-control-lg" name="fotografia" id="fotografia" required/>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-lg-6">
                                             <label class="text-white">No. Registro</label>
                                             <input type="text" class="form-control form-control-lg" name="registro_arma" id="registro_arma" required/>
                                         </div>

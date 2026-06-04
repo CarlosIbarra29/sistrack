@@ -864,17 +864,42 @@
                     <div class="card-header">
                         <h3 class="card-title text-white">Vehículo asignado</h3>
                         <div class="card-toolbar">
-                            <a href="{{ route('custodio.agregarvehiculo', $custodio->id) }}" class="btn btn-outline-warning font-weight-bold">
-                                <i class="flaticon2-plus "></i> Agregar
-                            </a>
+                            @if($vehiculo_custod == null)
+                                <a href="{{ route('custodio.agregarvehiculo', $custodio->id) }}" class="btn btn-outline-warning font-weight-bold">
+                                    <i class="flaticon2-plus "></i> Agregar
+                                </a>
+                            @else
+                                <a href="{{ route('custodio.editarvehiculo', $custodio->id) }}" class="btn btn-outline-warning font-weight-bold">
+                                    <i class="flaticon2-edit"></i> Editar
+                                </a>
+                            @endif
                         </div>
 
                     </div>
                     <div class="card-body px-10 py-8">
-                        
-                        <div class="form-group row">
-                            <span class="text-white">Para registrar el Vehículo es necesario registrar al custodio primero.</span>
-                        </div>
+                        @if($vehiculo_custod == null)
+                            <div class="form-group row">
+                                <span class="text-white">Para registrar el Vehículo es necesario registrar al custodio primero.</span>
+                            </div>
+                        @else
+
+                            <div class="row">
+                                <div class="col-lg-5" >
+                                    <img src="{{ route('archivo.documentovehiculoficha', $vehiculo_custod->id) }}" style="width: 125px;">
+                                </div>
+                                <div class="col-lg-7">
+                                    <label class="text-white">Marca:</label>
+                                    <span class="text-white">{{ $vehiculo_custod->vehiculo }}</span> <br>
+                                    <label class="text-white">No. Serie:</label>
+                                    <span class="text-white">{{ $vehiculo_custod->no_serie }}</span> <br>
+                                    <label class="text-white">Placa:</label>
+                                    <span class="text-white">{{ $vehiculo_custod->placa }}</span> <br>
+                                    <label class="text-white">Año:</label>
+                                    <span class="text-white">{{ $vehiculo_custod->year_unidad }}</span> <br>
+                                </div>
+                            </div>
+
+                        @endif
                     </div>
                 </div>
 
@@ -886,15 +911,36 @@
                     <div class="card-header">
                         <h3 class="card-title text-white">Datos del Arma</h3>
                         <div class="card-toolbar">
-                            <a href="{{ route('custodio.agregararma', $custodio->id) }}" class="btn btn-outline-warning font-weight-bold">
-                                <i class="flaticon2-plus "></i> Agregar
-                            </a>
+                            @if($arma_custod == null)
+                                <a href="{{ route('custodio.agregararma', $custodio->id) }}" class="btn btn-outline-warning font-weight-bold">
+                                    <i class="flaticon2-plus "></i> Agregar
+                                </a>
+                            @else
+                                <a href="{{ route('custodio.editararma', $custodio->id) }}" class="btn btn-outline-warning font-weight-bold">
+                                    <i class="flaticon2-edit"></i> Editar
+                                </a>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body px-10 py-8">
-                        <div class="form-group row">
-                            <span class="text-white">Para registrar el arma es necesario registrar al custodio primero.</span>
-                        </div>
+                        @if($arma_custod == null)
+                            <div class="form-group row">
+                                <span class="text-white">Para registrar el arma es necesario registrar al custodio primero.</span>
+                            </div>
+                        @else
+                            <div class="row">
+                                <div class="col-lg-5" >
+                                    <img src="{{ route('archivo.documentoarmaficha', $arma_custod->id) }}" style="width: 145px;">
+                                </div>
+                                <div class="col-lg-7">
+                                    <label class="text-white">No. Registro:</label>
+                                    <span class="text-white">{{ $arma_custod->registro_arma }}</span> <br>
+                                    <label class="text-white">Figencia de portacion:</label>
+                                    <span class="text-white">{{ $arma_custod->vigencia_portacion }}</span> <br>
+
+                                </div>
+                            </div>                        
+                        @endif
 
                     </div>
                 </div>

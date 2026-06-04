@@ -519,10 +519,11 @@ class CustodioController extends Controller
 
         }
         
-        
+        $vehiculo_custod = CustodioVehiculo::where('custodio_id', $custodio_id)->first();
+        $arma_custod = CustodioArma::where('custodio_id', $custodio_id)->first();
 
 
-        return view('custodio.editar-custodio', compact('custodio','cadenaTipoDocumento','documentos', 'custodio_seleccion', 'custodio_confianza', 'porcentaje_domicilio', 'porcentaje_info', 'porcentaje_seleccion', 'porcentaje_confianza', 'users_responsable', 'users_custodio'));
+        return view('custodio.editar-custodio', compact('custodio','cadenaTipoDocumento','documentos', 'custodio_seleccion', 'custodio_confianza', 'porcentaje_domicilio', 'porcentaje_info', 'porcentaje_seleccion', 'porcentaje_confianza', 'users_responsable', 'users_custodio', 'vehiculo_custod', 'arma_custod'));
 
     }
 
@@ -715,6 +716,16 @@ class CustodioController extends Controller
     public function guardarinfovehiculo(Request $request)
     {
 
+        if($request->hasFile('fotografia')){
+            $archivo = $request->file('fotografia');
+            $archivoNombre = $archivo->hashName();
+            Storage::putFileAs('custodio/'.$request->custodio_id, $archivo, $archivoNombre);
+            $fotografia = $archivoNombre;
+        }else{
+            $fotografia ="";
+        }
+
+
         $data = [
             'custodio_id' => $request->custodio_id,
             'vehiculo' => $request->vehiculo,
@@ -726,6 +737,7 @@ class CustodioController extends Controller
             'gps' => $request->gps,
             'no_gps' => $request->no_gps,
             'observaciones' => $request->observaciones,
+            'fotografia' => $fotografia,
             'created_at' =>date('Y-m-d H:i:s'),
             'updated_at' =>date('Y-m-d H:i:s'),
             'iduserCreated' =>auth()->user()->id,
@@ -784,7 +796,7 @@ class CustodioController extends Controller
         Custodio::where('id', $request->custodio_id)->update($data);
 
         session()->flash('success', 'El vehiculo se añadió correctamente');
-        return redirect()->route('custodio.agregarvehiculo', $request->custodio_id);  
+        return redirect()->route('custodio.editarcustodio', $request->custodio_id);  
 
     }
 
@@ -842,7 +854,18 @@ class CustodioController extends Controller
 
     public function editinfovehiculo(Request $request)
     {
-        // dd($request);
+        $vehiculo = CustodioVehiculo::where('custodio_id', $request->custodio_id)->first();
+
+        if($request->hasFile('fotografia')){
+            $archivo = $request->file('fotografia');
+            $archivoNombre = $archivo->hashName();
+            Storage::putFileAs('custodio/'.$request->custodio_id, $archivo, $archivoNombre);
+            $fotografia = $archivoNombre;
+        }else{
+            $fotografia =$vehiculo->fotografia;
+        }
+
+
         $data = [
             'custodio_id' => $request->custodio_id,
             'vehiculo' => $request->vehiculo,
@@ -940,11 +963,23 @@ class CustodioController extends Controller
 
     public function guardarinfoarma(Request $request)
     {
+
+        if($request->hasFile('fotografia')){
+            $archivo = $request->file('fotografia');
+            $archivoNombre = $archivo->hashName();
+            Storage::putFileAs('custodio/'.$request->custodio_id, $archivo, $archivoNombre);
+            $fotografia = $archivoNombre;
+        }else{
+            $fotografia ="";
+        }
+
+
         $data = [
             'custodio_id' => $request->custodio_id,
             'registro_arma' => $request->registro_arma,
             'vigencia_portacion' => $request->vigencia_portacion ? Carbon::createFromFormat('d/m/Y', $request->vigencia_portacion)->format('Y-m-d'):null,
             'observaciones' => $request->observaciones,
+            'fotografia'  => $fotografia,
             'created_at' =>date('Y-m-d H:i:s'),
             'updated_at' =>date('Y-m-d H:i:s'),
             'iduserCreated' =>auth()->user()->id,
@@ -1003,7 +1038,7 @@ class CustodioController extends Controller
         Custodio::where('id', $request->custodio_id)->update($data);
 
         session()->flash('success', 'El arma se añadió correctamente');
-        return redirect()->route('custodio.listadocustodio');         
+         return redirect()->route('custodio.editarcustodio', $request->custodio_id);        
     }
 
 

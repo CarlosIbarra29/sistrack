@@ -11,49 +11,81 @@
 	<input type="hidden" id="documentoEliminarPath" value="{{ route('custodio.eliminardocumentoarma') }}">
     <input type="hidden" id="fotografiaEliminarPath" value="{{ route('custodio.eliminarfotografiaarma') }}">
 
+                    <form action="{{ route('custodio.editinfoarma') }}" method="post" id="submit_vehiculo" enctype="multipart/form-data">
+                        @csrf
+    <!-- ENCABEZADO FORMAL -->
+    <div class="row mb-6">
+        <div class="col-lg-12">
+            <div class="d-flex justify-content-between align-items-center cont-title-forms rounded shadow-sm px-6 py-5 border-left border-warning" style="border-left-width:5px !important;">
+                <div>
+                    <h2 class="mb-1 font-weight-bold title-forms text-white">Registro del arma</h2>
+                    <span class="text-muted">Complete la información correspondiente del arma asignado al custodio</span>
+                </div>
+
+                <a href="{{ route('custodio.editarcustodio', $custodio->id) }}" class="btn btn-outline-warning font-weight-bold">
+                    <i class="flaticon2-back"></i> Regresar
+                </a>
+
+                <button type="button"  id="btnGuardar" class="btn btn-outline-warning">Guardar</button>
+
+            </div>
+        </div>
+    </div>
+
         <!--begin::Card-->
         <div class="row">
             <div class="col-lg-12">
                 <!--begin::Card-->
                 <div class="card card-custom gutter-b">
-                    <div class="card-header">
-                        <h3 class="card-title">Agregar información del arma</h3>
-                        <div class="card-toolbar">
-                            <a href="{{ route('custodio.listadocustodio') }}"class="btn btn-warning font-weight-bold"><i class="flaticon2-back"></i> Regresar</a></a>
-                        </div>
-                    </div>
-                    <!--begin::Form-->
-                    <form action="{{ route('custodio.editinfoarma') }}" method="post" id="submit_vehiculo" enctype="multipart/form-data">
-                        @csrf
 
                         <input type='hidden' id='tipoArchivo' value='{{ $cadenaTipoDocumento }}'>
                         <input type='hidden' id='tipoArchivov' value='{{ $cadenaTipoDocumento }}'>
                         <input type="hidden" name="custodio_id" value="{{ $custodio->id }}">
                         <div class="card-body">
 
-                            <ul class="nav nav-tabs nav-tabs-line">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_3">Datos del arma</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_4">Documentos del arma</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_5">Fotografias</a>
-                                </li>
-                            </ul>
+                        <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-warning mb-8">
+                            <li class="nav-item">
+                                <a class="nav-link active font-weight-bold" data-toggle="tab" href="#kt_tab_pane_3">
+                                    <i class="flaticon2-car mr-2"></i> Datos del vehículo
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link font-weight-bold" data-toggle="tab" href="#kt_tab_pane_4">
+                                    <i class="flaticon2-document mr-2"></i> Documentos
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link font-weight-bold" data-toggle="tab" href="#kt_tab_pane_5">
+                                    <i class="flaticon2-image-file mr-2"></i> Fotografías
+                                </a>
+                            </li>
+                        </ul>
+
 
                             <div class="tab-content mt-5" id="myTabContent">
                                 <div class="tab-pane fade show active mt-10" id="kt_tab_pane_3" role="tabpanel" aria-labelledby="kt_tab_pane_3">
+
+
                                     <div class="form-group row">
                                         <div class="col-lg-6">
-                                            <label>No. Registro</label>
+                                            <label class="text-white">Fotografia</label>
+                                            <input type="file" class="form-control form-control-lg" name="fotografia" id="fotografia"/>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <img src="{{ route('archivo.documentoarmaficha', $arma->id) }}" style="width: 225px;">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-lg-6">
+                                            <label class="text-white">No. Registro</label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control" name="registro_arma" id="registro_arma" value="{{ $arma->registro_arma }}" required/>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label>Vigencia de portación</label>
+                                            <label class="text-white">Vigencia de portación</label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control" name="vigencia_portacion" id="vigencia_portacion" value="{{ date('d/m/Y', strtotime($arma->vigencia_portacion))}}" required/>
                                             </div>
@@ -62,7 +94,7 @@
 
                                     <div class="form-group row">
                                         <div class="col-lg-12">
-                                            <label for="observaciones">Observaciones</label>
+                                            <label for="observaciones" class="text-white">Observaciones</label>
                                             <textarea class="form-control" name="observaciones" id="observaciones" rows="3">{{ $arma->observaciones }}</textarea>
                                         </div>
                                     </div>
@@ -138,14 +170,7 @@
                             </div>
 
                         </div>
-                        <div class="card-footer">
-                            <div class="row">
-                                <div class="col-lg-12 text-right">
-                                    <button type="button"  id="btnGuardar" class="btn btn-warning mr-2">Guardar</button>
-                                    <a href="{{ route('custodio.listadocustodio') }}"  class="btn btn-secondary">Cancelar</a>
-                                </div>
-                            </div>
-                        </div>
+
                     </form>
                     <!--end::Form-->
                 </div>

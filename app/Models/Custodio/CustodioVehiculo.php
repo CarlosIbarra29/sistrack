@@ -35,7 +35,7 @@ class CustodioVehiculo extends Model
     /**
      * @var array
      */
-    protected $fillable = ['custodio_id', 'vehiculo', 'modelo', 'year_unidad' , 'no_serie', 'placa', 'color', 'gps', 'no_gps', 'observaciones', 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at'];
+    protected $fillable = ['custodio_id', 'vehiculo', 'modelo', 'year_unidad' , 'no_serie', 'placa', 'color', 'gps', 'no_gps', 'observaciones', 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at', 'fotografia'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

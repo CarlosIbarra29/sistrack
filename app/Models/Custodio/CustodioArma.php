@@ -30,7 +30,7 @@ class CustodioArma extends Model
     /**
      * @var array
      */
-    protected $fillable = ['custodio_id', 'registro_arma', 'vigencia_portacion', 'observaciones', 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at'];
+    protected $fillable = ['custodio_id', 'registro_arma', 'vigencia_portacion', 'observaciones', 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at', 'fotografia'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
