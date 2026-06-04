@@ -1,3 +1,63 @@
+<style>
+    
+    .dataTables_filter {
+        display: none !important;
+    }
+    
+    #global_search_input::placeholder {
+        color: #a0aec0;
+        opacity: 0.7;
+    }
+</style>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     :root {
         --bg-main: #060b11;
