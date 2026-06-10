@@ -1,25 +1,25 @@
 @extends('layouts.app')
 
 @push('scripts')
-  <script src="{{ asset('js/custodios/CatalogoCustodio.js') }}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-  <meta name="csrf-token" content="{{ csrf_token() }}" />
-  
-  <script>
-      document.addEventListener('DOMContentLoaded', function () {
-          var options = {
-              series: [75.6, 14.1, 6.4],
-              chart: { type: 'donut', height: 130 },
-              colors: ['#1BC5BD', '#FFA800', '#F64E60'],
-              dataLabels: { enabled: false },
-              legend: { show: false },
-              stroke: { show: false, width: 0 },
-              plotOptions: { pie: { donut: { size: '70%' } } }
-          };
-          var chart = new ApexCharts(document.querySelector("#chart_lateral"), options);
-          chart.render();
-      });
-  </script>
+    <script src="{{ asset('js/custodios/CatalogoCustodio.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var options = {
+                series: [75.6, 14.1, 6.4],
+                chart: { type: 'donut', height: 130 },
+                colors: ['#1BC5BD', '#FFA800', '#F64E60'],
+                dataLabels: { enabled: false },
+                legend: { show: false },
+                stroke: { show: false, width: 0 },
+                plotOptions: { pie: { donut: { size: '70%' } } }
+            };
+            var chart = new ApexCharts(document.querySelector("#chart_lateral"), options);
+            chart.render();
+        });
+    </script>
 @endpush
 
 @section('content')
@@ -43,7 +43,8 @@
                 ['t' => 'ALTA DE CUSTODIOS', 'i' => 'fas fa-user-plus', 'c' => '#f6a924', 'bg' => 'rgba(246, 169, 36, 0.05)', 'r' => route('custodio.agregarcustodio')],
                 ['t' => 'FICHA TÉCNICA', 'i' => 'fas fa-id-card', 'c' => '#00c2a8', 'bg' => 'rgba(0, 194, 168, 0.05)', 'r' => '#'],
                 ['t' => 'SEGUIMIENTO DE DOCTOS.', 'i' => 'fas fa-file-signature', 'c' => '#8950fc', 'bg' => 'rgba(137, 80, 252, 0.05)', 'r' => '#'],
-                ['t' => 'IMPRESIÓN DE CREDENCIAL', 'i' => 'fas fa-print', 'c' => '#ffa800', 'bg' => 'rgba(255, 168, 0, 0.05)', 'r' => '#']
+                // Cambiado a Blanco Puro para unificar el diseño de tu plataforma
+                ['t' => 'IMPRESIÓN DE CREDENCIAL', 'i' => 'fas fa-print', 'c' => '#FFFFFF', 'bg' => 'rgba(255, 255, 255, 0.05)', 'r' => '#']
             ];
         @endphp
         @foreach($buttons as $btn)
@@ -172,7 +173,8 @@
             <div class="card card-premium p-4 mb-4">
                 <span class="text-warning font-weight-bolder font-size-xs d-block mb-3 text-uppercase">Estado Documentación</span>
                 <div class="d-flex align-items-center justify-content-between">
-                    <div class="donut-chart-segment"></div>
+                    {{-- Mantenemos tanto el contenedor de ApexCharts como la estructura visual que tenías --}}
+                    <div class="donut-chart-segment" id="chart_lateral"></div>
                     <div class="font-size-xs" style="line-height: 1.8;">
                         <div style="color: #10b981; font-weight: 600;">● Completa <span class="text-white-50 font-weight-normal">118 (75.6%)</span></div>
                         <div style="color: #f59e0b; font-weight: 600;">● Pendiente <span class="text-white-50 font-weight-normal">22 (14.1%)</span></div>

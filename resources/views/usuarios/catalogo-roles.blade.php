@@ -34,7 +34,6 @@
             <div class="card h-100 rounded-3" style="background-color: #111625; border: 1px solid #10b981;">
                 <div class="card-body d-flex flex-column align-items-center justify-content-between p-4">
                     <div class="text-center mb-3">
-                        <!-- Icono y texto actualizados al verde esmeralda idéntico a la imagen image_3c8643.png -->
                         <i class="fas fa-id-card mb-2" style="font-size: 2rem; color: #10b981;"></i>
                         <h6 class="fw-bold text-uppercase m-0" style="font-size: 0.75rem; letter-spacing: 1px; color: #10b981;">FICHA TÉCNICA</h6>
                     </div>
@@ -56,13 +55,13 @@
         </div>
 
         <div class="col-md-3">
-            <div class="card h-100 rounded-3" style="background-color: #111625; border: 1px solid #f97316;">
+            <div class="card h-100 rounded-3" style="background-color: #111625; border: 1px solid #64748b;">
                 <div class="card-body d-flex flex-column align-items-center justify-content-between p-4">
                     <div class="text-center mb-3">
-                        <i class="far fa-trash-alt mb-2" style="font-size: 2rem; color: #f97316;"></i>
-                        <h6 class="fw-bold text-uppercase m-0" style="font-size: 0.75rem; letter-spacing: 1px; color: #f97316;">ROLES INACTIVOS</h6>
+                        <i class="far fa-trash-alt mb-2" style="font-size: 2rem; color: #94a3b8;"></i>
+                        <h6 class="fw-bold text-uppercase m-0" style="font-size: 0.75rem; letter-spacing: 1px; color: #94a3b8;">ROLES INACTIVOS</h6>
                     </div>
-                    <a href="{{ route('rol.rolesinactivos') }}" class="btn w-100 fw-bold py-2" style="background-color: #f97316; color: #0b0f19; font-size: 0.8rem; letter-spacing: 1px;">ACCEDER <i class="fas fa-chevron-right ms-1" style="font-size: 0.7rem;"></i></a>
+                    <a href="{{ route('rol.rolesinactivos') }}" class="btn w-100 fw-bold py-2 text-white" style="background-color: #475569; font-size: 0.8rem; letter-spacing: 1px;">ACCEDER <i class="fas fa-chevron-right ms-1" style="font-size: 0.7rem;"></i></a>
                 </div>
             </div>
         </div>
@@ -96,10 +95,10 @@
                 </div>
                 <div class="col-md-4">
                     <div class="d-flex align-items-center p-3 rounded-3 shadow-sm" style="background-color: #111625; border: 1px solid #1e293b;">
-                        <div class="p-3 rounded-3 me-3" style="background-color: #2b2413;"><i class="far fa-clock text-warning fs-4"></i></div>
+                        <div class="p-3 rounded-3 me-3" style="background-color: #1e293b;"><i class="far fa-clock text-muted fs-4"></i></div>
                         <div>
-                            <span class="text-muted d-block fw-bold" style="font-size: 0.7rem; letter-spacing: 0.5px;">EN PROCESO</span>
-                            <h3 class="text-white fw-bold mb-0" style="font-size: 1.6rem;">22</h3>
+                            <span class="text-muted d-block fw-bold" style="font-size: 0.7rem; letter-spacing: 0.5px;">INACTIVOS</span>
+                            <h3 class="text-white fw-bold mb-0" style="font-size: 1.6rem;">16</h3>
                         </div>
                     </div>
                 </div>
@@ -185,12 +184,30 @@
                                     </div>
                                 </td>
                             </tr>
+
+                            <tr class="border-bottom border-dark" style="border-color: #171e30 !important;">
+                                <td class="fw-bold" style="color: #38bdf8;">ROL-0002</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="rounded-circle d-flex align-items-center justify-content-center me-2 text-dark fw-bold" style="width: 28px; height: 28px; background-color: #94a3b8; font-size: 0.75rem;">CST</div>
+                                        <span class="fw-bold text-white">CUSTODIO DE VALORES</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge px-3 py-1 fw-bold" style="background-color: #1e293b; color: #94a3b8; font-size: 0.7rem; letter-spacing: 0.5px;">INACTIVO</span></td>
+                                <td class="text-center">
+                                    <div class="d-flex justify-content-center gap-2 text-muted">
+                                        <a href="#" class="text-decoration-none text-muted transition-all" title="Ver detalle"><i class="far fa-eye"></i></a>
+                                        <a href="#" class="text-decoration-none text-muted transition-all" title="Editar"><i class="far fa-edit"></i></a>
+                                        <a href="#" class="text-decoration-none text-muted transition-all" title="Eliminar"><i class="far fa-trash-alt"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center mt-4" style="font-size: 0.8rem; color: #94a3b8;">
-                    <div>Mostrando registros del 1 al 1 de un total de 1 registros</div>
+                    <div>Mostrando registros del 1 al 2 de un total de 2 registros</div>
                     <div class="d-flex gap-1">
                         <button type="button" class="btn btn-sm btn-dark text-muted px-3 border-0" disabled style="background-color: #171e30;">Anterior</button>
                         <button type="button" class="btn btn-sm text-white px-3 border-0" style="background-color: #3b82f6;">1</button>
@@ -206,13 +223,13 @@
             <div class="card border-0 p-4 mb-4 rounded-3 shadow-sm" style="background-color: #111625; border: 1px solid #1e293b !important;">
                 <span class="fw-bold text-warning d-block mb-3" style="font-size: 0.75rem; letter-spacing: 0.5px;">ESTADO DOCUMENTACIÓN</span>
                 <div class="d-flex align-items-center gap-3">
-                    <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 75px; height: 75px; background: conic-gradient(#10b981 75%, #f59e0b 15%, #ef4444 6%, #3b82f6 4%); min-width: 75px;">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 75px; height: 75px; background: conic-gradient(#10b981 75%, #f59e0b 15%, #94a3b8 6%, #3b82f6 4%); min-width: 75px;">
                         <div class="rounded-circle" style="width: 55px; height: 55px; background-color: #111625;"></div>
                     </div>
                     <div style="font-size: 0.75rem; line-height: 1.5;">
                         <span class="d-block text-white">● <span class="text-success">Completa</span> 118 (75.6%)</span>
                         <span class="d-block text-white">● <span class="text-warning">Pendiente</span> 22 (14.1%)</span>
-                        <span class="d-block text-white">● <span class="text-danger">Incompleta</span> 10 (6.4%)</span>
+                        <span class="d-block text-white">● <span class="text-muted">Incompleta</span> 10 (6.4%)</span>
                         <span class="d-block text-white">● <span class="text-primary">Vencida</span> 6 (3.9%)</span>
                     </div>
                 </div>
@@ -223,10 +240,10 @@
                 <span class="fw-bold text-warning d-block mb-3" style="font-size: 0.75rem; letter-spacing: 0.5px;">ALERTAS IMPORTANTES</span>
                 
                 <div class="d-flex align-items-start gap-2 mb-3">
-                    <i class="fas fa-exclamation-triangle text-danger mt-1" style="font-size: 0.9rem;"></i>
+                    <i class="fas fa-exclamation-triangle text-muted mt-1" style="font-size: 0.9rem;"></i>
                     <div>
-                        <p class="mb-0 text-white fw-bold" style="font-size: 0.8rem;">6 documentos vencidos</p>
-                        <small class="text-muted" style="font-size: 0.7rem;">Requieren atención inmediata</small>
+                        <p class="mb-0 text-white fw-bold" style="font-size: 0.8rem;">6 documentos inactivos</p>
+                        <small class="text-muted" style="font-size: 0.7 room;">Requieren revisión ordinaria</small>
                     </div>
                 </div>
                 <div class="d-flex align-items-start gap-2 mb-4">
