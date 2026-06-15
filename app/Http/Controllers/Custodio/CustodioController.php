@@ -862,7 +862,7 @@ class CustodioController extends Controller
             Storage::putFileAs('custodio/'.$request->custodio_id, $archivo, $archivoNombre);
             $fotografia = $archivoNombre;
         }else{
-            $fotografia =$vehiculo->fotografia;
+            $fotografia = $vehiculo->fotografia;
         }
 
 
@@ -877,6 +877,7 @@ class CustodioController extends Controller
             'gps' => $request->gps,
             'no_gps' => $request->no_gps,
             'observaciones' => $request->observaciones,
+            'fotografia' => $fotografia,
             'created_at' =>date('Y-m-d H:i:s'),
             'updated_at' =>date('Y-m-d H:i:s'),
             'iduserCreated' =>auth()->user()->id,
