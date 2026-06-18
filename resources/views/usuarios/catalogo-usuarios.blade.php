@@ -1,14 +1,11 @@
 @extends('layouts.app')
-
-@push('scripts')
+    @push('scripts')
     <script src="{{ asset('js/usuarios/CatalogoUsuarios.js') }}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
-
 @section('title')
     Inventario de clientes
 @endsection
-
 @section('content')
 
 
@@ -26,7 +23,7 @@
                 
                 ['t' => 'FICHA TÉCNICA', 'i' => 'fas fa-id-card', 'c' => '#10b981', 'bg' => 'rgba(16, 185, 129, 0.05)', 'r' => '#'],
                 ['t' => 'SEGUIMIENTO DE DOCTOS.', 'i' => 'fas fa-file-signature', 'c' => '#38bdf8', 'bg' => 'rgba(56, 189, 248, 0.05)', 'r' => '#'],
-                // Actualizado a color Blanco Puro
+                
                 ['t' => 'IMPRESIÓN DE CREDENCIAL', 'i' => 'fas fa-print', 'c' => '#FFFFFF', 'bg' => 'rgba(255, 255, 255, 0.05)', 'r' => '#']
             ];
         @endphp
@@ -217,7 +214,7 @@
     </div>
 </div>
 
-{{-- CONFIGURACIÓN DEL DIÁLOGO MODAL --}}
+
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="model_delete_user">
     <div class="modal-dialog">
         <div class="modal-content card-premium text-white">

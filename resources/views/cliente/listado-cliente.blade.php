@@ -1,24 +1,23 @@
 @extends('layouts.app')
-
 @push('scripts')
   <script src="{{ asset('js/cliente/CatalogoClientes.js') }}"></script>
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
-
 @section('title')
   Inventario de clientes
 @endsection
-
 @section('content')
+
+
 <div class="w-100 p-5" style="background-color: #0b0f19; color: #ffffff; font-family: 'Poppins', sans-serif; min-height: 100vh;">
 
-    {{-- HEADER DE LA SECCIÓN --}}
+    
     <div class="mb-4 select-none">
         <h2 class="fw-bold text-white m-0" style="font-size: 1.8rem;">Inventario de Clientes</h2>
         <p class="text-muted m-0" style="font-size: 0.9rem;">Gestiona el alta, control y seguimiento de las cuentas y clientes de la plataforma.</p>
     </div>
 
-    {{-- ACCESOS RÁPIDOS PRINCIPALES (SIN HOVER INTERACTIVO) --}}
+    
     <div class="row g-3 mb-5">
         <div class="col-md-4">
             <div class="card h-100 rounded-3" style="background-color: #111625; border: 1px solid #f59e0b; cursor: default;">
@@ -59,13 +58,13 @@
         </div>
     </div>
 
-    {{-- DISEÑO DE DOS COLUMNAS: PRINCIPAL Y SIDEBAR --}}
+    
     <div class="row g-4">
         
-        {{-- COLUMNA IZQUIERDA: RESUMEN, FILTROS Y DATATABLE --}}
+        
         <div class="col-xl-9 col-lg-8">
             
-            {{-- TARJETAS DE INDICADORES (RESUMEN) --}}
+           
             <div class="mb-2 select-none">
                 <span class="fw-bold text-warning" style="font-size: 0.8rem; letter-spacing: 0.5px;">RESUMEN DE CUENTAS</span>
             </div>
@@ -108,7 +107,7 @@
                 </div>
             </div>
 
-            {{-- FORMULARIO DE BÚSQUEDA / FILTROS --}}
+            
             <div class="p-3 rounded-3 mb-4" style="background-color: #111625; border: 1px solid #1e293b;">
                 <form>
                     <div class="row g-2 align-items-center">
@@ -131,7 +130,7 @@
                 </form>
             </div>
 
-            {{-- SUBHEADER DE LA TABLA Y EXPORTACIONES --}}
+            
             <div class="mb-2 d-flex justify-content-between align-items-center select-none">
                 <span class="fw-bold text-warning" style="font-size: 0.8rem; letter-spacing: 0.5px;">LISTADO DE CLIENTES</span>
                 <div class="dropdown">
@@ -146,7 +145,7 @@
                 </div>
             </div>
 
-            {{-- CONTENEDOR DE LA TABLA PRINCIPAL (SIN HOVER EN FILAS) --}}
+            
             <div class="p-4 rounded-3 shadow-sm" style="background-color: #111625; border: 1px solid #1e293b;">
                 <div class="d-flex align-items-center text-white mb-4 select-none" style="font-size: 0.85rem;">
                     <span>Mostrar</span>
@@ -208,7 +207,7 @@
                     </table>
                 </div>
 
-                {{-- PAGINACIÓN / PIE DE TABLA (ESTÁTICA) --}}
+                
                 <div class="d-flex justify-content-between align-items-center mt-4 select-none" style="font-size: 0.8rem; color: #94a3b8;">
                     <div>Mostrando registros del 1 al {{ count($data) }} de un total de {{ count($data) }} registros</div>
                     <div class="d-flex gap-1">
@@ -221,10 +220,10 @@
 
         </div>
 
-        {{-- COLUMNA DERECHA: SIDEBAR DE ALERTAS Y GRÁFICOS INFORMATIVOS (ESTÁTICO) --}}
+        
         <div class="col-xl-3 col-lg-4">
             
-            {{-- SECCIÓN CONIC GRAPH DE DISTRIBUCIÓN --}}
+            
             <div class="card border-0 p-4 mb-4 rounded-3 shadow-sm" style="background-color: #111625; border: 1px solid #1e293b !important; cursor: default;">
                 <span class="fw-bold text-warning d-block mb-3 select-none" style="font-size: 0.75rem; letter-spacing: 0.5px;">ESTADO DE CARTERA</span>
                 <div class="d-flex align-items-center gap-3">
@@ -239,11 +238,33 @@
                 </div>
             </div>
 
+
+            <div class="card card-premium p-4 mb-4">
+                <span class="text-warning font-weight-bolder font-size-xs d-block mb-3 text-uppercase">Alertas Importantes</span>
+                <div class="d-flex flex-column gap-3">
+                    <div class="d-flex align-items-start gap-2">
+                        <i class="la la-exclamation-triangle text-danger font-size-h3 mt-1"></i>
+                        <div>
+                            <span class="text-white font-weight-bold font-size-xs d-block">6 documentos vencidos</span>
+                            <span class="text-muted font-size-xs">Requieren atención inmediata</span>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-start gap-2 mt-2">
+                        <i class="la la-clock text-warning font-size-h3 mt-1"></i>
+                        <div>
+                            <span class="text-white font-weight-bold font-size-xs d-block">22 usuarios por vencer doctos.</span>
+                            <span class="text-muted font-size-xs">Próximos 30 días</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-xs btn-block btn-outline-secondary font-weight-bold text-white mt-4 py-2" style="border-color: var(--border-color); font-size: 11px;">VER TODAS LAS ALERTAS</button>
+            </div>
+
         </div>
     </div>
 </div>
 
-{{-- M O D A L S & FORMS --}}
+
 <form method="post" id="cliente_delete_form" action="{{ route('cliente.desactivarclientelistado') }}" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="id" id="id_cliente_delete" value="">
