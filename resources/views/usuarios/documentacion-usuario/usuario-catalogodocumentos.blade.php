@@ -111,7 +111,7 @@
                                     </div>
                                 </div>
 
-                                <table class="table table-hover table-checkable inventory-table" id="kdatatable_documento">
+                                <table class="table table-checkable" id="kdatatable_documento">
                                     <thead>
                                         <tr>
                                             <th>No.</th>
