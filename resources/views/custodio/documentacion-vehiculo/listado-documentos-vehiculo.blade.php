@@ -149,6 +149,8 @@
                                 <th>Documento</th>
                                 <th class="text-center">Acciones</th>
                               </tr>
+
+                                
                             </tfoot>
 
                           </table>
