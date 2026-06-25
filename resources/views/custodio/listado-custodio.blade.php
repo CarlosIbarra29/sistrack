@@ -43,7 +43,7 @@
                 ['t' => 'ALTA DE CUSTODIOS', 'i' => 'fas fa-user-plus', 'c' => '#f6a924', 'bg' => 'rgba(246, 169, 36, 0.05)', 'r' => route('custodio.agregarcustodio')],
                 ['t' => 'FICHA TÉCNICA', 'i' => 'fas fa-id-card', 'c' => '#00c2a8', 'bg' => 'rgba(0, 194, 168, 0.05)', 'r' => '#'],
                 ['t' => 'SEGUIMIENTO DE DOCTOS.', 'i' => 'fas fa-file-signature', 'c' => '#8950fc', 'bg' => 'rgba(137, 80, 252, 0.05)', 'r' => '#'],
-                // Cambiado a Blanco Puro para unificar el diseño de tu plataforma
+                
                 ['t' => 'IMPRESIÓN DE CREDENCIAL', 'i' => 'fas fa-print', 'c' => '#FFFFFF', 'bg' => 'rgba(255, 255, 255, 0.05)', 'r' => '#']
             ];
         @endphp
@@ -173,7 +173,7 @@
             <div class="card card-premium p-4 mb-4">
                 <span class="text-warning font-weight-bolder font-size-xs d-block mb-3 text-uppercase">Estado Documentación</span>
                 <div class="d-flex align-items-center justify-content-between">
-                    {{-- Mantenemos tanto el contenedor de ApexCharts como la estructura visual que tenías --}}
+                   
                     <div class="donut-chart-segment" id="chart_lateral"></div>
                     <div class="font-size-xs" style="line-height: 1.8;">
                         <div style="color: #10b981; font-weight: 600;">● Completa <span class="text-white-50 font-weight-normal">118 (75.6%)</span></div>
