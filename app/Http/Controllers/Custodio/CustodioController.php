@@ -264,18 +264,21 @@ class CustodioController extends Controller
         }
         $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
 
-         $users_custodio = User::where('id_status_delete', 1)->where('role', 16)->get();
+        $users_custodio = User::where('id_status_delete', 1)->where('role', 16)->get();
+        $users_responsable = User::where('id_status_delete', 1)->get();
 
          // dd($data);
 
-        return view('custodio.agregar-custodio', compact('data', 'cadenaTipoDocumento', 'users_custodio'));
+        return view('custodio.agregar-custodio', compact('data', 'cadenaTipoDocumento', 'users_custodio', 'users_responsable'));
     }
 
     public function guardarcustodio(Request $request)
     {
 // dd($request);
         $data = [
-            // 'users_custodios' => $request->users_custodios,
+            'tipo_custodio' => $request->tipo_custodio,
+            'users_custodios' => $request->users_custodios,
+            'users_responsable' => $request->users_responsable,
             'num_list' => $this->folio->getFolioCustodio(),
             'fecha_ingreso' => $request->fecha_ingreso ? Carbon::createFromFormat('d/m/Y', $request->fecha_ingreso)->format('Y-m-d'):null,
             'fecha_baja' => $request->fecha_baja ? Carbon::createFromFormat('d/m/Y', $request->fecha_baja)->format('Y-m-d'):null,
@@ -309,17 +312,16 @@ class CustodioController extends Controller
             'iduserCreated' =>auth()->user()->id,
             'iduserUpdated' =>auth()->user()->id,
 
-              // Nuevo
-            'tipo_gps' => $request->tipo_gps,
-            'candado_servicio' => $request->candados_servicio,
-            'chaleco_servicio' => $request->chalecos_servicio,
+            'tipo_gps'         => $request->tipo_gps,
+            'candado_servicio' => $request->candado_servicio,
+            'chaleco_servicio' => $request->chaleco_servicio,
             'correo_assistcargo' => $request->correo_assistcargo,
             'contraseña_assistcargo' => $request->contraseña_assistcargo,
             'updated_at' => date('Y-m-d H:i:s'),
             'iduserUpdated' => auth()->user()->id,
+            'identificacion_custodio' => $request->identificacion_custodio,
+            'contrato_custodio' => $request->contrato_custodio,
 
-           
-            
         ];
         // dd($data);
         $id_custodio = Custodio::insertGetId($data);
@@ -336,6 +338,7 @@ class CustodioController extends Controller
             'updated_at' =>date('Y-m-d H:i:s'),
             'iduserCreated' =>auth()->user()->id,
             'iduserUpdated' =>auth()->user()->id,
+
         ];
         CustodioSeleccion::insert($data_seleccion);
 
@@ -373,21 +376,34 @@ class CustodioController extends Controller
         CustodioControlConfianza::insert($data_control_confianza);
 
 
-        if($request->hasfile('file_carga')){
-            $archivos = $request->file('file_carga');
-
-            foreach($archivos as $indice => $archivo)
-            {
-                $archivoNombre = $archivo->hashName();
-                $mimeType = $archivo->getMimeType();
-                Storage::putFileAs('custodio/'.$id_custodio, $archivo, $archivoNombre);
+        if($request->hasFile('profile_avatar')){
+            $archivo = $request->file('profile_avatar');
+            $archivoNombre = $archivo->hashName();
+            Storage::putFileAs('custodio/'.$id_custodio, $archivo, $archivoNombre);
                 $data = [
                     'fotografia_custodio' => $archivoNombre,
                 ];
 
                 Custodio::where('id', $id_custodio)->update($data);
-            }
         }
+
+
+        // if($request->hasfile('profile_avatar')){
+        //     $archivos = $request->file('profile_avatar');
+            
+        //     foreach($archivos as $indice => $archivo)
+        //     {
+
+        //         $archivoNombre = $archivo->hashName();
+        //         $mimeType = $archivo->getMimeType();
+        //         Storage::putFileAs('custodio/'.$id_custodio, $archivo, $archivoNombre);
+        //         $data = [
+        //             'fotografia_custodio' => $archivoNombre,
+        //         ];
+
+        //         Custodio::where('id', $id_custodio)->update($data);
+        //     }
+        // }
 
 
         $colIdDocumento = $request->id_documento;
@@ -430,8 +446,10 @@ class CustodioController extends Controller
 
         $custodio = Custodio::where('id', $custodio_id)->first();
         // dd($custodio);
+        $users_custodio = User::where('id_status_delete', 1)->where('role', 16)->get();
+        $users_responsable = User::where('id_status_delete', 1)->get();
         $custodio_seleccion = CustodioSeleccion::where('custodio_id', $custodio_id)->first();
-        // dd($custodio_id);
+
         $custodio_confianza = CustodioControlConfianza::where('custodio_id', $custodio_id)->first();
         $documento = DocumentacionCustodio::where('siaf_status',1)->get();
         //tipo de documentos en formato json
@@ -470,26 +488,42 @@ class CustodioController extends Controller
         $porcentaje_domicilio = $por_calle + $por_num + $por_municipio + $por_estado + $por_cp + $por_colonia;
 
         // dd($custodio_seleccion);
-        if($custodio_seleccion->entin_fecha == null){ $por_entin_fecha = 0; }else{ $por_entin_fecha = 1; };
-        if($custodio_seleccion->verdoc_fecha == null){ $por_verdoc_fecha = 0; }else{ $por_verdoc_fecha = 1; };
-        if($custodio_seleccion->entope_fecha == null){ $por_entope_fecha = 0; }else{ $por_entope_fecha = 1; };
-        $porcentaje_seleccion = $por_entin_fecha + $por_verdoc_fecha + $por_entope_fecha;
+        // dd();
+        if($custodio_seleccion != null){
+            if($custodio_seleccion->entin_fecha == null){ $por_entin_fecha = 0; }else{ $por_entin_fecha = 1; };
+            if($custodio_seleccion->verdoc_fecha == null){ $por_verdoc_fecha = 0; }else{ $por_verdoc_fecha = 1; };
+            if($custodio_seleccion->entope_fecha == null){ $por_entope_fecha = 0; }else{ $por_entope_fecha = 1; };
+            $porcentaje_seleccion = $por_entin_fecha + $por_verdoc_fecha + $por_entope_fecha;
 
-        if($custodio_confianza->valdat_fecha == null){ $por_valdat_fecha =0; }else{ $por_valdat_fecha =1; };
-        if($custodio_confianza->verref_fecha == null){ $por_verref_fecha =0; }else{ $por_verref_fecha =1; };
-        if($custodio_confianza->verlab_fecha == null){ $por_verlab_fecha =0; }else{ $por_verlab_fecha =1; };
-        if($custodio_confianza->anasoc_fecha == null){ $por_anasoc_fecha =0; }else{ $por_anasoc_fecha =1; };
-        if($custodio_confianza->exafis_fecha == null){ $por_exafis_fecha =0; }else{ $por_exafis_fecha =1; };
-        if($custodio_confianza->examed_fecha == null){ $por_examed_fecha =0; }else{ $por_examed_fecha =1; };
-        if($custodio_confianza->exapsi_fecha == null){ $por_exapsi_fecha =0; }else{ $por_exapsi_fecha =1; };
-        if($custodio_confianza->exatox_fecha == null){ $por_exatox_fecha =0; }else{ $por_exatox_fecha =1; };
-        if($custodio_confianza->tesver_fecha == null){ $por_tesver_fecha =0; }else{ $por_tesver_fecha =1; };
-        if($custodio_confianza->tesrob_fecha == null){ $por_tesrob_fecha =0; }else{ $por_tesrob_fecha =1; };
-        if($custodio_confianza->tesnor_fecha == null){ $por_tesnor_fecha =0; }else{ $por_tesnor_fecha =1; };
-        if($custodio_confianza->tessob_fecha == null){ $por_tessob_fecha =0; }else{ $por_tessob_fecha =1; };
-        $porcentaje_confianza = $por_valdat_fecha + $por_verref_fecha + $por_verlab_fecha + $por_anasoc_fecha + $por_exafis_fecha + $por_examed_fecha + $por_exapsi_fecha + $por_exatox_fecha + $por_tesver_fecha + $por_tesrob_fecha + $por_tesnor_fecha + $por_tessob_fecha;
+            if($custodio_confianza->valdat_fecha == null){ $por_valdat_fecha =0; }else{ $por_valdat_fecha =1; };
+            if($custodio_confianza->verref_fecha == null){ $por_verref_fecha =0; }else{ $por_verref_fecha =1; };
+            if($custodio_confianza->verlab_fecha == null){ $por_verlab_fecha =0; }else{ $por_verlab_fecha =1; };
+            if($custodio_confianza->anasoc_fecha == null){ $por_anasoc_fecha =0; }else{ $por_anasoc_fecha =1; };
+            if($custodio_confianza->exafis_fecha == null){ $por_exafis_fecha =0; }else{ $por_exafis_fecha =1; };
+            if($custodio_confianza->examed_fecha == null){ $por_examed_fecha =0; }else{ $por_examed_fecha =1; };
+            if($custodio_confianza->exapsi_fecha == null){ $por_exapsi_fecha =0; }else{ $por_exapsi_fecha =1; };
+            if($custodio_confianza->exatox_fecha == null){ $por_exatox_fecha =0; }else{ $por_exatox_fecha =1; };
+            if($custodio_confianza->tesver_fecha == null){ $por_tesver_fecha =0; }else{ $por_tesver_fecha =1; };
+            if($custodio_confianza->tesrob_fecha == null){ $por_tesrob_fecha =0; }else{ $por_tesrob_fecha =1; };
+            if($custodio_confianza->tesnor_fecha == null){ $por_tesnor_fecha =0; }else{ $por_tesnor_fecha =1; };
+            if($custodio_confianza->tessob_fecha == null){ $por_tessob_fecha =0; }else{ $por_tessob_fecha =1; };
+            $porcentaje_confianza = $por_valdat_fecha + $por_verref_fecha + $por_verlab_fecha + $por_anasoc_fecha + $por_exafis_fecha + $por_examed_fecha + $por_exapsi_fecha + $por_exatox_fecha + $por_tesver_fecha + $por_tesrob_fecha + $por_tesnor_fecha + $por_tessob_fecha;
+        }else{
+            $por_entin_fecha = 0;  $por_verdoc_fecha = 0; $por_entope_fecha = 0;
+            $porcentaje_seleccion = $por_entin_fecha + $por_verdoc_fecha + $por_entope_fecha;
 
-        return view('custodio.editar-custodio', compact('custodio','cadenaTipoDocumento','documentos', 'custodio_seleccion', 'custodio_confianza', 'porcentaje_domicilio', 'porcentaje_info', 'porcentaje_seleccion', 'porcentaje_confianza'));
+            $por_valdat_fecha =0; $por_verref_fecha =0; $por_verlab_fecha =0; $por_anasoc_fecha =0; $por_exafis_fecha =0; $por_examed_fecha =0;  $por_exapsi_fecha =0; $por_exatox_fecha =0; $por_tesver_fecha =0; 
+            $por_tesrob_fecha =0; $por_tesnor_fecha =0; $por_tessob_fecha =0; 
+
+            $porcentaje_confianza = $por_valdat_fecha + $por_verref_fecha + $por_verlab_fecha + $por_anasoc_fecha + $por_exafis_fecha + $por_examed_fecha + $por_exapsi_fecha + $por_exatox_fecha + $por_tesver_fecha + $por_tesrob_fecha + $por_tesnor_fecha + $por_tessob_fecha; 
+
+        }
+        
+        $vehiculo_custod = CustodioVehiculo::where('custodio_id', $custodio_id)->first();
+        $arma_custod = CustodioArma::where('custodio_id', $custodio_id)->first();
+
+
+        return view('custodio.editar-custodio', compact('custodio','cadenaTipoDocumento','documentos', 'custodio_seleccion', 'custodio_confianza', 'porcentaje_domicilio', 'porcentaje_info', 'porcentaje_seleccion', 'porcentaje_confianza', 'users_responsable', 'users_custodio', 'vehiculo_custod', 'arma_custod'));
 
     }
 
@@ -497,6 +531,9 @@ class CustodioController extends Controller
     {
         // dd($request->id_custodio);
         $data = [
+            // 'users_custodios' => $request->users_custodios,
+            'tipo_custodio' => $request->tipo_custodio,
+            'users_responsable' => $request->users_responsable,
             'fecha_ingreso' => $request->fecha_ingreso ? Carbon::createFromFormat('d/m/Y', $request->fecha_ingreso)->format('Y-m-d'):null,
             'fecha_baja' => $request->fecha_baja ? Carbon::createFromFormat('d/m/Y', $request->fecha_baja)->format('Y-m-d'):null,
             'ap_paterno' => $request->ape_paterno,
@@ -504,6 +541,11 @@ class CustodioController extends Controller
             'nombre_custodio' => $request->nombre_custodio,
             'edad' => $request->edad,
             'sexo' => $request->sexo,
+            'tipo_gps' => $request->tipo_gps,
+            'candado_servicio' => $request->candado_servicio,
+            'chaleco_servicio' => $request->chaleco_servicio,
+            'identificacion_custodio' => $request->identificacion_custodio,
+            'contrato_custodio' => $request->contrato_custodio,
             'fecha_nacimiento' =>  $request->fecha_nacimiento ? Carbon::createFromFormat('d/m/Y', $request->fecha_nacimiento)->format('Y-m-d'):null,
             'lugar_nacimiento' => $request->lugar_nacimiento,
             'nacionalidad' => $request->nacionalidad,
@@ -687,6 +729,16 @@ class CustodioController extends Controller
     public function guardarinfovehiculo(Request $request)
     {
 
+        if($request->hasFile('fotografia')){
+            $archivo = $request->file('fotografia');
+            $archivoNombre = $archivo->hashName();
+            Storage::putFileAs('custodio/'.$request->custodio_id, $archivo, $archivoNombre);
+            $fotografia = $archivoNombre;
+        }else{
+            $fotografia ="";
+        }
+
+
         $data = [
             'custodio_id' => $request->custodio_id,
             'vehiculo' => $request->vehiculo,
@@ -698,6 +750,7 @@ class CustodioController extends Controller
             'gps' => $request->gps,
             'no_gps' => $request->no_gps,
             'observaciones' => $request->observaciones,
+            'fotografia' => $fotografia,
             'created_at' =>date('Y-m-d H:i:s'),
             'updated_at' =>date('Y-m-d H:i:s'),
             'iduserCreated' =>auth()->user()->id,
@@ -756,7 +809,7 @@ class CustodioController extends Controller
         Custodio::where('id', $request->custodio_id)->update($data);
 
         session()->flash('success', 'El vehiculo se añadió correctamente');
-        return redirect()->route('custodio.listadocustodio');  
+        return redirect()->route('custodio.editarcustodio', $request->custodio_id);  
 
     }
 
@@ -814,7 +867,18 @@ class CustodioController extends Controller
 
     public function editinfovehiculo(Request $request)
     {
-        // dd($request);
+        $vehiculo = CustodioVehiculo::where('custodio_id', $request->custodio_id)->first();
+
+        if($request->hasFile('fotografia')){
+            $archivo = $request->file('fotografia');
+            $archivoNombre = $archivo->hashName();
+            Storage::putFileAs('custodio/'.$request->custodio_id, $archivo, $archivoNombre);
+            $fotografia = $archivoNombre;
+        }else{
+            $fotografia = $vehiculo->fotografia;
+        }
+
+
         $data = [
             'custodio_id' => $request->custodio_id,
             'vehiculo' => $request->vehiculo,
@@ -826,6 +890,7 @@ class CustodioController extends Controller
             'gps' => $request->gps,
             'no_gps' => $request->no_gps,
             'observaciones' => $request->observaciones,
+            'fotografia' => $fotografia,
             'created_at' =>date('Y-m-d H:i:s'),
             'updated_at' =>date('Y-m-d H:i:s'),
             'iduserCreated' =>auth()->user()->id,
@@ -912,11 +977,23 @@ class CustodioController extends Controller
 
     public function guardarinfoarma(Request $request)
     {
+
+        if($request->hasFile('fotografia')){
+            $archivo = $request->file('fotografia');
+            $archivoNombre = $archivo->hashName();
+            Storage::putFileAs('custodio/'.$request->custodio_id, $archivo, $archivoNombre);
+            $fotografia = $archivoNombre;
+        }else{
+            $fotografia ="";
+        }
+
+
         $data = [
             'custodio_id' => $request->custodio_id,
             'registro_arma' => $request->registro_arma,
             'vigencia_portacion' => $request->vigencia_portacion ? Carbon::createFromFormat('d/m/Y', $request->vigencia_portacion)->format('Y-m-d'):null,
             'observaciones' => $request->observaciones,
+            'fotografia'  => $fotografia,
             'created_at' =>date('Y-m-d H:i:s'),
             'updated_at' =>date('Y-m-d H:i:s'),
             'iduserCreated' =>auth()->user()->id,
@@ -975,7 +1052,7 @@ class CustodioController extends Controller
         Custodio::where('id', $request->custodio_id)->update($data);
 
         session()->flash('success', 'El arma se añadió correctamente');
-        return redirect()->route('custodio.listadocustodio');         
+         return redirect()->route('custodio.editarcustodio', $request->custodio_id);        
     }
 
 

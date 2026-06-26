@@ -31,3 +31,9 @@
 
    //Bitacora viaje
     Route::get('/documento-bitacora-viaje/{id}', [App\Http\Controllers\Archivo\ArchivoController::class, 'bitacoraviaje'])->name('archivo.bitacoraviaje');
+
+    //VehiculoCustodioFicha
+    Route::get('/documento-vehiculo-ficha/{id}', [App\Http\Controllers\Archivo\ArchivoController::class, 'documentovehiculoficha'])->name('archivo.documentovehiculoficha');
+
+    //ArmaCustodioFicha
+    Route::get('/documento-arma-ficha/{id}', [App\Http\Controllers\Archivo\ArchivoController::class, 'documentoarmaficha'])->name('archivo.documentoarmaficha');

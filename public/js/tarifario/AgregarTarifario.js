@@ -179,6 +179,13 @@ $("#calcular_tarifa").click(function(){
     var apoyos = document.getElementById("monto_apoyos").value;
     var estadias = document.getElementById("estadias").value;
     var acompanantes = document.getElementById("acompanantes").value;
+     var Estadías Custodio = document.getElementById("Estadías Custodio").value;
+    var Estadías Clientes = document.getElementById("Estadías Clientes").value;
+    var Horas de Estadia = document.getElementById("Horas de Estadia").value;
+    var SIS pago custodio II = document.getElementById("SIS pago custodio II").value;
+    var SIS pago custodio III = document.getElementById("SIS pago custodio III").value;
+    var Pago de custodio segundo = document.getElementById("Pago de custodio segundo").value;
+    var Pago de custodio tercero = document.getElementById("Pago de custodio tercero").value;
 
     var total_sis = kms * ppkm_sis;
     var total_cliente = document.getElementById("monto_cliente").value = formatoMexico(total_sis.toFixed(2)); //total cliente

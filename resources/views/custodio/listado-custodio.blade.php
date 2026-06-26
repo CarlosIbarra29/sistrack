@@ -1,429 +1,211 @@
 @extends('layouts.app')
+
 @push('scripts')
-{{-- <script src="{{ asset('js/Usuarios.js') }}"></script> --}}
-  <script src="{{ asset('js/custodios/CatalogoCustodio.js') }}"></script>
-  <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <script src="{{ asset('js/custodios/CatalogoCustodio.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var options = {
+                series: [75.6, 14.1, 6.4],
+                chart: { type: 'donut', height: 130 },
+                colors: ['#1BC5BD', '#FFA800', '#F64E60'],
+                dataLabels: { enabled: false },
+                legend: { show: false },
+                stroke: { show: false, width: 0 },
+                plotOptions: { pie: { donut: { size: '70%' } } }
+            };
+            var chart = new ApexCharts(document.querySelector("#chart_lateral"), options);
+            chart.render();
+        });
+    </script>
 @endpush
-@section('title')
-  Inventario de custodios
-@endsection
+
 @section('content')
+<div class="bg-dashboard-dark">
 
-    <div class="d-flex flex-row">
-
-    <!--begin::List-->
-    <div class="flex-row-fluid">
-        <div class="d-flex flex-column flex-grow-1">
-
-            <!--begin::Row-->
-            <div class="row">
-                <div class="col-xl-12">
-
-                <!--begin::Card-->
-                    <div class="card card-custom">
-                        <div class="card-header">
-                            <div class="card-title">
-                      <span class="card-icon">
-                        <i class="flaticon2-file coloricono"></i>
-                      </span>
-                                <h3 class="card-label">Inventario de custodios</h3>
-                            </div>
-                            <div class="card-toolbar">
-
-{{--                                 <a class="btn btn-link-primary font-weight-bold mr-2 busqueda" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                    Busqueda
-                                </a> --}}
-
-                                <!--begin::Button-->
-                                @if(true)
-                                  <a href="{{ route('custodio.agregarcustodio') }}"class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black"><i class="la la-plus"></i>Nuevo</a>
-                                @endif
-                                <!--end::Button-->
-
-                                <a href="{{ route('custodio.listadocustodioinactivo') }}" class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black"><i class="far fa-trash-alt"></i>Clientes inactivos</a>
-
-
-{{--                                 <div class="dropdown dropdown-inline mr-2">
-                                    <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      <span class="svg-icon svg-icon-md">
-                                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                          <rect x="0" y="0" width="24" height="24" />
-                                          <path d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z" fill="#000000" opacity="0.3" />
-                                          <path d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z" fill="#000000" />
-                                        </g>
-                                      </svg>
-                                      </span>Exportar
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                        <ul class="navi flex-column navi-hover py-2">
-                                            <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-excel">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-excel-o"></i>
-                                                </span>
-                                                <span class="navi-text">Excel</span>
-                                              </a>
-                                            </li>
-                                            <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-csv">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-text-o"></i>
-                                                </span>
-                                                <span class="navi-text">CSV</span>
-                                              </a>
-                                            </li>
-                                            <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-print">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-text-o"></i>
-                                                </span>
-                                                <span class="navi-text">Imprimir</span>
-                                              </a>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-                                </div> --}}
-                            </div>
-                        </div>
-                        <div class="card-body">
-
-                          <div class="collapse" id="collapseExample">
-                              <div class="card card-body">
-                                <!--begin: Search Form-->
-                                <form class="mb-15">
-                                  <div class="row mb-6">
-                                    <div class="col-lg-64mb-lg-0 mb-4">
-                                      <label>Nombre del custodio:</label>
-                                      <input type="text" class="form-control datatable-input" data-col-index="1" />
-                                    </div>
-                                    <div class="col-lg-4 mb-lg-0 mb-4">
-                                      <label>Apellido paterno:</label>
-                                      <input type="text" class="form-control datatable-input" data-col-index="2" />
-                                    </div>
-                                    <div class="col-lg-4 mb-lg-0 mb-4">
-                                      <label>Apellido materno:</label>
-                                      <input type="text" class="form-control datatable-input" data-col-index="3" />
-                                    </div>
-                                  </div>
-
-                                  <div class="row mb-6">
-                                    <div class="col-lg-64mb-lg-0 mb-4">
-                                      <label>CURP:</label>
-                                      <input type="text" class="form-control datatable-input" data-col-index="4" />
-                                    </div>
-                                    <div class="col-lg-4 mb-lg-0 mb-4">
-                                      <label>RFC:</label>
-                                      <input type="text" class="form-control datatable-input" data-col-index="5" />
-                                    </div>
-                                    <div class="col-lg-4 mb-lg-0 mb-4">
-                                      <label>Correo electronico:</label>
-                                      <input type="text" class="form-control datatable-input" data-col-index="7" />
-                                    </div>
-                                  </div>
-
-
-                                  <div class="row mt-8">
-                                    <div class="col-lg-12">
-                                      <button class="btn btn-primary btn-warning--icon" id="kt_search">
-                                        <span><i class="la la-search"></i><span>Buscar</span></span>
-                                      </button>&#160;&#160;
-                                      <button class="btn btn-secondary btn-secondary--icon" id="kt_reset">
-                                        <span><i class="la la-close"></i><span>Limpiar</span></span>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </form>
-                              </div>
-                          </div>
-                          <div class="row">                                   
-  <div class="col-lg-3">
-        <div class="alert-card">
-            <div class="alert-header">
-                <i class="fas fa-wallet"></i>
-                <span class="alert-title">Pendientes</span>
-            </div>
-            <div class="alert-value">12</div>
-            <div class="divider"></div>
-            <small>Clientes con pagos programados los próximos 7 días.</small>
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+            <h1 class="font-weight-bolder text-white m-0" style="font-size: 24px; letter-spacing: -0.5px;">Inventario de Custodios</h1>
+            <p class="text-muted font-size-sm m-0">Gestiona el alta, control y seguimiento de tus custodios en plataforma.</p>
         </div>
-  </div>
-  <div class="col-lg-3">
-<div class="alert-card">
-            <div class="alert-header">
-                <i class="fas fa-user-clock"></i>
-                <span class="alert-title">Custodios Inactivo</span>
-            </div>
-            <div class="alert-value">8</div>
-            <div class="divider"></div>
-            <small>Tarifas inactivas en más de 30 días.</small>
+        <div>
+            <a href="{{ route('custodio.listadocustodioinactivo') }}" class="btn btn-sm font-weight-bold text-white btn-outline-secondary" style="border-color: var(--border-color); height: 38px; display: flex; align-items: center; gap: 6px;">
+                <i class="la la-trash-alt"></i> Custodios inactivos
+            </a>
         </div>
-  </div>
-  <div class="col-lg-3">
-  <div class="alert-card">
-            <div class="alert-header">
-                <i class="fas fa-user-shield"></i>
-                <span class="alert-title">Grafica</span>
+    </div>
+
+    <div class="row mb-10">
+        @php
+            $buttons = [
+                ['t' => 'ALTA DE CUSTODIOS', 'i' => 'fas fa-user-plus', 'c' => '#f6a924', 'bg' => 'rgba(246, 169, 36, 0.05)', 'r' => route('custodio.agregarcustodio')],
+                ['t' => 'FICHA TÉCNICA', 'i' => 'fas fa-id-card', 'c' => '#00c2a8', 'bg' => 'rgba(0, 194, 168, 0.05)', 'r' => '#'],
+                ['t' => 'SEGUIMIENTO DE DOCTOS.', 'i' => 'fas fa-file-signature', 'c' => '#8950fc', 'bg' => 'rgba(137, 80, 252, 0.05)', 'r' => '#'],
                 
+                ['t' => 'IMPRESIÓN DE CREDENCIAL', 'i' => 'fas fa-print', 'c' => '#FFFFFF', 'bg' => 'rgba(255, 255, 255, 0.05)', 'r' => '#']
+            ];
+        @endphp
+        @foreach($buttons as $btn)
+        <div class="col px-2">
+            <div class="text-center p-4 h-100 d-flex flex-column justify-content-between" style="border: 1px solid {{ $btn['c'] }}; background: {{ $btn['bg'] }}; border-radius: 4px;">
+                <div>
+                    <i class="{{ $btn['i'] }} mb-3" style="color: {{ $btn['c'] }}; font-size: 2.2rem;"></i>
+                    <div class="font-weight-bolder mb-3" style="color: {{ $btn['c'] }}; font-size: 0.75rem;">{{ $btn['t'] }}</div>
+                </div>
+                <a href="{{ $btn['r'] }}" class="btn btn-sm btn-block p-2 font-weight-bolder d-flex justify-content-between align-items-center" style="background: {{ $btn['c'] }}; color: #000; font-size: 0.75rem;">
+                    ACCEDER <i class="fas fa-chevron-right ml-2" style="font-size: 0.6rem;"></i>
+                </a>
             </div>
-            <div class="alert-value">4</div>
-            <div class="divider"></div>
-            <small>Clientes con señales de abandono o retrasos.</small>
         </div>
-  </div>
-
-  <div class="col-lg-3">
-    <div class="alert-card" style="cursor: pointer; border: 1px solid #ffcc00;" data-toggle="modal" data-target="#modalVencimientos">
-        <div class="alert-header">
-            <i class="fas fa-bell "></i>
-            <span class="alert-title">Vencimientos Proximos</span>
-        </div>
-        <div class="alert-value text-warning">
-            <div class="alert-value text-warning">
-    {{ $data->where('tiene_vencimientos_proximos', true)->count() }}
-</div>
-        </div>
-        <div class="divider"></div>
-        <small>Documentos (Licencia, Seguro, etc.) por vencer en 30 días.</small>
+        @endforeach
     </div>
-</div>
 
-</div>
+    <div class="row">
+        <div class="col-xl-9 col-lg-8 pr-md-2">
+            
+            <div class="text-warning font-weight-bolder font-size-xs mb-3 text-uppercase tracking-wide">Resumen de Custodios</div>
 
-                            <!--begin: Datatable-->
-                            <table class="table table-hover table-checkable inventory-table" id="kdatatable_usuarios2">
-                                <thead>
-                                <tr>
-                                  <th>Folio.</th>
-                                  <th>Nombre</th>
-                                  <th>Apellido Paterno</th>
-                                  <th>Apellido Materno</th>
-                                  <th>CURP</th>
-                                  <th>RFC</th>
-                                  <th>Número Telefono</th>
-                                  <th>Correo Electónico</th>
-                                  <th class="text-center">Opciones</th>
-                                </tr>
-                                </thead>
-
-                                <tbody>
-                                  @php $num = 1; @endphp
-                                  @foreach($data as $unid)
-                                    <tr>
-                                      <td>{{ $unid->num_list }}</td>
-                                      <td>{{ $unid->nombre_custodio }}</td>
-                                      <td>{{ $unid->ap_paterno }}</td>
-                                      <td>{{ $unid->ap_materno }}</td>
-                                      <td>{{ $unid->curp }}</td>
-                                      <td>{{ $unid->rfc }}</td>
-                                      <td>{{ $unid->numero_telefono }}</td>
-                                      <td>{{ $unid->correo_electronico }}</td> 
-
-                                      <td class="text-center">
-                                        <a href="{{ route('custodio.vercustodio', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mt-2" title="Ver custodio" data-theme="dark" data-toggle="tooltip" data-placement="top">
-                                            <span class="svg-icon svg-icon-md">
-                                                <i class="flaticon-eye"></i>
-                                            </span>
-                                        </a>
-
-                                        <a href="{{ route('custodio.editarcustodio', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mt-2" title="Editar custodio" data-theme="dark" data-toggle="tooltip" data-placement="top">
-                                            <span class="svg-icon svg-icon-md">
-                                                <i class="flaticon-edit"></i>
-                                            </span>
-                                        </a>
-
-                                        @if($unid->op_vehiculo == 1)
-                                          <a href="{{ route('custodio.agregarvehiculo', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mt-2" title="Información vehículo" data-theme="dark" data-toggle="tooltip" data-placement="top">
-                                              <span class="svg-icon svg-icon-md">
-                                                  <i class="flaticon-truck"></i>
-                                              </span>
-                                          </a>
-                                        @else
-                                          <a href="{{ route('custodio.editarvehiculo', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mt-2" title="Información vehículo" data-theme="dark" data-toggle="tooltip" data-placement="top">
-                                              <span class="svg-icon svg-icon-md">
-                                                  <i class="flaticon-truck"></i>
-                                              </span>
-                                          </a>
-                                        @endif
-
-                                        @if($unid->op_arma == 1)
-                                          <a href="{{ route('custodio.agregararma', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mt-2" title="Información arma" data-theme="dark" data-toggle="tooltip" data-placement="top">
-                                              <span class="svg-icon svg-icon-md">
-                                                  <i class="flaticon-notepad"></i>
-                                              </span>
-                                          </a>
-                                        @else
-                                          <a href="{{ route('custodio.editararma', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mt-2" title="Información arma" data-theme="dark" data-toggle="tooltip" data-placement="top">
-                                              <span class="svg-icon svg-icon-md">
-                                                  <i class="flaticon-notepad"></i>
-                                              </span>
-                                          </a>
-                                        @endif
-
-                                        <button class="btn btn-clean btn-sm btn-icon btn-outline-warning mt-1" onClick="deletecustodio(` {{ $unid->nombre_custodio }} `,`{{ $unid->id }}`)" data-toggle="modal" data-target="#model_delete_user" data-toggle="tooltip" data-theme="dark" title="Desactivar custodio">
-                                            <span class="svg-icon svg-icon-md">
-                                                <i class="flaticon-delete"></i>
-                                            </span>
-                                         </button>
-
-                                      </td>
-                                    </tr>
-                                    @php $num ++; @endphp
-                                  @endforeach
-                                </tbody>
-
-                                <tfoot>
-                                <tr>
-                                  <th>Folio.</th>
-                                  <th>Nombre</th>
-                                  <th>Apellido Paterno</th>
-                                  <th>Apellido Materno</th>
-                                  <th>CURP</th>
-                                  <th>RFC</th>
-                                  <th>Número Telefono</th>
-                                  <th>Correo Electrónico</th>
-                                  <th class="text-center">Opciones</th>
-                                </tr>
-                                </tfoot>
-
-                            </table>
-                            <!--end: Datatable-->
-
-                            <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
-                            {{-- <input type="hidden" id="custodiosdatatable" value="{{ route('custodio.custodiodatatable') }}"> --}}
-
+            <div class="row mb-4 g-3">
+                <div class="col-md-4">
+                    <div class="counter-box-improved">
+                        <div class="icon-wrapper" style="background-color: rgba(59, 130, 246, 0.12); color: #3b82f6;"><i class="la la-users"></i></div>
+                        <div>
+                            <span class="text-muted font-weight-bold d-block font-size-xs text-uppercase">Total Custodios</span>
+                            <span class="text-white font-weight-bolder font-size-h4 d-block">156</span>
                         </div>
                     </div>
-                    <!--end::Card-->
-                    <!--end::Card-->
                 </div>
-
+                <div class="col-md-4">
+                    <div class="counter-box-improved">
+                        <div class="icon-wrapper" style="background-color: rgba(16, 185, 129, 0.12); color: #10b981;"><i class="la la-check-circle"></i></div>
+                        <div>
+                            <span class="text-muted font-weight-bold d-block font-size-xs text-uppercase">Activos</span>
+                            <span class="text-white font-weight-bolder font-size-h4 d-block">118</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="counter-box-improved">
+                        <div class="icon-wrapper" style="background-color: rgba(239, 68, 68, 0.12); color: #ef4444;"><i class="la la-user-times"></i></div>
+                        <div>
+                            <span class="text-muted font-weight-bold d-block font-size-xs text-uppercase">Inactivos</span>
+                            <span class="text-white font-weight-bolder font-size-h4 d-block">16</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!--end::Row-->
-        </div>
-    </div>
-    <!--end::List-->
-</div>
 
-{{-- M O D A L S --}}
-  <form method="post" id="custodio_delete_form" action="{{ route('custodio.desactivarcustodio') }}" enctype="multipart/form-data">
-    @csrf
-    <input type="hidden" name="id" id="id_custodio_delete" value="">
-  </form>
-
-  <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
-
-<div class="modal fade" id="modalPorcentajes" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Gestión de Administración: <span id="nombre_custodio_modal" class="text-primary"></span></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <form id="formPorcentajes">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Administrador Responsable (Dueño):</label>
-                        <select class="form-control select2" name="admin_principal">
-                            <option value="1">Admin Persona A</option>
-                            <option value="2">Admin Persona B</option>
-                        </select>
-                        <span class="form-text text-muted">Es quien figura como contacto directo.</span>
-                    </div>
-                    
-                    <hr>
-                    <h6>Repartición de Porcentajes</h6>
-                    <div id="contenedor_porcentajes">
-                        <div class="d-flex align-items-center mb-4">
-                            <div class="flex-grow-1">Persona A</div>
-                            <div style="width: 100px;">
-                                <input type="number" class="form-control" placeholder="%" value="50">
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center mb-4">
-                            <div class="flex-grow-1">Persona B</div>
-                            <div style="width: 100px;">
-                                <input type="number" class="form-control" placeholder="%" value="50">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="alert alert-custom alert-light-danger p-2" id="error_porcentaje" style="display:none;">
-                        La suma debe ser exactamente 100%.
-                    </div>
+            <form class="horizontal-filter-bar mb-4">
+                <div style="flex: 1; min-width: 160px; position: relative;">
+                    <input type="text" class="form-control input-premium-dark datatable-input pl-8" placeholder="Buscar custodio..." />
+                    <i class="la la-search text-muted position-absolute" style="left: 10px; top: 12px; font-size: 13px;"></i>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-warning" style="color:black">Guardar Cambios</button>
+                <div style="width: 150px;">
+                    <select class="form-control input-premium-dark datatable-input py-0">
+                        <option>Estatus: Todos</option>
+                    </select>
                 </div>
+                <div style="width: 150px;">
+                    <select class="form-control input-premium-dark datatable-input py-0">
+                        <option>Puesto: Todos</option>
+                    </select>
+                </div>
+                <div style="width: 150px;">
+                    <select class="form-control input-premium-dark datatable-input py-0">
+                        <option>Sucursal: Todos</option>
+                    </select>
+                </div>
+                
+                <button type="button" class="btn btn-sm btn-outline-secondary text-white font-weight-bold px-4" style="height:38px; border-color: var(--border-color);"><i class="la la-filter"></i> FILTROS</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary text-muted font-weight-bold px-4" style="height:38px; border-color: var(--border-color);"><i class="la la-sync"></i> LIMPIAR</button>
             </form>
-        </div>
-    </div>
-</div>
 
-
-
-
-
-
-
-
-
-  {{-- MODAL DE VENCIMIENTOS --}}
-<div class="modal fade" id="modalVencimientos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-exclamation-triangle text-warning mr-2"></i> Documentos Próximos a Vencer</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="table-responsive">
-                    <table class="table table-head-custom table-vertical-center" id="tabla_vencimientos">
-                        <thead>
-                            <tr>
-                                <th>Custodio</th>
-                                <th>Documento</th>
-                                <th>Fecha Vencimiento</th>
-                                <th>Días Circulación</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody> 
-                            @foreach($data as $unid)
+            <div class="text-warning font-weight-bolder font-size-xs mb-3 text-uppercase tracking-wide">Listado de Custodios</div>
+            <div class="card card-premium mb-4">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-improved-dark">
+                            <thead>
                                 <tr>
-                                    <td>{{ $unid->nombre_custodio }} {{ $unid->ap_paterno }}</td>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Puesto</th>
+                                    <th>Sucursal</th>
+                                    <th>Estatus</th>
+                                    <th>Documentación</th>
+                                    <th class="text-right" style="width: 100px;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody> 
+                                @foreach($data as $unid)
+                                <tr>
+                                    <td class="text-muted font-weight-bold">CUST-{{ str_pad($unid->id, 4, '0', STR_PAD_LEFT) }}</td>
                                     <td>
-                                        <span class="d-block"><b>Licencia:</b> {{ $unid->fecha_licencia ?? 'N/A' }}</span>
-                                        <span class="d-block"><b>Póliza:</b> {{ $unid->fecha_seguro ?? 'N/A' }}</span>
-                                        <span class="d-block"><b>Verificación:</b> {{ $unid->fecha_verificacion ?? 'N/A' }}</span>
+                                        <div class="d-flex align-items-center">
+                                            <div class="symbol symbol-25 symbol-circle mr-2" style="background-color: var(--bg-input); width:26px; height:26px; display:flex; align-items:center; justify-content:center; border: 1px solid var(--border-color); overflow:hidden;">
+                                                <img src="{{ asset('media/users/default.jpg') }}" alt="" style="width:100%; height:100%; object-fit:cover;">
+                                            </div>
+                                            <span class="font-weight-bold text-white">{{ $unid->nombre_custodio }} {{ $unid->ap_paterno }}</span>
+                                        </div>
                                     </td>
-                                    <td>
-                                        <span class="label label-light-danger label-inline">Próximo</span>
-                                    </td>
-                                    <td>{{ $unid->dias_circulacion ?? 'Lunes-Viernes' }}</td>
-                                    <td>
-                                        <a href="{{ route('custodio.editarcustodio', $unid->id) }}" class="btn btn-sm btn-clean btn-icon">
-                                            <i class="flaticon-edit text-primary"></i>
-                                        </a>
+                                    <td>{{ $unid->puesto ?? 'Escolta' }}</td>
+                                    <td class="text-muted">{{ $unid->sucursal ?? 'N/A' }}</td>
+                                    <td><span class="status-chip chip-active">ACTIVO</span></td>
+                                    <td><span class="status-chip chip-info">COMPLETA</span></td>
+                                    <td class="text-right">
+                                        <div class="d-flex justify-content-end align-items-center gap-1">
+                                            <a href="{{ route('custodio.vercustodio', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Ver Perfil"><i class="la la-eye font-size-lg"></i></a>
+                                            <a href="{{ route('custodio.editarcustodio', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Ver Perfil"><i class="la la-eye font-size-lg"></i></a>
+                                        </div>
                                     </td>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cerrar</button>
+        </div>
+
+        <div class="col-xl-3 col-lg-4 pl-md-2">
+            <div class="card card-premium p-4 mb-4">
+                <span class="text-warning font-weight-bolder font-size-xs d-block mb-3 text-uppercase">Estado Documentación</span>
+                <div class="d-flex align-items-center justify-content-between">
+                   
+                    <div class="donut-chart-segment" id="chart_lateral"></div>
+                    <div class="font-size-xs" style="line-height: 1.8;">
+                        <div style="color: #10b981; font-weight: 600;">● Completa <span class="text-white-50 font-weight-normal">118 (75.6%)</span></div>
+                        <div style="color: #f59e0b; font-weight: 600;">● Pendiente <span class="text-white-50 font-weight-normal">22 (14.1%)</span></div>
+                        <div style="color: #ef4444; font-weight: 600;">● Incompleta <span class="text-white-50 font-weight-normal">10 (6.4%)</span></div>
+                        <div style="color: #3b82f6; font-weight: 600;">● Vencida <span class="text-white-50 font-weight-normal">6 (3.9%)</span></div>
+                    </div>
+                </div>
+                <button class="btn btn-xs btn-block btn-outline-secondary font-weight-bold text-white mt-4 py-2" style="border-color: var(--border-color); font-size: 11px;">VER REPORTE COMPLETO</button>
+            </div>
+
+            <div class="card card-premium p-4 mb-4">
+                <span class="text-warning font-weight-bolder font-size-xs d-block mb-3 text-uppercase">Alertas Importantes</span>
+                <div class="d-flex flex-column gap-3">
+                    <div class="d-flex align-items-start gap-2">
+                        <i class="la la-exclamation-triangle text-danger font-size-h3 mt-1"></i>
+                        <div>
+                            <span class="text-white font-weight-bold font-size-xs d-block">6 documentos vencidos</span>
+                            <span class="text-muted font-size-xs">Requieren atención inmediata</span>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-start gap-2 mt-2">
+                        <i class="la la-clock text-warning font-size-h3 mt-1"></i>
+                        <div>
+                            <span class="text-white font-weight-bold font-size-xs d-block">22 usuarios por vencer doctos.</span>
+                            <span class="text-muted font-size-xs">Próximos 30 días</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-xs btn-block btn-outline-secondary font-weight-bold text-white mt-4 py-2" style="border-color: var(--border-color); font-size: 11px;">VER TODAS LAS ALERTAS</button>
             </div>
         </div>
     </div>
 </div>
-
-
 @endsection

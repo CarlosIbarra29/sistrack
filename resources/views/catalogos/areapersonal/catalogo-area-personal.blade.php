@@ -136,7 +136,7 @@
 
 
                                 <!--begin: Datatable-->
-                                <table class="table table-hover table-checkable inventory-table" id="catalogo_table">
+                                <table class="table table-checkables" id="catalogo_table">
                                     <thead>
                                         <tr>
                                             <th>No.</th>
