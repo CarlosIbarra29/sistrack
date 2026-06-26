@@ -206,42 +206,22 @@ class ProgramacionController extends Controller
             'fecha_servicio' => $request->fecha_hora,
             'acompanantes'=> $request->op_custodios,
             'dom_origen' => $request->dom_origen,
-            'dom_destino' => $request->dom_destino,
+            'dom_destino' => $request->// dom_destino,
             'observaciones' => $request->observaciones,
-            'op_monitoreo_id' => $request->op_monitoreo_id,
-
-            // Nuevo
-            'folio_interno' => $request->folio_interno,
-            'linea_transportista' => $request->linea_transportista,
-            'armado_servicio' => $request->armado_servicio,
+            'op_monitoreo_id' => $request->armado_servicio,
             
             'estatus_viaje_id' => 1,
             'siaf_status' =>1,
             'created_at' =>date('Y-m-d H:i:s'),
             'updated_at' =>date('Y-m-d H:i:s'),
-            'iduserCreated' =>auth()->user()->id,
-            'iduserUpdated' =>auth()->user()->id,
-        ];
+            '           ];
 
-        $id_programacion= Programacion::insertGetId($data);
-
-        $colIdDocumento = $request->id_documento;
-        if($request->op_custodios == 0){
-            foreach($request->id_documento as $indice => $archivo)
-            {
-                $data = [
-                    'programacion_id' => $id_programacion,
-                    'custodio_id' =>$colIdDocumento[$indice],
-                    'created_at' =>date('Y-m-d H:i:s'),
-                    'updated_at' =>date('Y-m-d H:i:s')
-                ];
-
-                AcompanantesProgramacion::insert($data);
+                AcompanantesProgramacion::ins($data);
             }
         }
 
-        // $colIdDocumento = $request->id_documento;
-        // if($request->op_custodios == 0){
+        $colIdDocumento = $request->id_umento;
+      / if($request->op_custodios == 0){
         //     {
                 
 

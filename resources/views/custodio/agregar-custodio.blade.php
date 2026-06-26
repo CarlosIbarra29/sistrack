@@ -246,8 +246,8 @@
                                                         <span></span> GPS Fijo
                                                     </label>
                                                     <label class="radio">
-                                                        <input type="radio" name="tipo_gps" value="1">
-                                                        <span></span> GPS Portatil
+                                                        <input type="radio" name="tipo_gps" value="portatil"> GPS Portatil
+                                                        
                                                     </label>
                                                 </div>
                                             </div>

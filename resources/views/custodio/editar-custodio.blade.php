@@ -294,8 +294,9 @@
                                                         <span></span> GPS Fijo
                                                     </label>
                                                     <label class="radio">
-                                                        <input type="radio" name="tipo_gps" value="2">
-                                                        <span></span> GPS Portatil
+                                                        <input type="radio" name="tipo_gps" value="portatil"
+    {{ $custodio->tipo_gps == 'portatil' ? 'checked' : '' }}> GPS Portatil
+                                                        
                                                     </label>
                                                 </div>
                                             </div>
