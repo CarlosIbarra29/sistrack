@@ -1,383 +1,491 @@
 @extends('layouts.app')
+
 @push('scripts')
   <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js') }}"></script>
   <meta name="csrf-token" content="{{ csrf_token() }}" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 @endpush
+
 @section('title')
   Listado de monitoreo
 @endsection
+
 @section('content')
 
-{{--     <div class="d-flex flex-row">
 
-    <div class="flex-row-fluid">
-        <div class="d-flex flex-column flex-grow-1">
+<div class="container-fluid bg-sisprotec p-4">
 
-            <div class="row">
-                <div class="col-xl-12">
+    
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3 class="main-title-custom text-uppercase m-0">Bitácora de Seguimiento</h3>
+            <span class="text-muted-custom font-size-sm">Seguimiento en tiempo real del servicio de custodia.</span>
+        </div>
+    </div>
 
-                    <div class="card card-custom">
-                        <div class="card-header">
-                            <div class="card-title">
-                      <span class="card-icon">
-                        <i class="flaticon2-file text-primary"></i>
-                      </span>
-                                <h3 class="card-label">Inventario de monitoreo</h3>
+    
+    <div class="card-monitoring p-3 mb-4">
+        <div class="form-row align-items-center">
+            <div class="col-md-3 mb-2 mb-md-0">
+                <label class="text-muted-custom font-size-xs m-0 d-block">Servicio</label>
+                <div class="d-flex align-items-center mt-1">
+                    <select class="form-control filter-input-custom font-weight-bold mr-2" style="width: 60%;">
+                        <option>CUST-2026-0428-0017</option>
+                    </select>
+                    
+                    <span class="badge badge-en-ruta">EN RUTA</span>
+                </div>
+            </div>
+            <div class="col-md-2 mb-2 mb-md-0">
+                <label class="text-muted-custom font-size-xs m-0 d-block">Fecha</label>
+                <input type="date" id="filtro_fecha" class="form-control filter-input-custom w-100 mt-1" value="2026-04-28">
+            </div>
+            <div class="col-md-2 mb-2 mb-md-0">
+                <label class="text-muted-custom font-size-xs m-0 d-block">Estatus</label>
+                <select class="form-control filter-input-custom w-100 mt-1">
+                    <option>Todos</option>
+                </select>
+            </div>
+            <div class="col-md-5 text-md-right mt-3 mt-md-0">
+                <button class="btn btn-sm btn-warning font-weight-bold px-3 text-dark" style="background-color: #eab308;" onclick="window.location.reload();"><i class="la la-refresh"></i> ACTUALIZAR</button>
+                <button class="btn btn-sm btn-outline-secondary font-weight-bold px-3 ml-1 text-white border-secondary"><i class="la la-download"></i> EXPORTAR</button>
+                <button class="btn btn-sm btn-outline-secondary font-weight-bold px-3 ml-1 text-white border-secondary"><i class="la la-print"></i> IMPRIMIR</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="row items-stretch">
+        
+        
+        <div class="col-xl-3 col-lg-4 d-flex flex-column">
+            <div class="card-monitoring flex-grow-1">
+                <div class="card-monitoring-header">
+                    <span class="text-gold font-weight-bold text-uppercase">Detalles del Servicio</span>
+                </div>
+                <div class="card-body p-3">
+                    <div class="row mb-2">
+                        <div class="col-5 text-muted-custom">Cliente</div>
+                        <div class="col-7 font-weight-bold">TYASA</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-5 text-muted-custom">No. Embarque</div>
+                        <div class="col-7 text-white">EMB-78291</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-5 text-muted-custom">Tipo de servicio</div>
+                        <div class="col-7 text-white">Custodia</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-5 text-muted-custom">Origen</div>
+                        <div class="col-7 text-white-50">CDMX - Centro de Distribución</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-5 text-muted-custom">Destino</div>
+                        <div class="col-7 text-white-50">Puebla - Planta Industrial</div>
+                    </div>
+                    
+                    <div class="form-row border-top border-dark pt-3 mb-3">
+                        <div class="col-6">
+                            <span class="text-muted-custom font-size-xs d-block">Fecha salida</span>
+                            <span class="text-white font-weight-bold">28/04/2026</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="text-muted-custom font-size-xs d-block">Hora salida</span>
+                            <span class="text-white font-weight-bold">08:00</span>
+                        </div>
+                    </div>
+
+                    <span class="text-gold font-weight-bold d-block mb-2 font-size-xs text-uppercase">Custodio asignado</span>
+                    <div class="d-flex align-items-center p-2 rounded mb-3" style="background-color: #090f1d; border: 1px solid #1e2d4a;">
+                        <div class="symbol symbol-35 symbol-circle mr-3">
+                            <span class="symbol-label bg-warning text-dark font-weight-bold">JP</span>
+                        </div>
+                        <div>
+                            <span class="font-weight-bold text-white d-block">Juan Pérez García</span>
+                            <small class="text-muted-custom">ID: CUST-015</small>
+                        </div>
+                    </div>
+
+                    <span class="text-muted-custom d-block font-size-xs">Unidad asignada</span>
+                    <span class="text-white font-weight-bold d-block mb-2">U-12 <span class="font-weight-normal text-muted-custom">| Nissan NP300 Blanca</span></span>
+
+                    <span class="text-muted-custom d-block font-size-xs">Nivel de riesgo</span>
+                    <span class="text-white font-weight-bold d-block mb-3"><i class="fa fa-circle text-warning font-size-xs mr-1"></i> MEDIO</span>
+
+                    <span class="text-muted-custom d-block font-size-xs">Observaciones</span>
+                    <p class="text-white-50 font-size-xs p-2 rounded border" style="background-color: #090f1d; border-color: #1e2d4a !important;">
+                        Mercancía sensible. Mantener comunicación cada 45 min.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="col-xl-6 col-lg-8 d-flex flex-column">
+            <div class="card-monitoring map-card-height mb-3" id="map-container-fullscreen">
+                <div class="card-monitoring-header d-flex justify-content-between align-items-center">
+                    <span class="text-gold font-weight-bold text-uppercase">Ubicación en Tiempo Real</span>
+                    <span class="badge badge-gps"><i class="fa fa-map-marker mr-1"></i> GPS ACTIVO</span>
+                </div>
+                <div class="p-2 position-relative" style="height: calc(100% - 49px);">
+                    <div class="map-wrapper" style="height: 100%;">
+                        
+                        
+                        <button class="btn-map-fullscreen" title="Expandir mapa" onclick="toggleMapFullscreen();">
+                            <svg viewBox="0 0 24 24">
+                                <!-- Flecha arriba-izquierda -->
+                                <polyline points="10 4 4 4 4 10"></polyline>
+                                <line x1="4" y1="4" x2="11" y2="11"></line>
+                                <!-- Flecha abajo-derecha -->
+                                <polyline points="14 20 20 20 20 14"></polyline>
+                                <line x1="20" y1="20" x2="13" y2="13"></line>
+                            </svg>
+                        </button>
+                        
+                        <div id="map-monitoring"></div>
+                    </div>
+                </div>
+            </div>
+
+           
+            <div class="card-monitoring flex-grow-1">
+                <div class="card-monitoring-header">
+                    <span class="text-gold font-weight-bold text-uppercase">Bitácora de Eventos</span>
+                </div>
+                <div class="table-responsive p-2">
+                    <table class="table table-events text-white mb-1">
+                        <thead>
+                            <tr>
+                                <th>Hora</th>
+                                <th>Tipo de evento</th>
+                                <th>Descripción</th>
+                                <th>Ubicación</th>
+                                <th>Registrado por</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-muted-custom">11:15</td>
+                                <td><span class="text-warning font-weight-bold"><i class="fa fa-exclamation-triangle mr-1"></i> Parada no programada</span></td>
+                                <td class="text-white-50">Parada no programada detectada</td>
+                                <td>Km 62+400</td>
+                                <td class="text-muted-custom">Sistema GPS</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted-custom">10:30</td>
+                                <td><span class="text-steel-blue font-weight-bold"><i class="fa fa-info-circle mr-1"></i> Checkpoint</span></td>
+                                <td class="text-white-50">Checkpoint alcanzado correctamente</td>
+                                <td>Km 85+300</td>
+                                <td class="text-muted-custom">Sistema GPS</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted-custom">09:45</td>
+                                <td><span class="text-custom-emerald font-weight-bold"><i class="fa fa-check-circle mr-1"></i> Comunicación</span></td>
+                                <td class="text-white-50">Comunicación con custodio realizada</td>
+                                <td>Km 45+200</td>
+                                <td class="text-muted-custom">Centro de Monitoreo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="col-xl-3 col-lg-12 d-flex flex-column">
+            
+            
+            <div class="card-monitoring map-card-height mb-3 d-flex flex-column">
+                <div class="card-monitoring-header">
+                    <span class="text-gold font-weight-bold text-uppercase">Estatus del Servicio</span>
+                </div>
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <div class="d-flex flex-column h-100">
+                        
+                        
+                        <div class="status-item-custom justify-content-between">
+                            <div class="d-flex align-items-start">
+                                <span class="text-custom-emerald mr-3 mt-1"><i class="la la-truck font-size-h4"></i></span>
+                                <div>
+                                    
+                                    <span class="text-custom-emerald font-weight-bold font-size-sm d-block">EN RUTA</span>
+                                    <small class="text-muted-custom d-block mt-1">Servicio en curso de custodia activa</small>
+                                </div>
                             </div>
-                            <div class="card-toolbar">
+                        </div>
 
-                                <a class="btn btn-link-primary font-weight-bold mr-2 busqueda" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                    Busqueda
-                                </a>
+                       
+                        <div class="status-item-custom justify-content-between">
+                            <div class="d-flex align-items-start">
+                                <span class="text-steel-blue mr-3 mt-1"><i class="la la-clock-o font-size-h4"></i></span>
+                                <div>
+                                    <span class="text-white font-weight-bold font-size-sm d-block">03:32:45 &nbsp; Tiempo Transcurrido</span>
+                                    <small class="text-muted-custom d-block mt-1">Inicio: 28/04/2026 08:00</small>
+                                    <small class="text-muted-custom d-block">Estimado de llegada: 10:45</small>
+                                </div>
+                            </div>
+                        </div>
 
-                                <div class="dropdown dropdown-inline mr-2">
-                                    <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      <span class="svg-icon svg-icon-md">
-                                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                          <rect x="0" y="0" width="24" height="24" />
-                                          <path d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z" fill="#000000" opacity="0.3" />
-                                          <path d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z" fill="#000000" />
-                                        </g>
-                                      </svg>
-                                      </span>Exportar
-                                    </button>
-
-                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-
-                                        <ul class="navi flex-column navi-hover py-2">
-                                            <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-excel">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-excel-o"></i>
-                                                </span>
-                                                <span class="navi-text">Excel</span>
-                                              </a>
-                                            </li>
-
-                                            <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-csv">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-text-o"></i>
-                                                </span>
-                                                <span class="navi-text">CSV</span>
-                                              </a>
-                                            </li>
-                                            <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-print">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-text-o"></i>
-                                                </span>
-                                                <span class="navi-text">Imprimir</span>
-                                              </a>
-                                            </li>
-
-                                        </ul>
+                        
+                        <div class="status-item-custom justify-content-between">
+                            <div class="d-flex align-items-start w-100 pr-3">
+                                <span class="text-warning mr-3 mt-1"><i class="la la-map-signs font-size-h4"></i></span>
+                                <div class="w-100">
+                                    <span class="text-white font-weight-bold font-size-sm d-block">68% &nbsp; Progreso de Ruta</span>
+                                    <div class="progress progress-custom mt-2">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 68%;"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
 
-                          <div class="collapse" id="collapseExample">
-                              <div class="card card-body">
-                                <form class="mb-15">
-                                  <div class="row mb-6">
-                                    <div class="col-lg-6 mb-lg-0 mb-6">
-                                        <label>Cliente:</label>
-                                        <select class="form-control datatable-input" name="nombre_cliente" data-control="select2" data-placeholder="Estado" data-col-index="0">
-                                            <option value="0">Selecciona un cliente</option>
-                                            @foreach($data as $es)
-                                                <option value="{{ $es->id }}" >{{ $es->nombre_cliente }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                  </div>
-
-                                  <div class="row mt-8">
-                                    <div class="col-lg-12">
-                                      <button class="btn btn-primary btn-primary-icon" id="kt_search">
-                                        <span><i class="la la-search"></i><span>Buscar</span></span>
-                                      </button>&#160;&#160;
-                                      <button class="btn btn-secondary btn-secondary-icon" id="kt_reset">
-                                        <span><i class="la la-close"></i><span>Limpiar</span></span>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </form>
-                              </div>
-                          </div>
-
-                             <table class="table table-hover table-checkable inventory-table" id="kdatatable_usuarios2">
-                                <thead>
-                                <tr>
-                                  <th>No.</th>
-                                  <th>Folio</th>
-                                  <th>Cliente</th>
-                                  <th>Domicilio origen</th>
-                                  <th>Domicilio destino</th>
-                                  <th>Fecha y Hora</th>
-                                  <th>Tipo de servicio</th>
-                                  <th>Estatus</th>
-                                  <th class="text-center">Acciones</th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                <tr>
-                                  <th>No.</th>
-                                  <th>Folio</th>
-                                  <th>Cliente</th>
-                                  <th>Domicilio origen</th>
-                                  <th>Domicilio destino</th>
-                                  <th>Fecha y Hora</th>
-                                  <th>Tipo de servicio</th>
-                                  <th>Estatus</th>
-                                  <th class="text-center">Acciones</th>
-                                </tr>
-                                </tfoot>
-
-                            </table>
-
-                            <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
-                            <input type="hidden" id="programaciondatatable" value="{{ route('programacion.programaciondatatable') }}">
-
-                        </div>
                     </div>
-
                 </div>
-
             </div>
 
+            
+            <div class="card-monitoring flex-grow-1 d-flex flex-column mb-3">
+                <div class="card-monitoring-header d-flex justify-content-between align-items-center">
+                    <span class="text-gold font-weight-bold text-uppercase">Alertas</span>
+                    <a href="#" class="font-size-xs text-gold">Ver todas</a>
+                </div>
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <div class="alert-container-flex flex-grow-1">
+                        
+                        <div class="p-3 alert-item-custom justify-content-between">
+                            <div class="d-flex align-items-start">
+                                <span class="text-warning mr-3 mt-1"><i class="fa fa-exclamation-triangle font-size-h6"></i></span>
+                                <div>
+                                    <span class="text-white font-weight-bold font-size-sm d-block">11:15 &nbsp; Parada no programada</span>
+                                    <small class="text-muted-custom d-block mt-1">Duración: 00:05:12 | Km 62+400</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-3 alert-item-custom justify-content-between">
+                            <div class="d-flex align-items-start">
+                                
+                                <span class="text-steel-blue mr-3 mt-1"><i class="fa fa-info-circle font-size-h6"></i></span>
+                                <div>
+                                    <span class="text-white font-weight-bold font-size-sm d-block">10:30 &nbsp; Checkpoint Alcanzado</span>
+                                    <small class="text-muted-custom d-block mt-1">San Martín Texmelucan | Km 85+300</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-3 alert-item-custom justify-content-between">
+                            <div class="d-flex align-items-start">
+                                <span class="text-custom-emerald mr-3 mt-1"><i class="fa fa-check-circle font-size-h6"></i></span>
+                                <div>
+                                    <span class="text-white font-weight-bold font-size-sm d-block">09:10 &nbsp; Servicio Iniciado</span>
+                                    <small class="text-muted-custom d-block mt-1">CDMX - Centro de Distribución</small>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-</div> --}}
-
-  <input type='hidden' id='url_estatus' value='{{ route('monitoreo.updateestatusajax') }}'>
-
-    <div class="d-flex flex-row">
-
-    <!--begin::List-->
-    <div class="flex-row-fluid">
-        <div class="d-flex flex-column flex-grow-1">
-
-            <!--begin::Row-->
-            <div class="row">
-                <div class="col-xl-12">
-
-                <!--begin::Card-->
-                    <div class="card card-custom">
-                        <div class="card-header">
-                            <div class="card-title">
-                      <span class="card-icon">
-                        <i class="flaticon2-file text-warning"></i>
-                      </span>
-                                <h3 class="card-label">Inventario de monitoreo</h3>
+    
+    <div class="row">
+        
+        <div class="col-md-6 d-flex">
+            <div class="card-monitoring w-100 p-2">
+                <div class="card-monitoring-header">
+                    <span class="text-gold font-weight-bold text-uppercase">Comunicación con Custodio</span>
+                </div>
+                <div class="card-body p-3 d-flex align-items-center">
+                    <div class="row w-100 align-items-center">
+                        <div class="col-lg-6 d-flex align-items-center">
+                            <div class="symbol symbol-50 symbol-circle mr-3">
+                                <span class="symbol-label bg-secondary text-white font-weight-bold">JP</span>
                             </div>
-                            <div class="card-toolbar">
-
-
+                            <div>
+                                <h5 class="m-0 font-weight-bold text-white">Juan Pérez García</h5>
+                                <small class="text-muted-custom d-block mb-2">ID: CUST-015</small>
+                                <span class="badge badge-en-ruta">CONECTADO</span>
                             </div>
                         </div>
-                        <div class="card-body">
-                          <div class="row">                                   
-  <div class="col-lg-3">
-        <div class="alert-card">
-            <div class="alert-header">
-                <i class="fas fa-wallet"></i>
-                <span class="alert-title">Pendientes</span>
+                        <div class="col-lg-6 text-lg-right mt-3 mt-lg-0">
+                            <div class="d-inline-block text-center mr-3">
+                                <a href="#" class="btn-circle-action"><i class="la la-phone font-size-h4"></i></a>
+                                <small class="text-muted-custom d-block mt-1">Llamada</small>
+                            </div>
+                            <div class="d-inline-block text-center mr-3">
+                                <a href="#" class="btn-circle-action"><i class="la la-comments font-size-h4"></i></a>
+                                <small class="text-muted-custom d-block mt-1">Mensaje</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="alert-value">12</div>
-            <div class="divider"></div>
-            <small>Clientes con pagos programados los próximos 7 días.</small>
         </div>
-  </div>
-  <div class="col-lg-3">
-<div class="alert-card">
-            <div class="alert-header">
-                <i class="fas fa-user-clock"></i>
-                <span class="alert-title">Monitoreo Inactivo</span>
-            </div>
-            <div class="alert-value">8</div>
-            <div class="divider"></div>
-            <small>Tarifas inactivas en más de 30 días.</small>
-        </div>
-  </div>
-  <div class="col-lg-3">
-  <div class="alert-card">
-            <div class="alert-header">
-                <i class="fas fa-exclamation-circle"></i>
-                <span class="alert-title">Tipo de viaje </span>
-            </div>
-            <div class="alert-value">3</div>
-            <div class="divider"></div>
-            <small>Tareas importantes que requieren atención inmediata.</small>
-        </div>
-  </div>
-  <div class="col-lg-3">
-  <div class="alert-card">
-            <div class="alert-header">
-                <i class="fas fa-user-shield"></i>
-                <span class="alert-title">Grafica</span>
-            </div>
-            <div class="alert-value">4</div>
-            <div class="divider"></div>
-            <small>Clientes con señales de abandono o retrasos.</small>
-        </div>
-  </div>
 
-</div>
+        
+        <div class="col-md-6 d-flex">
+            <div class="card-monitoring w-100 p-2">
+                <div class="card-monitoring-header">
+                    <span class="text-gold font-weight-bold text-uppercase">Documentos del Servicio</span>
+                </div>
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-sm-4 col-6 mb-2">
+                            <div class="doc-box text-center">
+                                <i class="la la-file-pdf text-danger font-size-h2 mb-1"></i>
+                                <span class="d-block font-size-xs text-white text-truncate font-weight-bold">Orden de Serv.</span>
+                                <a href="#" class="font-size-xs text-gold mt-1">Descargar</a>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-6 mb-2">
+                            <div class="doc-box text-center">
+                                <i class="la la-file-pdf text-danger font-size-h2 mb-1"></i>
+                                <span class="d-block font-size-xs text-white text-truncate font-weight-bold">Carta Porte</span>
+                                <a href="#" class="font-size-xs text-gold mt-1">Descargar</a>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-12 mb-2">
+                            <div class="doc-box text-center">
+                                <i class="la la-file-text text-success font-size-h2 mb-1"></i>
+                                <span class="d-block font-size-xs text-white text-truncate font-weight-bold">Hoja de Ruta</span>
+                                <a href="#" class="font-size-xs text-gold mt-1">Ver</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                            <!--begin: Datatable-->
-                             <table class="table table-hover table-checkable" id="kdatatable_usuarios2">
-                                <thead>
-                                <tr>
-                                  <th>No.</th>
-                                  <th>Folio</th>
-                                  <th>Cliente</th>
-                                  <th>Domicilio origen</th>
-                                  <th>Domicilio destino</th>
-                                  <th>Fecha y Hora</th>
-                                  <th>Custodio</th>
-                                  <th>Tipo de servicio</th>
-                                  <th>Estatus</th>
-                                  <th>Monitoreo</th>
-                                  <th class="text-center">Acciones</th>
-                                </tr>
-                                </thead>
 
-                                <tbody>
-                                  @foreach($monitoreo as $unid)
-                                    <tr>
-                                      <td>{{ $unid->id }}</td>
-                                      <td> <a href="{{ route('monitoreo.moduloestadias', $unid->id) }}">{{ $unid->folio }}</a></td>
-                                      <td>{{ $unid->nombre_cliente }}</td>
-                                      <td>{{ $unid->dom_origen }}</td>
-                                      <td>{{ $unid->dom_destino }}</td>
-                                      <td>
-                                        {{ date('d/m/Y  h:i  A' , strtotime( $unid->fecha_servicio)) }}
-                                      </td>
-                                      <td>{{ $unid->custodio->nombre_custodio }} {{ $unid->custodio->ap_paterno }} {{ $unid->custodio->ap_materno }}</td>
-                                      <td>
-                                        @if($unid->tipo_servicio == 0)
-                                          {{-- <span class="label font-weight-bold  label-outline-danger label-inline" >Foraneo</span> --}}
-                                          Foraneo
-                                        @else
-                                          {{-- <span class="label font-weight-bold label-outline-warning label-inline" ></span> --}}
-                                          Local
-                                        @endif
-                                      </td>
-                                      <td>
-                                        <select class="form-control" id="programacion_id" name="programacion_id" data-programacion="{{ $unid->id }}" style="width: 140px">
-                                            <option value="">Selecciona una custodio</option>
+        <div class="row mt-2">
+        <div class="col-12">
+            <div class="card-monitoring p-3">
+                <h5 class="text-white mb-3 font-weight-bold text-uppercase"><i class="flaticon2-file text-warning mr-2"></i>Inventario General de Monitoreo</h5>
+                <div class="table-responsive">
+                    <table class="table text-white font-size-sm" id="kdatatable_usuarios2">
+                        <thead>
+                            <tr class="text-gold">
+                                <th>No.</th>
+                                <th>Folio</th>
+                                <th>Cliente</th>
+                                <th>Domicilio origen</th>
+                                <th>Domicilio destino</th>
+                                <th>Fecha y Hora</th>
+                                <th>Custodio</th>
+                                <th>Tipo de servicio</th>
+                                <th>Estatus</th>
+                                <th>Monitoreo</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($monitoreo as $unid)
+                                <tr class="border-top border-dark" data-fecha-servicio="{{ date('Y-m-d', strtotime($unid->fecha_servicio)) }}">
+                                    <td>{{ $unid->id }}</td>
+                                    <td><a href="{{ route('monitoreo.moduloestadias', $unid->id) }}" class="text-gold font-weight-bold">{{ $unid->folio }}</a></td>
+                                    <td>{{ $unid->nombre_cliente }}</td>
+                                    <td>{{ $unid->dom_origen }}</td>
+                                    <td>{{ $unid->dom_destino }}</td>
+                                    <td>{{ date('d/m/Y h:i A' , strtotime($unid->fecha_servicio)) }}</td>
+                                    <td>{{ $unid->custodio->nombre_custodio }} {{ $unid->custodio->ap_paterno }}</td>
+                                    <td>{{ $unid->tipo_servicio == 0 ? 'Foraneo' : 'Local' }}</td>
+                                    <td>
+                                        <select class="form-control filter-input-custom text-white" id="programacion_id" name="programacion_id" data-programacion="{{ $unid->id }}" style="width: 140px">
                                             @foreach($estatus_programacion as $tp)
-                                                <option value="{{ $tp->id }}" @selected($unid->programacion_estatus_id == $tp->id) >{{ $tp->estatus_programacion }} </option>
+                                                <option value="{{ $tp->id }}" @selected($unid->programacion_estatus_id == $tp->id)>{{ $tp->estatus_programacion }}</option>
                                             @endforeach
                                         </select>
-                                      </td>
-                                      <td>
-                                        @if($unid->op_monitoreo_id == 1)
-                                          Monitoreo 1
-                                        @else
-                                          Monitoreo 2
-                                        @endif
-                                      </td>
-
-                                      <td class="text-center">
-                                        <a href="{{ route('monitoreo.verprogramacionmon', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mt-2" title="Ver programación" data-theme="dark" data-toggle="tooltip" data-placement="top">
-                                            <span class="svg-icon svg-icon-md">
-                                                <i class="flaticon-eye"></i>
-                                            </span>
-                                        </a>
-
-                                        <a href="{{ route('monitoreo.moduloestadias', $unid->id) }}"  class="btn btn-sm btn-outline-warning btn-icon mt-2" title="Generales transportes" data-theme="dark" data-toggle="tooltip" data-placement="top">
-                                            <span class="svg-icon svg-icon-md">
-                                                <i class="flaticon-presentation-1"></i>
-                                            </span>
-                                        </a>
-
-                                        <button class="btn btn-sm btn-outline-warning btn-icon mt-2" onClick="addincidenciaid({{ $unid->id }})" data-toggle="modal" data-target="#model_add_incidencia" data-toggle="tooltip" data-theme="dark" title="Incidencia">
-                                                <i class="flaticon-notepad"></i>
-                                        </button>
-                                      </td>
-                                    </tr>
-                                  @endforeach
-                                </tbody>
-
-                                <tfoot>
-                                <tr>
-                                  <th>No.</th>
-                                  <th>Folio</th>
-                                  <th>Cliente</th>
-                                  <th>Domicilio origen</th>
-                                  <th>Domicilio destino</th>
-                                  <th>Fecha y Hora</th>
-                                  <th>Custodio</th>
-                                  <th>Tipo de servicio</th>
-                                  <th>Estatus</th>
-                                  <th>Monitoreo</th>
-                                  <th class="text-center">Acciones</th>
+                                    </td>
+                                    <td>{{ $unid->op_monitoreo_id == 1 ? 'Monitoreo 1' : 'Monitoreo 2' }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('monitoreo.verprogramacionmon', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mt-1" title="Ver programación"><i class="flaticon-eye"></i></a>
+                                        <a href="{{ route('monitoreo.moduloestadias', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mt-1" title="Generales transportes"><i class="flaticon-presentation-1"></i></a>
+                                        <button class="btn btn-sm btn-outline-warning btn-icon mt-1" onClick="addincidenciaid({{ $unid->id }})" data-toggle="modal" data-target="#model_add_incidencia"><i class="flaticon-notepad"></i></button>
+                                    </td>
                                 </tr>
-                                </tfoot>
-
-                            </table>
-                            <!--end: Datatable-->
-
-                            <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
-
-                        </div>
-                    </div>
-                    <!--end::Card-->
-                    <!--end::Card-->
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-
             </div>
-            <!--end::Row-->
         </div>
     </div>
-    <!--end::List-->
+    </div>
+
 </div>
 
+<script>
 
+function toggleMapFullscreen() {
+    var container = document.getElementById('map-container-fullscreen');
+    
+    if (!document.fullscreenElement) {
+        if (container.requestFullscreen) {
+            container.requestFullscreen();
+        } else if (container.mozRequestFullScreen) { 
+            container.mozRequestFullScreen();
+        } else if (container.webkitRequestFullscreen) { 
+            container.webkitRequestFullscreen();
+        } else if (container.msRequestFullscreen) { 
+            container.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    }
+}
 
-  <form method="post" id="programacion_delete_form" action="{{ route('programacion.deasactivarprogramacion') }}" enctype="multipart/form-data">
-    @csrf
-    <input type="hidden" name="id" id="id_programacion_delete" value="">
-  </form>
+document.addEventListener('DOMContentLoaded', function () {
+    
+    var origenCoords = [19.4326, -99.1332]; 
+    var posicionActual = [19.2843, -98.4346]; 
+    var destinoCoords = [19.0414, -98.2063]; 
 
+    var map = L.map('map-monitoring', {
+        zoomControl: true,
+        attributionControl: false
+    }).setView(posicionActual, 10);
 
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19
+    }).addTo(map);
 
-  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="model_add_incidencia">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title">Incidencia</h5>
-                  <div class="btn btn-icon btn-sm btn-active-light-warning ms-2" data-bs-dismiss="modal" aria-label="Close">
-                      <span class="svg-icon svg-icon-2x"></span>
-                  </div>
-              </div>
+    L.circleMarker(origenCoords, { color: '#10b981', fillColor: '#10b981', fillOpacity: 1, radius: 6 }).addTo(map);
+    L.circleMarker(destinoCoords, { color: '#ef4444', fillColor: '#ef4444', fillOpacity: 1, radius: 6 }).addTo(map);
 
-              <div class="modal-body">
-                <form action="{{ route('monitoreo.guardarincidencia') }}" method="post" id="submit_incidencia">
-                @csrf
-                  <div class="row form-group">
-                    <div class="col-lg-12 mt-2">
-                      <label>Incidencia</label>
-                      <textarea class="form-control" name="incidencia" id="incidencia" ></textarea>
-                      <input type="hidden" name="id" id="id_programacion">
-                    </div>
-                  </div>
-                </form>
-              </div>
+    var markerActual = L.circleMarker(posicionActual, {
+        color: '#3b82f6',
+        fillColor: '#1e3a8a',
+        fillOpacity: 0.8,
+        weight: 3,
+        radius: 9
+    }).addTo(map);
 
-              <div class="modal-footer">
-                <button type="button" class="btn btn btn-secondary font-weight-bold" data-dismiss="modal"><i class="la la-times"></i>Cancelar</button>
-                <button type="button" id="send_incidencia" class="btn btn-warning"><i class="la la-plus"></i>Guardar</button>
-              </div>
-          </div>
-      </div>
-  </div>
+    var popupContent = `
+        <div style="color: #000; font-family: sans-serif; font-size: 11px; line-height: 14px;">
+            <b style="color: #1e3a8a; text-transform: uppercase;">Posición Actual</b><br>
+            <b>Carretera México - Puebla Km 85+300</b><br>
+            Velocidad: 72 km/h
+        </div>
+    `;
+    markerActual.bindPopup(popupContent).openPopup();
 
+    L.polyline([origenCoords, posicionActual, destinoCoords], {
+        color: '#3b82f6',
+        weight: 4,
+        opacity: 0.7,
+        dashArray: '5, 5'
+    }).addTo(map);
 
-
+    
+    document.addEventListener('fullscreenchange', function() {
+        setTimeout(function(){ map.invalidateSize(); }, 200);
+    });
+});
+</script>
 @endsection

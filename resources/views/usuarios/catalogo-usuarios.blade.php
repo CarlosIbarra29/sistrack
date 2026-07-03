@@ -26,8 +26,7 @@
                 
                 ['t' => 'FICHA TÉCNICA', 'i' => 'fas fa-id-card', 'c' => '#10b981', 'bg' => 'rgba(16, 185, 129, 0.05)', 'r' => '#'],
                 ['t' => 'SEGUIMIENTO DE DOCTOS.', 'i' => 'fas fa-file-signature', 'c' => '#38bdf8', 'bg' => 'rgba(56, 189, 248, 0.05)', 'r' => '#'],
-                // Actualizado a color Blanco Puro
-                ['t' => 'IMPRESIÓN DE CREDENCIAL', 'i' => 'fas fa-print', 'c' => '#FFFFFF', 'bg' => 'rgba(255, 255, 255, 0.05)', 'r' => '#']
+                ['t' => 'IMPRESIÓN DE CREDENCIAL', 'i' => 'fas fa-print', 'c' => '#ffa800', 'bg' => 'rgba(255, 168, 0, 0.05)', 'r' => '#']
             ];
         @endphp
         @foreach($buttons as $btn)

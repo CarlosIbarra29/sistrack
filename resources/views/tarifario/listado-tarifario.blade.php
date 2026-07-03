@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @push('scripts')
-
   <script src="{{ asset('js/tarifario/CatalogoTarifario.js') }}"></script>
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
@@ -10,283 +9,252 @@
 @section('content')
 
 
+<div class="w-100 p-5" style="background-color: #0b0f19; color: #ffffff; font-family: 'Poppins', sans-serif; min-height: 100vh;">
 
-    <div class="d-flex flex-row">
-
-    <!--begin::List-->
-    <div class="flex-row-fluid">
-        <div class="d-flex flex-column flex-grow-1">
-
-            <!--begin::Row-->
-            <div class="row">
-                <div class="col-xl-12">
-
-                <!--begin::Card-->
-                    <div class="card card-custom">
-                        <div class="card-header">
-                            <div class="card-title">
-                      <span class="card-icon">
-                        <i class="flaticon2-file coloricono"></i>
-                      </span>
-                                <h3 class="card-label">Inventario de tarifario</h3>
-                            </div>
-                            <div class="card-toolbar">
-
-{{--                                 <a class="btn btn-link-primary font-weight-bold mr-2 busqueda" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                    Busqueda
-                                </a> --}}
-
-                                <!--begin::Button-->
-
-                                <div class="col-lg-12 text-right">
-                                  <div class="col-lg-12">
-                                    @if(true)
-
-                                  <a href="{{ route('tarifario.agregartarifario') }}"class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black"><i class="la la-plus"></i>Nuevo</a>
-                                @endif
-                                <!--end::Button-->
-
-                                <a href="{{ route('tarifario.listadotarifarioinactivo') }}" class="btn btn-light-warning font-weight-bold mr-3 ml-3" style="color:black"><i class="far fa-trash-alt"></i>Tarifario inactivos</a>
-                                  </div>
-                                </div>
-                                
-
-                                <!--begin::Dropdown-->
-                                <div class="dropdown dropdown-inline mr-2">
-{{--                                     <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      <span class="svg-icon svg-icon-md">
-                                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                          <rect x="0" y="0" width="24" height="24" />
-                                          <path d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z" fill="#000000" opacity="0.3" />
-                                          <path d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z" fill="#000000" />
-                                        </g>
-                                      </svg>
-                                      </span>Exportar
-                                    </button> --}}
-                                    <!--begin::Dropdown Menu-->
-                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                        <!--begin::Navigation-->
-                                        <ul class="navi flex-column navi-hover py-2">
-                                            <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-excel">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-excel-o"></i>
-                                                </span>
-                                                <span class="navi-text">Excel</span>
-                                              </a>
-                                            </li>
-{{--                                             <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-pdf">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-pdf-o"></i>
-                                                </span>
-                                                <span class="navi-text">PDF</span>
-                                              </a>
-                                            </li> --}}
-                                            <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-csv">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-text-o"></i>
-                                                </span>
-                                                <span class="navi-text">CSV</span>
-                                              </a>
-                                            </li>
-                                            <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-print">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-text-o"></i>
-                                                </span>
-                                                <span class="navi-text">Imprimir</span>
-                                              </a>
-                                            </li>
-
-                                        </ul>
-                                        <!--end::Navigation-->
-                                    </div>
-                                    <!--end::Dropdown Menu-->
-                                </div>
-                                <!--end::Dropdown-->
-                            </div>
-                        </div>
-                        <div class="card-body">
-
-                          <div class="collapse" id="collapseExample">
-                              <div class="card card-body">
-                                <!--begin: Search Form-->
-                                <form class="mb-15">
-                                  <div class="row mb-6">
-                                    <div class="col-lg-6 mb-lg-0 mb-6">
-                                        <label>Cliente:</label>
-                                        <select class="form-control datatable-input" name="nombre_cliente" data-control="select2" data-placeholder="Estado" data-col-index="0">
-                                            <option value="0">Selecciona un cliente</option>
-                                            @foreach($data as $es)
-                                                <option value="{{ $es->id }}" >{{ $es->nombre_cliente }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                  </div>
-
-                                  <div class="row mt-8">
-                                    <div class="col-lg-12">
-                                      <button class="btn btn-primary btn-primary--icon" id="kt_search">
-                                        <span><i class="la la-search"></i><span>Buscar</span></span>
-                                      </button>&#160;&#160;
-                                      <button class="btn btn-secondary btn-secondary--icon" id="kt_reset">
-                                        <span><i class="la la-close"></i><span>Limpiar</span></span>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </form>
-                              </div>
-                          </div>
-
-
-<div class="row">                                   
-  <div class="col-lg-3">
-        <div class="alert-card">
-            <div class="alert-header">
-                <i class="fas fa-wallet"></i>
-                <span class="alert-title">Pendientes</span>
-            </div>
-            <div class="alert-value">12</div>
-            <div class="divider"></div>
-            <small>Clientes con pagos programados los próximos 7 días.</small>
+    
+    <div class="mb-4 select-none">
+        <div class="d-flex align-items-center gap-2">
+            <i class="flaticon2-file text-warning" style="font-size: 1.8rem;"></i>
+            <h2 class="fw-bold text-white m-0" style="font-size: 1.8rem;">Inventario de Tarifario</h2>
         </div>
-  </div>
-  <div class="col-lg-3">
-<div class="alert-card">
-            <div class="alert-header">
-                <i class="fas fa-user-clock"></i>
-                <span class="alert-title">Tarifario Inactivo</span>
-            </div>
-            <div class="alert-value">8</div>
-            <div class="divider"></div>
-            <small>Tarifas inactivas en más de 30 días.</small>
-        </div>
-  </div>
-  <div class="col-lg-3">
-  <div class="alert-card">
-            <div class="alert-header">
-                <i class="fas fa-exclamation-circle"></i>
-                <span class="alert-title">Tipo de viaje </span>
-            </div>
-            <div class="alert-value">3</div>
-            <div class="divider"></div>
-            <small>Tareas importantes que requieren atención inmediata.</small>
-        </div>
-  </div>
-  <div class="col-lg-3">
-  <div class="alert-card">
-            <div class="alert-header">
-                <i class="fas fa-user-shield"></i>
-                <span class="alert-title">Grafica</span>
-            </div>
-            <div class="alert-value">4</div>
-            <div class="divider"></div>
-            <small>Clientes con señales de abandono o retrasos.</small>
-        </div>
-  </div>
+        <p class="text-muted m-0" style="font-size: 0.9rem;">Gestiona y controla las rutas, kilometrajes y tarifas del sistema.</p>
+    </div>
 
-</div>
-
-
-
-                            <!--begin: Datatable-->
-                            <table class="table table-hover table-checkable" id="kdatatable_usuarios2">
-                                <thead>
-                                <tr>
-                                  <th>Folio.</th>
-                                  <th>Origen</th>
-                                  <th>Destino</th>
-                                  <th>Cliente</th>
-                                   <th>Tipo de Viaje</th>
-                                   <th>Caseta</th>
-                                  <th>#KMS</th>
-                                  <th>PPKM SIS</th>
-                                  <th>PPKM CUST</th>
-                                  <th class="text-center">Opciones</th>
-                                </tr>
-                                </thead>
-
-                                <tbody>
-                                  @foreach($tarifario as $unid)
-                                    <tr>
-                                      <td>{{ $unid->num_list }}</td>
-                                      <td>{{ $unid->origen }}</td>
-                                      <td>{{ $unid->destino }}</td>
-                                      <td>{{ $unid->cliente->nombre_cliente }}</td>
-                                      <td>
-                                        @if($unid->tipo_viaje==0)
-                                        Local
-                                        @else
-                                        Foraneo
-                                        @endif
-                                      </td>
-                                      <td>{{ $unid->caseta }}</td>
-                                      <td>{{ $unid->kms }}</td>
-                                      <td>{{ $unid->ppkm_sis }}</td>
-                                      <td>{{ $unid->ppkm_cust }}</td>
-
-                                      <td>
-
-                                        <a href="{{ route('tarifario.vertarifa', $unid->id ) }}" class="btn btn-sm btn-outline-warning btn-icon mr-2" title="Ver tarifario" data-theme="dark" data-toggle="tooltip" data-placement="top">
-                                            <span class="svg-icon svg-icon-md">
-                                                <i class="flaticon-eye"></i>
-                                            </span>
-                                        </a>
-                                        <a href="{{ route('tarifario.editartarifario', $unid->id ) }}" class="btn btn-sm btn-outline-warning btn-icon mr-2" title="Editar tarifario" data-theme="dark" data-toggle="tooltip" data-placement="top">
-                                            <span class="svg-icon svg-icon-md">
-                                                <i class="flaticon-edit"></i>
-                                            </span>
-                                        </a>
-                                        <button class="btn btn-clean btn-sm btn-icon btn-outline-warning mt-1" onClick="deletetarifario(`{{ $unid->origen }} `,`{{ $unid->id }}`)" data-toggle="modal" data-target="#model_delete_user" data-toggle="tooltip" data-theme="dark" title="Desactivar tarifario">
-                                            <span class="svg-icon svg-icon-md">
-                                                <i class="flaticon-delete"></i>
-                                            </span>
-                                         </button>
-
-                                      </td>
-                                    </tr>
-                                  @endforeach
-                                </tbody>
-
-                                <tfoot>
-                                <tr>
-                                  <th>Folio.</th>
-                                  <th>Origen</th>
-                                  <th>Destino</th>
-                                  <th>Cliente</th>
-                                  <th>Tipo de Viaje</th>
-                                  <th>Caseta</th>
-                                  <th>#KMS</th>
-                                  <th>PPKM SIS</th>
-                                  <th>PPKM CUST</th>
-                                  <th class="text-center">Opciones</th>
-                                </tr>
-                                </tfoot>
-
-                            </table>
-                            <!--end: Datatable-->
-
-                            <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
-                            {{-- <input type="hidden" id="tarifariodatatable" value="{{ route('tarifario.tarifariolistadodatatable') }}"> --}}
-
-                        </div>
+    
+    <div class="row g-3 mb-5">
+        <div class="col-md-6">
+            <div class="card h-100 rounded-3" style="background-color: #111625; border: 1px solid rgba(245, 158, 11, 0.3); cursor: default;">
+                <div class="card-body d-flex flex-column align-items-center justify-content-between p-4">
+                    <div class="text-center mb-3 select-none">
+                        <i class="fas fa-plus-circle text-warning mb-2" style="font-size: 2rem;"></i>
+                        <h6 class="fw-bold text-warning text-uppercase m-0" style="font-size: 0.75rem; letter-spacing: 1px;">NUEVO REGISTRO</h6>
                     </div>
-                    <!--end::Card-->
-                    <!--end::Card-->
+                    @if(true)
+                        <a href="{{ route('tarifario.agregartarifario') }}" class="btn w-100 fw-bold py-2" style="background-color: #f59e0b; color: #0b0f19; font-size: 0.8rem; letter-spacing: 1px; transition: none;">
+                            AGREGAR TARIFA <i class="fas fa-chevron-right ms-1" style="font-size: 0.7rem;"></i>
+                        </a>
+                    @endif
                 </div>
-
             </div>
-            <!--end::Row-->
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100 rounded-3" style="background-color: #111625; border: 1px solid rgba(100, 116, 139, 0.3); cursor: default;">
+                <div class="card-body d-flex flex-column align-items-center justify-content-between p-4">
+                    <div class="text-center mb-3 select-none">
+                        <i class="far fa-trash-alt mb-2" style="font-size: 2rem; color: #94a3b8;"></i>
+                        <h6 class="fw-bold text-uppercase m-0" style="font-size: 0.75rem; letter-spacing: 1px; color: #94a3b8;">TARIFARIOS INACTIVOS</h6>
+                    </div>
+                    <a href="{{ route('tarifario.listadotarifarioinactivo') }}" class="btn w-100 fw-bold py-2 text-white" style="background-color: #475569; font-size: 0.8rem; letter-spacing: 1px; transition: none;">
+                        VER INACTIVOS <i class="fas fa-chevron-right ms-1" style="font-size: 0.7rem;"></i>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-    <!--end::List-->
+
+    <div class="row g-4">
+        
+        
+        <div class="col-xl-9 col-lg-8">
+            
+            
+            <div class="mb-2 select-none">
+                <span class="fw-bold text-warning" style="font-size: 0.8rem; letter-spacing: 0.5px;">RESUMEN DE RUTAS</span>
+            </div>
+            <div class="row g-3 mb-4">
+                <div class="col-md-3">
+                    <div class="d-flex align-items-center p-3 rounded-3 shadow-sm" style="background-color: #111625; border: 1px solid #1e293b; cursor: default;">
+                        <div class="p-3 rounded-3 me-3" style="background-color: #1e293b;"><i class="fas fa-wallet text-warning fs-4"></i></div>
+                        <div>
+                            <span class="text-muted d-block fw-bold select-none" style="font-size: 0.7 Cantidad; letter-spacing: 0.5px;">PENDIENTES</span>
+                            <h3 class="text-white fw-bold mb-0" style="font-size: 1.6rem;">12</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="d-flex align-items-center p-3 rounded-3 shadow-sm" style="background-color: #111625; border: 1px solid #1e293b; cursor: default;">
+                        <div class="p-3 rounded-3 me-3" style="background-color: #1e293b;"><i class="fas fa-user-clock text-muted fs-4"></i></div>
+                        <div>
+                            <span class="text-muted d-block fw-bold select-none" style="font-size: 0.7rem; letter-spacing: 0.5px;">TARIFARIO INACTIVO</span>
+                            <h3 class="text-white fw-bold mb-0" style="font-size: 1.6rem;">8</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="d-flex align-items-center p-3 rounded-3 shadow-sm" style="background-color: #111625; border: 1px solid #1e293b;">
+                        <div class="p-3 rounded-3 me-3" style="background-color: #2d1515;"><i class="fas fa-exclamation-circle text-danger fs-4"></i></div>
+                        <div>
+                            <span class="text-muted d-block fw-bold select-none" style="font-size: 0.7rem; letter-spacing: 0.5px;">TIPO DE VIAJE</span>
+                            <h3 class="text-white fw-bold mb-0" style="font-size: 1.6rem;">3</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="d-flex align-items-center p-3 rounded-3 shadow-sm" style="background-color: #111625; border: 1px solid #1e293b; cursor: default;">
+                        <div class="p-3 rounded-3 me-3" style="background-color: #132b24;"><i class="fas fa-user-shield text-success fs-4"></i></div>
+                        <div>
+                            <span class="text-muted d-block fw-bold select-none" style="font-size: 0.7rem; letter-spacing: 0.5px;">GRÁFICA</span>
+                            <h3 class="text-white fw-bold mb-0" style="font-size: 1.6rem;">4</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="p-3 rounded-3 mb-4" style="background-color: #111625; border: 1px solid #1e293b;">
+                <form>
+                    <div class="row g-2 align-items-center">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text border-0 text-muted" style="background-color: #171e30;"><i class="fas fa-search"></i></span>
+                                <select class="form-select border-0 text-white datatable-input" name="nombre_cliente" data-control="select2" data-placeholder="Selecciona un cliente" style="background-color: #171e30; font-size: 0.85rem;">
+                                    <option value="0">Selecciona un cliente</option>
+                                    @foreach($data as $es)
+                                        <option value="{{ $es->id }}">{{ $es->nombre_cliente }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex gap-2 justify-content-end">
+                            <button type="button" class="btn btn-sm btn-dark border-secondary text-white px-3" id="kt_search" style="font-size: 0.75rem; font-weight: 600; transition: none;"><i class="fas fa-filter me-1"></i> BUSCAR</button>
+                            <button type="button" class="btn btn-sm text-muted text-decoration-none p-0" id="kt_reset" style="font-size: 0.75rem; transition: none;"><i class="fas fa-sync-alt"></i> LIMPIAR</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            
+            <div class="mb-2 d-flex justify-content-between align-items-center select-none">
+                <span class="fw-bold text-warning" style="font-size: 0.8rem; letter-spacing: 0.5px;">LISTADO DE TARIFARIO</span>
+                <div class="dropdown">
+                    <button type="button" class="btn btn-sm text-white border-0" data-toggle="dropdown" style="background-color: #171e30; font-size: 0.8rem; transition: none;">
+                        <i class="fas fa-download me-1"></i> Exportar
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end bg-dark border-secondary" style="transition: none;">
+                        <a href="#" class="dropdown-item text-white" id="export-excel"><i class="la la-file-excel-o me-2 text-success"></i>Excel</a>
+                        <a href="#" class="dropdown-item text-white" id="export-csv"><i class="la la-file-text-o me-2 text-info"></i>CSV</a>
+                        <a href="#" class="dropdown-item text-white" id="export-print"><i class="la la-file-text-o me-2 text-warning"></i>Imprimir</a>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="p-4 rounded-3 shadow-sm" style="background-color: #111625; border: 1px solid #1e293b;">
+                <div class="table-responsive">
+                    <table class="table align-middle text-white" id="kdatatable_usuarios2" style="--bs-table-bg: transparent; font-size: 0.85rem;">
+                        <thead>
+                            <tr class="text-muted fw-bold text-uppercase border-bottom border-secondary select-none" style="font-size: 0.75rem; border-color: #1e293b !important;">
+                                <th style="color: #38bdf8 !important;">Folio</th>
+                                <th>Origen</th>
+                                <th>Destino</th>
+                                <th>Cliente</th>
+                                <th>Tipo de Viaje</th>
+                                <th>Caseta</th>
+                                <th>#KMS</th>
+                                <th>PPKM SIS</th>
+                                <th>PPKM CUST</th>
+                                <th class="text-center" style="min-width: 120px;">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="border-0">
+                            @foreach($tarifario as $unid)
+                                <tr class="border-bottom border-dark" style="border-color: #171e30 !important;">
+                                    <td class="fw-bold" style="color: #38bdf8;">{{ $unid->num_list }}</td>
+                                    <td class="text-white-50">{{ $unid->origen }}</td>
+                                    <td class="text-white-50">{{ $unid->destino }}</td>
+                                    <td class="fw-bold text-white">{{ $unid->cliente->nombre_cliente }}</td>
+                                    <td>
+                                        @if($unid->tipo_viaje == 0)
+                                            <span class="badge px-2 py-1 fw-semibold text-success select-none" style="background-color: #132b24; font-size: 0.75rem;">Local</span>
+                                        @else
+                                            <span class="badge px-2 py-1 fw-semibold text-primary select-none" style="background-color: #17243a; font-size: 0.75rem;">Foráneo</span>
+                                        @endif
+                                    </td>
+                                    <td>{{ $unid->caseta }}</td>
+                                    <td><span class="text-warning fw-bold">{{ $unid->kms }} KMS</span></td>
+                                    <td class="text-success">${{ number_format($unid->ppkm_sis, 2) }}</td>
+                                    <td class="text-info">${{ number_format($unid->ppkm_cust, 2) }}</td>
+                                    <td class="text-center">
+                                        <div class="d-flex justify-content-center gap-2">
+                                            <a href="{{ route('tarifario.vertarifa', $unid->id ) }}" class="text-decoration-none text-muted px-1 action-animate" title="Ver tarifario" data-toggle="tooltip" data-theme="dark" data-placement="top">
+                                                <i class="far fa-eye text-white" style="font-size: 1rem;"></i>
+                                            </a>
+                                            <a href="{{ route('tarifario.editartarifario', $unid->id ) }}" class="text-decoration-none text-muted px-1 action-animate" title="Editar tarifario" data-toggle="tooltip" data-theme="dark" data-placement="top">
+                                                <i class="far fa-edit text-white" style="font-size: 1rem;"></i>
+                                            </a>
+                                            <a href="javascript:void(0);" onClick="deletetarifario(`{{ $unid->origen }} `,`{{ $unid->id }}`)" class="text-decoration-none text-muted px-1 action-animate" title="Desactivar tarifario" data-toggle="modal" data-target="#model_delete_user" data-placement="top">
+                                                <i class="far fa-trash-alt text-white" style="font-size: 1rem;"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+               
+                <div class="d-flex justify-content-between align-items-center mt-4 select-none" style="font-size: 0.8rem; color: #94a3b8;">
+                    <div>Mostrando registros del 1 al {{ count($tarifario) }} de un total de {{ count($tarifario) }} registros</div>
+                    <div class="d-flex gap-1">
+                        <button type="button" class="btn btn-sm btn-dark text-muted px-3 border-0" disabled style="background-color: #171e30; cursor: default;">Anterior</button>
+                        <button type="button" class="btn btn-sm text-white px-3 border-0" style="background-color: #3b82f6; cursor: default;">1</button>
+                        <button type="button" class="btn btn-sm btn-dark text-muted px-3 border-0" disabled style="background-color: #171e30; cursor: default;">Siguiente</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-xl-3 col-lg-4">
+            
+            
+            <div class="card border-0 p-4 mb-4 rounded-3 shadow-sm" style="background-color: #111625; border: 1px solid #1e293b !important; cursor: default;">
+                <span class="fw-bold text-warning d-block mb-3 select-none" style="font-size: 0.75rem; letter-spacing: 0.5px;">ESTADO DE CARTERA</span>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center select-none" style="width: 75px; height: 75px; background: conic-gradient(#10b981 70%, #f59e0b 15%, #ef4444 15%); min-width: 75px;">
+                        <div class="rounded-circle" style="width: 55px; height: 55px; background-color: #111625;"></div>
+                    </div>
+                    <div class="select-none" style="font-size: 0.75rem; line-height: 1.5;">
+                        <span class="d-block text-white">● <span class="text-success">Al corriente</span> 70%</span>
+                        <span class="d-block text-white">● <span class="text-warning">En prórroga</span> 15%</span>
+                        <span class="d-block text-white">● <span class="text-danger">Crítico</span> 15%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-premium p-4 mb-4">
+                <span class="text-warning font-weight-bolder font-size-xs d-block mb-3 text-uppercase">Alertas Importantes</span>
+                <div class="d-flex flex-column gap-3">
+                    <div class="d-flex align-items-start gap-2">
+                        <i class="la la-exclamation-triangle text-danger font-size-h3 mt-1"></i>
+                        <div>
+                            <span class="text-white font-weight-bold font-size-xs d-block">6 documentos vencidos</span>
+                            <span class="text-muted font-size-xs">Requieren atención inmediata</span>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-start gap-2 mt-2">
+                        <i class="la la-clock text-warning font-size-h3 mt-1"></i>
+                        <div>
+                            <span class="text-white font-weight-bold font-size-xs d-block">22 usuarios por vencer doctos.</span>
+                            <span class="text-muted font-size-xs">Próximos 30 días</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-xs btn-block btn-outline-secondary font-weight-bold text-white mt-4 py-2" style="border-color: var(--border-color); font-size: 11px;">VER TODAS LAS ALERTAS</button>
+            </div>
+
+        </div>
+    </div>
 </div>
-  <form method="post" id="tarifario_delete_form" action="{{ route('tarifario.desactivartarifario') }}" enctype="multipart/form-data">
+
+
+<form method="post" id="tarifario_delete_form" action="{{ route('tarifario.desactivartarifario') }}" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="id" id="id_tarifario_delete" value="">
-  </form>
+</form>
+
+<input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
 
 @endsection

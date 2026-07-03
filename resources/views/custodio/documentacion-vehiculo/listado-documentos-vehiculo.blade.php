@@ -135,7 +135,7 @@
 
 
                         <!--begin: Datatable-->
-                          <table class="table table-hover table-checkable inventory-table" id="kdatatable_documentoscustodio">
+                          <table class="table  table-checkable" id="kdatatable_documentoscustodio">
                             <thead>
                               <tr>
                                 <th>No.</th>
@@ -149,6 +149,8 @@
                                 <th>Documento</th>
                                 <th class="text-center">Acciones</th>
                               </tr>
+
+                                
                             </tfoot>
 
                           </table>
