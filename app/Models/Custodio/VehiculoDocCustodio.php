@@ -31,7 +31,7 @@ class VehiculoDocCustodio extends Model
     /**
      * @var array
      */
-    protected $fillable = ['custodio_id', 'custodio_documentacion_vehiculo_id', 'documento', 'mime_type', 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at'];
+    protected $fillable = ['custodio_id', 'custodio_documentacion_vehiculo_id', 'documento', 'mime_type', 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at', 'vigencia'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

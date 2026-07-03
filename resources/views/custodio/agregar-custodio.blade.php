@@ -737,7 +737,7 @@
                             <div class="tab-pane fade mt-10" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
                                 <div class="row form-group" >
                                     <div class="col-lg-12" id="tblArchivos">
-                                        <table class='table table-bordered' id='tblDocumentos'>
+                                        <table class='table table-bordered table-responsive' id='tblDocumentos'>
                                             <thead>
                                             <tr>
                                                 <th>Adjuntar Documento</th>

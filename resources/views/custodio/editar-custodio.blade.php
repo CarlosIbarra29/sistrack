@@ -817,7 +817,7 @@
 
 
                             <div class="tab-pane fade mt-10" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
-                                <table class="table mb-6 table-responsive-sm" id="tblDocumentos">
+                                <table class="table mb-6 table-responsive" id="tblDocumentos">
                                     <thead>
                                     <tr>
                                         <th scope="col">Documento</th>
