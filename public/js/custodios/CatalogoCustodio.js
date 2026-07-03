@@ -288,6 +288,38 @@ jQuery(document).ready(function() {
         });
     });
 
+    
+    $(".desactivar_custodio").click(function() {
+        var id = $(this).data('id');
+        var nombre = $(this).data('nombre');
+
+        Swal.fire({
+            title: "Estas seguro de desactivar el registro "+nombre,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Si, Desactivar!",
+            cancelButtonText: "No, Cancelar!",
+            reverseButtons: true
+        }).then(function(result) {
+            if (result.value) {
+                document.getElementById("id_delete").value = id;
+                Swal.fire({
+                    position: "top-center",
+                    icon: "success",
+                    title: "Espere un momento, la información esta siendo procesada",
+                    showConfirmButton: false
+                });
+                document.getElementById("custodio_delete_form").submit();
+            } else if (result.dismiss === "cancel") {
+                Swal.fire(
+                    "Cancelada",
+                    "La acción fue cancelada",
+                    "error"
+                )
+            }
+        });
+    });
+
 
     $("#kdatatable_usuarios2").DataTable({
         language: {

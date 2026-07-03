@@ -407,6 +407,7 @@ class CustodioController extends Controller
 
 
         $colIdDocumento = $request->id_documento;
+        $colIdVigencia = $request->vigencia;
         if($request->hasfile('archivo')){
             $archivos = $request->file('archivo');
 
@@ -420,6 +421,7 @@ class CustodioController extends Controller
                     'custodio_documentacion_id' =>$colIdDocumento[$indice],
                     'documento' => $archivoNombre,
                     'mime_type' => $mimeType,
+                    'vigencia' => $colIdVigencia[$indice],
                     'created_at' =>date('Y-m-d H:i:s'),
                     'updated_at' =>date('Y-m-d H:i:s'),
                     'iduserCreated' =>auth()->user()->id,
@@ -649,6 +651,7 @@ class CustodioController extends Controller
 
 
         $colIdDocumento = $request->id_documento;
+        $colIdVigencia = $request->vigencia;
         if($request->hasfile('archivo')){
             $archivos = $request->file('archivo');
             foreach($archivos as $indice => $archivo)
@@ -661,6 +664,7 @@ class CustodioController extends Controller
                     'custodio_documentacion_id' =>$colIdDocumento[$indice],
                     'documento' => $archivoNombre,
                     'mime_type' => $mimeType,
+                    'vigencia' =>$colIdVigencia[$indice],
                     'created_at' =>date('Y-m-d H:i:s'),
                     'updated_at' =>date('Y-m-d H:i:s'),
                     'iduserCreated' =>auth()->user()->id,
