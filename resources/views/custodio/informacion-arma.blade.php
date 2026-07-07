@@ -112,11 +112,12 @@
                                     </div>
 
                                     <div class="table-responsive">
-                                        <table class='table table-hover mb-6 table-responsive-sm' id='tblDocumentos'>
+                                        <table class='table  mb-6 table-responsive-sm' id='tblDocumentos'>
                                             <thead >
                                                 <tr>
                                                     <th>Adjuntar Documento</th>
                                                     <th>Tipo de Documento</th>
+                                                    <th>Vigencia</th>
                                                     <th width="120">Opción</th>
                                                 </tr>
                                             </thead>
@@ -148,7 +149,7 @@
                                     </div>
 
                                     <div class="table-responsive">
-                                        <table class='table table-hover mb-6 table-responsive-sm' id='tblDocumentosF'>
+                                        <table class='table  mb-6 table-responsive-sm' id='tblDocumentosF'>
                                             <thead >
                                                 <tr>
                                                     <th>Adjuntar Fotografía</th>

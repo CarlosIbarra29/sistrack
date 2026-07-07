@@ -155,18 +155,20 @@
                                             <i class="flaticon2-plus"></i> Agregar
                                         </a> --}}
                                     </div>
-
-                                    <div class="table-responsive">
-                                        <table class='table table-hover mb-6 table-responsive-sm' id='tblDocumentos'>
-                                            <thead class="">
-                                                <tr>
-                                                    <th>Adjuntar Documento</th>
-                                                    <th>Tipo de Documento</th>
-                                                    <th width="120">Opción</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id='tbodyDocumentos'></tbody>
-                                        </table>
+                                    <div class="row form-group" >
+                                        <div class="col-lg-12">
+                                            <table class='table table-responsive' id='tblDocumentos'>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Adjuntar Documento</th>
+                                                        <th>Tipo de Documento</th>
+                                                        <th>Vigencia</th>
+                                                        <th width="120">Opción</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id='tbodyDocumentos'></tbody>
+                                            </table>
+                                        </div>
                                     </div>
 
                                     <div class="row form-group">
