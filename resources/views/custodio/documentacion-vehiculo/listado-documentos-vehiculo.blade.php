@@ -1,245 +1,164 @@
 @extends('layouts.app')
 
 @section('title')
-    Catálogo de documentación vehiculo
+    Catálogo de documentación vehículo
 @endsection
 
 @push('scripts')
-  <script src="{{ asset('js/catalogos/custodios/CatalogoDocumentacionVehiculo.js') }}"></script> 
-  <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <script src="{{ asset('js/catalogos/custodios/CatalogoDocumentacionVehiculo.js') }}"></script> 
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
 
 @section('content')
+<div class="container-fluid px-4 py-3">
+    <div class="card bg-dark text-white shadow-sm border-0 rounded-lg">
+        
+        <div class="card-header border-bottom border-secondary d-flex flex-wrap align-items-center justify-content-between gap-3 py-4">
+            <div class="d-flex align-items-center gap-2">
+                <span class="p-2 bg-soft-warning rounded">
+                    <i class="flaticon2-file text-warning fs-4"></i>
+                </span>
+                <h3 class="card-title h5 mb-0 fw-bold text-white tracking-wide">
+                    Inventario de Documentación del Vehículo
+                </h3>
+            </div>
+            
+            <div class="d-flex flex-wrap align-items-center gap-2">
+                <a class="btn btn-sm btn-outline-secondary font-weight-bold busqueda" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <i class="la la-search mr-1"></i> Búsqueda
+                </a>
 
-    <div class="d-flex flex-row">
-    <!--begin::List-->
-    <div class="flex-row-fluid">
-        <div class="d-flex flex-column flex-grow-1">
+                <a href="#" class="btn btn-sm btn-warning font-weight-bolder text-dark" data-toggle="modal" data-target="#kt_modal_1">
+                    <i class="la la-plus mr-1"></i> Nuevo
+                </a>
 
-            <!--begin::Row-->
-            <div class="row">
-                <div class="col-xl-12">
+                <a href="{{ route('docvehiculo.catalogodocvehiculoinactivos') }}" class="btn btn-sm btn-outline-danger font-weight-bolder">
+                    <i class="far fa-trash-alt mr-1"></i> Documentación Inactiva
+                </a>
 
-                <!--begin::Card-->
-                    <div class="card card-custom">
-                        <div class="card-header">
-                            <div class="card-title">
-                              <span class="card-icon">
-                                <i class="flaticon2-file text-warning"></i>
-                              </span>
-                              <h3 class="card-label">Inventario de documentación del vehículo</h3>
-                            </div>
-                            <div class="card-toolbar">
-
-
-                                <a class="btn btn-link-warning font-weight-bold mr-2 busqueda" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                    Busqueda
+                <div class="dropdown d-inline-block">
+                    <button type="button" class="btn btn-sm btn-light font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="la la-download mr-1"></i> Exportar
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right shadow-sm border-0">
+                        <ul class="navi flex-column navi-hover py-2 list-unstyled mb-0">
+                            <li class="navi-item">
+                                <a href="#" class="navi-link d-flex align-items-center px-4 py-2 text-dark text-decoration-none" id="export-excel">
+                                    <i class="la la-file-excel-o text-success mr-2 fs-5"></i>
+                                    <span class="navi-text">Excel</span>
                                 </a>
-
-                                <!--begin::Button-->
-                                <a href="#" class="btn btn-light-warning font-weight-bolder mr-3 ml-3" data-toggle="modal" data-target="#kt_modal_1">
-                                    <i class="la la-plus"></i>Nuevo</a>
-
-                                <a href="{{ route('docvehiculo.catalogodocvehiculoinactivos') }}" class="btn btn-light-warning font-weight-bolder mr-3 ml-3">
-                                    <i class="far fa-trash-alt"></i>Documentación Inactiva</a>
-
-                                <!--end::Button-->
-
-
-                                <!--begin::Dropdown-->
-                                <div class="dropdown dropdown-inline mr-2">
-                                  <button type="button" class="btn btn-light-warning font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="svg-icon svg-icon-md">
-                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg-->
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                      <rect x="0" y="0" width="24" height="24" />
-                                      <path d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z" fill="#000000" opacity="0.3" />
-                                      <path d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z" fill="#000000" />
-                                    </g>
-                                    </svg>
-                                                    <!--end::Svg Icon-->
-                                    </span>Exportar
-                                  </button>
-                                    <!--begin::Dropdown Menu-->
-                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                        <!--begin::Navigation-->
-                                        <ul class="navi flex-column navi-hover py-2">
-
-                                            <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-excel">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-excel-o"></i>
-                                                </span>
-                                                <span class="navi-text">Excel</span>
-                                              </a>
-                                            </li>
-{{--                                             <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-pdf">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-pdf-o"></i>
-                                                </span>
-                                                <span class="navi-text">PDF</span>
-                                              </a>
-                                            </li> --}}
-                                            <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-csv">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-text-o"></i>
-                                                </span>
-                                                <span class="navi-text">CSV</span>
-                                              </a>
-                                            </li>
-                                            <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-print">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-text-o"></i>
-                                                </span>
-                                                <span class="navi-text">Imprimir</span>
-                                              </a>
-                                            </li>
-
-                                        </ul>
-                                        <!--end::Navigation-->
-                                    </div>
-                                    <!--end::Dropdown Menu-->
-                                </div>
-                                <!--end::Dropdown-->
-                            </div>
-                        </div>
-                        <div class="card-body">
-
-                          <div class="collapse" id="collapseExample">
-                            <div class="card card-body">
-                              <!--begin: Search Form-->
-                              <form class="mb-15">
-                                <div class="row mb-6">
-                                  <div class="col-lg-6 mb-lg-0 mb-6">
-                                    <label>Nombre del documento:</label>
-                                    <input type="text" class="form-control datatable-input" data-col-index="1" />
-                                  </div>
-                                </div>
-                                <div class="row mt-8">
-                                  <div class="col-lg-12">
-                                    <button class="btn btn-warning btn-warning--icon" id="kt_search">
-                                      <span><i class="la la-search"></i><span>Buscar</span></span>
-                                    </button>&#160;&#160;
-                                    <button class="btn btn-secondary btn-secondary--icon" id="kt_reset">
-                                      <span><i class="la la-close"></i><span>Limpiar</span></span>
-                                    </button>
-                                  </div>
-                                </div>
-                              </form>
-                            </div>
-                          </div>
-
-
-                        <!--begin: Datatable-->
-                          <table class="table  table-checkable" id="kdatatable_documentoscustodio">
-                            <thead>
-                              <tr>
-                                <th>No.</th>
-                                <th>Documento</th>
-                                <th class="text-center">Acciones</th>
-                              </tr>
-                            </thead>
-                            <tfoot>
-                              <tr>
-                                <th>No.</th>
-                                <th>Documento</th>
-                                <th class="text-center">Acciones</th>
-                              </tr>
-
-                                
-                            </tfoot>
-
-                          </table>
-                          <!--end: Datatable-->
-                          <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
-                          <input type="hidden" id="documentocustdatatable" value="{{ route('docvehiculo.vehiculodatatable') }}">
-
-
-                        </div>
+                            </li>
+                            <li class="navi-item">
+                                <a href="#" class="navi-link d-flex align-items-center px-4 py-2 text-dark text-decoration-none" id="export-csv">
+                                    <i class="la la-file-text-o text-info mr-2 fs-5"></i>
+                                    <span class="navi-text">CSV</span>
+                                </a>
+                            </li>
+                            <li class="navi-item">
+                                <a href="#" class="navi-link d-flex align-items-center px-4 py-2 text-dark text-decoration-none" id="export-print">
+                                    <i class="la la-print text-primary mr-2 fs-5"></i>
+                                    <span class="navi-text">Imprimir</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                    <!--end::Card-->
-                    <!--end::Card-->
                 </div>
             </div>
-            <!--end::Row-->
+        </div>
+        <div class="card-body p-4">
+            
+            <div class="collapse mb-4" id="collapseExample">
+                <div class="card bg-secondary text-white border-0 p-4 rounded">
+                    <form class="mb-0">
+                        <div class="row align-items-end">
+                            <div class="col-lg-6 mb-3 mb-lg-0">
+                                <label class="form-label text-light small fw-bold">Nombre del documento:</label>
+                                <input type="text" class="form-control bg-dark text-white border-secondary datatable-input" data-col-index="1" placeholder="Ej. Tarjeta de circulación..." />
+                            </div>
+                            <div class="col-lg-6 d-flex gap-2">
+                                <button class="btn btn-warning text-dark px-4" id="kt_search">
+                                    <i class="la la-search mr-1"></i> Buscar
+                                </button>
+                                <button class="btn btn-outline-light px-4" id="kt_reset" type="button">
+                                    <i class="la la-close mr-1"></i> Limpiar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle border-secondary mb-0" id="kdatatable_documentoscustodio">
+                    <thead class="table-light text-dark fw-bold uppercase tracking-wider">
+                        <tr>
+                            <th scope="col" class="py-3" style="width: 10%">No.</th>
+                            <th scope="col" class="py-3" style="width: 70%">Documento</th>
+                            <th scope="col" class="py-3 text-center" style="width: 20%">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+            <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
+            <input type="hidden" id="documentocustdatatable" value="{{ route('docvehiculo.vehiculodatatable') }}">
+        </div>
         </div>
     </div>
-    <!--end::List-->
-</div>
 
 {{-- M O D A L S --}}
-
-  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="kt_modal_1">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title">Agregar documentación</h5>
-
-                  <div class="btn btn-icon btn-sm btn-active-light-warning ms-2" data-bs-dismiss="modal" aria-label="Close">
-                      <span class="svg-icon svg-icon-2x"></span>
-                  </div>
-              </div>
-
-              <div class="modal-body">
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="kt_modal_1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white border-secondary">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title fw-bold">Agregar documentación</h5>
+                <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
                 <form action="{{ route('docvehiculo.guardardocumentovehiculo') }}" method="post" id="submit_documento">
-                @csrf
-                  <div class="row form-group">
-                    <div class="col-lg-12 mt-2">
-                      <label>Nombre del documento</label>
-                      <input type="text" class="form-control" name="documento" id="documento" />
+                    @csrf
+                    <div class="mb-3">
+                        <label class="form-label text-light small">Nombre del documento</label>
+                        <input type="text" class="form-control bg-secondary text-white border-0" name="documento" id="documento" required autocomplete="off"/>
                     </div>
-                  </div>
                 </form>
-              </div>
+            </div>
+            <div class="modal-footer border-secondary">
+                <button type="button" class="btn btn-sm btn-outline-light" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="send_documento" class="btn btn-sm btn-warning text-dark">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-              <div class="modal-footer">
-                <button type="button" class="btn btn btn-secondary font-weight-bold" data-dismiss="modal">Cancelar</button>
-                <button type="button" id="send_documento" class="btn btn-warning">Guardar</button>
-              </div>
-          </div>
-      </div>
-  </div>
-
-  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="model_edit_tipodocumento">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title">Editar documentación</h5>
-                  <div class="btn btn-icon btn-sm btn-active-light-warning ms-2" data-bs-dismiss="modal" aria-label="Close">
-                      <span class="svg-icon svg-icon-2x"></span>
-                  </div>
-              </div>
-
-              <div class="modal-body">
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="model_edit_tipodocumento">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white border-secondary">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title fw-bold">Editar documentación</h5>
+                <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
                 <form action="{{ route('docvehiculo.editardocumentovehiculo') }}" method="post" id="submit_documentoedit_edit">
-                @csrf
-                      <div class="row form-group">
-                        <div class="col-lg-12 mt-2">
-                          <label>Nombre del documento</label>
-                          <input type="text" class="form-control" name="documento" id="tipo_documento" />
-                        </div>
-
-                      </div>
-
-                  <input type="hidden" name="id_documento" id="id_documento" value="">
+                    @csrf
+                    <div class="mb-3">
+                        <label class="form-label text-light small">Nombre del documento</label>
+                        <input type="text" class="form-control bg-secondary text-white border-0" name="documento" id="tipo_documento" required autocomplete="off"/>
+                    </div>
+                    <input type="hidden" name="id_documento" id="id_documento" value="">
                 </form> 
-              </div>
+            </div>
+            <div class="modal-footer border-secondary">
+                <button type="button" class="btn btn-sm btn-outline-light" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="edit_tipodocumento_submit" class="btn btn-sm btn-warning text-dark">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-              <div class="modal-footer">
-                <button type="button" class="btn btn btn-secondary font-weight-bold" data-dismiss="modal">Cancelar</button>
-                <button type="button" id="edit_tipodocumento_submit" class="btn btn-warning">Guardar</button>
-              </div>
-          </div>
-      </div>
-  </div>
-
-  <form method="post" id="tipodocumento_delete_form" action="{{ route('docvehiculo.desactivardocumentovehiculo') }}" enctype="multipart/form-data">
+<form method="post" id="tipodocumento_delete_form" action="{{ route('docvehiculo.desactivardocumentovehiculo') }}" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="id" id="id_documento_delete" value="">
-  </form>
-
+</form>
 @endsection
