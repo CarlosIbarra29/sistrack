@@ -23,32 +23,31 @@
 @endpush
 
 @section('content')
-<div class="bg-dashboard-dark">
+<div class="bg-dashboard-dark p-4">
 
-    <div class="d-flex justify-content-between align-items-center mb-5">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-5 gap-3">
         <div>
             <h1 class="font-weight-bolder text-white m-0" style="font-size: 24px; letter-spacing: -0.5px;">Inventario de Custodios</h1>
             <p class="text-muted font-size-sm m-0">Gestiona el alta, control y seguimiento de tus custodios en plataforma.</p>
         </div>
-        <div>
+        <div class="mt-3 mt-md-0">
             <a href="{{ route('custodio.listadocustodioinactivo') }}" class="btn btn-sm font-weight-bold text-white btn-outline-secondary" style="border-color: var(--border-color); height: 38px; display: flex; align-items: center; gap: 6px;">
                 <i class="la la-trash-alt"></i> Custodios inactivos
             </a>
         </div>
     </div>
 
-    <div class="row mb-10">
+    <div class="row mb-6 mx-n2">
         @php
             $buttons = [
                 ['t' => 'ALTA DE CUSTODIOS', 'i' => 'fas fa-user-plus', 'c' => '#f6a924', 'bg' => 'rgba(246, 169, 36, 0.05)', 'r' => route('custodio.agregarcustodio')],
                 ['t' => 'FICHA TÉCNICA', 'i' => 'fas fa-id-card', 'c' => '#00c2a8', 'bg' => 'rgba(0, 194, 168, 0.05)', 'r' => '#'],
                 ['t' => 'SEGUIMIENTO DE DOCTOS.', 'i' => 'fas fa-file-signature', 'c' => '#8950fc', 'bg' => 'rgba(137, 80, 252, 0.05)', 'r' => '#'],
-                
                 ['t' => 'IMPRESIÓN DE CREDENCIAL', 'i' => 'fas fa-print', 'c' => '#FFFFFF', 'bg' => 'rgba(255, 255, 255, 0.05)', 'r' => '#']
             ];
         @endphp
         @foreach($buttons as $btn)
-        <div class="col px-2">
+        <div class="col-xl-3 col-md-6 col-12 px-2 mb-3">
             <div class="text-center p-4 h-100 d-flex flex-column justify-content-between" style="border: 1px solid {{ $btn['c'] }}; background: {{ $btn['bg'] }}; border-radius: 4px;">
                 <div>
                     <i class="{{ $btn['i'] }} mb-3" style="color: {{ $btn['c'] }}; font-size: 2.2rem;"></i>
@@ -63,12 +62,12 @@
     </div>
 
     <div class="row">
-        <div class="col-xl-9 col-lg-8 pr-md-2">
+        <div class="col-xl-9 col-lg-8 pr-xl-2">
             
             <div class="text-warning font-weight-bolder font-size-xs mb-3 text-uppercase tracking-wide">Resumen de Custodios</div>
 
-            <div class="row mb-4 g-3">
-                <div class="col-md-4">
+            <div class="row mb-4">
+                <div class="col-xl-4 col-sm-6 mb-3">
                     <div class="counter-box-improved">
                         <div class="icon-wrapper" style="background-color: rgba(59, 130, 246, 0.12); color: #3b82f6;"><i class="la la-users"></i></div>
                         <div>
@@ -77,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-xl-4 col-sm-6 mb-3">
                     <div class="counter-box-improved">
                         <div class="icon-wrapper" style="background-color: rgba(16, 185, 129, 0.12); color: #10b981;"><i class="la la-check-circle"></i></div>
                         <div>
@@ -86,7 +85,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-xl-4 col-sm-6 mb-3">
                     <div class="counter-box-improved">
                         <div class="icon-wrapper" style="background-color: rgba(239, 68, 68, 0.12); color: #ef4444;"><i class="la la-user-times"></i></div>
                         <div>
@@ -97,65 +96,68 @@
                 </div>
             </div>
 
-            <form class="horizontal-filter-bar mb-4">
-                <div style="flex: 1; min-width: 160px; position: relative;">
-                    <input type="text" class="form-control input-premium-dark datatable-input pl-8" placeholder="Buscar custodio..." />
-                    <i class="la la-search text-muted position-absolute" style="left: 10px; top: 12px; font-size: 13px;"></i>
+            <form class="horizontal-filter-bar mb-4 p-3 rounded" onsubmit="return false;" style="background: rgba(30, 45, 74, 0.2); border: 1px solid var(--border-color);">
+                <div class="form-row align-items-center w-100 m-0">
+                    <div class="col-12 col-md-6 col-xl-3 mb-2 mb-xl-0 px-1 position-relative">
+                        <input type="text" class="form-control input-premium-dark pl-8" placeholder="Buscar custodio..." />
+                        <i class="la la-search text-muted position-absolute" style="left: 15px; top: 12px; font-size: 13px;"></i>
+                    </div>
+                    <div class="col-6 col-md-3 col-xl-2 mb-2 mb-xl-0 px-1">
+                        <select class="form-control input-premium-dark datatable-input">
+                            <option value="">Estatus: Todos</option>
+                        </select>
+                    </div>
+                    <div class="col-6 col-md-3 col-xl-2 mb-2 mb-xl-0 px-1">
+                        <select class="form-control input-premium-dark datatable-input">
+                            <option value="">Puesto: Todos</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-2 mb-2 mb-xl-0 px-1">
+                        <select class="form-control input-premium-dark datatable-input">
+                            <option value="">Sucursal: Todos</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-3 d-flex gap-1 px-1 mt-2 mt-xl-0 justify-content-xl-end">
+                        <button type="button" class="btn btn-sm btn-outline-secondary text-white font-weight-bold px-3 flex-grow-1" style="height:38px; border-color: var(--border-color);"><i class="la la-filter"></i> FILTROS</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary text-muted font-weight-bold px-3 flex-grow-1" style="height:38px; border-color: var(--border-color);"><i class="la la-sync"></i> LIMPIAR</button>
+                    </div>
                 </div>
-                <div style="width: 150px;">
-                    <select class="form-control input-premium-dark datatable-input py-0">
-                        <option>Estatus: Todos</option>
-                    </select>
-                </div>
-                <div style="width: 150px;">
-                    <select class="form-control input-premium-dark datatable-input py-0">
-                        <option>Puesto: Todos</option>
-                    </select>
-                </div>
-                <div style="width: 150px;">
-                    <select class="form-control input-premium-dark datatable-input py-0">
-                        <option>Sucursal: Todos</option>
-                    </select>
-                </div>
-                
-                <button type="button" class="btn btn-sm btn-outline-secondary text-white font-weight-bold px-4" style="height:38px; border-color: var(--border-color);"><i class="la la-filter"></i> FILTROS</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary text-muted font-weight-bold px-4" style="height:38px; border-color: var(--border-color);"><i class="la la-sync"></i> LIMPIAR</button>
             </form>
 
             <div class="text-warning font-weight-bolder font-size-xs mb-3 text-uppercase tracking-wide">Listado de Custodios</div>
             <div class="card card-premium mb-4">
                 <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table table-hover table-improved-dark">
+                        <table class="table table-hover table-improved-dark m-0">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th style="color: #38bdf8 !important;">ID</th>
                                     <th>Nombre</th>
                                     <th>Puesto</th>
                                     <th>Sucursal</th>
                                     <th>Estatus</th>
                                     <th>Documentación</th>
-                                    <th class="text-right" style="width: 100px;">Acciones</th>
+                                    <th class="text-center" style="width: 100px;">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody> 
                                 @foreach($data as $unid)
                                 <tr>
-                                    <td class="text-muted font-weight-bold">CUST-{{ str_pad($unid->id, 4, '0', STR_PAD_LEFT) }}</td>
+                                    <td class="font-weight-bold" style="color: #38bdf8;">CUST-{{ str_pad($unid->id, 4, '0', STR_PAD_LEFT) }}</td>
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="symbol symbol-25 symbol-circle mr-2" style="background-color: var(--bg-input); width:26px; height:26px; display:flex; align-items:center; justify-content:center; border: 1px solid var(--border-color); overflow:hidden;">
                                                 <img src="{{ asset('media/users/default.jpg') }}" alt="" style="width:100%; height:100%; object-fit:cover;">
                                             </div>
-                                            <span class="font-weight-bold text-white">{{ $unid->nombre_custodio }} {{ $unid->ap_paterno }}</span>
+                                            <span class="font-weight-bold text-white text-nowrap">{{ $unid->nombre_custodio }} {{ $unid->ap_paterno }}</span>
                                         </div>
                                     </td>
                                     <td>{{ $unid->puesto ?? 'Escolta' }}</td>
                                     <td class="text-muted">{{ $unid->sucursal ?? 'N/A' }}</td>
                                     <td><span class="status-chip chip-active">ACTIVO</span></td>
                                     <td><span class="status-chip chip-info">COMPLETA</span></td>
-                                    <td class="text-right">
-                                        <div class="d-flex justify-content-end align-items-center gap-1">
+                                    <td class="text-center">
+                                        <div class="d-flex justify-content-center align-items-center gap-1">
                                             <a href="{{ route('custodio.vercustodio', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Ver Custodio"><i class="la la-eye font-size-lg"></i></a>
                                             <a href="{{ route('custodio.editarcustodio', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Editar custodio"><i class="la la-edit font-size-lg"></i></a>
                                             <button class="btn btn-xs btn-icon btn-clean text-muted p-0 desactivar_custodio" data-nombre="{{ $unid->nombre_custodio}}" data-id="{{ $unid->id}}" title="Desactivar custodio"><i class="la la-trash font-size-lg"></i></button>
@@ -170,11 +172,10 @@
             </div>
         </div>
 
-        <div class="col-xl-3 col-lg-4 pl-md-2">
+        <div class="col-xl-3 col-lg-4 pl-xl-2 mt-4 mt-lg-0">
             <div class="card card-premium p-4 mb-4">
                 <span class="text-warning font-weight-bolder font-size-xs d-block mb-3 text-uppercase">Estado Documentación</span>
-                <div class="d-flex align-items-center justify-content-between">
-                   
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
                     <div class="donut-chart-segment" id="chart_lateral"></div>
                     <div class="font-size-xs" style="line-height: 1.8;">
                         <div style="color: #10b981; font-weight: 600;">● Completa <span class="text-white-50 font-weight-normal">118 (75.6%)</span></div>
@@ -210,12 +211,8 @@
     </div>
 </div>
 
-
-
-  <form method="post" id="custodio_delete_form" action="{{ route('custodio.desactivarcustodio') }}" enctype="multipart/form-data">
+<form method="post" id="custodio_delete_form" action="{{ route('custodio.desactivarcustodio') }}" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="id" id="id_delete" value="">
-  </form>
-
-
+</form>
 @endsection

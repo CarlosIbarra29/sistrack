@@ -7,125 +7,133 @@
 @push('scripts')
   <script src="{{ asset('js/catalogos/custodios/CatalogoDocumentacionCustodios.js') }}"></script> 
   <meta name="csrf-token" content="{{ csrf_token() }}" />
+  
+  <style>
+      /* Estilos Premium Custom para mitigar líneas pesadas de Metronic v7 */
+      .card-premium-dark {
+          background-color: #111116 !important;
+          border: 1px solid #1e1e24 !important;
+      }
+      .table-clean-premium {
+          border-collapse: collapse !important;
+      }
+      .table-clean-premium thead th {
+          border-bottom: 2px solid #1e1e24 !important;
+          color: #a2a5b9 !important;
+          font-weight: 600 !important;
+          text-transform: uppercase;
+          font-size: 0.85rem;
+          letter-spacing: 0.5px;
+      }
+      .table-clean-premium tfoot th {
+          border-top: 2px solid #1e1e24 !important;
+          color: #a2a5b9 !important;
+      }
+      .table-clean-premium tbody tr {
+          border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+          transition: background-color 0.2s ease;
+      }
+      .table-clean-premium tbody tr:hover {
+          background-color: rgba(255, 218, 8, 0.03) !important; /* Ligero destello dorado al pasar cursor */
+      }
+      /* Uniformidad en botones de acción dentro de la tabla */
+      .table-clean-premium .btn.btn-icon {
+          border-radius: 6px !important;
+          transition: all 0.2s;
+      }
+  </style>
 @endpush
 
 @section('content')
 
-    <div class="d-flex flex-row">
-    <!--begin::List-->
+<div class="d-flex flex-row">
     <div class="flex-row-fluid">
         <div class="d-flex flex-column flex-grow-1">
 
-            <!--begin::Row-->
             <div class="row">
                 <div class="col-xl-12">
 
-                <!--begin::Card-->
-                    <div class="card card-custom">
-                        <div class="card-header">
+                    <div class="card card-custom card-premium-darkshadow-sm">
+                        <div class="card-header border-0 py-5align-items-center">
                             <div class="card-title">
                               <span class="card-icon">
-                                <i class="flaticon2-file text-warning"></i>
+                                <i class="flaticon2-file text-warning icon-lg"></i>
                               </span>
-                              <h3 class="card-label">Inventario de documentación del custodio</h3>
+                              <h3 class="card-label font-weight-bolder text-white">Inventario de documentación del custodio</h3>
                             </div>
                             <div class="card-toolbar">
-
-
-                                <a class="btn btn-link-warning font-weight-bold mr-2 busqueda" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                    Busqueda
+                                
+                                <a class="btn btn-sm btn-text-warning btn-hover-light-warning font-weight-bold mr-2 busqueda" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    <i class="la la-search"></i> Búsqueda
                                 </a>
 
-                                <!--begin::Button-->
-                                <a href="#" class="btn btn-light-warning font-weight-bolder mr-3 ml-3" data-toggle="modal" data-target="#kt_modal_1">
-                                    <i class="la la-plus"></i>Nuevo</a>
+                                <a href="#" class="btn btn-sm btn-warning font-weight-bolder px-5 mr-2" data-toggle="modal" data-target="#kt_modal_1">
+                                    <i class="la la-plus"></i> Nuevo
+                                </a>
 
-                                <a href="{{ route('doccustodio.catalogodocinactivos') }}" class="btn btn-light-warning font-weight-bolder mr-3 ml-3">
-                                    <i class="far fa-trash-alt"></i>Documentación Inactivos</a>
+                                <a href="{{ route('doccustodio.catalogodocinactivos') }}" class="btn btn-sm btn-outline-warning font-weight-bold mr-2">
+                                    <i class="far fa-trash-alt"></i> Inactivos
+                                </a>
 
-                                <!--end::Button-->
-
-
-                                <!--begin::Dropdown-->
-                                <div class="dropdown dropdown-inline mr-2">
-                                  <button type="button" class="btn btn-light-warning font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="svg-icon svg-icon-md">
-                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg-->
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                      <rect x="0" y="0" width="24" height="24" />
-                                      <path d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z" fill="#000000" opacity="0.3" />
-                                      <path d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z" fill="#000000" />
-                                    </g>
-                                    </svg>
-                                                    <!--end::Svg Icon-->
+                                <div class="dropdown dropdown-inline">
+                                  <button type="button" class="btn btn-sm btn-outline-warning font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="svg-icon svg-icon-sm pr-1">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                          <rect x="0" y="0" width="24" height="24" />
+                                          <path d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z" fill="#D4AF37" opacity="0.3" />
+                                          <path d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z" fill="#D4AF37" />
+                                        </g>
+                                      </svg>
                                     </span>Exportar
                                   </button>
-                                    <!--begin::Dropdown Menu-->
-                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                        <!--begin::Navigation-->
-                                        <ul class="navi flex-column navi-hover py-2">
-
-                                            <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-excel">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-excel-o"></i>
-                                                </span>
-                                                <span class="navi-text">Excel</span>
-                                              </a>
-                                            </li>
-{{--                                             <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-pdf">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-pdf-o"></i>
-                                                </span>
-                                                <span class="navi-text">PDF</span>
-                                              </a>
-                                            </li> --}}
-                                            <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-csv">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-text-o"></i>
-                                                </span>
-                                                <span class="navi-text">CSV</span>
-                                              </a>
-                                            </li>
-                                            <li class="navi-item">
-                                              <a href="#" class="navi-link" id="export-print">
-                                                <span class="navi-icon">
-                                                  <i class="la la-file-text-o"></i>
-                                                </span>
-                                                <span class="navi-text">Imprimir</span>
-                                              </a>
-                                            </li>
-
-                                        </ul>
-                                        <!--end::Navigation-->
-                                    </div>
-                                    <!--end::Dropdown Menu-->
-                                </div>
-                                <!--end::Dropdown-->
-                            </div>
-                        </div>
-                        <div class="card-body">
-
-                          <div class="collapse" id="collapseExample">
-                            <div class="card card-body">
-                              <!--begin: Search Form-->
-                              <form class="mb-15">
-                                <div class="row mb-6">
-                                  <div class="col-lg-6 mb-lg-0 mb-6">
-                                    <label>Documento del documento:</label>
-                                    <input type="text" class="form-control datatable-input" data-col-index="1" />
+                                  
+                                  <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                    <ul class="navi flex-column navi-hover py-2">
+                                        <li class="navi-item">
+                                          <a href="#" class="navi-link" id="export-excel">
+                                            <span class="navi-icon"><i class="la la-file-excel-o text-success"></i></span>
+                                            <span class="navi-text">Excel</span>
+                                          </a>
+                                        </li>
+                                        <li class="navi-item">
+                                          <a href="#" class="navi-link" id="export-csv">
+                                            <span class="navi-icon"><i class="la la-file-text-o text-info"></i></span>
+                                            <span class="navi-text">CSV</span>
+                                          </a>
+                                        </li>
+                                        <li class="navi-item">
+                                          <a href="#" class="navi-link" id="export-print">
+                                            <span class="navi-icon"><i class="la la-print text-muted"></i></span>
+                                            <span class="navi-text">Imprimir</span>
+                                          </a>
+                                        </li>
+                                    </ul>
                                   </div>
                                 </div>
-                                <div class="row mt-8">
-                                  <div class="col-lg-12">
-                                    <button class="btn btn-warning btn-primary--icon" id="kt_search">
-                                      <span><i class="la la-search"></i><span>Buscar</span></span>
-                                    </button>&#160;&#160;
-                                    <button class="btn btn-secondary btn-secondary--icon" id="kt_reset">
-                                      <span><i class="la la-close"></i><span>Limpiar</span></span>
+                                </div>
+                        </div>
+                        
+                        <div class="card-body pt-2">
+                          <div class="collapse" id="collapseExample">
+                            <div class="card card-body bg-dark-o-10 border-0 mb-8 p-6" style="border-radius: 8px;">
+                              <form class="mb-0">
+                                <div class="row align-items-end">
+                                  <div class="col-lg-6 mb-4 mb-lg-0">
+                                    <label class="font-weight-bold text-muted mb-2">Nombre del documento:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-transparent border-secondary-o-50"><i class="la la-file-text text-warning"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control datatable-input" data-col-index="1" placeholder="Ej. CURP, INE..." />
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-6 text-lg-right">
+                                    <button type="button" class="btn btn-warning font-weight-bold px-6" id="kt_search">
+                                      <i class="la la-search"></i> Buscar
+                                    </button>
+                                    <button type="button" class="btn btn-light-dark font-weight-bold px-6 ml-2" id="kt_reset">
+                                      <i class="la la-close"></i> Limpiar
                                     </button>
                                   </div>
                                 </div>
@@ -133,109 +141,86 @@
                             </div>
                           </div>
 
-
-                        <!--begin: Datatable-->
-                          <table class="table table-checkable" id="kdatatable_documentoscustodio">
-                            <thead>
-                              <tr>
-                                <th>No.</th>
-                                <th>Documento</th>
-                                <th class="text-center">Acciones</th>
-                              </tr>
-                            </thead>
-                            <tfoot>
-                              <tr>
-                                <th>No.</th>
-                                <th>Documento</th>
-                                <th class="text-center">Acciones</th>
-                              </tr>
-                            </tfoot>
-
-                          </table>
-                          <!--end: Datatable-->
+                          <div class="table-responsive">
+                              <table class="table table-checkable table-clean-premium" id="kdatatable_documentoscustodio">
+                                <thead>
+                                  <tr>
+                                    <th style="width: 10%;">No.</th>
+                                    <th style="width: 70%;">Documento</th>
+                                    <th class="text-center" style="width: 20%;">Acciones</th>
+                                  </tr>
+                                </thead>
+                                <tfoot>
+                                  <tr>
+                                    <th>No.</th>
+                                    <th>Documento</th>
+                                    <th class="text-center">Acciones</th>
+                                  </tr>
+                                </tfoot>
+                              </table>
+                          </div>
                           <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
                           <input type="hidden" id="documentocustdatatable" value="{{ route('doccustodio.documentosdatatable') }}">
-
-
                         </div>
                     </div>
-                    <!--end::Card-->
-                    <!--end::Card-->
-                </div>
+                    </div>
             </div>
-            <!--end::Row-->
-        </div>
+            </div>
     </div>
-    <!--end::List-->
-</div>
+    </div>
 
 {{-- M O D A L S --}}
-
-  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="kt_modal_1">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title">Agregar documentación</h5>
-
-                  <div class="btn btn-icon btn-sm btn-active-light-warning ms-2" data-bs-dismiss="modal" aria-label="Close">
-                      <span class="svg-icon svg-icon-2x"></span>
-                  </div>
-              </div>
-
-              <div class="modal-body">
-                <form action="{{ route('doccustodio.guardardocumento') }}" method="post" id="submit_documento">
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="kt_modal_1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark-card border-0">
+            <div class="modal-header border-0">
+                <h5 class="modal-title font-weight-bolder text-white">Agregar documentación</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body py-4">
+              <form action="{{ route('doccustodio.guardardocumento') }}" method="post" id="submit_documento">
                 @csrf
-                  <div class="row form-group">
-                    <div class="col-lg-12 mt-2">
-                      <label>Nombre del documento</label>
-                      <input type="text" class="form-control" name="documento" id="documento" />
-                    </div>
-                  </div>
-                </form>
-              </div>
+                <div class="form-group mb-0">
+                    <label class="font-weight-bold text-muted mb-2">Nombre del documento</label>
+                    <input type="text" class="form-control" name="documento" id="documento" placeholder="Escribe el nombre del documento" required />
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer border-0">
+              <button type="button" class="btn btn-clean font-weight-bold text-white" data-dismiss="modal">Cancelar</button>
+              <button type="button" id="send_documento" class="btn btn-warning font-weight-bold px-6">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-              <div class="modal-footer">
-                <button type="button" class="btn btn btn-secondary font-weight-bold" data-dismiss="modal">Cancelar</button>
-                <button type="button" id="send_documento" class="btn btn-warning">Guardar</button>
-              </div>
-          </div>
-      </div>
-  </div>
-
-  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="model_edit_tipodocumento">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title">Editar documentación</h5>
-                  <div class="btn btn-icon btn-sm btn-active-light-warning ms-2" data-bs-dismiss="modal" aria-label="Close">
-                      <span class="svg-icon svg-icon-2x"></span>
-                  </div>
-              </div>
-
-              <div class="modal-body">
-                <form action="{{ route('doccustodio.editardocumento') }}" method="post" id="submit_documentoedit_edit">
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="model_edit_tipodocumento">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark-card border-0">
+            <div class="modal-header border-0">
+                <h5 class="modal-title font-weight-bolder text-white">Editar documentación</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body py-4">
+              <form action="{{ route('doccustodio.editardocumento') }}" method="post" id="submit_documentoedit_edit">
                 @csrf
-                      <div class="row form-group">
-                        <div class="col-lg-12 mt-2">
-                          <label>Nombre del documento</label>
-                          <input type="text" class="form-control" name="documento" id="tipo_documento" />
-                        </div>
-
-                      </div>
-
-                  <input type="hidden" name="id_documento" id="id_documento" value="">
-                </form> 
-              </div>
-
-              <div class="modal-footer">
-                <button type="button" class="btn btn btn-secondary font-weight-bold" data-dismiss="modal">Cancelar</button>
-                <button type="button" id="edit_tipodocumento_submit" class="btn btn-warning">Guardar</button>
-                
-              </div>
-          </div>
-      </div>
-  </div>
-
-  
+                <div class="form-group mb-0">
+                    <label class="font-weight-bold text-muted mb-2">Nombre del documento</label>
+                    <input type="text" class="form-control" name="documento" id="tipo_documento" required />
+                </div>
+                <input type="hidden" name="id_documento" id="id_documento" value="">
+              </form> 
+            </div>
+            <div class="modal-footer border-0">
+              <button type="button" class="btn btn-clean font-weight-bold text-white" data-dismiss="modal">Cancelar</button>
+              <button type="button" id="edit_tipodocumento_submit" class="btn btn-warning font-weight-bold px-6">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
