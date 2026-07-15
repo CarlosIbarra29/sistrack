@@ -126,51 +126,60 @@
 
             <div class="text-warning font-weight-bolder font-size-xs mb-3 text-uppercase tracking-wide">Listado de Custodios</div>
             <div class="card card-premium mb-4">
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-hover table-improved-dark m-0">
-                            <thead>
-                                <tr>
-                                    <th style="color: #38bdf8 !important;">ID</th>
-                                    <th>Nombre</th>
-                                    <th>Puesto</th>
-                                    <th>Sucursal</th>
-                                    <th>Estatus</th>
-                                    <th>Documentación</th>
-                                    <th class="text-center" style="width: 100px;">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody> 
-                                @foreach($data as $unid)
-                                <tr>
-                                    <td class="font-weight-bold" style="color: #38bdf8;">CUST-{{ str_pad($unid->id, 4, '0', STR_PAD_LEFT) }}</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-25 symbol-circle mr-2" style="background-color: var(--bg-input); width:26px; height:26px; display:flex; align-items:center; justify-content:center; border: 1px solid var(--border-color); overflow:hidden;">
-                                                <img src="{{ asset('media/users/default.jpg') }}" alt="" style="width:100%; height:100%; object-fit:cover;">
-                                            </div>
-                                            <span class="font-weight-bold text-white text-nowrap">{{ $unid->nombre_custodio }} {{ $unid->ap_paterno }}</span>
-                                        </div>
-                                    </td>
-                                    <td>{{ $unid->puesto ?? 'Escolta' }}</td>
-                                    <td class="text-muted">{{ $unid->sucursal ?? 'N/A' }}</td>
-                                    <td><span class="status-chip chip-active">ACTIVO</span></td>
-                                    <td><span class="status-chip chip-info">COMPLETA</span></td>
-                                    <td class="text-center">
-                                        <div class="d-flex justify-content-center align-items-center gap-1">
-                                            <a href="{{ route('custodio.vercustodio', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Ver Custodio"><i class="la la-eye font-size-lg"></i></a>
-                                            <a href="{{ route('custodio.editarcustodio', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Editar custodio"><i class="la la-edit font-size-lg"></i></a>
-                                            <button class="btn btn-xs btn-icon btn-clean text-muted p-0 desactivar_custodio" data-nombre="{{ $unid->nombre_custodio}}" data-id="{{ $unid->id}}" title="Desactivar custodio"><i class="la la-trash font-size-lg"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover table-improved-dark m-0">
+                <thead>
+                    <tr>
+                        <th style="color: #38bdf8 !important;">ID</th>
+                        <th>Nombre</th>
+                        <th>Puesto</th>
+                        <th>Sucursal</th>
+                        <th>Estatus</th>
+                        <th>Documentación</th>
+                        <th class="text-center" style="width: 100px;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    @foreach($data as $unid)
+                    <tr>
+                        <td class="font-weight-bold" style="color: #38bdf8;">CUST-{{ str_pad($unid->id, 4, '0', STR_PAD_LEFT) }}</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="symbol symbol-25 symbol-circle mr-2" style="background-color: var(--bg-input); width:26px; height:26px; display:flex; align-items:center; justify-content:center; border: 1px solid var(--border-color); overflow:hidden;">
+                                    <img src="{{ asset('media/users/default.jpg') }}" alt="" style="width:100%; height:100%; object-fit:cover;">
+                                </div>
+                                <span class="font-weight-bold text-white text-nowrap">{{ $unid->nombre_custodio }} {{ $unid->ap_paterno }}</span>
+                            </div>
+                        </td>
+                        <td>{{ $unid->puesto ?? 'Escolta' }}</td>
+                        <td class="text-muted">{{ $unid->sucursal ?? 'N/A' }}</td>
+                        <td><span class="status-chip chip-active">ACTIVO</span></td>
+                        <td><span class="status-chip chip-info">COMPLETA</span></td>
+                        <td class="text-center">
+                            <div class="d-flex justify-content-center align-items-center gap-1">
+                                <a href="{{ route('custodio.vercustodio', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Ver Custodio"><i class="la la-eye font-size-lg"></i></a>
+                                <a href="{{ route('custodio.editarcustodio', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Editar custodio"><i class="la la-edit font-size-lg"></i></a>
+                                <button class="btn btn-xs btn-icon btn-clean text-muted p-0 desactivar_custodio" data-nombre="{{ $unid->nombre_custodio}}" data-id="{{ $unid->id}}" title="Desactivar custodio"><i class="la la-trash font-size-lg"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
+    </div>
+    
+    
+    <div class="d-flex justify-content-between align-items-center mt-4 p-3 select-none" style="font-size: 0.8rem; color: #94a3b8; background-color: #111625; border-top: 1px solid #1e293b;">
+        <div>Mostrando registros del 1 al {{ count($data) }} de un total de {{ count($data) }} registros</div>
+        <div class="d-flex gap-1">
+            <button type="button" class="btn btn-sm btn-dark text-muted px-3 border-0" disabled style="background-color: #171e30; cursor: default;">Anterior</button>
+            <button type="button" class="btn btn-sm text-white px-3 border-0" style="background-color: #3b82f6; cursor: default;">1</button>
+            <button type="button" class="btn btn-sm btn-dark text-muted px-3 border-0" disabled style="background-color: #171e30; cursor: default;">Siguiente</button>
+        </div>
+    </div>
+</div>        </div>
 
         <div class="col-xl-3 col-lg-4 pl-xl-2 mt-4 mt-lg-0">
             <div class="card card-premium p-4 mb-4">
