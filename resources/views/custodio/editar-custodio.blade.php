@@ -43,15 +43,30 @@
                 <div class="card card-custom shadow-sm custodio-sidebar-card border-0 mb-6">
                     <div class="card-body p-0 text-center">
                         <div class="row mb-3">
-                            <div class="col-12 text-center custodio-avatar-container">
-                                <div class="custodio-avatar-wrapper mx-auto" style="background-image: url('{{ $custodio->fotografia_custodio != null ? route('archivo.fotografiaCustodio', $custodio->id) : asset('media/users/default.jpg') }}'); background-color: #f3f3f3;">
-                                    <label class="custodio-avatar-upload" data-toggle="tooltip" title="Cambiar foto">
-                                        <i class="fa fa-camera icon-sm"></i>
-                                        <input type="file" name="profile_avatar" id="file_carga" accept=".png, .jpg, .jpeg" style="display: none;"/>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+    <div class="col-12 text-center custodio-avatar-container">
+        <div class="col-lg-12 col-xl-6 mx-auto d-flex justify-content-center">
+            <div class="image-input image-input-outline" id="kt_profile_avatar">
+                <div class="image-input-wrapper" style="background-color: #f3f3f3;
+                    @if($custodio->fotografia_custodio != null)
+                        background-image: url({{ route('archivo.fotografiaCustodio', $custodio->id) }});
+                    @else
+                        background-color: #f3f3f3;
+                    @endif">
+                </div>
+                    
+                <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Cambiar foto de custodio">
+                    <i class="fa fa-pen icon-sm text-muted"></i>
+                    <input type="file" name="profile_avatar" id="file_carga" accept=".png, .jpg, .jpeg" />
+                    <input type="hidden" name="profile_avatar_remove" />
+                </label>
+
+                <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Eliminar">
+                    <i class="ki ki-bold-close icon-xs text-muted"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
 
                         <div class="row mb-4">
                             <div class="col-12">
@@ -93,63 +108,91 @@
                         </div>
 
                         
-                        <div class="text-left px-3 mt-4">
-                            
-                            <div class="info-box-card-large">
-                                <div class="info-box-title">
-                                    <i class="fa fa-car text-warning"></i> Vehículo asignado
-                                </div>
-                                <div class="info-box-body-wrapper">
-                                    @if($vehiculo_custod == null)
-                                        <div class="text-muted text-center py-2">
-                                            <p class="mb-4" style="font-size: 0.95rem;">No tiene vehículo asignado.</p>
-                                            <a href="{{ route('custodio.agregarvehiculo', $custodio->id) }}" class="btn btn-custodio-outline">
-                                                Asignar
-                                            </a>
-                                        </div>
-                                    @else
-                                        <div class="row align-items-center info-box-content py-2">
-                                            <div class="col-12 text-center mb-3">
-                                                <img src="{{ route('archivo.documentovehiculoficha', $vehiculo_custod->id) }}" class="img-fluid" style="max-height: 90px; border-radius: 4px;">
-                                            </div>
-                                            <div class="col-12">
-                                                <p class="mb-2" style="font-size: 0.9rem;"><span class="info-box-label">Vehículo:</span> {{ $vehiculo_custod->vehiculo }}</p>
-                                                <p class="mb-2" style="font-size: 0.9rem;"><span class="info-box-label">Serie:</span> {{ $vehiculo_custod->no_serie }}</p>
-                                                <p class="mb-2" style="font-size: 0.9rem;"><span class="info-box-label">Placa:</span> {{ $vehiculo_custod->placa }}</p>
-                                                <p class="mb-0" style="font-size: 0.9rem;"><span class="info-box-label">Estatus:</span> <span class="text-doc-cargado font-weight-bold">ACTIVO</span></p>
-                                            </div>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-
-                            
-                            <div class="info-box-card-large">
-                                <div class="info-box-title">
-                                    <i class="fa fa-shuttle-van text-warning"></i> Datos del Arma
-                                </div>
-                                <div class="info-box-body-wrapper">
-                                    @if($arma_custod == null)
-                                        <div class="text-muted text-center py-2">
-                                            <p class="mb-4" style="font-size: 0.95rem;">No tiene arma asignada.</p>
-                                            <a href="{{ route('custodio.agregararma', $custodio->id) }}" class="btn btn-custodio-outline">
-                                                Asignar
-                                            </a>
-                                        </div>
-                                    @else
-                                        <div class="row align-items-center info-box-content py-2">
-                                            <div class="col-12 text-center mb-3">
-                                                <img src="{{ route('archivo.documentoarmaficha', $arma_custod->id) }}" class="img-fluid" style="max-height: 90px; border-radius: 4px;">
-                                            </div>
-                                            <div class="col-12">
-                                                <p class="mb-2" style="font-size: 0.9rem;"><span class="info-box-label">Registro:</span> {{ $arma_custod->registro_arma }}</p>
-                                                <p class="mb-0" style="font-size: 0.9rem;"><span class="info-box-label">Vigencia:</span> {{ $arma_custod->vigencia_portacion }}</p>
-                                            </div>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
+                        <div class="row mt-2">
+    <!-- Vehículo asignado -->
+    <div class="col-lg-12 mb-4">
+        <div class="card card-custom shadow-sm border-0">
+            <div class="card-header">
+                <h3 class="card-title text-white">
+                    <i class="flaticon2-delivery-truck text-warning mr-2"></i> Vehículo asignado
+                </h3>
+                <div class="card-toolbar">
+                    @if($vehiculo_custod != null)
+                        <a href="{{ route('custodio.editarvehiculo', $custodio->id) }}" class="btn btn-outline-warning font-weight-bold btn-sm">
+                            <i class="flaticon2-edit"></i> Editar
+                        </a>
+                    @endif
+                </div>
+            </div>
+            <div class="card-body px-12 py-10 text-center">
+                @if($vehiculo_custod == null)
+                    <div class="form-group my-3">
+                        <span class="text-white d-block mb-4">No tiene vehículo asignado.</span>
+                        <a href="{{ route('custodio.agregarvehiculo', $custodio->id) }}" class="btn btn-outline-warning font-weight-bold">
+                            Asignar
+                        </a>
+                    </div>
+                @else
+                    <div class="row text-left align-items-center">
+                        <div class="col-lg-3 text-center">
+                            <img src="{{ route('archivo.documentovehiculoficha', $vehiculo_custod->id) }}" style="width: 150px;">
                         </div>
+                        <div class="col-lg-9">
+                            <label class="text-white font-weight-bold">Marca:</label>
+                            <span class="text-white">{{ $vehiculo_custod->vehiculo }}</span> <br>
+                            <label class="text-white font-weight-bold">No. Serie:</label>
+                            <span class="text-white">{{ $vehiculo_custod->no_serie }}</span> <br>
+                            <label class="text-white font-weight-bold">Placa:</label>
+                            <span class="text-white">{{ $vehiculo_custod->placa }}</span> <br>
+                            <label class="text-white font-weight-bold">Año:</label>
+                            <span class="text-white">{{ $vehiculo_custod->year_unidad }}</span> <br>
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div> 
+
+    <!-- Datos del Arma -->
+    <div class="col-lg-12">
+        <div class="card card-custom shadow-sm border-0">
+            <div class="card-header">
+                <h3 class="card-title text-white">
+                    <i class="flaticon2-shield text-warning mr-2"></i> Datos del Arma
+                </h3>
+                <div class="card-toolbar">
+                    @if($arma_custod != null)
+                        <a href="{{ route('custodio.editararma', $custodio->id) }}" class="btn btn-outline-warning font-weight-bold btn-sm">
+                            <i class="flaticon2-edit"></i> Editar
+                        </a>
+                    @endif
+                </div>
+            </div>
+            <div class="card-body px-12 py-10 text-center">
+                @if($arma_custod == null)
+                    <div class="form-group my-3">
+                        <span class="text-white d-block mb-4">No tiene arma asignada.</span>
+                        <a href="{{ route('custodio.agregararma', $custodio->id) }}" class="btn btn-outline-warning font-weight-bold">
+                            Asignar
+                        </a>
+                    </div>
+                @else
+                    <div class="row text-left align-items-center">
+                        <div class="col-lg-3 text-center">
+                            <img src="{{ route('archivo.documentoarmaficha', $arma_custod->id) }}" style="width: 160px;">
+                        </div>
+                        <div class="col-lg-9">
+                            <label class="text-white font-weight-bold">No. Registro:</label>
+                            <span class="text-white">{{ $arma_custod->registro_arma }}</span> <br>
+                            <label class="text-white font-weight-bold">Vigencia de portación:</label>
+                            <span class="text-white">{{ $arma_custod->vigencia_portacion }}</span> <br>
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div> 
+</div>
 
                     </div>
                 </div>

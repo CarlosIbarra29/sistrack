@@ -48,15 +48,20 @@
                 <span class="text-muted font-weight-bold text-uppercase" style="font-size: 0.75rem; letter-spacing: 1px;">Nuevo Custodio</span>
                 
                 <div class="my-5">
-                    <div class="avatar-wrapper-dark" id="kt_profile_avatar">
-                        <i class="fa fa-user text-muted" style="font-size: 3rem; opacity: 0.35;"></i>
-                        <div class="image-input-wrapper" style="background-color: transparent; position: absolute; top:0; left:0; width:100%; height:100%; border-radius:50%;"></div>
-                        <label class="btn btn-xs btn-icon btn-circle btn-warning btn-shadow" data-action="change" data-toggle="tooltip" title="Cambiar foto" style="position: absolute; bottom: 0; right: 0; background-color: #e5a913; border: none; width: 24px; height: 24px;">
-                            <i class="fa fa-camera text-dark" style="font-size: 0.75rem;"></i>
-                            <input type="file" name="profile_avatar" id="file_carga" accept=".png, .jpg, .jpeg" style="display:none;"/>
-                            <input type="hidden" name="profile_avatar_remove" />
-                        </label>
-                    </div>
+                    <div class="image-input image-input-outline" id="kt_profile_avatar">
+                                        <div class="image-input-wrapper"style=" background-color: #f3f3f3;">
+                                        </div>
+                                                            
+                                            <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Cambiar foto de custodio">
+                                                <i class="fa fa-pen icon-sm text-muted"></i>
+                                                <input type="file" name="profile_avatar" id="file_carga" accept=".png, .jpg, .jpeg" />
+                                                <input type="hidden" name="profile_avatar_remove" />
+                                            </label>
+
+                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Eliminar">
+                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                            </span>
+                                    </div>
                 </div>
 
                 <div class="mb-4">
@@ -341,103 +346,48 @@
 
     
     <div class="row">
-        
-        <div class="col-lg-6 mb-6">
-            <div class="card custom-card-dark h-100" id="card_vehiculo_container" style="transition: border-color 0.25s ease;">
-                <div class="card-header custom-card-header-dark py-4 px-6 d-flex align-items-center">
-                    <h5 class="m-0 text-white font-weight-bold">
-                        <i class="fa fa-car mr-2 text-warning"></i> Vehículo asignado
-                    </h5>
+    <div class="row mt-2 w-100">
+        <div class="col-lg-6">
+            <div class="card card-custom shadow-sm border-0 w-100">
+                <div class="card-header">
+                    <h3 class="card-title text-white">Vehículo asignado</h3>
                 </div>
-                <div class="card-body px-6 py-6 d-flex flex-column justify-content-between">
-                    <div class="row">
-                        <div class="col-md-5 d-flex align-items-center justify-content-center mb-4 mb-md-0">
-                            
-                            <i id="vehiculo_icono_visual" class="fa fa-car" style="font-size: 5.5rem; color: #1a222e; transition: color 0.3s ease;"></i>
-                        </div>
-                        <div class="col-md-7 text-muted" style="font-size: 0.85rem;">
-                            <div class="mb-2"><strong class="text-white">Vehículo:</strong> <span id="v_nombre">—</span></div>
-                            <div class="mb-2"><strong class="text-white">No. serie:</strong> <span id="v_serie">—</span></div>
-                            <div class="mb-2"><strong class="text-white">Placa:</strong> <span id="v_placa">—</span></div>
-                            <div class="mb-2"><strong class="text-white">Color:</strong> <span id="v_color">—</span></div>
-                            <div class="mb-2"><strong class="text-white">Marca / Año:</strong> <span id="v_marca">—</span></div>
-                            <div><strong class="text-white">Estatus:</strong> <span id="v_estatus" class="text-success font-weight-bold">ACTIVO</span></div>
-                        </div>
+                <div class="card-body px-12 py-10">
+                    <div class="form-group row">
+                        <span class="text-white">Para registrar el Vehículo es necesario registrar al custodio primero.</span>
                     </div>
-                    <div class="mt-4 pt-4 border-top" style="border-color: #1f242c !important;">
-                        <button type="button" class="btn btn-outline-dark-gold btn-sm px-4" data-toggle="modal" data-target="#modalAsignarVehiculo">
-                            + ASIGNAR VEHÍCULO
-                        </button>
-                    </div>
-                    
-                    <input type="hidden" name="id_vehiculo" id="id_vehiculo">
                 </div>
             </div>
         </div> 
 
-        
-        <div class="col-lg-6 mb-6">
-            <div class="card custom-card-dark h-100">
-                <div class="card-header custom-card-header-dark py-4 px-6 d-flex justify-content-between align-items-center">
-                    <h5 class="m-0 text-white font-weight-bold">
-                        <i class="fa fa-folder-open mr-2 text-warning"></i> Documentación
-                    </h5>
-                    <span class="text-muted" id="doc-counter" style="font-size: 0.8rem;">0 de 4 documentos</span>
+        <div class="col-lg-6">
+            <div class="card card-custom shadow-sm border-0 w-100">
+                <div class="card-header">
+                    <h3 class="card-title text-white">Datos del Arma</h3>
                 </div>
-                <div class="card-body px-6 py-6 d-flex flex-column justify-content-between">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <div class="doc-grid-card" onclick="triggerFile('doc_ine')">
-                                <i class="fa fa-file-alt doc-icon mr-3"></i>
-                                <div>
-                                    <span class="text-white d-block font-weight-bold" style="font-size: 0.85rem;">INE / Identificación</span>
-                                    <span class="text-muted status-text" id="status_doc_ine" style="font-size: 0.75rem;">No cargado</span>
-                                </div>
-                                <input type="file" name="doc_ine" id="doc_ine" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="handleFileChange('doc_ine')">
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <div class="doc-grid-card" onclick="triggerFile('doc_domicilio')">
-                                <i class="fa fa-home doc-icon mr-3"></i>
-                                <div>
-                                    <span class="text-white d-block font-weight-bold" style="font-size: 0.85rem;">Comp. Domicilio</span>
-                                    <span class="text-muted status-text" id="status_doc_domicilio" style="font-size: 0.75rem;">No cargado</span>
-                                </div>
-                                <input type="file" name="doc_domicilio" id="doc_domicilio" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="handleFileChange('doc_domicilio')">
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3 mb-md-0">
-                            <div class="doc-grid-card" onclick="triggerFile('doc_acta')">
-                                <i class="fa fa-user-friends doc-icon mr-3"></i>
-                                <div>
-                                    <span class="text-white d-block font-weight-bold" style="font-size: 0.85rem;">Acta Nacimiento</span>
-                                    <span class="text-muted status-text" id="status_doc_acta" style="font-size: 0.75rem;">No cargado</span>
-                                </div>
-                                <input type="file" name="doc_acta" id="doc_acta" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="handleFileChange('doc_acta')">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="doc-grid-card" onclick="triggerFile('doc_rfc')">
-                                <i class="fa fa-id-card doc-icon mr-3"></i>
-                                <div>
-                                    <span class="text-white d-block font-weight-bold" style="font-size: 0.85rem;">RFC</span>
-                                    <span class="text-muted status-text" id="status_doc_rfc" style="font-size: 0.75rem;">No cargado</span>
-                                </div>
-                                <input type="file" name="doc_rfc" id="doc_rfc" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="handleFileChange('doc_rfc')">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-4 pt-4 border-top d-flex justify-content-between align-items-center" style="border-color: #1f242c !important;">
-                        <button type="button" class="btn btn-outline-dark-gold btn-sm px-4" data-toggle="modal" data-target="#modalSubirDocumentos">
-                            <i class="fa fa-upload mr-1"></i> SUBIR DOCUMENTOS
-                        </button>
-                        <span class="text-muted" style="font-size: 0.75rem;">PDF, JPG, PNG (máx. 10MB)</span>
+                <div class="card-body px-12 py-10">
+                    <div class="form-group row">
+                        <span class="text-white">Para registrar el arma es necesario registrar al custodio primero.</span>
                     </div>
                 </div>
             </div>
         </div> 
     </div>
+</div>
+
+
+    <div class="row mt-2">
+    <div class="col-lg-12">
+        <div class="card card-custom shadow-sm border-0">
+            <div class="card-body px-10 py-8">
+                <div class="form-group">
+                    <label for="observaciones" class="text-white">Observaciones</label>
+                    <textarea class="form-control" name="observaciones" placeholder="Agrega observaciones adicionales sobre el custodio" id="observaciones" rows="3"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
     
     <div class="modal fade" id="modalSubirDocumentos" tabindex="-1" role="dialog" aria-hidden="true">
@@ -529,104 +479,5 @@
 
 
 <script>
-
-    function triggerFile(inputId) {
-        document.getElementById(inputId).click();
-    }
-
-    function handleFileChange(inputId) {
-        const input = document.getElementById(inputId);
-        const statusSpan = document.getElementById('status_' + inputId);
-        const cardElement = input.closest('.doc-grid-card');
-        
-        if (input.files && input.files[0]) {
-            const fileName = input.files[0].name;
-            const shortName = fileName.length > 15 ? fileName.substring(0, 12) + '...' : fileName;
-            
-            statusSpan.innerHTML = '<span class="text-success font-weight-bold">✓ ' + shortName + '</span>';
-            cardElement.classList.add('loaded');
-            
-            const modalInputId = inputId.replace('doc_', 'modal_');
-            const modalLabel = document.getElementById('label_' + modalInputId);
-            if(modalLabel) {
-                modalLabel.innerText = fileName;
-                modalLabel.classList.remove('text-muted');
-                modalLabel.classList.add('text-white');
-            }
-        } else {
-            statusSpan.innerText = 'No cargado';
-            cardElement.classList.remove('loaded');
-        }
-        updateDocCounter();
-    }
-
-    function syncWithGrid(modalInputId, targetInputId) {
-        const modalInput = document.getElementById(modalInputId);
-        const targetInput = document.getElementById(targetInputId);
-        const modalLabel = document.getElementById('label_' + modalInputId);
-        
-        if (modalInput.files && modalInput.files[0]) {
-            targetInput.files = modalInput.files;
-            modalLabel.innerText = modalInput.files[0].name;
-            modalLabel.classList.remove('text-muted');
-            modalLabel.classList.add('text-white');
-            handleFileChange(targetInputId);
-        }
-    }
-
-    function updateDocCounter() {
-        const docInputs = ['doc_ine', 'doc_domicilio', 'doc_acta', 'doc_rfc'];
-        let loadedCount = 0;
-        docInputs.forEach(function(id) {
-            const input = document.getElementById(id);
-            if (input && input.files && input.files.length > 0) {
-                loadedCount++;
-            }
-        });
-        document.getElementById('doc-counter').innerText = loadedCount + ' de 4 documentos';
-    }
-
-    
-    function actualizarVehiculoCard() {
-        const select = document.getElementById('select_vehiculo_modal');
-        const selectedOption = select.options[select.selectedIndex];
-        
-        
-        if (select.value === "") {
-            document.getElementById('v_nombre').innerText = '—';
-            document.getElementById('v_serie').innerText = '—';
-            document.getElementById('v_placa').innerText = '—';
-            document.getElementById('v_color').innerText = '—';
-            document.getElementById('v_marca').innerText = '—';
-            document.getElementById('id_vehiculo').value = '';
-            document.getElementById('card_vehiculo_container').style.borderColor = '#1f242c';
-            document.getElementById('vehiculo_icono_visual').style.color = '#1a222e';
-            return;
-        }
-
-       
-        const vNombre = selectedOption.text;
-        const vSerie = selectedOption.getAttribute('data-serie');
-        const vPlaca = selectedOption.getAttribute('data-placa');
-        const vColor = selectedOption.getAttribute('data-color');
-        const vMarca = selectedOption.getAttribute('data-marca');
-
-        
-        document.getElementById('v_nombre').innerText = vNombre;
-        document.getElementById('v_serie').innerText = vSerie;
-        document.getElementById('v_placa').innerText = vPlaca;
-        document.getElementById('v_color').innerText = vColor;
-        document.getElementById('v_marca').innerText = vMarca;
-
-        
-        document.getElementById('id_vehiculo').value = select.value;
-
-        
-        document.getElementById('card_vehiculo_container').style.borderColor = '#e5a913';
-        document.getElementById('vehiculo_icono_visual').style.color = '#e5a913';
-
-        
-        $('#modalAsignarVehiculo').modal('hide');
-    }
 </script>
 @endsection
