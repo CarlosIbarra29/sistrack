@@ -407,6 +407,7 @@ class CustodioController extends Controller
 
 
         $colIdDocumento = $request->id_documento;
+        $colIdVigencia = $request->vigencia;
         if($request->hasfile('archivo')){
             $archivos = $request->file('archivo');
 
@@ -420,6 +421,7 @@ class CustodioController extends Controller
                     'custodio_documentacion_id' =>$colIdDocumento[$indice],
                     'documento' => $archivoNombre,
                     'mime_type' => $mimeType,
+                    'vigencia' => $colIdVigencia[$indice],
                     'created_at' =>date('Y-m-d H:i:s'),
                     'updated_at' =>date('Y-m-d H:i:s'),
                     'iduserCreated' =>auth()->user()->id,
@@ -662,6 +664,7 @@ class CustodioController extends Controller
 
 
         $colIdDocumento = $request->id_documento;
+        $colIdVigencia = $request->vigencia;
         if($request->hasfile('archivo')){
             $archivos = $request->file('archivo');
             foreach($archivos as $indice => $archivo)
@@ -674,6 +677,7 @@ class CustodioController extends Controller
                     'custodio_documentacion_id' =>$colIdDocumento[$indice],
                     'documento' => $archivoNombre,
                     'mime_type' => $mimeType,
+                    'vigencia' =>$colIdVigencia[$indice],
                     'created_at' =>date('Y-m-d H:i:s'),
                     'updated_at' =>date('Y-m-d H:i:s'),
                     'iduserCreated' =>auth()->user()->id,
@@ -758,7 +762,7 @@ class CustodioController extends Controller
         ];
         CustodioVehiculo::insert($data);
 
-
+        $colIdVigencia = $request->vigencia;
         $colIdDocumento = $request->id_documento;
         if($request->hasfile('archivo')){
             $archivos = $request->file('archivo');
@@ -773,6 +777,7 @@ class CustodioController extends Controller
                     'custodio_documentacion_vehiculo_id' =>$colIdDocumento[$indice],
                     'documento' => $archivoNombre,
                     'mime_type' => $mimeType,
+                    'vigencia' =>$colIdVigencia[$indice],
                     'created_at' =>date('Y-m-d H:i:s'),
                     'updated_at' =>date('Y-m-d H:i:s'),
                     'iduserCreated' =>auth()->user()->id,
@@ -900,7 +905,7 @@ class CustodioController extends Controller
 
         CustodioVehiculo::where('custodio_id', $request->custodio_id)->update($data);
 
-
+        $colIdVigencia = $request->vigencia;
         $colIdDocumento = $request->id_documento;
         if($request->hasfile('archivo')){
             $archivos = $request->file('archivo');
@@ -915,6 +920,7 @@ class CustodioController extends Controller
                     'custodio_documentacion_vehiculo_id' =>$colIdDocumento[$indice],
                     'documento' => $archivoNombre,
                     'mime_type' => $mimeType,
+                    'vigencia' =>$colIdVigencia[$indice],
                     'created_at' =>date('Y-m-d H:i:s'),
                     'updated_at' =>date('Y-m-d H:i:s'),
                     'iduserCreated' =>auth()->user()->id,
@@ -964,7 +970,7 @@ class CustodioController extends Controller
         //tipo de documentos en formato json
         $cadenaTipoDocumento = "";
         foreach($documentos as $documento){
-            $cadenaTipoDocumento .= '"'.$documento->id.'":"'.$documento->tipo_documento_arma.'",';
+            $cadenaTipoDocumento .= '"'.$documento->id.'":"'.$documento->registro_arma.'",';
         }
         $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
 
@@ -1001,7 +1007,7 @@ class CustodioController extends Controller
         ];
         CustodioArma::insert($data);
 
-
+        $colIdVigencia = $request->vigencia;
         $colIdDocumento = $request->id_documento;
         if($request->hasfile('archivo')){
             $archivos = $request->file('archivo');
@@ -1016,6 +1022,7 @@ class CustodioController extends Controller
                     'custodio_documentacion_arma_id' =>$colIdDocumento[$indice],
                     'documento' => $archivoNombre,
                     'mime_type' => $mimeType,
+                    'vigencia' =>$colIdVigencia[$indice],
                     'created_at' =>date('Y-m-d H:i:s'),
                     'updated_at' =>date('Y-m-d H:i:s'),
                     'iduserCreated' =>auth()->user()->id,
@@ -1062,11 +1069,11 @@ class CustodioController extends Controller
         $custodio = Custodio::where('id', $custodio_id)->first();
 
         $documentos = DocumentacionArmaCustodio::where('siaf_status',1)->get();
-
+        // dd($documentos);
         //tipo de documentos en formato json
         $cadenaTipoDocumento = "";
         foreach($documentos as $documento){
-            $cadenaTipoDocumento .= '"'.$documento->id.'":"'.$documento->tipo_documento_arma.'",';
+            $cadenaTipoDocumento .= '"'.$documento->id.'":"'.$documento->registro_arma.'",';
         }
         $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
 
@@ -1093,6 +1100,7 @@ class CustodioController extends Controller
 
         CustodioArma::where('custodio_id', $request->custodio_id)->update($data);
 
+        $colIdVigencia = $request->vigencia;
         $colIdDocumento = $request->id_documento;
         if($request->hasfile('archivo')){
             $archivos = $request->file('archivo');
@@ -1107,6 +1115,7 @@ class CustodioController extends Controller
                     'custodio_documentacion_arma_id' =>$colIdDocumento[$indice],
                     'documento' => $archivoNombre,
                     'mime_type' => $mimeType,
+                    'vigencia' =>$colIdVigencia[$indice],
                     'created_at' =>date('Y-m-d H:i:s'),
                     'updated_at' =>date('Y-m-d H:i:s'),
                     'iduserCreated' =>auth()->user()->id,

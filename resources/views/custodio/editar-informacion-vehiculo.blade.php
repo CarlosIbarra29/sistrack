@@ -156,11 +156,12 @@
                                 </div>
 
                                 <div class="tab-pane fade mt-10" id="kt_tab_pane_4" role="tabpanel" aria-labelledby="kt_tab_pane_4">
-									<table class="table table-hover mb-6 table-responsive-sm" id="tblDocumentos">
+									<table class="table  mb-6 table-responsive-sm" id="tblDocumentos">
 									    <thead>
 									    <tr>
 									        <th scope="col">Documento</th>
 									        <th scope="col">Tipo de Documento</th>
+                                            <th>Vigencia</th>
 									        <th scope="col">Opción</th>
 									    </tr>
 									    </thead>
@@ -169,6 +170,7 @@
 									            <tr id="trDocumento{{ $documento->id }}">
 									                <td><a href="{{ route('archivo.documentovehiculo', ['id'=>$documento->id]) }}" class="link-primary" target="_blank"> {{ $documento->documento }} </a></td>
 									                <td>{{ $documento->custodioDocumentacionVehiculo->tipo_documento_vehiculo }}</td>
+                                                    <td>{{ $documento->vigencia }}</td>
 									                <td>
 									                    <a href='#' class='btn btn-clean btn-icon btn-outline-success mt-1 hrefEliminarDocumento' data-id='{{ $documento->id }}' data-documento='{{ $documento->documento }}'  data-toggle='tooltip' data-theme='dark' title='Eliminar'>
 									                        <i class='flaticon-delete'></i>
@@ -190,7 +192,7 @@
 
 
                                 <div class="tab-pane fade mt-10" id="kt_tab_pane_5" role="tabpanel" aria-labelledby="kt_tab_pane_4">
-									<table class="table table-hover mb-6 table-responsive-sm" id="tblDocumentosF">
+									<table class="table mb-6 table-responsive-sm" id="tblDocumentosF">
 									    <thead>
 									    <tr>
 									        <th scope="col">Fotografía</th>

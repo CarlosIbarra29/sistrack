@@ -11,22 +11,22 @@
 @section('content')
 <div class="dashboard-dark p-4">
     
-    <div class="d-flex justify-content-between align-items-center mb-6">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-6" style="gap: 15px;">
         <div>
-            <h2 class="text-white font-weight-bold mb-1">PROGRAMACIÓN DE SERVICIOS</h2>
-            <p class="text-muted small">Administra y programa los servicios de custodia y traslado.</p>
+            <h2 class="text-white font-weight-bold mb-1" style="font-size: calc(1.3rem + 0.6vw);">PROGRAMACIÓN DE SERVICIOS</h2>
+            <p class="text-muted small mb-0">Administra y programa los servicios de custodia y traslado.</p>
         </div>
-        <div class="d-flex align-items-center">
-            <a href="{{ route('programacion.nuevaprogramacion') }}" class="btn btn-gold mr-2 d-flex align-items-center px-4 py-2">
+        <div class="d-flex flex-wrap align-items-center w-100 w-md-auto" style="gap: 10px;">
+            <a href="{{ route('programacion.nuevaprogramacion') }}" class="btn btn-gold d-flex align-items-center px-4 py-2 flex-grow-1 flex-md-grow-0 justify-content-center">
                 <i class="la la-plus mr-2"></i> NUEVO SERVICIO
             </a>
-            <a href="{{ route('programacion.programacioninactivas') }}" class="btn btn-outline-custom mr-2 btn-sm d-flex align-items-center">
+            <a href="{{ route('programacion.programacioninactivas') }}" class="btn btn-outline-custom btn-sm d-flex align-items-center flex-grow-1 flex-md-grow-0 justify-content-center">
                 <i class="far fa-trash-alt mr-2"></i> CLIENTES INACTIVOS
             </a>
-            <button class="btn btn-outline-custom mr-2 btn-sm">
+            <button class="btn btn-outline-custom btn-sm flex-grow-1 flex-md-grow-0">
                 <i class="fa fa-file-excel mr-2"></i> IMPORTAR EXCEL
             </button>
-            <button class="btn btn-outline-custom btn-sm">
+            <button class="btn btn-outline-custom btn-sm flex-grow-1 flex-md-grow-0">
                 <i class="fa fa-download mr-2"></i> EXPORTAR
             </button>
         </div>
@@ -335,7 +335,6 @@
     </div>
 
 </div>
-
 
 <input type='hidden' id='url_estatus' value='{{ route('programacion.updatemonitoreoajax') }}'>
 

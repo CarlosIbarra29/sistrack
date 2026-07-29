@@ -130,6 +130,11 @@ var Modulo = function() {
             "          </select>",
             "       </div>" +
             "    </td>",
+            "    <td>" +
+            "       <div class='form-group mb-0'>" +
+            "           <input type='datetime-local' class='form-control' name='vigencia["+contadorDocumentos+"]' id='vigencia"+contadorDocumentos+"' >",
+            "       </div>" +
+            "    </td>",
             "	 <td>",
             "		<a href='#' class='btn btn-clean btn-icon btn-outline-success mt-1 hrefEliminar' data-id='"+contadorDocumentos+"' data-toggle='tooltip' data-theme='dark' title='Eliminar'>",
             "			<i class='flaticon-delete'></i>",
@@ -142,6 +147,7 @@ var Modulo = function() {
         //agrega validación del elemento creado
         validador.addField('archivo[' + contadorDocumentos + ']', archivoValidador);
         validador.addField('id_documento[' + contadorDocumentos + ']', tipoArchivoValidador);
+        validador.addField('vigencia[' + contadorDocumentos + ']', tipoArchivoValidador);
         KTApp.initTooltips(); //inicia tooltip del elemento creado
         KTApp.initFileInput(); //inicia el elemento archivo del elemento creado
     };
@@ -155,6 +161,7 @@ var Modulo = function() {
             //elimina la validación del elemento
             validador.removeField('archivo[' + idDocumento + ']');
             validador.removeField('id_documento[' + idDocumento + ']');
+            validador.removeField('vigencia[' + idDocumento + ']');
             $('#trDocumento'+idDocumento).remove();//elimina el elemento
         });
     };

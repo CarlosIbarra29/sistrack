@@ -1,18 +1,17 @@
 @extends('layouts.app')
 
 @push('scripts')
-  <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js') }}"></script>
-  <meta name="csrf-token" content="{{ csrf_token() }}" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js') }}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 @endpush
 
 @section('title')
-  Listado de monitoreo
+    Listado de monitoreo
 @endsection
 
 @section('content')
-
 
 <div class="container-fluid bg-sisprotec p-4">
 
@@ -33,7 +32,6 @@
                     <select class="form-control filter-input-custom font-weight-bold mr-2" style="width: 60%;">
                         <option>CUST-2026-0428-0017</option>
                     </select>
-                    
                     <span class="badge badge-en-ruta">EN RUTA</span>
                 </div>
             </div>
@@ -124,6 +122,7 @@
 
         
         <div class="col-xl-6 col-lg-8 d-flex flex-column">
+            <!-- Mapa -->
             <div class="card-monitoring map-card-height mb-3" id="map-container-fullscreen">
                 <div class="card-monitoring-header d-flex justify-content-between align-items-center">
                     <span class="text-gold font-weight-bold text-uppercase">Ubicación en Tiempo Real</span>
@@ -131,27 +130,21 @@
                 </div>
                 <div class="p-2 position-relative" style="height: calc(100% - 49px);">
                     <div class="map-wrapper" style="height: 100%;">
-                        
-                        
                         <button class="btn-map-fullscreen" title="Expandir mapa" onclick="toggleMapFullscreen();">
                             <svg viewBox="0 0 24 24">
-                                <!-- Flecha arriba-izquierda -->
                                 <polyline points="10 4 4 4 4 10"></polyline>
                                 <line x1="4" y1="4" x2="11" y2="11"></line>
-                                <!-- Flecha abajo-derecha -->
                                 <polyline points="14 20 20 20 20 14"></polyline>
                                 <line x1="20" y1="20" x2="13" y2="13"></line>
                             </svg>
                         </button>
-                        
                         <div id="map-monitoring"></div>
                     </div>
                 </div>
             </div>
 
-           
-            <div class="card-monitoring flex-grow-1">
-                <div class="card-monitoring-header">
+                        <div class="card-monitoring flex-grow-1">
+                <div class="card-monitoring-header d-flex justify-content-between align-items-center">
                     <span class="text-gold font-weight-bold text-uppercase">Bitácora de Eventos</span>
                 </div>
                 <div class="table-responsive p-2">
@@ -196,27 +189,22 @@
         
         <div class="col-xl-3 col-lg-12 d-flex flex-column">
             
-            
             <div class="card-monitoring map-card-height mb-3 d-flex flex-column">
                 <div class="card-monitoring-header">
                     <span class="text-gold font-weight-bold text-uppercase">Estatus del Servicio</span>
                 </div>
                 <div class="card-body p-0 d-flex flex-column flex-grow-1">
                     <div class="d-flex flex-column h-100">
-                        
-                        
                         <div class="status-item-custom justify-content-between">
                             <div class="d-flex align-items-start">
                                 <span class="text-custom-emerald mr-3 mt-1"><i class="la la-truck font-size-h4"></i></span>
                                 <div>
-                                    
                                     <span class="text-custom-emerald font-weight-bold font-size-sm d-block">EN RUTA</span>
                                     <small class="text-muted-custom d-block mt-1">Servicio en curso de custodia activa</small>
                                 </div>
                             </div>
                         </div>
 
-                       
                         <div class="status-item-custom justify-content-between">
                             <div class="d-flex align-items-start">
                                 <span class="text-steel-blue mr-3 mt-1"><i class="la la-clock-o font-size-h4"></i></span>
@@ -228,7 +216,6 @@
                             </div>
                         </div>
 
-                        
                         <div class="status-item-custom justify-content-between">
                             <div class="d-flex align-items-start w-100 pr-3">
                                 <span class="text-warning mr-3 mt-1"><i class="la la-map-signs font-size-h4"></i></span>
@@ -240,20 +227,17 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
 
-            
-            <div class="card-monitoring flex-grow-1 d-flex flex-column mb-3">
+                        <div class="card-monitoring flex-grow-1 d-flex flex-column mb-3">
                 <div class="card-monitoring-header d-flex justify-content-between align-items-center">
                     <span class="text-gold font-weight-bold text-uppercase">Alertas</span>
                     <a href="#" class="font-size-xs text-gold">Ver todas</a>
                 </div>
                 <div class="card-body p-0 d-flex flex-column flex-grow-1">
                     <div class="alert-container-flex flex-grow-1">
-                        
                         <div class="p-3 alert-item-custom justify-content-between">
                             <div class="d-flex align-items-start">
                                 <span class="text-warning mr-3 mt-1"><i class="fa fa-exclamation-triangle font-size-h6"></i></span>
@@ -266,7 +250,6 @@
 
                         <div class="p-3 alert-item-custom justify-content-between">
                             <div class="d-flex align-items-start">
-                                
                                 <span class="text-steel-blue mr-3 mt-1"><i class="fa fa-info-circle font-size-h6"></i></span>
                                 <div>
                                     <span class="text-white font-weight-bold font-size-sm d-block">10:30 &nbsp; Checkpoint Alcanzado</span>
@@ -284,7 +267,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -326,7 +308,7 @@
             </div>
         </div>
 
-        
+       
         <div class="col-md-6 d-flex">
             <div class="card-monitoring w-100 p-2">
                 <div class="card-monitoring-header">
@@ -359,49 +341,57 @@
                 </div>
             </div>
         </div>
+    </div>
 
-
-        <div class="row mt-2">
+   
+    <div class="row mt-4">
         <div class="col-12">
-            <div class="card-monitoring p-3">
-                <h5 class="text-white mb-3 font-weight-bold text-uppercase"><i class="flaticon2-file text-warning mr-2"></i>Inventario General de Monitoreo</h5>
+            <div class="card-monitoring p-4">
+                <h5 class="text-white mb-4 font-weight-bold text-uppercase d-flex align-items-center">
+                    <i class="flaticon2-file text-warning mr-3 font-size-lg"></i>
+                    SERVICIOS PROGRAMADOS ({{ $monitoreo->count() }})
+                </h5>
                 <div class="table-responsive">
-                    <table class="table text-white font-size-sm" id="kdatatable_usuarios2">
+                    <table class="table text-white font-size-sm m-0" id="kdatatable_usuarios2">
                         <thead>
-                            <tr class="text-gold">
-                                <th>No.</th>
-                                <th>Folio</th>
-                                <th>Cliente</th>
-                                <th>Domicilio origen</th>
-                                <th>Domicilio destino</th>
-                                <th>Fecha y Hora</th>
-                                <th>Custodio</th>
-                                <th>Tipo de servicio</th>
-                                <th>Estatus</th>
-                                <th>Monitoreo</th>
-                                <th class="text-center">Acciones</th>
+                            <tr class="text-gold border-bottom border-dark text-uppercase font-size-xs">
+                                <th class="py-3" style="width: 50px;">No.</th>
+                                <th class="py-3 text-nowrap">Folio</th>
+                                <th class="py-3">Cliente</th>
+                                <th class="py-3">Domicilio origen</th>
+                                <th class="py-3">Domicilio destino</th>
+                                <th class="py-3 text-nowrap">Fecha y Hora</th>
+                                <th class="py-3">Custodio</th>
+                                <th class="py-3 text-nowrap">Tipo de servicio</th>
+                                <th class="py-3" style="min-width: 150px;">Estatus</th>
+                                <th class="py-3 text-nowrap">Monitoreo</th>
+                                <th class="py-3 text-center" style="width: 140px;">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($monitoreo as $unid)
-                                <tr class="border-top border-dark" data-fecha-servicio="{{ date('Y-m-d', strtotime($unid->fecha_servicio)) }}">
-                                    <td>{{ $unid->id }}</td>
-                                    <td><a href="{{ route('monitoreo.moduloestadias', $unid->id) }}" class="text-gold font-weight-bold">{{ $unid->folio }}</a></td>
-                                    <td>{{ $unid->nombre_cliente }}</td>
-                                    <td>{{ $unid->dom_origen }}</td>
-                                    <td>{{ $unid->dom_destino }}</td>
-                                    <td>{{ date('d/m/Y h:i A' , strtotime($unid->fecha_servicio)) }}</td>
-                                    <td>{{ $unid->custodio->nombre_custodio }} {{ $unid->custodio->ap_paterno }}</td>
-                                    <td>{{ $unid->tipo_servicio == 0 ? 'Foraneo' : 'Local' }}</td>
-                                    <td>
-                                        <select class="form-control filter-input-custom text-white" id="programacion_id" name="programacion_id" data-programacion="{{ $unid->id }}" style="width: 140px">
+                                <tr class="border-bottom border-dark align-middle" data-fecha-servicio="{{ date('Y-m-d', strtotime($unid->fecha_servicio)) }}">
+                                    <td class="text-muted-custom py-3">{{ $unid->id }}</td>
+                                    <td class="py-3 text-nowrap">
+                                        <a href="{{ route('monitoreo.moduloestadias', $unid->id) }}" class="text-gold font-weight-bold">
+                                            {{ $unid->folio }}
+                                        </a>
+                                    </td>
+                                    <td class="py-3 font-weight-bold">{{ $unid->nombre_cliente }}</td>
+                                    <td class="py-3 text-truncate max-w-200" title="{{ $unid->dom_origen }}">{{ $unid->dom_origen }}</td>
+                                    <td class="py-3 text-truncate max-w-200" title="{{ $unid->dom_destino }}">{{ $unid->dom_destino }}</td>
+                                    <td class="py-3 text-nowrap text-white-50">{{ date('d/m/Y h:i A' , strtotime($unid->fecha_servicio)) }}</td>
+                                    <td class="py-3 text-nowrap">{{ $unid->custodio->nombre_custodio }} {{ $unid->custodio->ap_paterno }}</td>
+                                    <td class="py-3 text-nowrap">{{ $unid->tipo_servicio == 0 ? 'Foráneo' : 'Local' }}</td>
+                                    <td class="py-3">
+                                        <select class="form-control filter-input-custom text-white" id="programacion_id" name="programacion_id" data-programacion="{{ $unid->id }}">
                                             @foreach($estatus_programacion as $tp)
                                                 <option value="{{ $tp->id }}" @selected($unid->programacion_estatus_id == $tp->id)>{{ $tp->estatus_programacion }}</option>
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td>{{ $unid->op_monitoreo_id == 1 ? 'Monitoreo 1' : 'Monitoreo 2' }}</td>
-                                    <td class="text-center">
+                                    <td class="py-3 text-nowrap text-muted-custom">{{ $unid->op_monitoreo_id == 1 ? 'Monitoreo 1' : 'Monitoreo 2' }}</td>
+                                    <td class="py-3 text-center text-nowrap">
                                         <a href="{{ route('monitoreo.verprogramacionmon', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mt-1" title="Ver programación"><i class="flaticon-eye"></i></a>
                                         <a href="{{ route('monitoreo.moduloestadias', $unid->id) }}" class="btn btn-sm btn-outline-warning btn-icon mt-1" title="Generales transportes"><i class="flaticon-presentation-1"></i></a>
                                         <button class="btn btn-sm btn-outline-warning btn-icon mt-1" onClick="addincidenciaid({{ $unid->id }})" data-toggle="modal" data-target="#model_add_incidencia"><i class="flaticon-notepad"></i></button>
@@ -414,34 +404,24 @@
             </div>
         </div>
     </div>
-    </div>
 
 </div>
 
-<script>
 
+<script>
 function toggleMapFullscreen() {
     var container = document.getElementById('map-container-fullscreen');
-    
     if (!document.fullscreenElement) {
-        if (container.requestFullscreen) {
-            container.requestFullscreen();
-        } else if (container.mozRequestFullScreen) { 
-            container.mozRequestFullScreen();
-        } else if (container.webkitRequestFullscreen) { 
-            container.webkitRequestFullscreen();
-        } else if (container.msRequestFullscreen) { 
-            container.msRequestFullscreen();
-        }
+        if (container.requestFullscreen) { container.requestFullscreen(); }
+        else if (container.mozRequestFullScreen) { container.mozRequestFullScreen(); }
+        else if (container.webkitRequestFullscreen) { container.webkitRequestFullscreen(); }
+        else if (container.msRequestFullscreen) { container.msRequestFullscreen(); }
     } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        }
+        if (document.exitFullscreen) { document.exitFullscreen(); }
     }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    
     var origenCoords = [19.4326, -99.1332]; 
     var posicionActual = [19.2843, -98.4346]; 
     var destinoCoords = [19.0414, -98.2063]; 
@@ -482,7 +462,6 @@ document.addEventListener('DOMContentLoaded', function () {
         dashArray: '5, 5'
     }).addTo(map);
 
-    
     document.addEventListener('fullscreenchange', function() {
         setTimeout(function(){ map.invalidateSize(); }, 200);
     });
