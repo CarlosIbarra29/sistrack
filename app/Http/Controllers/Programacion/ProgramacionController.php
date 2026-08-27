@@ -44,14 +44,23 @@ class ProgramacionController extends Controller
         $data = Cliente::where('siaf_status', 1)->get();
         $tarifario = Tarifario::where('siaf_status', 1)->get();
         $estatus_monitoreo = MonitoreoProgramacion::get();
+        $cliente = Cliente::where('siaf_status', 1)->get();
+        $custodio = Custodio::where('siaf_status', 1)->get();
+        //tipo de documentos en formato json
+        $cadenaTipoDocumento = "";
+        foreach($custodio as $documento){
+            $cadenaTipoDocumento .= '"'.$documento->id.'":"'.$documento->nombre_custodio. " ".$documento->ap_paterno. " ". $documento->ap_materno.'",';
+        }
+        $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
+
         $programcion = Programacion::select('programacion.id','programacion.folio', 'programacion.tipo_servicio', 'pe.estatus_programacion', 'cli.nombre_cliente', 'programacion.dom_origen', 'programacion.dom_destino', 'programacion.fecha_servicio', 'programacion.programacion_estatus_id', 'programacion.op_monitoreo_id',  'programacion.custodio_id')
-            ->leftjoin("programacion_estatus as pe","pe.id","programacion.programacion_estatus_id")
+            ->leftjoin("programacion_estatus as pe","pe.id","programacion.programacion_estatus_id",)
             ->leftjoin("cliente as cli","cli.id","programacion.cliente_id")
             ->where('programacion.siaf_status', 1)
             ->get();
 
 
-        return view('programacion.listado-programacion', compact('data', 'programcion', 'estatus_monitoreo'));
+        return view('programacion.listado-programacion', compact('data', 'programcion', 'estatus_monitoreo','cliente','custodio','cadenaTipoDocumento'));
     }
 
     public function programaciondatatable(Request $request)
@@ -240,6 +249,63 @@ class ProgramacionController extends Controller
             }
         }
 
+        // $colIdDocumento = $request->id_documento;
+        // if($request->op_custodios == 0){
+        //     {
+                
+
+        //     }
+        // }
+
+
+        session()->flash('success', 'La programación se creo correctamente');
+        return redirect()->route('programacion.listadoprogramacion');
+
+    }
+
+    public function guardarprogramacionnew(Request $request)
+    {
+        // dd($request);
+        $data = [
+            'folio' => $this->folio->getFolioProgramacion(),
+            'cliente_id' => $request->cliente_id,
+            'custodio_id' => $request->custodio_id,
+            'tarifario_id' => 1,
+            'programacion_estatus_id' => 1,
+            'tipo_servicio' => $request->tipo_servicio,
+            'fecha_servicio' => $request->fecha_hora,
+            'acompanantes'=> $request->op_custodios,
+            'dom_origen' => $request->dom_origen,
+            'dom_destino' => $request->dom_destino,
+            'observaciones' => $request->observaciones,
+            'armado_servicio' => $request->armado_servicio,
+            'op_monitoreo_id' => 1,
+            'estatus_viaje_id' => 1,
+            'siaf_status' =>1,
+            'created_at' =>date('Y-m-d H:i:s'),
+            'updated_at' =>date('Y-m-d H:i:s'),
+            'iduserCreated' =>auth()->user()->id,
+            'iduserUpdated' =>auth()->user()->id,
+        ];
+
+        $id_programacion= Programacion::insertGetId($data);
+
+
+        $colIdDocumento = $request->id_documento;
+        if($request->op_custodios == 0){
+            foreach($request->id_documento as $indice => $archivo)
+            {
+                $data = [
+                    'programacion_id' => $id_programacion,
+                    'custodio_id' =>$colIdDocumento[$indice],
+                    'created_at' =>date('Y-m-d H:i:s'),
+                    'updated_at' =>date('Y-m-d H:i:s')
+                ];
+
+                AcompanantesProgramacion::insert($data);
+            }
+        }
+            
         // $colIdDocumento = $request->id_documento;
         // if($request->op_custodios == 0){
         //     {

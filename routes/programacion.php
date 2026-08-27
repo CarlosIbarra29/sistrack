@@ -20,6 +20,9 @@
 	Route::post('/eliminar-observacion-programacion', [App\Http\Controllers\Programacion\ProgramacionController::class, 'eliminarobservacion'])->name('programacion.eliminarobservacion'); 
 	Route::post('/editar-observacion-programacion', [App\Http\Controllers\Programacion\ProgramacionController::class, 'editarobservacion'])->name('programacion.editarobservacion'); 
 
+	//GUARDAR PROGRAMACION DESDE MISMA PAGINA
+	Route::post('/guardar-programacionnew', [App\Http\Controllers\Programacion\ProgramacionController::class, 'guardarprogramacionnew'])->name('programacion.guardarprogramacionnew'); 
+
 	// M O N I T O R E O
 	Route::get('/listado-monitoreo', [App\Http\Controllers\Programacion\MonitoreoController::class, 'listadomonitoreo'])->name('monitoreo.listamonitoreo');
 	Route::post('/monitoreo-datatable', [App\Http\Controllers\Programacion\MonitoreoController::class, 'monitoreodatatable'])->name('monitoreo.monitoreodatatable');	

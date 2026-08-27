@@ -2,6 +2,7 @@
 @push('scripts')
   <script src="{{ asset('js/programacion/CatalogoProgramacion.js') }}"></script>
   <meta name="csrf-token" content="{{ csrf_token() }}" />
+  <script src="{{ asset('js/programacion/AgregarProgramacionUnique.js') }}"></script>
 @endpush
 
 @section('title')
@@ -32,92 +33,197 @@
         </div>
     </div>
 
-    <div class="panel-dark mb-6 py-3 px-4 d-flex align-items-center flex-wrap">
-        <div class="mr-4 mb-2 mb-md-0">
-            <label class="small text-muted d-block mb-1">Fecha:</label>
-            <input type="date" class="form-control custom-input form-control-sm" value="2026-04-28">
-        </div>
-        <div class="mr-4 mb-2 mb-md-0">
-            <label class="small text-muted d-block mb-1">Cliente:</label>
-            <select class="form-control custom-input form-control-sm w-150px">
-                <option value="Todos">Todos</option>
-                @foreach($data as $es)
-                    <option value="{{ $es->id }}">{{ $es->nombre_cliente }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div>
-            <label class="small text-muted d-block mb-1">Estatus:</label>
-            <select class="form-control custom-input form-control-sm w-150px">
-                <option>Todos</option>
-                <option>Programado</option>
-                <option>En Ruta</option>
-            </select>
-        </div>
-    </div>
 
+
+                                      {{--DATOS DEL SERVICIO--}}
     <div class="row mb-5">
         <div class="col-xl-3 mb-4">
             <div class="panel-dark">
                 <h6 class="text-gold mb-4 font-weight-bold">DATOS DEL SERVICIO</h6>
-                
-                <div class="form-group mb-3">
-                    <label class="small text-muted">Cliente *</label>
-                    <select class="form-control custom-input">
-                        <option>Seleccionar cliente</option>
-                        @foreach($data as $es)
-                            <option value="{{ $es->id }}">{{ $es->nombre_cliente }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                <form action="{{ route('programacion.guardarprogramacionnew') }}" 
+                  method="post" 
+                  id="submit_programacion" 
+                  enctype="multipart/form-data">
+                  @csrf
+                  <input type='hidden' id='tipoArchivo' value='{{ $cadenaTipoDocumento }}'>
+                     <!-- SECCIÓN 1: CLIENTE Y TIEMPO -->
+                    <div class="form-row-section">
+                        <div class="section-meta">
+                            <h3>Origen</h3>
+                            <p>Defina el cliente solicitante, el horario de salida del servicio y las variables de monitoreo.</p>
+                        </div>
+                        <div class="section-controls">
+                            <div class="form-group row">
+                                <div class="col-md-7 mb-4">
+                                    <label class="app-label">Razón Social *</label>
+                                    <select class="form-control app-input" id="cliente_id" name="cliente_id" required>
+                                        <option value="" disabled selected>Buscar y seleccionar cliente...</option>
+                                       @foreach($cliente as $cli)
+                                            <option value="{{ $cli->id }}">{{ $cli->nombre_cliente }} / {{ $cli->razon_social }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-5 mb-4">
+                                    <label class="app-label">Fecha y hora de servicio *</label>
+                                    <input type="datetime-local" class="form-control app-input" name="fecha_hora" id="fecha_hora" required>
+                                </div>
+                            </div>
 
-                <div class="form-group mb-3">
-                    <label class="small text-muted">No. Embarque</label>
-                    <input type="text" class="form-control custom-input" placeholder="Ingrese número">
-                </div>
-
-                <div class="form-group mb-3">
-                    <label class="small text-muted">Origen *</label>
-                    <select class="form-control custom-input"><option>Seleccionar origen</option></select>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label class="small text-muted">Destino *</label>
-                    <select class="form-control custom-input"><option>Seleccionar destino</option></select>
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col-6 form-group mb-0">
-                        <label class="small text-muted">Fecha salida *</label>
-                        <input type="date" class="form-control custom-input">
+                            <div class="form-group row mb-0">
+                                <div class="col-md-4 mb-3">
+                                    <label class="app-label">Tipo de servicio</label>
+                                    <div class="compact-radio-group">
+                                        <label class="compact-radio-item">
+                                            <input type="radio" checked name="tipo_servicio" value="0">
+                                            <span>Foráneo</span>
+                                        </label>
+                                        <label class="compact-radio-item">
+                                            <input type="radio" name="tipo_servicio" value="1">
+                                            <span>Local</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="app-label">Armado</label>
+                                    <div class="compact-radio-group">
+                                        <label class="compact-radio-item">
+                                            <input type="radio" checked name="armado_servicio" value="1">
+                                            <span>Sí</span>
+                                        </label>
+                                        <label class="compact-radio-item">
+                                            <input type="radio" name="armado_servicio" value="2">
+                                            <span>No</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-6 form-group mb-0">
-                        <label class="small text-muted">Hora salida *</label>
-                        <input type="time" class="form-control custom-input">
-                    </div>
-                </div>
-                
-                <div class="form-group mb-3">
-                    <label class="small text-muted">Nivel de riesgo</label>
-                    <div class="d-flex">
-                        <button class="btn btn-sm btn-outline-success flex-grow-1 mr-1 font-weight-bold">BAJO</button>
-                        <button class="btn btn-sm btn-outline-warning flex-grow-1 mr-1 font-weight-bold">MEDIO</button>
-                        <button class="btn btn-sm btn-outline-danger flex-grow-1 font-weight-bold">ALTO</button>
-                    </div>
-                </div>
 
-                <div class="form-group mb-4">
-                    <label class="small text-muted">Observaciones</label>
-                    <textarea class="form-control custom-input" rows="3" placeholder="Ingrese observaciones..."></textarea>
-                </div>
+                        <!-- SECCIÓN 3: GEOLOCALIZACIÓN -->
+                    <div class="form-row-section">
+                        <div class="section-meta">
+                            <h3>Rutas</h3>
+                            <p>Puntos geográficos controlados de partida y destino.</p>
+                        </div>
+                        <div class="section-controls">
+                            <div class="form-group row mb-0">
+                                <div class="col-md-6 mb-3">
+                                    <label class="app-label">Domicilio origen *</label>
+                                    <input type="text" class="form-control app-input" name="dom_origen" id="dom_origen" placeholder="Dirección origen del servicio" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="app-label">Domicilio destino *</label>
+                                    <input type="text" class="form-control app-input" name="dom_destino" id="dom_destino" placeholder="Dirección destino del servicio" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="d-flex mb-2">
-                    <button class="btn btn-outline-custom btn-sm flex-grow-1 mr-2">LIMPIAR</button>
-                    <button class="btn btn-gold btn-sm flex-grow-1">GUARDAR</button>
-                </div>
-                <button class="btn btn-gold btn-block py-2 font-weight-bold">PROGRAMAR SERVICIO</button>
-            </div>
-        </div>
+
+                    <!-- SECCIÓN 4: ASIGNACIÓN OPERATIVA -->
+                    <div class="form-row-section">
+                        <div class="section-meta">
+                            <h3>Personal</h3>
+                            <p>Gestione el custodio principal al mando de la unidad y acompañantes secundarios.</p>
+                        </div>
+                        <div class="section-controls">
+                            <div class="form-group row align-items-end">
+                                <div class="col-md-7 mb-4">
+                                    <label class="app-label">Custodio Principal *</label>
+                                    <select class="form-control app-input" id="custodio_id" name="custodio_id" required >
+                                        <option value="" disabled selected>Asignar custodio...</option>
+                                        @foreach($custodio as $cli)
+                                            <option value="{{ $cli->id }}" >{{ $cli->nombre_custodio }} {{ $cli->ap_paterno }} {{ $cli->ap_materno }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-md-5 mb-4">
+                                    <label class="app-label">¿Lleva Acompañantes?</label>
+                                    <div class="compact-radio-group">
+                                        <label class="compact-radio-item">
+                                            <input type="radio" name="op_custodios" id="op_c_uno" value="0" />
+                                            <span>Sí</span>
+                                        </label>
+                                        <label class="compact-radio-item">
+                                            <input type="radio" checked name="op_custodios" id="op_c_dos" value="1" />
+                                            <span>No</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Bloque dinámico integrado --}}
+                            <div class="p-5 rounded mb-0" id="div_custodios" style="display: none; background-color: #111827; border: 1px solid #2e3b4e;">
+                                <label class="app-label mb-3">Acompañantes Extras</label>
+                                <div class="table-responsive mb-3">
+                                    <table class="table table-bordered m-0 text-white" id="tblDocumentos" style="border-color: #2e3b4e;">
+                                        <thead>
+                                            <tr style="background-color: #1a2332;">
+                                                <th class="border-0 py-2">Custodio</th>
+                                                <th class="border-0 py-2 text-center" style="width: 80px;">Opción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbodyDocumentos"></tbody>
+                                    </table>
+                                </div>
+                                <a href="#" class="btn btn-action-secondary btn-sm hrefAgregarOtro">
+                                    <i class="flaticon2-plus small"></i> Agregar otro
+                                </a>
+                            </div>
+                        </div>
+
+
+                        <!-- SECCIÓN 5: ANOTACIONES FINALES -->
+                    <div class="form-row-section">
+                        <div class="section-meta">
+                            <h3>Notas</h3>
+                            <p>Observaciones críticas u operacionales a considerar.</p>
+                        </div>
+                        <div class="section-controls">
+                            <div class="form-group mb-0">
+                                <textarea class="form-control app-input" name="observaciones" placeholder="Escriba comentarios adicionales aquí..." id="observaciones" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- ACCIONES -->
+                    <div class="panel-footer-actions d-flex justify-content-end align-items-center">
+                        <a href="{{ route('programacion.listadoprogramacion') }}" class="btn btn-action-secondary mr-3">
+                            Limpiar Todo
+                        </a>
+                        <button type="button" id="btnGuardar" class="btn btn-action-primary">
+                            Guardar Registro
+                        </button>
+                    </div>
+                </form>
+            </div>           
+         </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{--SERVICIOS PROGRAMADOS--}}
+
 
         <div class="col-xl-6 mb-4">
             <div class="panel-dark p-0 overflow-hidden">
