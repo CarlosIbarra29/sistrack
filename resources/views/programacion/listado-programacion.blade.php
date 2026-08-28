@@ -269,6 +269,9 @@
                                     <a href="#" class="text-gold mx-1" data-toggle="modal" data-target="#model_add_incidencia" onclick="$('#id_programacion').val({{ $unid->id }})">
                                         <i class="flaticon-eye"></i>
                                     </a>
+
+                                <a href="{{ route('programacion.editarprogramacion', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Editar programcion"><i class="la la-edit font-size-lg"></i></a>
+
                                 </td>
                             </tr>
                             @endforeach
