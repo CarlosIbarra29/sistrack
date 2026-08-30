@@ -49,7 +49,7 @@
 
                     
                     <div class="profile-content-text flex-grow-1 d-flex flex-column justify-content-center">
-                        <!-- Nombre con mayor peso visual -->
+                        
                         <h5 class="profile-name-premium mb-3 mt-4">
                             {{ $custodio->nombre_custodio }}
                         </h5>
