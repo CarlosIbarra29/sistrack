@@ -325,6 +325,8 @@ var Modulo = function() {
         },
     };
 
+    const today = new Date().toISOString().split('T')[0];
+
     //agrega el elemento archivo y lista desplegable
     var addArchivo = function () {
         contadorDocumentos++;
@@ -349,7 +351,7 @@ var Modulo = function() {
             "    </td>",
             "    <td>" +
             "       <div class='form-group mb-0'>" +
-            "           <input type='datetime-local' class='form-control' name='vigencia["+contadorDocumentos+"]' id='vigencia"+contadorDocumentos+"' >",
+            "           <input type='date' class='form-control' name='vigencia["+contadorDocumentos+"]' id='vigencia"+contadorDocumentos+"' >",
             "       </div>" +
             "    </td>",
             "    <td>",

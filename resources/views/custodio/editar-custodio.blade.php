@@ -829,7 +829,7 @@
                                     <tbody id='tbodyDocumentos'>
                                         @foreach($documentos as $documento)
                                             <tr id="trDocumento{{ $documento->id }}">
-                                                <td><a href="{{ route('archivo.documentocustodio', ['id'=>$documento->id]) }}" class="link-primary" target="_blank"> {{ $documento->documento }} </a></td>
+                                                <td><a href="{{ route('archivo.documentocustodio', ['id'=>$documento->id]) }}" class="link-primary" target="_blank"> {{ $documento->custodioDocumentacion->tipo_documento }}</a></td>
                                                 <td>{{ $documento->custodioDocumentacion->tipo_documento }}</td>
                                                 <td>{{ $documento->vigencia }}</td>
                                                 <td>
