@@ -1,75 +1,145 @@
 "use strict";
-var Modulo = function() {
-var validador; //validador del formulario
 
-    var validacion = function() {
-        //validacion de formulario
-        const form = document.getElementById('submit_estadia');
-        validador = FormValidation.formValidation(
-            form,
-            {
-                locale: 'es_ES',
-                localization: FormValidation.locales.es_ES,
-                fields: {
+var ModuloEstadias = function () {
 
-                },
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    submitButton: new FormValidation.plugins.SubmitButton(),
-                    declarative: new FormValidation.plugins.Declarative({
-                        html5Input: true,
-                    }),
-                    bootstrap: new FormValidation.plugins.Bootstrap({
-                        //  eleInvalidClass: '', // Repace with uncomment to hide bootstrap validation icons
-                        //  eleValidClass: '',   // Repace with uncomment to hide bootstrap validation icons
-                    })
-                }
-            }
-        ).on('core.form.valid', function() {
-            toastr.success("Guardando, Por favor Espere...");
-        }).on('core.form.invalid', function() {
-            toastr.warning("Por favor, Ingrese la información marcada en rojo.");
-            KTUtil.scrollTop();
-        });
+    var form = null;
+    var guardando = false;
 
-        $( "#btnGuardar" ).click(function( e ) {
+    var inicializarGuardado = function () {
+
+        form = document.getElementById('submit_estadia');
+
+        var btnGuardar = document.getElementById('btnGuardar');
+
+        if (!form || !btnGuardar) {
+            return;
+        }
+
+        btnGuardar.addEventListener('click', function (e) {
+
             e.preventDefault();
-            validador.validate().then(function(status) {
-                if (status === 'Valid'){
-                    var btnGuardar = document.getElementById('btnGuardar');
-                    KTUtil.btnWait( btnGuardar, 'spinner spinner-right spinner-white pr-15', 'Espere...', true);
-                    form.submit();
-                }
-            });
+
+            if (guardando) {
+                return;
+            }
+
+            guardando = true;
+
+            KTUtil.btnWait(
+                btnGuardar,
+                'spinner spinner-right spinner-white pr-15',
+                'Espere...',
+                true
+            );
+
+            toastr.success(
+                'Guardando información, por favor espere...'
+            );
+
+            form.submit();
+
         });
-    };
-
-    var initEvents = function() {
-
 
     };
 
 
+    var inicializarAcompanantes = function () {
 
+        var custodio = document.getElementById('custodio_id');
+        var acompanantes = document.getElementById('acompanantes_ids');
 
-    var eventosEspeciales = function () {
-        $('#elemento1').val();
+        if (!custodio || !acompanantes) {
+            return;
+        }
+
+        var actualizarOpciones = function () {
+
+            var custodioPrincipal = String(
+                custodio.value || ''
+            );
+
+            Array.prototype.forEach.call(
+                acompanantes.options,
+                function (option) {
+
+                    var esPrincipal =
+                        custodioPrincipal !== '' &&
+                        String(option.value) === custodioPrincipal;
+
+                    option.disabled = esPrincipal;
+
+                    if (esPrincipal && option.selected) {
+                        option.selected = false;
+                    }
+
+                }
+            );
+
+        };
+
+        custodio.addEventListener(
+            'change',
+            actualizarOpciones
+        );
+
+        actualizarOpciones();
+
+    };
+
+    var inicializarLimpiar = function () {
+
+        var btnLimpiar =
+            document.getElementById(
+                'btnLimpiarEstadia'
+            );
+
+        if (!btnLimpiar) {
+            return;
+        }
+
+        btnLimpiar.addEventListener(
+            'click',
+            function () {
+
+                Swal.fire({
+                    title: '¿Descartar cambios?',
+                    text: 'Los campos volverán a los valores con los que abriste esta pantalla.',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, limpiar',
+                    cancelButtonText: 'Cancelar',
+                    reverseButtons: true
+
+                }).then(function (result) {
+
+                    if (!result.value) {
+                        return;
+                    }
+
+                    window.location.reload();
+
+                });
+
+            }
+        );
+
     };
 
     return {
 
-        //main function to initiate the module
-        init: function() {
-            initEvents();
-            validacion();
-            eventosEspeciales();
-        },
+        init: function () {
+
+            inicializarGuardado();
+            inicializarAcompanantes();
+            inicializarLimpiar();
+
+        }
 
     };
 
 }();
 
-jQuery(document).ready(function() {
-    Modulo.init();
-});
 
+jQuery(document).ready(function () {
+    ModuloEstadias.init();
+});
