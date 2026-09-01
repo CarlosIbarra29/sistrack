@@ -11,7 +11,6 @@
 @section('content')
 
 
-
 <div class="container-fluid">
     <form action="{{ route('custodio.guardarcustodio') }}" method="post" id="submit_cliente" enctype="multipart/form-data">
     @csrf
