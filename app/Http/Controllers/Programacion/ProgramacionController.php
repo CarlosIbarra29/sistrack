@@ -46,6 +46,7 @@ class ProgramacionController extends Controller
         $estatus_monitoreo = MonitoreoProgramacion::get();
         $cliente = Cliente::where('siaf_status', 1)->get();
         $custodio = Custodio::where('siaf_status', 1)->get();
+        $estatus_programacion_data = EstatusProgramacion::get();
         //tipo de documentos en formato json
         $cadenaTipoDocumento = "";
         foreach($custodio as $documento){
@@ -60,7 +61,7 @@ class ProgramacionController extends Controller
             ->get();
 
 
-        return view('programacion.listado-programacion', compact('data', 'programcion', 'estatus_monitoreo','cliente','custodio','cadenaTipoDocumento'));
+        return view('programacion.listado-programacion', compact('data', 'programcion', 'estatus_monitoreo','cliente','custodio','cadenaTipoDocumento','estatus_programacion_data'));
     }
 
     public function programaciondatatable(Request $request)
@@ -271,7 +272,7 @@ class ProgramacionController extends Controller
             'cliente_id' => $request->cliente_id,
             'custodio_id' => $request->custodio_id,
             'tarifario_id' => 1,
-            'programacion_estatus_id' => 1,
+            'programacion_estatus_id' => $request->programacion_id,
             'tipo_servicio' => $request->tipo_servicio,
             'fecha_servicio' => $request->fecha_hora,
             'acompanantes'=> $request->op_custodios,

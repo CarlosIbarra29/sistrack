@@ -1,0 +1,1668 @@
+/* ==========================================================================
+   SISTRACK - LOGIN
+   CSS EXCLUSIVO DE AUTENTICACIÓN
+   ========================================================================== */
+
+html,
+body {
+    width: 100%;
+    min-width: 0;
+    min-height: 100%;
+    margin: 0;
+}
+
+body.sistrack-login-body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: #070c12 !important;
+    color: #d8e0ea;
+    font-family: 'Poppins', sans-serif;
+}
+
+.sistrack-login {
+    --login-bg: #070c12;
+    --login-panel: #0d151f;
+    --login-panel-2: #111c28;
+    --login-input: #0d1722;
+    --login-input-hover: #111e2b;
+    --login-border: #263547;
+    --login-border-soft: rgba(148, 163, 184, .12);
+    --login-gold: #eba72f;
+    --login-gold-2: #f3bd4f;
+    --login-white: #ffffff;
+    --login-text: #d8e0ea;
+    --login-muted: #8190a5;
+    --login-green: #20c997;
+    --login-red: #ef535b;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 100vh;
+
+    display: grid;
+    grid-template-columns:
+        minmax(390px, 520px)
+        minmax(0, 1fr);
+
+    background: var(--login-bg);
+}
+
+.sistrack-login *,
+.sistrack-login *::before,
+.sistrack-login *::after {
+    box-sizing: border-box;
+}
+
+
+/* ==========================================================================
+   PANEL IZQUIERDO
+   ========================================================================== */
+
+.sistrack-login-aside {
+    position: relative;
+    z-index: 3;
+
+    min-width: 0;
+    min-height: 100vh;
+
+    display: flex;
+
+    background:
+        radial-gradient(
+            circle at 0 0,
+            rgba(235, 167, 47, .055),
+            transparent 32%
+        ),
+        linear-gradient(
+            180deg,
+            #0c141e 0%,
+            #090f17 100%
+        );
+
+    border-right: 1px solid rgba(148, 163, 184, .11);
+
+    box-shadow:
+        24px 0 65px rgba(0, 0, 0, .18);
+}
+
+.sistrack-login-aside__inner {
+    width: 100%;
+    max-width: 430px;
+    min-height: 100vh;
+
+    margin: 0 auto;
+
+    padding: 34px 38px 22px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ==========================================================================
+   LOGO / MARCA
+   ========================================================================== */
+
+.sistrack-login-brand {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    min-height: 68px;
+}
+
+.sistrack-login-logo {
+    display: block;
+
+    width: auto;
+    max-width: 210px;
+    max-height: 72px;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(
+            0 5px 14px rgba(0, 0, 0, .18)
+        );
+}
+
+.sistrack-login-brand-copy {
+    display: none;
+    flex-direction: column;
+
+    padding-left: 13px;
+
+    border-left: 1px solid rgba(235, 167, 47, .18);
+}
+
+.sistrack-login-brand-copy span {
+    color: #73849a;
+
+    font-size: .43rem;
+    font-weight: 600;
+
+    letter-spacing: .12em;
+}
+
+.sistrack-login-brand-copy strong {
+    margin-top: 2px;
+
+    color: var(--login-gold);
+
+    font-size: .73rem;
+
+    letter-spacing: .08em;
+}
+
+
+/* ==========================================================================
+   FORMULARIO
+   ========================================================================== */
+
+.sistrack-login-form {
+    width: 100% !important;
+    max-width: none !important;
+
+    margin: auto 0;
+
+    padding: 38px 0 30px !important;
+}
+
+.sistrack-login-heading {
+    margin-bottom: 27px;
+}
+
+.sistrack-login-eyebrow {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: var(--login-gold);
+
+    font-size: .48rem;
+    line-height: 1.3;
+    font-weight: 700;
+
+    letter-spacing: .13em;
+
+    text-transform: uppercase;
+}
+
+.sistrack-login-heading h1 {
+    margin: 0 0 7px;
+
+    color: #fff;
+
+    font-size: clamp(1.65rem, 2.2vw, 2.05rem);
+    line-height: 1.15;
+
+    font-weight: 700;
+
+    letter-spacing: -.04em;
+}
+
+.sistrack-login-heading p {
+    max-width: 350px;
+
+    margin: 0;
+
+    color: #78889c;
+
+    font-size: .67rem;
+    line-height: 1.65;
+}
+
+
+/* ==========================================================================
+   CAMPOS
+   ========================================================================== */
+
+.sistrack-login-field {
+    margin-bottom: 17px;
+}
+
+.sistrack-login-field > label {
+    display: block;
+
+    margin: 0 0 6px;
+
+    color: #91a0b2;
+
+    font-size: .58rem;
+    line-height: 1.3;
+    font-weight: 500;
+}
+
+.sistrack-login-input-wrap {
+    position: relative;
+
+    width: 100%;
+}
+
+.sistrack-login-input-wrap > i {
+    position: absolute;
+
+    left: 13px;
+    top: 50%;
+
+    z-index: 2;
+
+    transform: translateY(-50%);
+
+    color: #62738a;
+
+    font-size: .92rem;
+
+    pointer-events: none;
+
+    transition: color .2s ease;
+}
+
+.sistrack-login-input {
+    width: 100% !important;
+
+    height: 46px !important;
+    min-height: 46px !important;
+
+    padding:
+        9px 13px
+        9px 40px !important;
+
+    background:
+        rgba(13, 23, 34, .92) !important;
+
+    border:
+        1px solid var(--login-border) !important;
+
+    border-radius:
+        8px !important;
+
+    color:
+        #e1e8f0 !important;
+
+    font-family:
+        'Poppins',
+        sans-serif !important;
+
+    font-size:
+        .66rem !important;
+
+    font-weight:
+        400 !important;
+
+    outline:
+        none !important;
+
+    box-shadow:
+        none !important;
+
+    transition:
+        background-color .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.sistrack-login-input:hover {
+    background:
+        var(--login-input-hover) !important;
+
+    border-color:
+        #35485f !important;
+}
+
+.sistrack-login-input:focus {
+    background:
+        var(--login-input-hover) !important;
+
+    border-color:
+        rgba(235, 167, 47, .8) !important;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(235, 167, 47, .07) !important;
+}
+
+.sistrack-login-input-wrap:focus-within > i {
+    color: var(--login-gold);
+}
+
+.sistrack-login-input::placeholder {
+    color: #536379 !important;
+    opacity: 1;
+}
+
+
+/* ==========================================================================
+   CAPTCHA
+   ========================================================================== */
+
+.sistrack-captcha-card {
+    min-height: 66px;
+
+    padding: 8px;
+
+    display: grid;
+    grid-template-columns:
+        145px
+        35px
+        minmax(0, 1fr);
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-bottom: 8px;
+
+    overflow: hidden;
+
+    background:
+        rgba(9, 16, 24, .55);
+
+    border:
+        1px solid var(--login-border-soft);
+
+    border-radius: 8px;
+}
+
+.sistrack-captcha-image {
+    min-width: 0;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+
+    border-radius: 5px;
+
+    background: #fff;
+}
+
+.sistrack-captcha-image span {
+    width: 100% !important;
+    height: 100%;
+
+    display: block !important;
+}
+
+.sistrack-captcha-image img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+.sistrack-captcha-refresh {
+    width: 34px;
+    height: 34px;
+
+    padding: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border:
+        1px solid var(--login-border);
+
+    border-radius: 50%;
+
+    background:
+        #101a26;
+
+    color:
+        var(--login-gold);
+
+    outline:
+        none;
+
+    cursor:
+        pointer;
+
+    transition:
+        .2s ease;
+}
+
+.sistrack-captcha-refresh:hover {
+    border-color:
+        rgba(235, 167, 47, .6);
+
+    background:
+        rgba(235, 167, 47, .07);
+
+    transform:
+        rotate(25deg);
+}
+
+.sistrack-captcha-refresh i {
+    margin: 0 !important;
+
+    color:
+        inherit !important;
+
+    font-size:
+        .75rem;
+}
+
+.sistrack-captcha-copy {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.sistrack-captcha-copy strong {
+    color: #c9d2dd;
+
+    font-size: .54rem;
+
+    font-weight: 600;
+}
+
+.sistrack-captcha-copy span {
+    margin-top: 2px;
+
+    color: #65768b;
+
+    font-size: .47rem;
+}
+
+.sistrack-login-input-wrap--captcha {
+    margin-top: 0;
+}
+
+
+/* ==========================================================================
+   RECORDAR / RECUPERAR
+   ========================================================================== */
+
+.sistrack-login-options {
+    margin: 5px 0 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 14px;
+}
+
+.sistrack-login-checkbox {
+    margin: 0;
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    color: #8291a4;
+
+    font-size: .55rem;
+
+    cursor: pointer;
+
+    user-select: none;
+}
+
+.sistrack-login-checkbox input {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+}
+
+.sistrack-login-checkbox__box {
+    width: 17px;
+    height: 17px;
+
+    flex: 0 0 17px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border:
+        1px solid #34465c;
+
+    border-radius: 4px;
+
+    background:
+        #0d1722;
+
+    color:
+        transparent;
+
+    transition:
+        .2s ease;
+}
+
+.sistrack-login-checkbox__box i {
+    margin: 0;
+
+    font-size:
+        .66rem;
+}
+
+.sistrack-login-checkbox input:checked +
+.sistrack-login-checkbox__box {
+    border-color:
+        var(--login-gold);
+
+    background:
+        var(--login-gold);
+
+    color:
+        #111;
+}
+
+.sistrack-login-link {
+    color:
+        var(--login-gold) !important;
+
+    font-size:
+        .55rem;
+
+    font-weight:
+        500;
+
+    text-decoration:
+        none !important;
+}
+
+.sistrack-login-link:hover {
+    color:
+        var(--login-gold-2) !important;
+}
+
+
+/* ==========================================================================
+   BOTÓN LOGIN
+   ========================================================================== */
+
+.sistrack-login-submit {
+    width: 100%;
+
+    min-height: 45px;
+
+    margin: 0 !important;
+
+    padding: 9px 15px !important;
+
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border:
+        1px solid var(--login-gold) !important;
+
+    border-radius:
+        8px !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--login-gold-2),
+            var(--login-gold)
+        ) !important;
+
+    color:
+        #111 !important;
+
+    font-size:
+        .65rem !important;
+
+    font-weight:
+        700 !important;
+
+    box-shadow:
+        0 8px 22px
+        rgba(235, 167, 47, .14) !important;
+
+    transition:
+        .2s ease !important;
+}
+
+.sistrack-login-submit:hover,
+.sistrack-login-submit:focus {
+    color:
+        #111 !important;
+
+    filter:
+        brightness(1.05);
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 10px 26px
+        rgba(235, 167, 47, .19) !important;
+}
+
+.sistrack-login-submit i {
+    margin: 0 !important;
+
+    color:
+        #111 !important;
+
+    font-size:
+        .8rem;
+}
+
+.sistrack-login-submit--auto {
+    width: auto;
+
+    min-width: 130px;
+}
+
+
+/* ==========================================================================
+   ERRORES
+   ========================================================================== */
+
+.sistrack-login-errors {
+    margin-bottom: 17px;
+}
+
+.sistrack-login-alert {
+    width: 100%;
+
+    min-height: 40px;
+
+    padding: 8px 10px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 7px;
+
+    border:
+        1px solid rgba(239, 83, 91, .22);
+
+    border-radius:
+        7px;
+
+    background:
+        rgba(239, 83, 91, .055);
+
+    color:
+        #e4a2a6;
+
+    font-size:
+        .54rem;
+}
+
+.sistrack-login-alert__icon {
+    width: 26px;
+    height: 26px;
+
+    flex: 0 0 26px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 6px;
+
+    background:
+        rgba(239, 83, 91, .08);
+
+    color:
+        #ef6c73;
+}
+
+
+/* ==========================================================================
+   RECUPERAR CONTRASEÑA
+   ========================================================================== */
+
+.sistrack-forgot-actions {
+    margin-top: 20px;
+
+    display: grid;
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 8px;
+}
+
+.sistrack-login-secondary-btn {
+    min-height: 45px;
+
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    border:
+        1px solid var(--login-border) !important;
+
+    border-radius:
+        8px !important;
+
+    background:
+        transparent !important;
+
+    color:
+        #c9d2dc !important;
+
+    font-size:
+        .61rem !important;
+
+    font-weight:
+        600 !important;
+
+    transition:
+        .2s ease;
+}
+
+.sistrack-login-secondary-btn:hover {
+    background:
+        var(--login-panel-2) !important;
+
+    border-color:
+        #3b4e65 !important;
+
+    color:
+        #fff !important;
+}
+
+
+/* ==========================================================================
+   FOOTER IZQUIERDO
+   ========================================================================== */
+
+.sistrack-login-footer {
+    min-height: 28px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    color:
+        #4f6075;
+
+    font-size:
+        .42rem;
+
+    font-weight:
+        600;
+
+    letter-spacing:
+        .06em;
+
+    text-transform:
+        uppercase;
+}
+
+.sistrack-login-footer-dot {
+    width: 3px;
+    height: 3px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+
+    background:
+        rgba(235, 167, 47, .55);
+}
+
+
+/* ==========================================================================
+   PANEL DERECHO
+   ========================================================================== */
+
+.sistrack-login-visual {
+    position: relative;
+
+    min-width: 0;
+    min-height: 100vh;
+
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 55px;
+
+    background:
+        radial-gradient(
+            circle at 75% 20%,
+            rgba(235, 167, 47, .06),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 22% 70%,
+            rgba(77, 141, 255, .055),
+            transparent 33%
+        ),
+        linear-gradient(
+            145deg,
+            #08101a 0%,
+            #0b1521 48%,
+            #070c12 100%
+        );
+}
+
+.sistrack-login-grid {
+    position: absolute;
+
+    inset: 0;
+
+    opacity: .18;
+
+    background-image:
+        linear-gradient(
+            rgba(148, 163, 184, .06) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(148, 163, 184, .06) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        46px 46px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            transparent 0%,
+            #000 20%,
+            #000 80%,
+            transparent 100%
+        );
+}
+
+.sistrack-login-glow {
+    position: absolute;
+
+    border-radius: 50%;
+
+    filter: blur(2px);
+
+    pointer-events: none;
+}
+
+.sistrack-login-glow--one {
+    width: 330px;
+    height: 330px;
+
+    top: -140px;
+    right: -100px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(235, 167, 47, .075),
+            transparent 68%
+        );
+}
+
+.sistrack-login-glow--two {
+    width: 390px;
+    height: 390px;
+
+    bottom: -170px;
+    left: -150px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(77, 141, 255, .055),
+            transparent 70%
+        );
+}
+
+.sistrack-login-visual-content {
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+    max-width: 720px;
+}
+
+
+/* ==========================================================================
+   BADGE DERECHO
+   ========================================================================== */
+
+.sistrack-visual-badge {
+    width: fit-content;
+
+    min-height: 28px;
+
+    padding: 5px 9px;
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 20px;
+
+    border:
+        1px solid rgba(32, 201, 151, .14);
+
+    border-radius:
+        20px;
+
+    background:
+        rgba(32, 201, 151, .045);
+
+    color:
+        #70cfb0;
+
+    font-size:
+        .46rem;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        .08em;
+}
+
+.sistrack-visual-live-dot {
+    width: 6px;
+    height: 6px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+
+    background:
+        var(--login-green);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(32, 201, 151, .07);
+}
+
+
+/* ==========================================================================
+   COPY DERECHO
+   ========================================================================== */
+
+.sistrack-login-visual-copy {
+    max-width: 570px;
+
+    margin-bottom: 34px;
+}
+
+.sistrack-login-visual-copy h2 {
+    margin:
+        0 0 11px;
+
+    color:
+        #fff;
+
+    font-size:
+        clamp(
+            2rem,
+            3.3vw,
+            3.25rem
+        );
+
+    line-height:
+        1.05;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        -.05em;
+}
+
+.sistrack-login-visual-copy p {
+    max-width: 520px;
+
+    margin: 0;
+
+    color:
+        #718198;
+
+    font-size:
+        .72rem;
+
+    line-height:
+        1.7;
+}
+
+
+/* ==========================================================================
+   DASHBOARD DECORATIVO
+   ========================================================================== */
+
+.sistrack-dashboard-preview {
+    width: 100%;
+
+    padding: 17px;
+
+    border:
+        1px solid rgba(148, 163, 184, .14);
+
+    border-radius:
+        13px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, .016),
+            transparent 60%
+        ),
+        rgba(13, 23, 34, .78);
+
+    backdrop-filter:
+        blur(13px);
+
+    box-shadow:
+        0 30px 70px
+        rgba(0, 0, 0, .2);
+}
+
+.sistrack-dashboard-preview__header {
+    min-height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 14px;
+
+    padding-bottom: 13px;
+
+    border-bottom:
+        1px solid rgba(148, 163, 184, .1);
+}
+
+.sistrack-dashboard-preview__header > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.sistrack-dashboard-preview__header span {
+    color:
+        #62748a;
+
+    font-size:
+        .43rem;
+
+    font-weight:
+        600;
+
+    letter-spacing:
+        .1em;
+}
+
+.sistrack-dashboard-preview__header strong {
+    margin-top: 3px;
+
+    color:
+        #e1e8ef;
+
+    font-size:
+        .65rem;
+
+    font-weight:
+        600;
+}
+
+.sistrack-dashboard-status {
+    min-height: 22px;
+
+    padding: 4px 8px;
+
+    display: inline-flex;
+    align-items: center;
+
+    border:
+        1px solid rgba(32, 201, 151, .14);
+
+    border-radius:
+        13px;
+
+    background:
+        rgba(32, 201, 151, .055);
+
+    color:
+        #60cda9 !important;
+
+    font-size:
+        .42rem !important;
+}
+
+
+/* ==========================================================================
+   RUTA
+   ========================================================================== */
+
+.sistrack-dashboard-route {
+    min-height: 126px;
+
+    display: grid;
+    grid-template-columns:
+        auto
+        minmax(60px, 1fr)
+        auto;
+
+    align-items: center;
+
+    gap: 13px;
+}
+
+.sistrack-route-point {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+}
+
+.sistrack-route-marker {
+    width: 12px;
+    height: 12px;
+
+    flex: 0 0 12px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+}
+
+.sistrack-route-marker--start {
+    background:
+        var(--login-gold);
+
+    box-shadow:
+        0 0 0 5px
+        rgba(235, 167, 47, .07);
+}
+
+.sistrack-route-marker--end {
+    background:
+        var(--login-green);
+
+    box-shadow:
+        0 0 0 5px
+        rgba(32, 201, 151, .07);
+}
+
+.sistrack-route-point div {
+    display: flex;
+    flex-direction: column;
+}
+
+.sistrack-route-point small {
+    color:
+        #596b82;
+
+    font-size:
+        .4rem;
+
+    font-weight:
+        600;
+
+    letter-spacing:
+        .08em;
+}
+
+.sistrack-route-point strong {
+    margin-top:
+        2px;
+
+    color:
+        #b9c5d1;
+
+    font-size:
+        .53rem;
+
+    font-weight:
+        500;
+
+    white-space:
+        nowrap;
+}
+
+.sistrack-route-line {
+    position:
+        relative;
+
+    height:
+        1px;
+
+    border-top:
+        1px dashed
+        rgba(235, 167, 47, .32);
+}
+
+.sistrack-route-line span {
+    position:
+        absolute;
+
+    left:
+        32%;
+
+    top:
+        50%;
+
+    width:
+        7px;
+
+    height:
+        7px;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--login-gold);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(235, 167, 47, .06);
+
+    transform:
+        translateY(-50%);
+}
+
+
+/* ==========================================================================
+   MINI ESTADÍSTICAS
+   ========================================================================== */
+
+.sistrack-dashboard-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 8px;
+}
+
+.sistrack-dashboard-stat {
+    min-width: 0;
+
+    min-height: 61px;
+
+    padding: 9px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    border:
+        1px solid rgba(148, 163, 184, .09);
+
+    border-radius:
+        8px;
+
+    background:
+        rgba(255, 255, 255, .012);
+}
+
+.sistrack-dashboard-stat__icon {
+    width: 30px;
+    height: 30px;
+
+    flex: 0 0 30px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius:
+        7px;
+
+    background:
+        rgba(235, 167, 47, .055);
+
+    color:
+        var(--login-gold);
+}
+
+.sistrack-dashboard-stat__icon i {
+    font-size:
+        .84rem;
+}
+
+.sistrack-dashboard-stat > div {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.sistrack-dashboard-stat small {
+    color:
+        #596b80;
+
+    font-size:
+        .39rem;
+
+    letter-spacing:
+        .07em;
+}
+
+.sistrack-dashboard-stat strong {
+    margin-top:
+        2px;
+
+    overflow:
+        hidden;
+
+    color:
+        #b9c5d1;
+
+    font-size:
+        .51rem;
+
+    font-weight:
+        600;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
+}
+
+
+/* ==========================================================================
+   FOOTER DERECHO
+   ========================================================================== */
+
+.sistrack-login-visual-footer {
+    position:
+        absolute;
+
+    right:
+        28px;
+
+    bottom:
+        22px;
+
+    left:
+        28px;
+
+    z-index:
+        2;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        16px;
+
+    color:
+        #46586e;
+
+    font-size:
+        .4rem;
+
+    font-weight:
+        600;
+
+    letter-spacing:
+        .1em;
+}
+
+
+/* ==========================================================================
+   METRONIC VALIDATION
+   ========================================================================== */
+
+.sistrack-login .fv-plugins-message-container {
+    margin-top:
+        4px;
+}
+
+.sistrack-login .fv-help-block,
+.sistrack-login .fv-plugins-message-container div {
+    color:
+        #ef6b72 !important;
+
+    font-size:
+        .5rem !important;
+
+    line-height:
+        1.35;
+}
+
+
+/* ==========================================================================
+   LOGIN-2 FUNCIONAL
+   ========================================================================== */
+
+.login.login-2 .login-signin,
+.login.login-2 .login-signup,
+.login.login-2 .login-forgot {
+    display: none;
+}
+
+.login.login-2.login-signin-on
+.login-signin {
+    display: block;
+}
+
+.login.login-2.login-signin-on
+.login-forgot {
+    display: none;
+}
+
+.login.login-2.login-forgot-on
+.login-signin {
+    display: none;
+}
+
+.login.login-2.login-forgot-on
+.login-forgot {
+    display: block;
+}
+
+
+/* ==========================================================================
+   LAPTOP PEQUEÑA
+   ========================================================================== */
+
+@media (max-width: 1200px) {
+
+    .sistrack-login {
+        grid-template-columns:
+            440px
+            minmax(0, 1fr);
+    }
+
+    .sistrack-login-aside__inner {
+        padding:
+            28px 32px 20px;
+    }
+
+    .sistrack-login-visual {
+        padding:
+            45px;
+    }
+
+}
+
+
+/* ==========================================================================
+   TABLET / MOBILE
+   ========================================================================== */
+
+@media (max-width: 991.98px) {
+
+    .sistrack-login {
+        display:
+            block;
+
+        min-height:
+            100vh;
+    }
+
+    .sistrack-login-aside {
+        width:
+            100%;
+
+        min-height:
+            100vh;
+
+        border-right:
+            0;
+    }
+
+    .sistrack-login-aside__inner {
+        width:
+            100%;
+
+        max-width:
+            520px;
+
+        min-height:
+            100vh;
+
+        padding:
+            28px 28px 20px;
+    }
+
+    .sistrack-login-brand {
+        justify-content:
+            center;
+    }
+
+    .sistrack-login-logo {
+        max-width:
+            200px;
+    }
+
+    .sistrack-login-form {
+        padding:
+            34px 0 25px !important;
+    }
+
+    .sistrack-login-visual {
+        display:
+            none;
+    }
+
+    .sistrack-login-footer {
+        justify-content:
+            center;
+    }
+
+}
+
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+
+@media (max-width: 575.98px) {
+
+    .sistrack-login-aside__inner {
+        padding:
+            22px 18px 17px;
+    }
+
+    .sistrack-login-logo {
+        max-width:
+            180px;
+    }
+
+    .sistrack-login-heading {
+        margin-bottom:
+            22px;
+    }
+
+    .sistrack-login-heading h1 {
+        font-size:
+            1.55rem;
+    }
+
+    .sistrack-login-heading p {
+        font-size:
+            .61rem;
+    }
+
+    .sistrack-captcha-card {
+        grid-template-columns:
+            minmax(0, 1fr)
+            34px;
+
+        gap:
+            7px;
+    }
+
+    .sistrack-captcha-copy {
+        grid-column:
+            1 / -1;
+
+        padding:
+            2px 3px 0;
+    }
+
+    .sistrack-login-options {
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+        gap:
+            9px;
+    }
+
+    .sistrack-forgot-actions {
+        grid-template-columns:
+            1fr;
+    }
+
+    .sistrack-login-submit--auto {
+        width:
+            100%;
+    }
+
+}
+
+
+/* ==========================================================================
+   MOBILE MUY PEQUEÑO
+   ========================================================================== */
+
+@media (max-width: 380px) {
+
+    .sistrack-login-aside__inner {
+        padding-left:
+            14px;
+
+        padding-right:
+            14px;
+    }
+
+    .sistrack-login-footer {
+        gap:
+            5px;
+
+        font-size:
+            .37rem;
+    }
+
+}
