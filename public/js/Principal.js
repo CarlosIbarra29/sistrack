@@ -168,6 +168,28 @@ var Principal = (function () {
             }
         }
 
+        //activar menu de Monitoreo
+        function activeMenuServiciosCliente() {
+            $("#menuServiciosCliente").addClass("menu-item-active");
+            $("#menuServiciosCliente").addClass("menu-item-open");
+        }
+
+        //rutas para el menu de clientes
+        if (routeName.includes("procli")) {
+            activeMenuServiciosCliente();
+            //we addd the active class to the menuUsuarios parent item
+            // $("#menuRegistroMonitoreo").addClass("menu-item-active");
+            // $("#menuRegistroMonitoreo").addClass("menu-item-open");
+
+            switch (routeName) {
+                case "procli.nuevoservicio":
+                    //we add the class 'menu-item-open' to id menuListadoUsuarios
+                    // $("#menuListadoMonitoreo").addClass("menu-item-open");
+                    break;
+
+            }
+        }
+
 
 
         //activar menu de CATALOGOS
