@@ -45,7 +45,7 @@
 
         </div>
 
-        <a href="{{ route('programacion.listadoprogramacion') }}"
+        <a href="{{ route('procli.listaservicios') }}"
            class="nuevo-servicio-btn nuevo-servicio-btn--secondary">
 
             <i class="flaticon2-back"></i>
@@ -83,7 +83,8 @@
 
         </div>
 
-        <form action=""  method="post" id="submit_programacion" enctype="multipart/form-data">
+        <form action="{{ route('procli.guardarserviciocliente') }}"  method="post" id="submit_programacion" enctype="multipart/form-data">
+            @csrf
             <div class="nuevo-servicio-panel-body">
 
                 {{-- =====================================================
@@ -427,7 +428,7 @@
             ========================================================== --}}
             <footer class="nuevo-servicio-footer">
 
-                <a href="{{ route('programacion.listadoprogramacion') }}"
+                <a href="{{ route('procli.listaservicios') }}"
                    class="nuevo-servicio-btn nuevo-servicio-btn--secondary">
 
                     <i class="la la-times"></i>

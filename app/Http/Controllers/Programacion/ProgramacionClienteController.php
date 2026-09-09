@@ -23,6 +23,7 @@ use App\Models\Programacion\EstadiasProgramacion;
 use App\Models\Programacion\MonitoreoProgramacion;
 use App\Models\Programacion\MonitoreoIncidencias;
 use App\Models\Programacion\ProgramacionObservacion;
+use App\Models\Programacion\Programacioncliente;
 
 use App\Models\User;
 use App\Models\Rol;
@@ -39,8 +40,40 @@ class ProgramacionClienteController extends Controller
         $this->folio = $folio;
     }
 
+    public function listaservicios()
+    {
+		return view('programacion.cliente.listaservicios');	
+    }
+
     public function nuevoservicio()
     {
     	return view('programacion.cliente.nuevoservicio');
+    }
+
+    public function guardarserviciocliente(Request $request)
+    {
+
+        $data = [
+            'ubicacion_origen' => $request->ubicacion_origen,
+            'direccion_origen' => $request->direccion_origen,
+            'ubicacion_destino' => $request->ubicacion_destino,
+            'direccion_destino' => $request->direccion_destino,
+            'fechahora_servicio' => $request->fechahora_servicio,
+            'armada' => $request->armada,
+            'linea_transporte' => $request->linea_transporte,
+            'nombre_operador' => $request->nombre_operador,
+            'placas' => $request->placas,
+            'numero_telefono' => $request->numero_telefono,
+            'observaciones' => $request->observaciones,
+            'created_at' =>date('Y-m-d H:i:s'),
+            'updated_at' =>date('Y-m-d H:i:s'),
+            'iduserCreated' =>auth()->user()->id,
+            'iduserUpdated' =>auth()->user()->id,
+        ];  
+
+        Programacioncliente::insert($data);
+
+        session()->flash('success', 'El servicio se creo correctamente');
+        return redirect()->route('procli.nuevoservicio'); 
     }
 }
