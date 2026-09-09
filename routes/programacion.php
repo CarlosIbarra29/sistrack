@@ -22,6 +22,8 @@
 
 	// TEMPORAL SE QUITA ARA HACER BIEN EL PROCESO NO EST APUNTANDO A NINGUN CONTROLLER
 	Route::get('/nuevo-servicio', [App\Http\Controllers\Programacion\ProgramacionClienteController::class, 'nuevoservicio'])->name('procli.nuevoservicio');
+	Route::post('/guardar-servicio-cliente', [App\Http\Controllers\Programacion\ProgramacionClienteController::class, 'guardarserviciocliente'])->name('procli.guardarserviciocliente');
+	Route::get('/lista-servicios-cliente', [App\Http\Controllers\Programacion\ProgramacionClienteController::class, 'listaservicios'])->name('procli.listaservicios');
 
 
 	//GUARDAR PROGRAMACION DESDE MISMA PAGINA

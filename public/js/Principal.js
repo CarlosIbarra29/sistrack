@@ -187,6 +187,9 @@ var Principal = (function () {
                     // $("#menuListadoMonitoreo").addClass("menu-item-open");
                     break;
 
+                case "procli.listaservicios":
+                break;
+
             }
         }
 

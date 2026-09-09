@@ -341,7 +341,7 @@
                             </li>
          {{-- END P R O G R A M A C I O N   C L I E N T E--}}
                             <li id="menuServiciosCliente" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="{{ route('procli.nuevoservicio') }}" class="menu-link menu-toggle">
+                                <a href="{{ route('procli.listaservicios') }}" class="menu-link menu-toggle">
                                     <i class="flaticon-notepad menu-icon"></i>
                                     <span class="menu-text">Servicios cliente</span>
                                 </a>

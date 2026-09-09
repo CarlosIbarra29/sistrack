@@ -27,7 +27,7 @@ class EstatusProgramacion extends Model
     /**
      * @var array
      */
-    protected $fillable = ['estatus_programacion', 'created_at', 'updated_at', 'iduserCreated', 'iduserUpdated'];
+    protected $fillable = ['estatus_programacion','estatus_activo','estatus_monitoreo','estatus_pgr', 'created_at', 'updated_at', 'iduserCreated', 'iduserUpdated'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
