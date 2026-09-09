@@ -21,7 +21,7 @@
 	Route::post('/editar-observacion-programacion', [App\Http\Controllers\Programacion\ProgramacionController::class, 'editarobservacion'])->name('programacion.editarobservacion'); 
 
 	// TEMPORAL SE QUITA ARA HACER BIEN EL PROCESO NO EST APUNTANDO A NINGUN CONTROLLER
-	Route::get('/nuevo-servicio', function () {return view('programacion.nuevoservicio');})->name('programacion.nuevoservicio');
+	Route::get('/nuevo-servicio', [App\Http\Controllers\Programacion\ProgramacionClienteController::class, 'nuevoservicio'])->name('procli.nuevoservicio');
 
 
 	//GUARDAR PROGRAMACION DESDE MISMA PAGINA

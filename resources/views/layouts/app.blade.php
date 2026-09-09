@@ -116,17 +116,28 @@
                     <!--begin::Menu Nav-->
                     <ul class="menu-nav">
                     {{-- si es cliente --}}
-                    @if(Auth::user()->tipo_usuario_id == 1)
+{{--                     @if(Auth::user()->tipo_usuario_id == 1)
 
                     @elseif(Auth::user()->tipo_usuario_id == 2)
 
-                    @else
+                    @else --}}
                         <li id="menuHome" class="menu-item menu-item-active" aria-haspopup="true">
                             <a href="{{ route('tablero.show') }}" class="menu-link">
                                 <i class="flaticon-pie-chart-1 menu-icon"></i>
                                 <span class="menu-text">Tablero</span>
                             </a>
                         </li>
+
+
+                        <li id="menuNotificaciones" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                            <a href="" class="menu-link menu-toggle">
+                                <i class="flaticon2-checking  menu-icon"></i>
+                                <span class="menu-text">Notificaciones</span>
+                                <!--<i class="menu-arrow"></i>-->
+                            </a>
+                        </li>
+
+
                         @if (in_array("1", Session::get('permisos', [])) || in_array("2", Session::get('permisos', [])))
                             <li id="menuAdministracion" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="javascript:;" class="menu-link menu-toggle">
@@ -328,8 +339,13 @@
                                 <!--    </ul>-->
                                 <!--</div>-->
                             </li>
-         {{-- END P R O G R A M A C I O N --}}
-
+         {{-- END P R O G R A M A C I O N   C L I E N T E--}}
+                            <li id="menuServiciosCliente" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="{{ route('procli.nuevoservicio') }}" class="menu-link menu-toggle">
+                                    <i class="flaticon-notepad menu-icon"></i>
+                                    <span class="menu-text">Servicios cliente</span>
+                                </a>
+                            </li>
 
 
         {{-- M O N I T O R E O --}}
@@ -542,7 +558,6 @@
                             </div>
 
                         </li>
-                        @endif
                         {{-- Fin de catalogos --}}
 
                     </ul>

@@ -158,7 +158,7 @@
                         <td><span class="status-chip chip-info">COMPLETA</span></td>
                         <td class="text-center">
                             <div class="d-flex justify-content-center align-items-center gap-1">
-                                <a href="{{ route('custodio.vercustodio', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Ver Custodio"><i class="la la-eye font-size-lg"></i></a>
+                                {{-- <a href="{{ route('custodio.vercustodio', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Ver Custodio"><i class="la la-eye font-size-lg"></i></a> --}}
                                 <a href="{{ route('custodio.editarcustodio', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Editar custodio"><i class="la la-edit font-size-lg"></i></a>
                                 <button class="btn btn-xs btn-icon btn-clean text-muted p-0 desactivar_custodio" data-nombre="{{ $unid->nombre_custodio}}" data-id="{{ $unid->id}}" title="Desactivar custodio"><i class="la la-trash font-size-lg"></i></button>
                             </div>
