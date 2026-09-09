@@ -1,0 +1,1263 @@
+
+/* ============================================================
+   EDITAR CLIENTE
+============================================================ */
+
+.cliente-edit-page {
+    --cliente-bg: #080d12;
+    --cliente-bg-secondary: #0d141c;
+    --cliente-panel: #101923;
+    --cliente-panel-light: #131e29;
+    --cliente-border: #243342;
+
+    --cliente-text: #edf2f7;
+    --cliente-text-muted: #8291a1;
+
+    --cliente-gold: #f0a51a;
+    --cliente-gold-dark: #c77c0a;
+
+    --cliente-danger: #e25555;
+    --cliente-success: #19b77a;
+
+    min-height: calc(100vh - 80px);
+    padding: 28px 30px 40px;
+    background: var(--cliente-bg);
+    color: var(--cliente-text);
+}
+
+
+/* ============================================================
+   HEADER
+============================================================ */
+
+.cliente-page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--cliente-border);
+}
+
+.cliente-page-title {
+    min-width: 0;
+}
+
+.cliente-title-kicker {
+    margin-bottom: 6px;
+    color: var(--cliente-gold);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.cliente-page-title h2 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.cliente-page-title p {
+    margin: 7px 0 0;
+    color: var(--cliente-text-muted);
+    font-size: 11px;
+}
+
+
+/* ============================================================
+   BOTONES
+============================================================ */
+
+.cliente-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 34px;
+    padding: 0 13px;
+    border-radius: 5px !important;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    transition:
+        background .15s ease,
+        border-color .15s ease,
+        color .15s ease,
+        transform .15s ease;
+    cursor: pointer;
+}
+
+.cliente-btn i {
+    font-size: 12px;
+}
+
+.cliente-btn:hover {
+    text-decoration: none !important;
+}
+
+
+/* Regresar */
+
+.cliente-btn--back {
+    background: transparent !important;
+    border: 1px solid var(--cliente-border) !important;
+    color: #dbe3eb !important;
+}
+
+.cliente-btn--back:hover {
+    background: var(--cliente-panel-light) !important;
+    border-color: var(--cliente-gold) !important;
+   color: var(--cliente-gold) !important;
+}
+
+
+/* ============================================================
+   TARJETA PRINCIPAL
+============================================================ */
+
+.cliente-main-card {
+    overflow: hidden;
+    background: var(--cliente-panel);
+    border: 1px solid var(--cliente-border);
+    border-radius: 7px;
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, .18);
+}
+
+
+/* ============================================================
+   TABS
+============================================================ */
+
+.cliente-tabs-header {
+    padding: 0 22px;
+    background: #0c131b;
+    border-bottom: 1px solid var(--cliente-border);
+}
+
+.cliente-tabs {
+    display: flex;
+    gap: 6px;
+    margin: 0 !important;
+    border: 0 !important;
+}
+
+.cliente-tabs .nav-item {
+    margin: 0;
+}
+
+.cliente-tabs .nav-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 48px;
+   padding: 0 15px;
+    border: 0 !important;
+    color: #788898 !important;
+    background: transparent !important;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    transition: color .15s ease;
+}
+
+.cliente-tabs .nav-link i {
+    font-size: 13px;
+}
+
+.cliente-tabs .nav-link:hover {
+    color: #dbe4ec !important;
+}
+
+.cliente-tabs .nav-link.active {
+    color: var(--cliente-gold) !important;
+}
+
+.cliente-tabs .nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 0;
+    height: 2px;
+    background: var(--cliente-gold);
+    border-radius: 2px 2px 0 0;
+}
+
+
+/* ============================================================
+   CONTENIDO
+============================================================ */
+
+.cliente-content {
+    padding: 22px;
+}
+
+.cliente-content .tab-content {
+    min-height: 300px;
+}
+
+
+/* ============================================================
+   PANELES
+============================================================ */
+
+.cliente-panel {
+    overflow: hidden;
+    margin-bottom: 18px;
+    background: var(--cliente-bg-secondary);
+    border: 1px solid var(--cliente-border);
+    border-radius: 6px;
+}
+
+.cliente-panel:last-child {
+    margin-bottom: 0;
+}
+
+
+/* Header del panel */
+
+.cliente-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    min-height: 60px;
+    padding: 11px 15px;
+    background: linear-gradient(
+        180deg,
+        #141e28 0%,
+        #101923 100%
+    );
+
+    border-bottom: 1px solid var(--cliente-border);
+}
+
+.cliente-section-label {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--cliente-gold);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+}
+
+/* Subtitulos */
+.cliente-panel-header h3 {
+    margin: 0;
+    color: #f4f7fa;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* Cuerpo */
+
+.cliente-panel-body {
+    padding: 18px;
+}
+
+
+/* ============================================================
+   LABELS
+============================================================ */
+
+.cliente-edit-page .titulo-lb {
+    display: block;
+    margin-bottom: 7px;
+    color: #8c9baa;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: .25px;
+    text-transform: uppercase;
+}
+
+
+/* ============================================================
+   INPUTS
+============================================================ */
+
+.cliente-edit-page .st-input,
+.cliente-edit-page .form-control {
+    min-height: 36px;
+    padding: 7px 10px;
+    background: #0b131b !important;
+    border: 1px solid #263644 !important;
+    border-radius: 4px !important;
+    color: #e9eef3 !important;
+    font-size: 11px;
+    box-shadow: none !important;
+   transition:
+        border-color .15s ease,
+        background .15s ease;
+}
+
+.cliente-edit-page .st-input:focus,
+.cliente-edit-page .form-control:focus {
+    background: #0d1720 !important;
+    border-color: var(--cliente-gold) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 0 1px rgba(240, 165, 26, .08) !important;
+}
+
+.cliente-edit-page .st-input::placeholder,
+.cliente-edit-page .form-control::placeholder {
+    color: #526170;
+}
+
+
+/* Inputs grandes */
+
+.cliente-edit-page .form-control-lg {
+    min-height: 40px;
+}
+
+
+/* Espacio entre campos */
+
+.cliente-panel-body .form-group {
+    row-gap: 15px;
+}
+
+.cliente-panel-body .col-lg-3,
+.cliente-panel-body .col-lg-4,
+.cliente-panel-body .col-lg-6 {
+    margin-bottom: 5px;
+}
+
+
+/* ============================================================
+   TEXTAREA
+============================================================ */
+
+.cliente-textarea {
+    min-height: 85px;
+    resize: vertical;
+}
+
+
+/* ============================================================
+   BOTÓN AGREGAR
+============================================================ */
+
+.cliente-add-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    width: auto !important;
+    height: 31px !important;
+    padding: 0 10px !important;
+    background: transparent !important;
+    border: 1px solid rgba(240, 165, 26, .55) !important;
+    border-radius: 4px !important;
+    color: var(--cliente-gold) !important;
+    font-size: 9px !important;
+    text-decoration: none !important;
+}
+
+.cliente-add-btn i {
+    font-size: 11px;
+}
+
+.cliente-add-btn:hover {
+    background: var(--cliente-gold) !important;
+    border-color: var(--cliente-gold) !important;
+    color: #111 !important;
+}
+
+
+/* ============================================================
+   TABLAS
+============================================================ */
+
+.cliente-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.cliente-table {
+    width: 100%;
+    margin: 0 !important;
+    color: #cbd5de !important;
+    border-collapse: collapse;
+}
+
+.cliente-table thead {
+    background: #0b131b !important;
+}
+
+.cliente-table thead th {
+    padding: 10px 13px !important;
+    background: #0b131b !important;
+    border-top: 0 !important;
+    border-bottom: 1px solid var(--cliente-border) !important;
+    color: #68798a !important;
+    font-size: 8px !important;
+    font-weight: 700 !important;
+    letter-spacing: .7px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.cliente-table tbody tr {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(36, 51, 66, .65);
+    transition: background .15s ease;
+}
+
+.cliente-table tbody tr:last-child {
+    border-bottom: 0;
+}
+
+.cliente-table tbody tr:hover {
+    background: rgba(255, 255, 255, .025) !important;
+}
+
+.cliente-table tbody td {
+    padding: 11px 13px !important;
+    border-top: 0 !important;
+    color: #cbd4dd !important;
+    font-size: 10px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+
+/* ============================================================
+   BADGE TIPO CONTACTO
+============================================================ */
+
+.cliente-type-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 22px;
+    padding: 0 8px;
+    background: rgba(240, 165, 26, .08);
+    border: 1px solid rgba(240, 165, 26, .20);
+    border-radius: 4px;
+    color: var(--cliente-gold);
+    font-size: 8px;
+    font-weight: 600;
+}
+
+
+/* ============================================================
+   COLUMNA ACCIÓN
+============================================================ */
+
+.cliente-action-column {
+    width: 70px;
+
+    text-align: center !important;
+}
+
+
+/* ============================================================
+   BOTÓN ELIMINAR CONTACTO / DOCUMENTO
+============================================================ */
+
+.cliente-delete-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 28px !important;
+    height: 28px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 1px solid rgba(226, 85, 85, .40) !important;
+    border-radius: 4px !important;
+    color: var(--cliente-danger) !important;
+    font-size: 11px !important;
+    cursor: pointer;
+    transition:
+        background .15s ease,
+        border-color .15s ease,
+        color .15s ease;
+}
+
+.cliente-delete-btn:hover {
+    background: var(--cliente-danger) !important;
+    border-color: var(--cliente-danger) !important;
+    color: #ffffff !important;
+}
+
+.cliente-delete-btn i {
+    font-size: 11px;
+}
+
+
+/* ============================================================
+   ENLACES DE DOCUMENTOS
+============================================================ */
+
+.cliente-document-link {
+    color: #e4a62a !important;
+    font-size: 10px;
+    text-decoration: none !important;
+    transition: color .15s ease;
+}
+
+.cliente-document-link:hover {
+    color: #ffc65a !important;
+    text-decoration: underline !important;
+}
+
+
+/* ============================================================
+   FOOTER
+============================================================ */
+
+.cliente-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: 64px;
+    padding: 13px 22px;
+    background: #0b131b;
+    border-top: 1px solid var(--cliente-border);
+}
+
+.cliente-footer-info {
+    color: #596a79;
+    font-size: 9px;
+}
+
+.cliente-footer-info i {
+    margin-right: 5px;
+    color: var(--cliente-gold);
+}
+
+.cliente-footer-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+/* ============================================================
+   BOTÓN GUARDAR
+============================================================ */
+
+.cliente-btn--save {
+    min-width: 105px;
+    background: var(--cliente-gold) !important;
+   border: 1px solid var(--cliente-gold) !important;
+    color: #111 !important;
+}
+
+.cliente-btn--save:hover {
+    background: #ffb72d !important;
+    border-color: #ffb72d !important;
+    color: #111 !important;
+    transform: translateY(-1px);
+}
+
+
+/* ============================================================
+   BOTÓN CANCELAR
+============================================================ */
+
+.cliente-btn--cancel {
+    min-width: 85px;
+    background: transparent !important;
+    border: 1px solid #344352 !important;
+    color: #aeb9c4 !important;
+}
+
+.cliente-btn--cancel:hover {
+    background: #18222c !important;
+    border-color: #526477 !important;
+    color: #ffffff !important;
+}
+
+
+/* ============================================================
+   SELECTS
+============================================================ */
+
+.cliente-edit-page select.form-control {
+    appearance: auto;
+    background-color: #0b131b !important;
+    color: #e9eef3 !important;
+}
+
+
+/* ============================================================
+   ARCHIVOS DINÁMICOS
+============================================================ */
+
+.cliente-edit-page .custom-file {
+    height: 36px;
+}
+
+.cliente-edit-page .custom-file-input {
+    height: 36px;
+    cursor: pointer;
+}
+
+.cliente-edit-page .custom-file-label {
+    height: 36px;
+    padding: 9px 10px;
+   background: #0b131b !important;
+    border: 1px solid #263644 !important;
+    border-radius: 4px !important;
+   color: #8493a2 !important;
+    font-size: 10px;
+}
+
+.cliente-edit-page .custom-file-label::after {
+    height: 34px;
+    padding: 9px 10px;
+    background: #151f29;
+    border-left: 1px solid #263644;
+    color: #aab6c1;
+  font-size: 9px;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media (max-width: 991px) {
+    .cliente-edit-page {
+        padding: 20px 15px 30px;
+    }
+
+    .cliente-page-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .cliente-btn--back {
+        align-self: flex-start;
+    }
+
+    .cliente-content {
+        padding: 15px;
+    }
+
+    .cliente-panel-header {
+        min-height: 55px;
+    }
+
+    .cliente-footer {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .cliente-footer-actions {
+        width: 100%;
+    }
+
+    .cliente-footer-actions .cliente-btn {
+        flex: 1;
+    }
+}
+
+
+@media (max-width: 575px) {
+
+    .cliente-edit-page {
+        padding: 15px 10px 25px;
+    }
+
+    .cliente-page-title h2 {
+        font-size: 21px;
+    }
+
+    .cliente-tabs-header {
+        padding: 0 10px;
+    }
+
+    .cliente-tabs {
+        overflow-x: auto;
+
+        flex-wrap: nowrap;
+    }
+
+    .cliente-tabs .nav-link {
+        padding: 0 10px;
+
+        white-space: nowrap;
+    }
+
+    .cliente-content {
+        padding: 10px;
+    }
+
+    .cliente-panel-body {
+        padding: 13px;
+    }
+
+    .cliente-panel-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .cliente-add-btn {
+        width: 100% !important;
+    }
+
+    .cliente-footer {
+        padding: 12px;
+    }
+}
+
+
+                                            /* ==========================================================================
+                                                                     VER CLIENTE
+                                           ========================================================================== */
+
+.cliente-edit-page {
+--cliente-bg: #080d12;
+--cliente-bg-secondary: #0d141c;
+--cliente-panel: #101923;
+--cliente-panel-light: #131e29;
+--cliente-border: #243342;
+
+```
+--cliente-text: #edf2f7;
+--cliente-text-muted: #8291a1;
+
+--cliente-gold: #f0a51a;
+--cliente-gold-dark: #c77c0a;
+
+--cliente-danger: #e25555;
+--cliente-success: #19b77a;
+
+min-height: calc(100vh - 80px);
+padding: 28px 30px 40px;
+background: var(--cliente-bg);
+color: var(--cliente-text);
+```
+
+}
+
+/* ============================================================
+HEADER
+============================================================ */
+
+.cliente-page-header {
+display: flex;
+align-items: flex-end;
+justify-content: space-between;
+gap: 20px;
+margin-bottom: 22px;
+padding-bottom: 18px;
+border-bottom: 1px solid var(--cliente-border);
+}
+
+.cliente-page-title {
+min-width: 0;
+}
+
+.cliente-title-kicker {
+margin-bottom: 6px;
+color: var(--cliente-gold);
+font-size: 9px;
+font-weight: 700;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+}
+
+.cliente-page-title h2 {
+margin: 0;
+color: #ffffff;
+font-size: 25px;
+font-weight: 700;
+line-height: 1.2;
+}
+
+.cliente-page-title p {
+margin: 7px 0 0;
+color: var(--cliente-text-muted);
+font-size: 11px;
+}
+
+/* ============================================================
+BOTONES
+============================================================ */
+
+.cliente-btn {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 7px;
+min-height: 34px;
+padding: 0 13px;
+border-radius: 5px !important;
+font-size: 10px !important;
+font-weight: 600 !important;
+text-decoration: none !important;
+transition:
+background .15s ease,
+border-color .15s ease,
+color .15s ease,
+transform .15s ease;
+cursor: pointer;
+}
+
+.cliente-btn i {
+font-size: 12px;
+}
+
+.cliente-btn:hover {
+text-decoration: none !important;
+}
+
+.cliente-btn--back {
+background: transparent !important;
+border: 1px solid var(--cliente-border) !important;
+color: #dbe3eb !important;
+}
+
+.cliente-btn--back:hover {
+background: var(--cliente-panel-light) !important;
+border-color: var(--cliente-gold) !important;
+color: var(--cliente-gold) !important;
+}
+
+/* ============================================================
+TARJETA PRINCIPAL
+============================================================ */
+
+.cliente-main-card {
+overflow: hidden;
+background: var(--cliente-panel);
+border: 1px solid var(--cliente-border);
+border-radius: 7px;
+box-shadow:
+0 12px 30px rgba(0, 0, 0, .18);
+}
+
+/* ============================================================
+TABS
+============================================================ */
+
+.cliente-tabs-header {
+padding: 0 22px;
+background: #0c131b;
+border-bottom: 1px solid var(--cliente-border);
+}
+
+.cliente-tabs {
+display: flex;
+gap: 6px;
+margin: 0 !important;
+border: 0 !important;
+}
+
+.cliente-tabs .nav-item {
+margin: 0;
+}
+
+.cliente-tabs .nav-link {
+position: relative;
+display: flex;
+align-items: center;
+gap: 8px;
+height: 48px;
+padding: 0 15px;
+border: 0 !important;
+color: #788898 !important;
+background: transparent !important;
+font-size: 10px !important;
+font-weight: 600 !important;
+transition: color .15s ease;
+}
+
+.cliente-tabs .nav-link i {
+font-size: 13px;
+}
+
+.cliente-tabs .nav-link:hover {
+color: #dbe4ec !important;
+}
+
+.cliente-tabs .nav-link.active {
+color: var(--cliente-gold) !important;
+}
+
+.cliente-tabs .nav-link.active::after {
+content: "";
+position: absolute;
+left: 12px;
+right: 12px;
+bottom: 0;
+height: 2px;
+background: var(--cliente-gold);
+border-radius: 2px 2px 0 0;
+}
+
+/* ============================================================
+CONTENIDO
+============================================================ */
+
+.cliente-content {
+padding: 22px;
+}
+
+.cliente-content .tab-content {
+min-height: 300px;
+}
+
+/* ============================================================
+PANELES
+============================================================ */
+
+.cliente-panel {
+overflow: hidden;
+margin-bottom: 18px;
+background: var(--cliente-bg-secondary);
+border: 1px solid var(--cliente-border);
+border-radius: 6px;
+}
+
+.cliente-panel:last-child {
+margin-bottom: 0;
+}
+
+.cliente-panel-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 15px;
+min-height: 60px;
+padding: 11px 15px;
+background: linear-gradient(
+180deg,
+#141e28 0%,
+#101923 100%
+);
+
+
+border-bottom: 1px solid var(--cliente-border);
+
+
+}
+
+.cliente-section-label {
+display: block;
+margin-bottom: 3px;
+color: var(--cliente-gold);
+font-size: 8px;
+font-weight: 700;
+letter-spacing: 1.1px;
+text-transform: uppercase;
+}
+
+.cliente-panel-header h3 {
+margin: 0;
+color: #f4f7fa;
+font-size: 13px;
+font-weight: 600;
+}
+
+.cliente-panel-body {
+padding: 18px;
+}
+
+/* ============================================================
+LABELS
+============================================================ */
+
+.cliente-edit-page .titulo-lb {
+display: block;
+margin-bottom: 7px;
+color: #8c9baa;
+font-size: 9px;
+font-weight: 600;
+letter-spacing: .25px;
+text-transform: uppercase;
+}
+
+/* ============================================================
+INPUTS
+============================================================ */
+
+.cliente-edit-page .st-input,
+.cliente-edit-page .form-control {
+min-height: 36px;
+padding: 7px 10px;
+background: #0b131b !important;
+border: 1px solid #263644 !important;
+border-radius: 4px !important;
+color: #e9eef3 !important;
+font-size: 11px;
+box-shadow: none !important;
+transition:
+border-color .15s ease,
+background .15s ease;
+}
+
+.cliente-edit-page .st-input:focus,
+.cliente-edit-page .form-control:focus {
+background: #0d1720 !important;
+border-color: var(--cliente-gold) !important;
+color: #ffffff !important;
+box-shadow: 0 0 0 1px rgba(240, 165, 26, .08) !important;
+}
+
+.cliente-edit-page .st-input::placeholder,
+.cliente-edit-page .form-control::placeholder {
+color: #526170;
+}
+
+.cliente-edit-page .form-control-lg {
+min-height: 40px;
+}
+
+.cliente-panel-body .form-group {
+row-gap: 15px;
+}
+
+.cliente-panel-body .col-lg-3,
+.cliente-panel-body .col-lg-4,
+.cliente-panel-body .col-lg-6 {
+margin-bottom: 5px;
+}
+
+/* ============================================================
+TEXTAREA
+============================================================ */
+
+.cliente-textarea {
+min-height: 85px;
+resize: vertical;
+}
+
+/* ============================================================
+TABLAS
+============================================================ */
+
+.cliente-table-wrapper {
+width: 100%;
+overflow-x: auto;
+}
+
+.cliente-table {
+width: 100%;
+margin: 0 !important;
+color: #cbd5de !important;
+border-collapse: collapse;
+}
+
+.cliente-table thead {
+background: #0b131b !important;
+}
+
+.cliente-table thead th {
+padding: 10px 13px !important;
+background: #0b131b !important;
+border-top: 0 !important;
+border-bottom: 1px solid var(--cliente-border) !important;
+color: #68798a !important;
+font-size: 8px !important;
+font-weight: 700 !important;
+letter-spacing: .7px;
+text-transform: uppercase;
+white-space: nowrap;
+}
+
+.cliente-table tbody tr {
+background: transparent !important;
+border-bottom: 1px solid rgba(36, 51, 66, .65);
+transition: background .15s ease;
+}
+
+.cliente-table tbody tr:last-child {
+border-bottom: 0;
+}
+
+.cliente-table tbody tr:hover {
+background: rgba(255, 255, 255, .025) !important;
+}
+
+.cliente-table tbody td {
+padding: 11px 13px !important;
+border-top: 0 !important;
+color: #cbd4dd !important;
+font-size: 10px;
+vertical-align: middle;
+white-space: nowrap;
+}
+
+/* ============================================================
+BADGE TIPO CONTACTO
+============================================================ */
+
+.cliente-type-badge {
+display: inline-flex;
+align-items: center;
+min-height: 22px;
+padding: 0 8px;
+background: rgba(240, 165, 26, .08);
+border: 1px solid rgba(240, 165, 26, .20);
+border-radius: 4px;
+color: var(--cliente-gold);
+font-size: 8px;
+font-weight: 600;
+}
+
+/* ============================================================
+ENLACES DE DOCUMENTOS
+============================================================ */
+
+.cliente-document-link {
+color: #e4a62a !important;
+font-size: 10px;
+text-decoration: none !important;
+transition: color .15s ease;
+}
+
+.cliente-document-link:hover {
+color: #ffc65a !important;
+text-decoration: underline !important;
+}
+
+/* ============================================================
+FOOTER
+============================================================ */
+
+.cliente-footer {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 20px;
+min-height: 64px;
+padding: 13px 22px;
+background: #0b131b;
+border-top: 1px solid var(--cliente-border);
+}
+
+.cliente-footer-info {
+color: #596a79;
+font-size: 9px;
+}
+
+.cliente-footer-info i {
+margin-right: 5px;
+color: var(--cliente-gold);
+}
+
+.cliente-footer-actions {
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+/* ============================================================
+BOTÓN GUARDAR
+============================================================ */
+
+.cliente-btn--save {
+min-width: 105px;
+background: var(--cliente-gold) !important;
+border: 1px solid var(--cliente-gold) !important;
+color: #111 !important;
+}
+
+.cliente-btn--save:hover {
+background: #ffb72d !important;
+border-color: #ffb72d !important;
+color: #111 !important;
+transform: translateY(-1px);
+}
+
+/* ============================================================
+RESPONSIVE
+============================================================ */
+
+@media (max-width: 991px) {
+
+
+.cliente-edit-page {
+    padding: 20px 15px 30px;
+}
+
+.cliente-page-header {
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.cliente-btn--back {
+    align-self: flex-start;
+}
+
+.cliente-content {
+    padding: 15px;
+}
+
+.cliente-panel-header {
+    min-height: 55px;
+}
+
+.cliente-footer {
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.cliente-footer-actions {
+    width: 100%;
+}
+
+.cliente-footer-actions .cliente-btn {
+    flex: 1;
+}
+
+
+}
+
+@media (max-width: 575px) {
+.cliente-edit-page {
+    padding: 15px 10px 25px;
+}
+
+.cliente-page-title h2 {
+    font-size: 21px;
+}
+
+.cliente-tabs-header {
+    padding: 0 10px;
+}
+
+.cliente-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+}
+
+.cliente-tabs .nav-link {
+    padding: 0 10px;
+    white-space: nowrap;
+}
+
+.cliente-content {
+    padding: 10px;
+}
+
+.cliente-panel-body {
+    padding: 13px;
+}
+
+.cliente-panel-header {
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.cliente-footer {
+    padding: 12px;
+}
+
+
+}
