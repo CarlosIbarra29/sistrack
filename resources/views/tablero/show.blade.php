@@ -72,7 +72,31 @@
 </div>
 
 
-        
+@if(Auth::user()->role == 17)
+
+  <div class="row mb-6">
+      <div class="col-lg-12">
+          <div class="org-header-card">
+              <div class="org-content-wrapper">
+                  <div class="org-icon-main">
+                      <i class="fas fa-sitemap"></i>
+                  </div>
+                  <div class="org-text-info">
+                      <h2 class="org-title">Bienvenido</h2>
+                      {{-- <p class="org-description">Visualiza la estructura de las direcciones y sus áreas.</p> --}}
+                  </div>
+              </div>
+              <!-- Decoración gráfica derecha -->
+              <div class="org-visual-decor d-none d-md-block">
+                  <i class="fas fa-users-cog"></i>
+              </div>
+          </div>
+      </div>
+  </div>
+
+@else
+
+ 
 <div class="row mb-6">
     <div class="col-lg-12">
         <div class="org-header-card">
@@ -283,5 +307,7 @@
 
 
     @endif --}}
+
+    @endif  
 @endsection
 

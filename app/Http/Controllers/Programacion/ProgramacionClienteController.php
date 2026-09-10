@@ -42,7 +42,9 @@ class ProgramacionClienteController extends Controller
 
     public function listaservicios()
     {
-		return view('programacion.cliente.listaservicios');	
+    	$data = Programacioncliente::where('iduserCreated', auth()->user()->id)->get();
+
+		return view('programacion.cliente.listaservicios', compact('data') );	
     }
 
     public function nuevoservicio()

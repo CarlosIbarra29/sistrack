@@ -4,7 +4,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
 @section('title')
-  Inventario de clientes
+  Listado de Servicios
 @endsection
 @section('content')
 
@@ -13,7 +13,7 @@
 
     
     <div class="mb-4 select-none">
-        <h2 class="fw-bold text-white m-0" style="font-size: 1.8rem;">Inventario de Servicios</h2>
+        <h2 class="fw-bold text-white m-0" style="font-size: 1.8rem;">Listado de Servicios</h2>
         {{-- <p class="text-muted m-0" style="font-size: 0.9rem;">Gestiona el alta, control y seguimiento de las cuentas y clientes de la plataforma.</p> --}}
     </div>
 
@@ -139,34 +139,36 @@
                     <table class="table align-middle text-white" id="kdatatable_usuarios2" style="--bs-table-bg: transparent; font-size: 0.85rem;">
                         <thead>
                             <tr class="text-muted fw-bold text-uppercase border-bottom border-secondary select-none" style="font-size: 0.75rem; border-color: #1e293b !important;">
-                                <th style="width: 15%; color: #38bdf8 !important;">Folio <i class="fas fa-sort text-muted ms-1" style="font-size: 0.65rem;"></i></th>
-                                <th style="width: 30%;">Razón Social <i class="fas fa-sort text-muted ms-1" style="font-size: 0.65rem;"></i></th>
-                                <th style="width: 30%;">Nombre Cliente <i class="fas fa-sort text-muted ms-1" style="font-size: 0.65rem;"></i></th>
-                                <th style="width: 13%;">Grupo <i class="fas fa-sort text-muted ms-1" style="font-size: 0.65rem;"></i></th>
+                                <th style="width: 15%; color: #38bdf8 !important;">Id <i class="fas fa-sort text-muted ms-1" style="font-size: 0.65rem;"></i></th>
+                                <th style="width: 30%;">UBICACIÓN / DIRECCIÓN ORIGEN <i class="fas fa-sort text-muted ms-1" style="font-size: 0.65rem;"></i></th>
+                                <th style="width: 30%;">UBICACIÓN / DIRECCIÓN DESTINO <i class="fas fa-sort text-muted ms-1" style="font-size: 0.65rem;"></i></th>
+                                <th style="width: 13%;">FECHA Y HORA DEL SERVICIO <i class="fas fa-sort text-muted ms-1" style="font-size: 0.65rem;"></i></th>
+                                <th style="width: 13%;">ARMADA <i class="fas fa-sort text-muted ms-1" style="font-size: 0.65rem;"></i></th>
+                                <th style="width: 13%;">LÍNEA DE TRANSPORTE <i class="fas fa-sort text-muted ms-1" style="font-size: 0.65rem;"></i></th>
+                                <th style="width: 13%;">NOMBRE DEL OPERADOR <i class="fas fa-sort text-muted ms-1" style="font-size: 0.65rem;"></i></th>
                                 <th style="width: 12%;" class="text-center">Opciones</th>
                             </tr>
                         </thead>
-{{--                         <tbody class="border-0">
+                        <tbody class="border-0">
                             @php $num = 1; @endphp
                             @foreach($data as $unid)
                                 <tr class="border-bottom border-dark" style="border-color: #171e30 !important;">
-                                    <td class="fw-bold" style="color: #38bdf8;">{{ $unid->num_list }}</td>
-                                    <td class="text-white-50">{{ $unid->razon_social }}</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="rounded-circle d-flex align-items-center justify-content-center me-2 text-dark fw-bold select-none" style="width: 28px; height: 28px; background-color: #cbd5e1; font-size: 0.75rem;">
-                                                {{ strtoupper(substr($unid->nombre_cliente, 0, 2)) }}
-                                            </div>
-                                            <span class="fw-bold text-white">{{ $unid->nombre_cliente }}</span>
-                                        </div>
-                                    </td>
+                                    <td class="fw-bold" style="color: #38bdf8;">{{ $unid->id }}</td>
+                                    <td class="text-white-50">{{ $unid->ubicacion_origen  }} / {{ $unid->direccion_origen  }}</td>
+                                    <td class="text-white-50">{{ $unid->ubicacion_destino  }} / {{ $unid->direccion_destino  }} </td>
                                     <td>
                                         <span class="badge px-2 py-1 fw-semibold select-none" style="background-color: #171e30; color: #38bdf8; font-size: 0.75rem;">
-                                            {{ $unid->grupo }}
+                                            {{ $unid->fechahora_servicio }}
                                         </span>
                                     </td>
+                                    <td class="text-white-50">
+                                        @if($unid->armada == 0) No @else Si @endif
+                                    </td>
+
+                                    <td class="text-white-50">{{ $unid->linea_transporte  }}  </td>
+                                    <td class="text-white-50">{{ $unid->nombre_operador  }}  </td>
                                     <td class="text-center">
-                                        <div class="d-flex justify-content-center gap-2">
+  {{--                                       <div class="d-flex justify-content-center gap-2">
                                             <a href="{{ route('cliente.vercliente', $unid->id) }}" class="text-decoration-none text-muted px-1" title="Ver cliente" data-toggle="tooltip" data-theme="dark" data-placement="top">
                                                 <i class="far fa-eye text-white" style="font-size: 1rem;"></i>
                                             </a>
@@ -176,12 +178,12 @@
                                             <a href="javascript:void(0);" onClick="deletecliente(`{{ $unid->id }} `,`{{ $unid->id }}`)" class="text-decoration-none text-muted px-1" title="Desactivar cliente" data-toggle="modal" data-target="#model_delete_user" data-placement="top">
                                                 <i class="far fa-trash-alt text-white" style="font-size: 1rem;"></i>
                                             </a>
-                                        </div>
+                                        </div> --}}
                                     </td>
                                 </tr>
                                 @php $num ++; @endphp
                             @endforeach
-                        </tbody> --}}
+                        </tbody>
                     </table>
                 </div>
 

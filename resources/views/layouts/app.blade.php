@@ -121,6 +121,25 @@
                     @elseif(Auth::user()->tipo_usuario_id == 2)
 
                     @else --}}
+
+                    @if(Auth::user()->role == 17)
+
+                        <li id="menuHome" class="menu-item menu-item-active" aria-haspopup="true">
+                            <a href="{{ route('tablero.show') }}" class="menu-link">
+                                <i class="flaticon-pie-chart-1 menu-icon"></i>
+                                <span class="menu-text">Tablero</span>
+                            </a>
+                        </li>
+
+
+                        <li id="menuServiciosCliente" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                            <a href="{{ route('procli.listaservicios') }}" class="menu-link menu-toggle">
+                                <i class="flaticon-notepad menu-icon"></i>
+                                <span class="menu-text">Servicios cliente</span>
+                            </a>
+                        </li>
+
+                    @else
                         <li id="menuHome" class="menu-item menu-item-active" aria-haspopup="true">
                             <a href="{{ route('tablero.show') }}" class="menu-link">
                                 <i class="flaticon-pie-chart-1 menu-icon"></i>
@@ -558,6 +577,8 @@
                             </div>
 
                         </li>
+
+                        @endif
                         {{-- Fin de catalogos --}}
 
                     </ul>
