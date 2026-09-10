@@ -3628,14 +3628,12 @@ td {
 
 /*barra arriba comentar si la regresamos abajo*/
 
-.monitoreo-table-wrapper,
-.monitoreo-record-table-wrapper {
+.monitoreo-table-wrapper {
     transform: rotateX(180deg);
-    overflow-x: auto; /* Asegura que el scroll se active */
+    overflow-x: auto;
 }
 
-.monitoreo-table-wrapper table,
-.monitoreo-record-table-wrapper table {
+.monitoreo-table-wrapper .monitoreo-table {
     transform: rotateX(180deg);
 }
 
