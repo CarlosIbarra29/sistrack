@@ -46,7 +46,10 @@ class ProgramacionController extends Controller
         $estatus_monitoreo = MonitoreoProgramacion::get();
         $cliente = Cliente::where('siaf_status', 1)->get();
         $custodio = Custodio::where('siaf_status', 1)->get();
-        $estatus_programacion_data = EstatusProgramacion::get();
+
+        $estatus_programacion_data = EstatusProgramacion::where('estatus_activo', 1)
+                    ->where('estatus_pgr', 1)
+                    ->get();
         //tipo de documentos en formato json
         $cadenaTipoDocumento = "";
         foreach($custodio as $documento){
@@ -54,11 +57,14 @@ class ProgramacionController extends Controller
         }
         $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
 
-        $programcion = Programacion::select('programacion.id','programacion.folio', 'programacion.tipo_servicio', 'pe.estatus_programacion', 'cli.nombre_cliente', 'programacion.dom_origen', 'programacion.dom_destino', 'programacion.fecha_servicio', 'programacion.programacion_estatus_id', 'programacion.op_monitoreo_id',  'programacion.custodio_id')
-            ->leftjoin("programacion_estatus as pe","pe.id","programacion.programacion_estatus_id",)
-            ->leftjoin("cliente as cli","cli.id","programacion.cliente_id")
-            ->where('programacion.siaf_status', 1)
-            ->get();
+        $programcion = Programacion::select('programacion.id','programacion.folio','programacion.tipo_servicio','pe.estatus_programacion','cli.nombre_cliente','programacion.dom_origen','programacion.dom_destino','programacion.fecha_servicio','programacion.programacion_estatus_id','programacion.op_monitoreo_id','programacion.custodio_id','programacion.folio_interno','programacion.estatus_custodio')
+        ->with(['custodio','acompanantesProgramacion.custodio'])
+        ->leftJoin('programacion_estatus as pe','pe.id','=','programacion.programacion_estatus_id')
+        ->leftJoin('cliente as cli','cli.id','=','programacion.cliente_id')
+        ->where('programacion.siaf_status', 1)
+        ->orderByDesc('programacion.estatus_custodio')
+        ->orderBy('programacion.fecha_servicio', 'asc')
+        ->get();
 
 
         return view('programacion.listado-programacion', compact('data', 'programcion', 'estatus_monitoreo','cliente','custodio','cadenaTipoDocumento','estatus_programacion_data'));
@@ -264,61 +270,167 @@ class ProgramacionController extends Controller
 
     }
 
+    // public function guardarprogramacionnew(Request $request)
+    // {
+    //     $data = [
+    //         'folio' => $this->folio->getFolioProgramacion(),
+    //         'cliente_id' => $request->cliente_id,
+    //         'custodio_id' => $request->custodio_id,
+    //         'tarifario_id' => 1,
+    //         'programacion_estatus_id' => $request->programacion_id,
+    //         'tipo_servicio' => $request->tipo_servicio,
+    //         'fecha_servicio' => $request->fecha_hora,
+    //         'acompanantes'=> $request->op_custodios,
+    //         'dom_origen' => $request->dom_origen,
+    //         'dom_destino' => $request->dom_destino,
+    //         'observaciones' => $request->observaciones,
+    //         'armado_servicio' => $request->armado_servicio,
+    //         'op_monitoreo_id' => 1,
+    //         'estatus_viaje_id' => 1,
+    //         'siaf_status' =>1,
+    //         'created_at' =>date('Y-m-d H:i:s'),
+    //         'updated_at' =>date('Y-m-d H:i:s'),
+    //         'iduserCreated' =>auth()->user()->id,
+    //         'iduserUpdated' =>auth()->user()->id,
+    //     ];
+
+    //     $id_programacion= Programacion::insertGetId($data);
+
+
+    //     $colIdDocumento = $request->id_documento;
+    //     if($request->op_custodios == 0){
+    //         foreach($request->id_documento as $indice => $archivo)
+    //         {
+    //             $data = [
+    //                 'programacion_id' => $id_programacion,
+    //                 'custodio_id' =>$colIdDocumento[$indice],
+    //                 'created_at' =>date('Y-m-d H:i:s'),
+    //                 'updated_at' =>date('Y-m-d H:i:s')
+    //             ];
+
+    //             AcompanantesProgramacion::insert($data);
+    //         }
+    //     }
+
+    //     session()->flash('success', 'La programación se creo correctamente');
+    //     return redirect()->route('programacion.listadoprogramacion');
+
+    // }
+
     public function guardarprogramacionnew(Request $request)
     {
-        // dd($request);
-        $data = [
-            'folio' => $this->folio->getFolioProgramacion(),
-            'cliente_id' => $request->cliente_id,
-            'custodio_id' => $request->custodio_id,
-            'tarifario_id' => 1,
-            'programacion_estatus_id' => $request->programacion_id,
-            'tipo_servicio' => $request->tipo_servicio,
-            'fecha_servicio' => $request->fecha_hora,
-            'acompanantes'=> $request->op_custodios,
-            'dom_origen' => $request->dom_origen,
-            'dom_destino' => $request->dom_destino,
-            'observaciones' => $request->observaciones,
-            'armado_servicio' => $request->armado_servicio,
-            'op_monitoreo_id' => 1,
-            'estatus_viaje_id' => 1,
-            'siaf_status' =>1,
-            'created_at' =>date('Y-m-d H:i:s'),
-            'updated_at' =>date('Y-m-d H:i:s'),
-            'iduserCreated' =>auth()->user()->id,
-            'iduserUpdated' =>auth()->user()->id,
-        ];
 
-        $id_programacion= Programacion::insertGetId($data);
+        $request->validate([
+            'cliente_id' => 'required',
+            'nuevo_cliente_razon_social' => 'required_if:cliente_id,0|max:255',
+            'fecha_hora' => 'required',
+            'custodio_id' => 'required',
+            'programacion_id' => 'required',
+            'tipo_servicio' => 'required',
+            'armado_servicio' => 'required',
+            'dom_origen' => 'required',
+            'dom_destino' => 'required',
 
+            // Puede venir vacío
+            'folio_interno' => 'nullable|max:255',
+        ]);
 
-        $colIdDocumento = $request->id_documento;
-        if($request->op_custodios == 0){
-            foreach($request->id_documento as $indice => $archivo)
-            {
-                $data = [
-                    'programacion_id' => $id_programacion,
-                    'custodio_id' =>$colIdDocumento[$indice],
-                    'created_at' =>date('Y-m-d H:i:s'),
-                    'updated_at' =>date('Y-m-d H:i:s')
-                ];
+        try {
 
-                AcompanantesProgramacion::insert($data);
+            DB::beginTransaction();
+
+            $clienteId = $request->cliente_id;
+
+            $sinCustodio = ((int) $request->custodio_id === 153);
+
+            $estatusCustodio = $sinCustodio ? 1 : 0;
+
+            if ((int) $request->cliente_id === 0) {
+
+                $razonSocial = trim(
+                    $request->nuevo_cliente_razon_social
+                );
+
+                $nuevoCliente = Cliente::create([
+                    'num_list' => $this->folio->getFolioCliente(),
+                    'razon_social' => $razonSocial,
+                    'nombre_cliente' => $razonSocial,
+                    'siaf_status' => 1,
+                    'iduserCreated' => auth()->user()->id,
+                    'iduserUpdated' => auth()->user()->id,
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);
+
+                $clienteId = $nuevoCliente->id;
             }
-        }
+
+            $data = [
+
+                'folio' => $this->folio->getFolioProgramacion(),
+                'cliente_id' => $clienteId,
+                'folio_interno' => $request->filled('folio_interno') ? trim($request->folio_interno) : null,
+                'custodio_id' => $request->custodio_id,
+                'estatus_custodio' => $estatusCustodio,
+                'tarifario_id' => 1,
+                'programacion_estatus_id' =>$request->programacion_id,
+                'tipo_servicio' =>$request->tipo_servicio,
+                'fecha_servicio' =>$request->fecha_hora,
+                'acompanantes' =>$sinCustodio ? 1 : $request->op_custodios,
+                'dom_origen' =>$request->dom_origen,
+                'dom_destino' =>$request->dom_destino,
+                'observaciones' =>$request->observaciones,
+                'armado_servicio' =>$request->armado_servicio,
+                'op_monitoreo_id' => 1,
+                'estatus_viaje_id' => 1,
+                'siaf_status' => 1,
+                'created_at' =>date('Y-m-d H:i:s'),
+                'updated_at' =>date('Y-m-d H:i:s'),
+                'iduserCreated' =>auth()->user()->id,
+                'iduserUpdated' =>auth()->user()->id,
+            ];
             
-        // $colIdDocumento = $request->id_documento;
-        // if($request->op_custodios == 0){
-        //     {
-                
-
-        //     }
-        // }
+            // Insertamos la programación.
+            $id_programacion = Programacion::insertGetId($data);
 
 
-        session()->flash('success', 'La programación se creo correctamente');
-        return redirect()->route('programacion.listadoprogramacion');
+             // ACOMPAÑANTES
+            if (!$sinCustodio &&(int) $request->op_custodios === 0 && !empty($request->id_documento)) {
 
+                $colIdDocumento = $request->id_documento;
+
+                foreach ($colIdDocumento as $indice => $custodioId) {
+
+                    $dataAcompanante = [
+                        'programacion_id' =>$id_programacion,
+                        'custodio_id' =>$custodioId,
+                        'created_at' =>date('Y-m-d H:i:s'),
+                        'updated_at' =>date('Y-m-d H:i:s'),
+                    ];
+
+                    AcompanantesProgramacion::insert($dataAcompanante);
+                }
+            }
+
+            DB::commit();
+
+            session()->flash('success','La programación se creo correctamente');
+            return redirect()->route('programacion.listadoprogramacion');
+
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            \Log::error('Error al crear programación: ' . $e->getMessage());
+
+            return redirect()->back()
+                ->withInput()
+                ->with(
+                    'error',
+                    'Ocurrió un error al crear la programación.'
+                );
+        }
     }
 
     public function editarprogramacion($id_programacion)

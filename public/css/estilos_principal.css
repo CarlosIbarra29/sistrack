@@ -448,6 +448,265 @@
     color: var(--st-gold);
 }
 
+
+.programacion-page
+.programacion-field-client
+.select2-container {
+    width: 100% !important;
+    max-width: 100%;
+}
+
+.programacion-page
+.programacion-field-client
+.select2-container
+.select2-selection--single {
+    height: 36px !important;
+    min-height: 36px !important;
+    display: flex;
+    align-items: center;
+    background: var(--st-input) !important;
+    border: 1px solid var(--st-border) !important;
+    border-radius: 7px !important;
+    box-shadow: none !important;
+}
+
+
+.programacion-page
+.programacion-field-client
+.select2-container
+.select2-selection--single
+.select2-selection__rendered {
+    width: 100%;
+    padding-left: 10px !important;
+    padding-right: 32px !important;
+    color: #dce4ee !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: .62rem !important;
+    line-height: 34px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.programacion-page
+.programacion-field-client
+.select2-container
+.select2-selection--single
+.select2-selection__placeholder {
+    color: #59697d !important;
+}
+
+.programacion-page
+.programacion-field-client
+.select2-container
+.select2-selection--single
+.select2-selection__arrow {
+    height: 34px !important;
+    top: 0 !important;
+    right: 5px !important;
+}
+
+.programacion-page
+.programacion-field-client
+.select2-container--open
+.select2-selection--single {
+    border-color: var(--st-gold) !important;
+    box-shadow: 0 0 0 3px rgba(235, 167, 47, .08) !important;
+}
+
+.select2-container--open
+.select2-dropdown {
+    background: #111a24 !important;
+    border: 1px solid #263547 !important;
+    border-radius: 7px !important;
+    overflow: hidden;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .28);
+}
+
+.select2-container--open
+.select2-search--dropdown {
+    padding: 8px !important;
+}
+
+
+.select2-container--open
+.select2-search__field {
+    height: 34px !important;
+    padding: 6px 9px !important;
+    background: #0f1924 !important;
+    border: 1px solid #263547 !important;
+    border-radius: 6px !important;
+    color: #dce4ee !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: .62rem !important;
+    outline: none !important;
+}
+
+.select2-container--open
+.select2-search__field:focus {
+    border-color: #eba72f !important;
+}
+
+.select2-container--open
+.select2-results__option {
+    padding: 7px 10px !important;
+    color: #b7c2d0 !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: .61rem !important;
+}
+
+
+.select2-container--open
+.select2-results__option--highlighted {
+    background: rgba(235, 167, 47, .12) !important;
+    color: #eba72f !important;
+}
+
+.programacion-field-new-client {
+    min-width: 0;
+}
+
+.programacion-label-optional {
+    margin-left: 4px;
+
+    color: #607086;
+
+    font-size: .48rem;
+    font-weight: 400;
+}
+
+.programacion-page
+.app-input.is-invalid {
+    border-color: #ef535b !important;
+    box-shadow:0 0 0 3px rgba(239, 83, 91, .08) !important;
+}
+
+
+   /*PROGRAMACIÓN SIN CUSTODIO*/
+
+.programacion-services-table tbody
+tr.programacion-row-sin-custodio {
+    position: relative;
+    background: rgba(245, 166, 35, .055) !important;
+}
+
+
+.programacion-services-table tbody
+tr.programacion-row-sin-custodio:hover {
+    background:rgba(245, 166, 35, .09) !important;
+}
+
+.programacion-services-table tbody
+tr.programacion-row-sin-custodio
+td:first-child {
+    box-shadow:inset 3px 0 0 rgba(245, 166, 35, .80);
+}
+
+.programacion-services-table tbody
+tr.programacion-row-sin-custodio td {
+    border-bottom-color: rgba(245, 166, 35, .10) !important;
+}
+
+.programacion-custodio-cell--pending {
+    gap: 8px;
+}
+
+
+.programacion-custodio-avatar--pending {
+    border-color: rgba(245, 166, 35, .32) !important;
+    background:rgba(245, 166, 35, .10) !important;
+    color: #f5a623 !important;
+}
+
+.programacion-custodio-cell--pending
+.programacion-custodio-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px;
+}
+
+.programacion-custodio-pending-text {
+    color: #f5a623;
+    font-size: .56rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.programacion-custodio-pending-label {
+    color: #94784f;
+    font-size: .45rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.programacion-page
+.programacion-field-custodio
+.select2-container {
+    width: 100% !important;
+    max-width: 100%;
+}
+
+.programacion-page
+.programacion-field-custodio
+.select2-container
+.select2-selection--single {
+    height: 36px !important;
+    min-height: 36px !important;
+    display: flex;
+    align-items: center;
+    background: var(--st-input) !important;
+    border: 1px solid var(--st-border) !important;
+    border-radius: 7px !important;
+    box-shadow: none !important;
+}
+
+.programacion-page
+.programacion-field-custodio
+.select2-container
+.select2-selection--single
+.select2-selection__rendered {
+    width: 100%;
+    padding-left: 10px !important;
+    padding-right: 32px !important;
+    color: #dce4ee !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: .62rem !important;
+    line-height: 34px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.programacion-page
+.programacion-field-custodio
+.select2-container
+.select2-selection--single
+.select2-selection__placeholder {
+    color: #59697d !important;
+}
+
+
+.programacion-page
+.programacion-field-custodio
+.select2-container
+.select2-selection--single
+.select2-selection__arrow {
+    height: 34px !important;
+    top: 0 !important;
+    right: 5px !important;
+}
+
+.programacion-page
+.programacion-field-custodio
+.select2-container--open
+.select2-selection--single {
+    border-color: var(--st-gold) !important;
+    box-shadow: 0 0 0 3px rgba(235, 167, 47, .08) !important;
+}
+
 /* ==========================================================================
    INPUTS
    ========================================================================== */
@@ -730,7 +989,7 @@
     display: grid;
     grid-template-columns:
         minmax(0, 1fr)
-        minmax(235px, 255px);
+        minmax(200px, 220px);
 
     align-items: start;
     gap: 16px;
@@ -842,9 +1101,9 @@
     padding: 10px 12px !important;
     border: 0 !important;
     border-bottom: 1px solid var(--st-border-soft) !important;
-    background: #172331 !important;
-    color: #72839a !important;
-    font-size: .52rem !important;
+    background: var(--st-gold) !important;
+    color: #000000 !important;
+    font-size: .60rem !important;
     font-weight: 700 !important;
     letter-spacing: .06em;
     text-transform: uppercase;
@@ -924,6 +1183,137 @@
 }
 
 /* ==========================================================================
+   CUSTODIO PRINCIPAL
+   ========================================================================== */
+
+.programacion-custodio-info {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+}
+
+
+.programacion-custodio-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+
+/* ==========================================================================
+   INDICADOR CUSTODIO ARMADO
+   ========================================================================== */
+
+.programacion-armed-icon {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(235, 167, 47, .22);
+    border-radius: 5px;
+    background: rgba(235, 167, 47, .08);
+    font-size: .70rem;
+    line-height: 1;
+    cursor: default;
+}
+
+
+/* ==========================================================================
+   ACOMPAÑANTES
+   ========================================================================== */
+
+.programacion-acompanantes-cell {
+    min-width: 155px;
+    max-width: 210px;
+}
+
+.programacion-acompanantes-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    min-width: 0;
+}
+
+.programacion-acompanante-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+
+/* Avatar más pequeño porque es acompañante */
+.programacion-acompanante-avatar {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(213, 220, 229, .25);
+    border-radius: 50%;
+    background: rgba(223, 229, 236, .08);
+    color: #9eabbc;
+    font-size: .48rem;
+    font-weight: 700;
+}
+
+.programacion-acompanante-name {
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #dce4ee;
+    font-size: .53rem;
+    font-weight: 500;
+    line-height: 1.25;
+}
+
+.programacion-no-acompanante {
+    display: inline-flex;
+    align-items: center;
+    color: #59697d;
+    font-size: .52rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+
+.programacion-row-action--comment {
+    color: #eba72f !important;
+}
+
+
+.programacion-row-action--comment:hover {
+    border-color: rgba(235, 167, 47, .25) !important;
+    background:rgba(235, 167, 47, .09) !important;
+    color: #f3bd4f !important;
+}
+
+.programacion-row-action--edit {
+    color: #8291a5 !important;
+}
+
+.programacion-row-action--edit:hover {
+    border-color: rgba(77, 141, 255, .22) !important;
+    background:rgba(77, 141, 255, .08) !important;
+    color: #69a0ff !important;
+}
+
+.programacion-row-action--comment i,
+.programacion-row-action--edit i {
+    font-size: .95rem !important;
+}
+
+.programacion-services-table {
+    min-width: 980px;
+}
+
+/* ==========================================================================
    ESTATUS Y RIESGO
    ========================================================================== */
 
@@ -984,10 +1374,6 @@
     background: var(--st-red) !important;
 }
 
-/* ==========================================================================
-   ACCIONES TABLA
-   ========================================================================== */
-
 .programacion-row-actions {
     display: flex;
     align-items: center;
@@ -1016,10 +1402,6 @@
 .programacion-row-action i {
     font-size: .83rem;
 }
-
-/* ==========================================================================
-   FOOTER TABLA / PAGINADOR
-   ========================================================================== */
 
 .programacion-table-footer {
     min-height: 48px;
@@ -1085,10 +1467,6 @@
     text-align: center;
     font-size: .62rem !important;
 }
-
-/* ==========================================================================
-   SIDEBAR
-   ========================================================================== */
 
 .programacion-side-card,
 .programacion-alert-card {
@@ -1161,10 +1539,6 @@
     text-decoration: none !important;
 }
 
-/* ==========================================================================
-   ALERTAS
-   ========================================================================== */
-
 .programacion-alert-card {
     background:
         linear-gradient(
@@ -1208,10 +1582,6 @@
     color: #536176;
     font-size: .46rem;
 }
-
-/* ==========================================================================
-   LEYENDAS
-   ========================================================================== */
 
 .programacion-legends {
     margin-top: 16px;
@@ -1271,10 +1641,6 @@
     font-size: .52rem;
 }
 
-/* ==========================================================================
-   SCROLL DE TABLA
-   ========================================================================== */
-
 .programacion-services-table-wrapper::-webkit-scrollbar {
     height: 6px;
 }
@@ -1287,6 +1653,7 @@
     border-radius: 10px;
     background: #2d3d52;
 }
+
 
 /* ==========================================================================
    RESPONSIVE - LAPTOP
@@ -1324,6 +1691,10 @@
             minmax(0, 1fr)
             225px;
     }
+
+    .programacion-acompanantes-cell {
+        min-width: 145px;
+    }
 }
 
 /* ==========================================================================
@@ -1352,7 +1723,6 @@
             repeat(2, minmax(0, 1fr));
     }
 }
-
 /* ==========================================================================
    RESPONSIVE - TABLET
    ========================================================================== */
@@ -1401,6 +1771,11 @@
         padding-left: 0;
         border-top: 1px solid var(--st-border-soft);
         border-left: 0;
+    }
+
+    .programacion-field-grid--origin {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
     }
 }
 
@@ -1489,6 +1864,14 @@
         align-items: flex-start;
         flex-direction: column;
     }
+
+    .programacion-services-table {
+        min-width: 950px;
+    }
+
+    .programacion-acompanante-name {
+        font-size: .51rem;
+    }
 }
 
 /* ==========================================================================
@@ -1512,6 +1895,26 @@
     .programacion-legend-items {
         align-items: flex-start;
         flex-direction: column;
+    }
+
+    .programacion-field-grid--origin {
+        grid-template-columns:
+            minmax(0, 1fr);
+    }
+
+    .programacion-field-client,
+    .programacion-field-date,
+    .programacion-field-new-client,
+    .programacion-field-folio,
+    .programacion-choice-block {
+        width: 100%;
+        grid-column: 1 / -1;
+    }
+
+    .programacion-page
+    .programacion-field-client
+    .select2-container {
+        width: 100% !important;
     }
 }
 
@@ -1853,7 +2256,7 @@ select.monitoreo-input option {
 
 .monitoreo-table {
     width: 100%;
-    min-width: 1160px;
+    min-width: 1080px;
     margin: 0;
     border-collapse: separate;
     border-spacing: 0;
@@ -1884,9 +2287,9 @@ select.monitoreo-input option {
     padding: 10px 11px;
     border: 0;
     border-bottom: 1px solid var(--mon-border-soft);
-    background: #172331;
-    color: #72839a;
-    font-size: .51rem;
+    background: #eba72f;
+    color: #000000;
+    font-size: .60rem;
     line-height: 1.35;
     font-weight: 700;
     letter-spacing: .06em;
@@ -1895,13 +2298,13 @@ select.monitoreo-input option {
 }
 
 .monitoreo-table tbody td {
-    height: 52px;
-    padding: 9px 11px;
+    height: 42px;
+    padding: 6px 8px;
     border: 0;
     border-bottom: 1px solid var(--mon-border-soft);
     color: #bac5d1;
-    font-size: .59rem;
-    line-height: 1.4;
+    font-size: .55rem;
+    line-height: 1.25;
     vertical-align: middle;
 }
 
@@ -1962,24 +2365,135 @@ select.monitoreo-input option {
 .monitoreo-custodio {
     display: flex;
     align-items: center;
-    gap: 7px;
-    min-width: 125px;
+    gap: 5px;
+    min-width: 115px;
     color: #fff;
 }
 
 .monitoreo-custodio-avatar {
-    width: 25px;
-    height: 25px;
-    flex: 0 0 25px;
+    width: 22px;
+    height: 22px;
+    flex: 0 0 22px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     background: #dfe5ec;
     color: #536174;
-    font-size: .53rem;
+    font-size: .50rem;
     font-weight: 700;
 }
+
+.monitoreo-armed-icon {
+    width: 19px;
+    height: 19px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 19px;
+    margin-left: 3px;
+    border: 1px solid rgba(235, 167, 47, .22);
+    border-radius: 5px;
+    background: rgba(235, 167, 47, .08);
+    font-size: .66rem;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.monitoreo-custodio-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    min-width: 0;
+}
+
+.monitoreo-acompanantes-list {
+    min-width: 125px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.monitoreo-acompanante-item {
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    min-height: 20px;
+    padding: 3px 6px;
+    border: 1px solid rgba(148, 163, 184, .10);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, .015);
+}
+
+.monitoreo-acompanante-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    color: #8998aa;
+    font-size: .51rem;
+    font-weight: 500;
+    line-height: 1.25;
+}
+
+
+.monitoreo-no-acompanante {
+    color: #607086;
+    font-size: .53rem;
+}
+
+.monitoreo-table tbody
+tr.monitoreo-row-sin-custodio {
+    background: rgba(245, 166, 35, .055) !important;
+}
+
+.monitoreo-table tbody
+tr.monitoreo-row-sin-custodio:hover {
+    background: rgba(245, 166, 35, .09) !important;
+}
+
+.monitoreo-table tbody
+tr.monitoreo-row-sin-custodio
+td:first-child {
+    box-shadow:inset 3px 0 0 rgba(245, 166, 35, .82);
+}
+
+.monitoreo-table tbody
+tr.monitoreo-row-sin-custodio
+td {
+    border-bottom-color: rgba(245, 166, 35, .11) !important;
+}
+
+.monitoreo-custodio--pending {
+    min-width: 135px;
+}
+
+.monitoreo-custodio-avatar--pending {
+    border-color:rgba(245, 166, 35, .32) !important;
+    background:rgba(245, 166, 35, .10) !important;
+    color: #f5a623 !important;
+}
+
+.monitoreo-custodio-pending-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.monitoreo-custodio-pending-text {
+    color: #f5a623;
+    font-size: .55rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.monitoreo-custodio-pending-info small {
+    color: #94784f;
+    font-size: .44rem;
+    white-space: nowrap;
+}
+
 
 /* ==========================================================================
    SELECT ESTATUS
@@ -1987,15 +2501,15 @@ select.monitoreo-input option {
 
 .monitoreo-status-select {
     width: 100% !important;
-    min-width: 150px;
-    height: 34px !important;
-    padding: 5px 28px 5px 9px !important;
+    min-width: 135px;
+    height: 30px !important;
+    padding: 3px 25px 3px 8px !important;
     background: #0d1722 !important;
     border: 1px solid var(--mon-border) !important;
-    border-radius: 6px !important;
+    border-radius: 5px !important;
     color: #dce4ee !important;
     font-family: 'Poppins', sans-serif !important;
-    font-size: .56rem !important;
+    font-size: .55rem !important;
     box-shadow: none !important;
     cursor: pointer;
     transition: .2s ease;
@@ -3110,6 +3624,19 @@ select.monitoreo-input option {
 .monitoreo-record-table-wrapper::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background: #2d3d52;
+}
+
+/*barra arriba comentar si la regresamos abajo*/
+
+.monitoreo-table-wrapper,
+.monitoreo-record-table-wrapper {
+    transform: rotateX(180deg);
+    overflow-x: auto; /* Asegura que el scroll se active */
+}
+
+.monitoreo-table-wrapper table,
+.monitoreo-record-table-wrapper table {
+    transform: rotateX(180deg);
 }
 
 /* ==========================================================================

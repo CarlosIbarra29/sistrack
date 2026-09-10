@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=1.0.3') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=1.2.1') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('js/programacion/CatalogoProgramacion.js?v=1.3.6') }}"></script>
+    <script src="{{ asset('js/programacion/CatalogoProgramacion.js?v=1.3.8') }}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <script src="{{ asset('js/programacion/AgregarProgramacionUnique.js') }}"></script>
+    <script src="{{ asset('js/programacion/AgregarProgramacionUnique.js?v=1.0.5') }}"></script>
 @endpush
 
 @section('title')
@@ -120,6 +120,11 @@
                                                 Buscar y seleccionar cliente...
                                             </option>
 
+                                            {{-- NUEVO CLIENTE --}}
+                                            <option value="0">
+                                                + Nuevo cliente
+                                            </option>
+
                                             @foreach($cliente as $cli)
                                                 <option value="{{ $cli->id }}">
                                                     {{ $cli->nombre_cliente }} / {{ $cli->razon_social }}
@@ -128,6 +133,7 @@
 
                                         </select>
                                     </div>
+
 
                                     <div class="form-group programacion-field-date">
                                         <label class="app-label">
@@ -140,6 +146,41 @@
                                                id="fecha_hora"
                                                required>
                                     </div>
+
+                                    <div class="form-group programacion-field-new-client"
+                                         id="contenedor_nuevo_cliente"
+                                         style="display: none;">
+
+                                        <label class="app-label">
+                                            Razón social del nuevo cliente *
+                                        </label>
+
+                                        <input type="text"
+                                               class="form-control app-input"
+                                               name="nuevo_cliente_razon_social"
+                                               id="nuevo_cliente_razon_social"
+                                               placeholder="Ej. Transportes del Centro S.A. de C.V."
+                                               autocomplete="off">
+                                    </div>
+
+
+                                    {{-- FOLIO DEL CLIENTE - OPCIONAL --}}
+                                    <div class="form-group programacion-field-folio">
+                                        <label class="app-label">
+                                            Folio
+                                            <span class="programacion-label-optional">
+                                                Cliente
+                                            </span>
+                                        </label>
+
+                                        <input type="text"
+                                               class="form-control app-input"
+                                               name="folio_interno"
+                                               id="folio_interno"
+                                               placeholder="Folio proporcionado por el cliente"
+                                               autocomplete="off">
+                                    </div>
+
 
                                     <div class="form-group programacion-choice-block">
                                         <label class="app-label">
@@ -173,6 +214,7 @@
 
                                         </div>
                                     </div>
+
 
                                     <div class="form-group programacion-choice-block">
                                         <label class="app-label">
@@ -307,29 +349,41 @@
 
                                 <div class="programacion-field-grid programacion-field-grid--personal">
 
-                                    <div class="form-group">
+                                    <div class="form-group programacion-field-custodio">
                                         <label class="app-label">
                                             Custodio Principal *
                                         </label>
 
                                         <select class="form-control app-input"
-                                                id="custodio_id"
-                                                name="custodio_id"
-                                                required>
+                                            id="custodio_id"
+                                            name="custodio_id"
+                                            required>
 
                                             <option value="" disabled selected>
-                                                Asignar custodio...
+                                                Buscar y asignar custodio...
+                                            </option>
+
+                                            <option value="153">
+                                                Sin custodio
                                             </option>
 
                                             @foreach($custodio as $cli)
-                                                <option value="{{ $cli->id }}">
-                                                    {{ $cli->nombre_custodio }}
-                                                    {{ $cli->ap_paterno }}
-                                                    {{ $cli->ap_materno }}
-                                                </option>
+
+                                                {{-- Seguridad por si algún día el 153 cambia de estatus --}}
+                                                @if((int) $cli->id !== 153)
+
+                                                    <option value="{{ $cli->id }}">
+                                                        {{ $cli->nombre_custodio }}
+                                                        {{ $cli->ap_paterno }}
+                                                        {{ $cli->ap_materno }}
+                                                    </option>
+
+                                                @endif
+
                                             @endforeach
 
                                         </select>
+
                                     </div>
 
                                     <div class="form-group">
@@ -512,15 +566,17 @@
 
                         <thead>
                             <tr>
+                                <th>Bitacora</th>
                                 <th>Folio</th>
-                                <th>Día Salida</th>
-                                <th>Hora salida</th>
+                                <th>Fecha y Hora</th>
+                                <th>Obs</th>
                                 <th>Cliente</th>
                                 <th>Origen</th>
                                 <th>Destino</th>
                                 <th>Custodio</th>
+                                <th>Custodio Acompañante</th>
                                 <th>Estatus</th>
-                                <th class="text-center">Acciones</th>
+                                <th class="text-center">Editar</th>
                             </tr>
                         </thead>
 
@@ -528,49 +584,176 @@
 
                             @foreach($programcion as $unid)
 
-                                <tr>
+                                <!-- <tr class="{{ (int) $unid->estatus_custodio === 1 || (int) $unid->custodio_id === 153 ? 'programacion-row-sin-custodio': '' }}"> -->
+
+                                    <tr class="{{ (int) $unid->custodio_id === 153 ? 'programacion-row-sin-custodio' : '' }}">
 
                                     <td class="programacion-table-time">
                                         {{ $unid->folio }}
                                     </td>
 
                                     <td class="programacion-table-time">
-                                        {{ date('d-m-Y', strtotime($unid->fecha_servicio)) }}
+                                        {{ $unid->folio_interno ?? 'Sin folio' }}
                                     </td>
 
                                     <td class="programacion-table-time">
-                                        {{ date('H:i', strtotime($unid->fecha_servicio)) }}
+                                        {{ date('d/m/Y h:i A', strtotime($unid->fecha_servicio)) }}
+                                    </td>
+
+                                    <td class="text-center">
+
+                                        <div class="programacion-row-actions">
+
+                                            <a href="#"
+                                               class="programacion-row-action programacion-row-action--comment"
+                                               data-toggle="modal"
+                                               data-target="#model_add_incidencia"
+                                               onclick="$('#id_programacion').val({{ $unid->id }})"
+                                               title="Agregar comentario">
+
+                                                <i class="la la-comment"></i>
+
+                                            </a>
+
+                                        </div>
+
                                     </td>
 
                                     <td class="programacion-table-client">
                                         {{ $unid->nombre_cliente }}
                                     </td>
 
-                                    <td class="programacion-table-route"
-                                        title="{{ $unid->dom_origen }}">
+                                    <td class="programacion-table-route" title="{{ $unid->dom_origen }}">
                                         {{ $unid->dom_origen }}
                                     </td>
 
-                                    <td class="programacion-table-route"
-                                        title="{{ $unid->dom_destino }}">
+                                    <td class="programacion-table-route" title="{{ $unid->dom_destino }}">
                                         {{ $unid->dom_destino }}
                                     </td>
 
                                     <td>
 
-                                        <div class="programacion-custodio-cell">
+                                        @if((int) $unid->custodio_id === 153)
 
-                                            <div class="programacion-custodio-avatar">
-                                                <span>
-                                                    {{ substr($unid->custodio->nombre_custodio ?? 'S', 0, 1) }}
-                                                </span>
+                                            <div class="programacion-custodio-cell programacion-custodio-cell--pending">
+
+                                                <div class="programacion-custodio-avatar programacion-custodio-avatar--pending">
+
+                                                    <span>
+                                                        !
+                                                    </span>
+
+                                                </div>
+
+                                                <div class="programacion-custodio-info">
+
+                                                    <span class="programacion-custodio-pending-text">
+                                                        Sin custodio
+                                                    </span>
+
+                                                    <small class="programacion-custodio-pending-label">
+                                                        Pendiente de asignar
+                                                    </small>
+
+                                                </div>
+
                                             </div>
 
-                                            <span class="programacion-custodio-name">
-                                                {{ $unid->custodio->nombre_custodio ?? 'Sin asignar' }}
+                                        @else
+
+                                            <div class="programacion-custodio-cell">
+
+                                                <div class="programacion-custodio-avatar">
+
+                                                    <span>
+                                                        {{ substr( $unid->custodio->nombre_custodio ?? 'S',0,1) }}
+                                                    </span>
+
+                                                </div>
+
+                                                <div class="programacion-custodio-info">
+
+                                                    <span class="programacion-custodio-name">
+
+                                                        {{ $unid->custodio->nombre_custodio ?? 'Sin asignar' }}
+
+                                                        @if($unid->custodio && (int) $unid->custodio->tipo_custodio === 2)
+
+                                                            <span class="programacion-armed-icon"
+                                                                  title="Custodio armado">
+                                                                🔫
+                                                            </span>
+
+                                                        @endif
+
+                                                    </span>
+
+                                                </div>
+
+                                            </div>
+
+                                        @endif
+
+                                    </td>
+
+                                    <td class="programacion-acompanantes-cell">
+
+                                        @if((int) $unid->custodio_id === 153)
+
+                                            <span class="programacion-no-acompanante">
+                                                No aplica
                                             </span>
 
-                                        </div>
+                                        @elseif(isset($unid->acompanantesProgramacion) && $unid->acompanantesProgramacion->count() > 0)
+
+                                            <div class="programacion-acompanantes-list">
+
+                                                @foreach($unid->acompanantesProgramacion as $acompanante)
+
+                                                    @if($acompanante->custodio)
+
+                                                        <div class="programacion-acompanante-item">
+
+                                                            <div class="programacion-acompanante-avatar">
+
+                                                                {{ substr($acompanante->custodio->nombre_custodio ?? 'A',0,1) }}
+
+                                                            </div>
+                                                            <span class="programacion-acompanante-name">
+
+                                                                {{ $acompanante->custodio->nombre_custodio }}
+                                                                {{ $acompanante->custodio->ap_paterno }}
+
+                                                                @if(!empty($acompanante->custodio->ap_materno))
+                                                                    {{ $acompanante->custodio->ap_materno }}
+                                                                @endif
+
+                                                                @if((int) $acompanante->custodio->tipo_custodio === 2)
+
+                                                                    <span class="programacion-armed-icon"
+                                                                          title="Custodio armado">
+                                                                        🔫
+                                                                    </span>
+
+                                                                @endif
+
+                                                            </span>
+
+                                                        </div>
+
+                                                    @endif
+
+                                                @endforeach
+
+                                            </div>
+
+                                        @else
+
+                                            <span class="programacion-no-acompanante">
+                                                Sin acompañante
+                                            </span>
+
+                                        @endif
 
                                     </td>
 
@@ -584,20 +767,9 @@
 
                                         <div class="programacion-row-actions">
 
-                                            <a href="#"
-                                               class="programacion-row-action text-gold"
-                                               data-toggle="modal"
-                                               data-target="#model_add_incidencia"
-                                               onclick="$('#id_programacion').val({{ $unid->id }})"
-                                               title="Ver observaciones">
-
-                                                <i class="flaticon-eye"></i>
-
-                                            </a>
-
                                             <a href="{{ route('programacion.editarprogramacion', $unid->id) }}"
-                                               class="programacion-row-action text-muted"
-                                               title="Editar programcion">
+                                               class="programacion-row-action programacion-row-action--edit"
+                                               title="Editar programación">
 
                                                 <i class="la la-edit"></i>
 

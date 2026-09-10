@@ -514,7 +514,7 @@ $("#send_incidencia")
 
     var celdaSinResultados = document.createElement('td');
 
-    celdaSinResultados.colSpan = 8;
+    celdaSinResultados.colSpan =11;
     celdaSinResultados.className = 'programacion-no-results';
     celdaSinResultados.textContent = 'No se encontraron servicios que coincidan con la búsqueda.';
     filaSinResultados.appendChild(celdaSinResultados);

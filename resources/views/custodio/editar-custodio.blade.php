@@ -339,51 +339,7 @@
                                         <label class="text-white">Correo ASSISTCARGO</label>
                                         <input type="email" class="form-control" name="correo_assistcargo" id="correo_assistcargo" value="{{ $custodio->correo_assistcargo }}"/>
                                     </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-<<<<<<< HEAD
-                                <div class="col-lg-6">
-                                    <label>Contraseña ASSISTCARGO</label>
-                                    <input type="password" class="form-control" name="contraseña_assistcargo" id="contraseña_assistcargo"/>
-                                </div>
-                            </div>
-
-                               
-                                <div class="form-group row">
-                                      <div class="col-lg-4">
-                                            <label class="font-weight-bold">Tipo de servicio</label>
-                                                 <div class="radio-inline mt-2">
-                                                    <label class="radio">
-                                                        <input type="radio" name="tipo_gps" value="1">
-                                                        <span></span> GPS Fijo
-                                                    </label>
-                                                    <label class="radio">
-                                                        <input type="radio" name="tipo_gps" value="portatil"
-    {{ $custodio->tipo_gps == 'portatil' ? 'checked' : '' }}> GPS Portatil
-                                                        
-                                                    </label>
-                                                </div>
-                                            </div>
-
-                                        <div class="col-lg-4">
-                                            <label class="font-weight-bold">Candados</label>
-                                            <div class="radio-inline mt-2">
-                                                <label class="radio">
-                                                    <input type="radio" name="candado_servicio" value="1">
-                                                    <span></span> Si
-                                                </label>
-                                                <label class="radio">
-                                                    <input type="radio" name="candado_servicio" value="2">
-                                                    <span></span>  No
-                                                </label>
-                                            </div>
-=======
-=======
->>>>>>> 1e9a380267320ebe44345ef28d5c261deabd8b8c
-=======
-
->>>>>>> a582a639a39f2fe10d2e59a755b5296671d69a81
                                     <div class="col-lg-4">
                                         <label class="text-white">Contraseña ASSISTCARGO</label>
                                         <input type="password" class="form-control" name="contraseña_assistcargo" id="contraseña_assistcargo" value="{{ $custodio->contraseña_assistcargo }}"/>
@@ -399,7 +355,6 @@
                                                 <input type="radio" name="identificacion_custodio" value="1" {{ $custodio->identificacion_custodio == 1 ? 'checked' : '' }}>
                                                 <span></span> No
                                             </label>
->>>>>>> ef107b39a35c7ed29971238146823bbf170b6a93
                                         </div>
                                     </div>
                                 </div>

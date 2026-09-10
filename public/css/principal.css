@@ -1946,18 +1946,18 @@
     color: #444;
 }
 
+/*Movimiento de la tabla descomentarlo para que lo haga */
 
-
-#kdatatable_usuarios2.table-hover tbody tr:hover td,
+/*#kdatatable_usuarios2.table-hover tbody tr:hover td,
 #kdatatable_usuarios2.table-hover tbody tr:hover th {
     background-color: #10305D !important; 
     color: #ffffff !important;          
     border-top: 1px solid #D4AF37 !important; 
     border-bottom: 1px solid #D4AF37 !important;
-}
+}*/
 
 
-#kdatatable_usuarios2 tbody tr {
+/*#kdatatable_usuarios2 tbody tr {
     transition: all 0.2s ease;
 }
 
@@ -1969,7 +1969,7 @@
 
 #kdatatable_usuarios2 tbody tr:hover i {
     color: #ffffff !important;
-}
+}*/
 
 
 .table.dataTable.display tbody tr.odd > .sorting_1, 

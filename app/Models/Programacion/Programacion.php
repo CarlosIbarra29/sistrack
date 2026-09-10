@@ -105,5 +105,10 @@ class Programacion extends Model
         return $this->belongsTo('App\Models\Programacion\EstatusViaje');
     }
 
+    public function acompanantesProgramacion()
+    {
+        return $this->hasMany('App\Models\Programacion\AcompanantesProgramacion','programacion_id','id');
+    }
+
 
 }

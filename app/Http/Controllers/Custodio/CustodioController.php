@@ -569,20 +569,7 @@ class CustodioController extends Controller
             'iduserUpdated' =>auth()->user()->id,
         ];
 
-        public function update(Request $request, $id)
-{
-    $custodio = Custodio::findOrFail($id);
-
-    $custodio->tipo_gps = $request->tipo_gps;
-    $custodio->candados = $request->candados;
-    $custodio->chaleco = $request->chaleco;
-
-    $custodio->save();
-
-    return redirect()->back();
-}
-
-        
+        Custodio::where('id', $request->id_custodio)->update($data);
 
         $data_seleccion = [
             'custodio_id' => $request->id_custodio,
@@ -1255,4 +1242,3 @@ class CustodioController extends Controller
     }
 
 }
-

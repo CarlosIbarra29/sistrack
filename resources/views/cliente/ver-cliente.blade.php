@@ -34,11 +34,6 @@ Ver cliente
     </a>
 </div>
 
-
-{{-- =========================================================
-     DATOS OCULTOS
-========================================================== --}}
-
 <input type="hidden"
        id="documentoEliminarOperativo"
        value="{{ route('cliente.eliminarcontactooperativo') }}">

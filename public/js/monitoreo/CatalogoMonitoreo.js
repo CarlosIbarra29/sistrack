@@ -24,7 +24,7 @@
         filas: [],
         filtradas: [],
         paginaActual: 1,
-        registrosPorPagina: 20,
+        registrosPorPagina: 10,
 
         init: function () {
             this.tabla = document.getElementById("kdatatable_usuarios2");
