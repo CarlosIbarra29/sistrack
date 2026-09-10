@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=1.0.3') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=1.1.9') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js?v=2.0.1') }}"></script>
+    <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js?v=2.0.2') }}"></script>
 @endpush
 
 @section('title')
@@ -20,7 +20,7 @@
     <header class="monitoreo-page-header">
         <div>
             <span class="monitoreo-eyebrow">MONITOREO OPERATIVO</span>
-            <h2 class="monitoreo-page-title">BITÁCORA DE SEGUIMIENTO</h2>
+            <h2 class="monitoreo-page-title">BITÁCORA DE MONITOREO</h2>
             <p class="monitoreo-page-subtitle">
                 Seguimiento y control de los servicios programados.
             </p>
@@ -54,7 +54,7 @@
     <section class="monitoreo-panel monitoreo-filter-panel">
         <div class="monitoreo-filter-grid">
 
-            <div class="monitoreo-filter-field">
+            <!-- <div class="monitoreo-filter-field">
                 <label class="monitoreo-label" for="monitoreo_filtro_servicio">
                     Servicio
                 </label>
@@ -69,7 +69,7 @@
                         </option>
                     @endforeach
                 </select>
-            </div>
+            </div> -->
 
             <div class="monitoreo-filter-field">
                 <label class="monitoreo-label" for="monitoreo_filtro_estatus">
@@ -151,6 +151,10 @@
                             Folio
                         </th>
 
+                        <th class="monitoreo-col-inc">
+                            Inc.
+                        </th>
+
                         <th class="monitoreo-col-estatus">
                             Estatus
                         </th>
@@ -203,21 +207,36 @@
 
                 <tbody>
                     @foreach($monitoreo as $unid)
-                        <tr data-monitoreo-row
-                            data-folio="{{ $unid->folio }}"
-                            data-status-id="{{ $unid->programacion_estatus_id }}">
-
-                            <td class="monitoreo-id">
-                                <span class="monitoreo-bitacora-number">
-                                    {{ $unid->id }}
-                                </span>
-                            </td>
+                        <tr data-monitoreo-row data-folio="{{ $unid->folio }}" 
+                            data-status-id="{{ $unid->programacion_estatus_id }}"
+                            class="{{(int) $unid->custodio_id === 153 ? 'monitoreo-row-sin-custodio' : '' }}">
 
                             <td>
                                 <a href="{{ route('monitoreo.verprogramacionmon', $unid->id) }}"
                                    class="monitoreo-folio">
                                     {{ $unid->folio }}
                                 </a>
+                            </td>
+
+                            <td class="monitoreo-id">
+                                <span class="monitoreo-bitacora-number">
+                                    {{ $unid->folio_interno ?? 'Sin folio' }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <div class="monitoreo-row-actions">
+
+                                    <button type="button"
+                                            class="monitoreo-action js-add-incidencia"
+                                            data-programacion="{{ $unid->id }}"
+                                            data-toggle="modal"
+                                            data-target="#model_add_incidencia"
+                                            title="Agregar incidencia">
+                                        <i class="flaticon-notepad"></i>
+                                    </button>
+
+                                </div>
                             </td>
 
                             <td>
@@ -262,22 +281,110 @@
                             </td>
 
                             <td>
-                                <div class="monitoreo-custodio">
-                                    <span class="monitoreo-custodio-avatar">
-                                        {{ substr($unid->custodio->nombre_custodio ?? 'S', 0, 1) }}
-                                    </span>
+                                @if((int) $unid->custodio_id === 153)
 
-                                    <span>
-                                        {{ $unid->custodio->nombre_custodio ?? 'Sin asignar' }}
-                                        {{ $unid->custodio->ap_paterno ?? '' }}
-                                    </span>
-                                </div>
+                                    <div class="monitoreo-custodio monitoreo-custodio--pending">
+
+                                        <span class="monitoreo-custodio-avatar monitoreo-custodio-avatar--pending">
+                                            !
+                                        </span>
+
+                                        <div class="monitoreo-custodio-pending-info">
+
+                                            <strong class="monitoreo-custodio-pending-text">
+                                                Sin custodio
+                                            </strong>
+
+                                            <small>
+                                                Pendiente de asignar
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                @else
+
+                                    <div class="monitoreo-custodio">
+
+                                        <span class="monitoreo-custodio-avatar">
+                                            {{ substr($unid->custodio->nombre_custodio ?? 'S',0,1) }}
+                                        </span>
+
+                                        <span class="monitoreo-custodio-name">
+
+                                            {{ $unid->custodio->nombre_custodio ?? 'Sin asignar' }}
+                                            {{ $unid->custodio->ap_paterno ?? '' }}
+
+                                            @if($unid->custodio && (int) $unid->custodio->tipo_custodio === 2)
+
+                                                <span class="monitoreo-armed-icon"
+                                                      title="Custodio armado">
+                                                    🔫
+                                                </span>
+
+                                            @endif
+
+                                        </span>
+
+                                    </div>
+
+                                @endif
                             </td>
 
                             <td class="monitoreo-muted">
-                                <span class="monitoreo-acompanantes-value">
-                                    {{ $unid->acompañante ?? '-' }}
-                                </span>
+                                @if((int) $unid->custodio_id === 153)
+
+                                    <span class="monitoreo-no-acompanante">
+                                        No aplica
+                                    </span>
+
+                                @elseif(isset($unid->acompanantesProgramacion) && $unid->acompanantesProgramacion->count() > 0)
+
+                                    <div class="monitoreo-acompanantes-list">
+
+                                        @foreach($unid->acompanantesProgramacion as $acompanante)
+
+                                            @if($acompanante->custodio)
+
+                                                <div class="monitoreo-acompanante-item">
+
+                                                    <span class="monitoreo-acompanante-name">
+
+                                                        {{ $acompanante->custodio->nombre_custodio }}
+
+                                                        {{ $acompanante->custodio->ap_paterno }}
+
+                                                        @if(!empty($acompanante->custodio->ap_materno))
+                                                            {{ $acompanante->custodio->ap_materno }}
+                                                        @endif
+
+                                                        @if((int) $acompanante->custodio->tipo_custodio === 2)
+
+                                                            <span class="monitoreo-armed-icon"
+                                                                  title="Custodio armado">
+                                                                🔫
+                                                            </span>
+
+                                                        @endif
+
+                                                    </span>
+
+                                                </div>
+
+                                            @endif
+
+                                        @endforeach
+
+                                    </div>
+
+                                @else
+
+                                    <span class="monitoreo-no-acompanante">
+                                        -
+                                    </span>
+
+                                @endif
                             </td>
 
                             <td class="monitoreo-date monitoreo-operational-date">
@@ -306,15 +413,6 @@
                                        title="Generales transportes">
                                         <i class="flaticon-presentation-1"></i>
                                     </a>
-
-                                    <button type="button"
-                                            class="monitoreo-action js-add-incidencia"
-                                            data-programacion="{{ $unid->id }}"
-                                            data-toggle="modal"
-                                            data-target="#model_add_incidencia"
-                                            title="Agregar incidencia">
-                                        <i class="flaticon-notepad"></i>
-                                    </button>
 
                                 </div>
                             </td>

@@ -44,15 +44,18 @@ class MonitoreoController extends Controller
     {
         $data = Cliente::where('siaf_status', 1)->get();
         $tarifario = Tarifario::where('siaf_status', 1)->get();
-        $estatus_programacion = EstatusProgramacion::get();
+        $estatus_programacion = EstatusProgramacion::where('estatus_activo', 1)
+                    ->where('estatus_monitoreo', 1)
+                    ->get();
 
-        $monitoreo = Programacion::select('programacion.id','programacion.folio', 'programacion.tipo_servicio', 'pe.estatus_programacion', 'cli.nombre_cliente', 'programacion.dom_origen', 'programacion.dom_destino', 'programacion.fecha_servicio', 'programacion.programacion_estatus_id', 'programacion.op_monitoreo_id',  'programacion.custodio_id','pd.fechahora_inicio_trayecto','pd.fechahora_llegado_destino','pd.fechahora_finalizacion',DB::raw("CONCAT(cu.nombre_custodio, ' ', cu.ap_paterno) as acompañante"))
-            ->leftjoin("programacion_estatus as pe","pe.id","programacion.programacion_estatus_id")
-            ->leftjoin("cliente as cli","cli.id","programacion.cliente_id")
-            ->leftjoin("programacion_estadias as pd","pd.programacion_id","programacion.id")
-            ->leftjoin("programacion_acompanantes as pa","pa.programacion_id","programacion.id")
-            ->leftjoin("custodio as cu","cu.id","pa.custodio_id")
+        $monitoreo = Programacion::select('programacion.id','programacion.folio','programacion.folio_interno','programacion.tipo_servicio','pe.estatus_programacion','cli.nombre_cliente','programacion.dom_origen','programacion.dom_destino','programacion.fecha_servicio','programacion.programacion_estatus_id','programacion.op_monitoreo_id','programacion.custodio_id','programacion.estatus_custodio','pd.fechahora_inicio_trayecto','pd.fechahora_llegado_destino','pd.fechahora_finalizacion')
+            ->with(['custodio','acompanantesProgramacion.custodio'])
+            ->leftJoin('programacion_estatus as pe','pe.id','=','programacion.programacion_estatus_id')
+            ->leftJoin('cliente as cli','cli.id','=','programacion.cliente_id')
+            ->leftJoin('programacion_estadias as pd','pd.programacion_id','=','programacion.id')
             ->where('programacion.siaf_status', 1)
+            ->orderByDesc('programacion.estatus_custodio')
+            ->orderBy('programacion.fecha_servicio', 'asc')
             ->get();
 
 

@@ -35,12 +35,33 @@ var Modulo = function() {
             KTUtil.scrollTop();
         });
 
-        $( "#btnGuardar" ).click(function( e ) {
+        $("#btnGuardar").click(function(e) {
+
             e.preventDefault();
+            
+            var clienteId = $("#cliente_id").val();
+
+            if (clienteId === "0") {
+
+                var razonSocial = $.trim($("#nuevo_cliente_razon_social").val());
+                if (razonSocial === "") {
+
+                    toastr.warning("Ingresa la razón social del nuevo cliente.");
+                    $("#nuevo_cliente_razon_social").addClass("is-invalid").focus();
+
+                    return false;
+                }
+
+                $("#nuevo_cliente_razon_social").removeClass("is-invalid");
+            }
+
+            // normal
             validador.validate().then(function(status) {
-                if (status === 'Valid'){
-                    var btnGuardar = document.getElementById('btnGuardar');
-                    KTUtil.btnWait( btnGuardar, 'spinner spinner-right spinner-white pr-15', 'Espere...', true);
+
+                if (status === "Valid") {
+
+                    var btnGuardar =document.getElementById("btnGuardar");
+                    KTUtil.btnWait(btnGuardar,"spinner spinner-right spinner-white pr-15","Espere...",true);
                     form.submit();
                 }
             });
@@ -48,6 +69,39 @@ var Modulo = function() {
     };
 
     var initEvents = function() {
+
+        // SELECT CLIENTE BUSCABLE
+        $("#cliente_id").select2({
+            placeholder: "Buscar y seleccionar cliente...",
+            allowClear: true,
+            width: "100%",
+            language: {
+                noResults: function() {
+                    return "No se encontraron clientes";
+                },
+                searching: function() {
+                    return "Buscando...";
+                }
+            }
+        });
+
+
+        // SELECT CUSTODIO BUSCABLE
+
+
+        $("#custodio_id").select2({
+            placeholder: "Buscar y asignar custodio...",
+            allowClear: true,
+            width: "100%",
+            language: {
+                noResults: function() {
+                    return "No se encontraron custodios";
+                },
+                searching: function() {
+                    return "Buscando...";
+                }
+            }
+        });
 
         var arrows = {
             leftArrow: '<i class="la la-angle-left"></i>',
@@ -160,10 +214,12 @@ var Modulo = function() {
     };
 
 
-
     $(document).on('change', 'select[id^="cliente_id"]', function () {
         var id = $(this).attr('id');
         var idGrupo = $(this).val();
+        if (idGrupo === "0" || idGrupo === "" || idGrupo === null) {
+            return;
+        }
         var idDocumento = id.replace('cliente_id', '');
         var url = $('#url_tarifario').val();
         var data = {
@@ -204,6 +260,77 @@ var Modulo = function() {
         $('#elemento1').val();
     };
 
+
+   // NUEVO CLIENTE
+    var initNuevoCliente = function() {
+
+        var $cliente = $("#cliente_id");
+        var $contenedor = $("#contenedor_nuevo_cliente");
+        var $nuevoCliente = $("#nuevo_cliente_razon_social");
+
+        function actualizarNuevoCliente() {
+
+            var clienteId = $cliente.val();
+
+            if (clienteId === "0") {
+
+                $contenedor.stop(true, true).slideDown(180);
+                $nuevoCliente.attr("required", true);
+
+            } else {
+
+                $contenedor.stop(true, true).slideUp(180);
+                $nuevoCliente.removeAttr("required").val("");
+            }
+        }
+
+        $cliente.on("change", function() {
+            actualizarNuevoCliente();
+        });
+
+        actualizarNuevoCliente();
+    };
+
+   // SIN CUSTODIO
+
+    var initSinCustodio = function() {
+
+        var ID_SIN_CUSTODIO = "153";
+
+        var $custodio = $("#custodio_id");
+        var $radioSi = $("#op_c_uno");
+        var $radioNo = $("#op_c_dos");
+        var $contenedorAcompanantes = $("#div_custodios");
+
+        function actualizarEstadoCustodio() {
+
+            var custodioId = $custodio.val();
+
+            if (custodioId === ID_SIN_CUSTODIO) {
+
+                $radioNo.prop("checked", true);
+                $radioSi.prop("disabled", true);
+
+                $contenedorAcompanantes
+                    .stop(true, true)
+                    .slideUp(180);
+
+                $("#tbodyDocumentos").empty();
+
+            } else {
+
+                $radioSi.prop("disabled", false);
+
+            }
+        }
+
+        $custodio.on("change", function() {
+            actualizarEstadoCustodio();
+        });
+
+        actualizarEstadoCustodio();
+    };
+
     return {
 
         //main function to initiate the module
@@ -211,6 +338,8 @@ var Modulo = function() {
             initEvents();
             validacion();
             eventosEspeciales();
+            initNuevoCliente();
+            initSinCustodio();
         },
 
     };
@@ -225,7 +354,20 @@ $("#op_c_dos").click(function () {
     $("#div_custodios").hide();
 });
 
+
 $("#op_c_uno").click(function () {
+
+    if ($("#custodio_id").val() === "153") {
+
+        $("#op_c_dos").prop("checked", true);
+        $("#div_custodios").hide();
+
+        toastr.warning("No puedes agregar acompañantes mientras la programación esté sin custodio.");
+
+        return false;
+    }
+
     $("#div_custodios").show();
+
 });
 

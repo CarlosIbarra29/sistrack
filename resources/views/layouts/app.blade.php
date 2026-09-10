@@ -31,7 +31,7 @@
     <!--end::Layout Themes-->
 
     <!--begin::Custom Theme(used by all pages)-->
-    <link href="{{ asset('css/principal.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/principal.css?v=1.1.1') }}" rel="stylesheet" type="text/css" />
     <!--end::Custom Theme-->
 
     @stack('styles')
