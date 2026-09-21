@@ -30,15 +30,11 @@ class Estatusitinerario extends Model
     /**
      * @var array
      */
-    protected $fillable = ['programacion_estadias', 'descripcion', 'value', 'activo', 'created_at', 'updated_at', 'iduserCreated', 'iduserUpdated'];
+    protected $fillable = ['descripcion', 'value', 'activo', 'created_at', 'updated_at', 'iduserCreated', 'iduserUpdated'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function programacionEstadia()
-    {
-        return $this->belongsTo('App\Models\Programacion\EstadiasProgramacionEstadia', 'programacion_estadias');
-    }
 
     public function userCreated()
     {

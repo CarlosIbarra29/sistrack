@@ -35,7 +35,7 @@ class EstadiasProgramacion extends Model
     /**
      * @var array
      */
-    protected $fillable = ['programacion_id', 'nombre_conductor', 'telefono', 'placas', 'generales_unidad', 'fechahora_llegada_custodio', 'fechahora_inicio_trayecto', 'fechahora_llegado_destino', 'fechahora_finalizacion', 'created_at', 'updated_at', 'iduserCreated', 'iduserUpdated', 'linea_transportistas'];
+    protected $fillable = ['programacion_id', 'nombre_conductor', 'telefono', 'placas', 'generales_unidad', 'fechahora_llegada_custodio', 'fechahora_inicio_trayecto', 'fechahora_llegado_destino', 'fechahora_finalizacion', 'created_at', 'updated_at', 'iduserCreated', 'iduserUpdated', 'linea_transportistas', 'estatus_itinerario'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -54,4 +54,10 @@ class EstadiasProgramacion extends Model
     {
         return $this->belongsTo('App\Models\User', 'iduserUpdated');
     }
+
+    public function programacionEstatusItinerario()
+    {
+        return $this->belongsTo('App\Models\Programacion\EstatusItinerari', 'estatus_itinerario');
+    }
+
 }
