@@ -191,9 +191,9 @@
 
                                             <label class="compact-radio-item">
                                                 <input type="radio"
-                                                       checked
+                                                       
                                                        name="tipo_servicio"
-                                                       value="0">
+                                                       value="0" required>
 
                                                 <span>
                                                     <i class="la la-road"></i>
@@ -225,9 +225,9 @@
 
                                             <label class="compact-radio-item">
                                                 <input type="radio"
-                                                       checked
+                                                       
                                                        name="armado_servicio"
-                                                       value="1">
+                                                       value="1" required>
 
                                                 <span>
                                                     <i class="la la-check"></i>
@@ -589,7 +589,16 @@
                                     <tr class="{{ (int) $unid->custodio_id === 153 ? 'programacion-row-sin-custodio' : '' }}">
 
                                     <td class="programacion-table-time">
+
                                         {{ $unid->folio }}
+
+                                        @if((int) $unid->armado_servicio === 1)
+                                            <span class="programacion-armed-icon"
+                                                  title="Servicio armado">
+                                                🔫
+                                            </span>
+                                        @endif
+
                                     </td>
 
                                     <td class="programacion-table-time">
@@ -677,15 +686,6 @@
 
                                                         {{ $unid->custodio->nombre_custodio ?? 'Sin asignar' }}
 
-                                                        @if($unid->custodio && (int) $unid->custodio->tipo_custodio === 2)
-
-                                                            <span class="programacion-armed-icon"
-                                                                  title="Custodio armado">
-                                                                🔫
-                                                            </span>
-
-                                                        @endif
-
                                                     </span>
 
                                                 </div>
@@ -726,15 +726,6 @@
 
                                                                 @if(!empty($acompanante->custodio->ap_materno))
                                                                     {{ $acompanante->custodio->ap_materno }}
-                                                                @endif
-
-                                                                @if((int) $acompanante->custodio->tipo_custodio === 2)
-
-                                                                    <span class="programacion-armed-icon"
-                                                                          title="Custodio armado">
-                                                                        🔫
-                                                                    </span>
-
                                                                 @endif
 
                                                             </span>

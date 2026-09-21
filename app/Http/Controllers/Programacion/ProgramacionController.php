@@ -57,7 +57,7 @@ class ProgramacionController extends Controller
         }
         $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
 
-        $programcion = Programacion::select('programacion.id','programacion.folio','programacion.tipo_servicio','pe.estatus_programacion','cli.nombre_cliente','programacion.dom_origen','programacion.dom_destino','programacion.fecha_servicio','programacion.programacion_estatus_id','programacion.op_monitoreo_id','programacion.custodio_id','programacion.folio_interno','programacion.estatus_custodio')
+        $programcion = Programacion::select('programacion.id','programacion.folio','programacion.tipo_servicio','pe.estatus_programacion','cli.nombre_cliente','programacion.dom_origen','programacion.dom_destino','programacion.fecha_servicio','programacion.programacion_estatus_id','programacion.op_monitoreo_id','programacion.custodio_id','programacion.folio_interno','programacion.estatus_custodio','programacion.armado_servicio')
         ->with(['custodio','acompanantesProgramacion.custodio'])
         ->leftJoin('programacion_estatus as pe','pe.id','=','programacion.programacion_estatus_id')
         ->leftJoin('cliente as cli','cli.id','=','programacion.cliente_id')
