@@ -482,94 +482,516 @@
        ACTUALIZACIÓN AJAX DE ESTATUS DESDE LISTADO
        ====================================================================== */
 
+    // $(document).on(
+    //     "change",
+    //     'select[data-role="estatus-programacion"]',
+    //     function () {
+
+    //         var $select = $(this);
+    //         var programacion = $select.data("programacion");
+    //         var estatusAnterior = $select.data("estatus-anterior");
+    //         var estatusNuevo = $select.val();
+    //         var url = $("#url_estatus").val();
+
+    //         if (!url) {
+    //             Swal.fire(
+    //                 "Error",
+    //                 "No se encontró la ruta para actualizar el estatus.",
+    //                 "error"
+    //             );
+
+    //             return;
+    //         }
+
+    //         $select.prop("disabled", true);
+    //         $select.addClass("is-updating");
+
+    //         $.ajax({
+    //             url: url,
+    //             type: "POST",
+
+    //             headers: {
+    //                 "X-CSRF-TOKEN": getCsrfToken()
+    //             },
+
+    //             data: {
+    //                 id: estatusNuevo,
+    //                 id_programacio: programacion,
+    //                 _token: getCsrfToken()
+    //             },
+
+    //             success: function () {
+    //                 var fila = $select.closest("[data-monitoreo-row]")[0];
+
+    //                 if (fila) {
+    //                     fila.dataset.statusId = estatusNuevo;
+    //                     MonitoreoListado.actualizarBusquedaFila(fila);
+    //                 }
+
+    //                 $select.data("estatus-anterior", estatusNuevo);
+
+    //                 Swal.fire({
+    //                     title: "Actualizado",
+    //                     text: "El estatus se actualizó correctamente.",
+    //                     icon: "success",
+    //                     timer: 1500,
+    //                     showConfirmButton: false
+    //                 });
+    //             },
+
+    //             error: function (xhr) {
+    //                 if (estatusAnterior) {
+    //                     $select.val(estatusAnterior);
+    //                 }
+
+    //                 console.error(xhr);
+
+    //                 Swal.fire(
+    //                     "No fue posible actualizar",
+    //                     "Ocurrió un error al cambiar el estatus.",
+    //                     "error"
+    //                 );
+    //             },
+
+    //             complete: function () {
+    //                 $select
+    //                     .prop("disabled", false)
+    //                     .removeClass("is-updating");
+    //             }
+    //         });
+    //     }
+    // );
+
+    // $(document).on(
+    //     "focus",
+    //     'select[data-role="estatus-programacion"]',
+    //     function () {
+    //         $(this).data(
+    //             "estatus-anterior",
+    //             $(this).val()
+    //         );
+    //     }
+    // );
+
+
+    /* ======================================================================
+   ACTUALIZACIÓN AJAX DE ESTATUS DESDE LISTADO
+   ====================================================================== */
+
+    function actualizarSemaforoEstatus($select) {
+
+        var estatus = parseInt($select.val(), 10);
+        var $dot = $select.closest(".monitoreo-status-wrapper").find('[data-role="estatus-semaforo"]');
+
+        $dot.removeClass(
+            "monitoreo-status-dot--gris " +
+            "monitoreo-status-dot--verde " +
+            "monitoreo-status-dot--rojo " +
+            "monitoreo-status-dot--amarillo"
+        );
+
+        if (estatus === 1) {
+
+            $dot.addClass("monitoreo-status-dot--gris");
+
+        } else if (estatus === 3) {
+
+            $dot.addClass("monitoreo-status-dot--verde");
+
+        } else if (estatus === 10) {
+
+            $dot.addClass("monitoreo-status-dot--rojo");
+
+        } else {
+
+            $dot.addClass("monitoreo-status-dot--amarillo");
+        }
+    }
+
+
+    $(document).on(
+        "focus",
+        'select[data-role="estatus-programacion"]',
+        function () {
+
+            $(this).data(
+                "estatus-anterior",
+                $(this).val()
+            );
+        }
+    );
+
+
     $(document).on(
         "change",
         'select[data-role="estatus-programacion"]',
         function () {
 
             var $select = $(this);
+
             var programacion = $select.data("programacion");
-            var estatusAnterior = $select.data("estatus-anterior");
-            var estatusNuevo = $select.val();
+            var estatusAnterior = String(
+                $select.data("estatus-anterior") || ""
+            );
+
+            var estatusNuevo = String($select.val());
+
+            var textoNuevo = $select
+                .find("option:selected")
+                .text()
+                .trim();
+
             var url = $("#url_estatus").val();
 
-            if (!url) {
-                Swal.fire(
-                    "Error",
-                    "No se encontró la ruta para actualizar el estatus.",
-                    "error"
-                );
 
+            if (estatusAnterior === estatusNuevo) {
                 return;
             }
 
-            $select.prop("disabled", true);
-            $select.addClass("is-updating");
 
-            $.ajax({
-                url: url,
-                type: "POST",
+            Swal.fire({
+                title: "¿Cambiar estatus?",
+                text: "El servicio cambiará a \"" + textoNuevo + "\".",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Sí, actualizar",
+                cancelButtonText: "Cancelar",
+                reverseButtons: true
 
-                headers: {
-                    "X-CSRF-TOKEN": getCsrfToken()
-                },
+            }).then(function (result) {
 
-                data: {
-                    id: estatusNuevo,
-                    id_programacio: programacion,
-                    _token: getCsrfToken()
-                },
+                if (!result.value) {
 
-                success: function () {
-                    var fila = $select.closest("[data-monitoreo-row]")[0];
+                    $select.val(estatusAnterior);
 
-                    if (fila) {
-                        fila.dataset.statusId = estatusNuevo;
-                        MonitoreoListado.actualizarBusquedaFila(fila);
-                    }
+                    actualizarSemaforoEstatus($select);
 
-                    $select.data("estatus-anterior", estatusNuevo);
-
-                    Swal.fire({
-                        title: "Actualizado",
-                        text: "El estatus se actualizó correctamente.",
-                        icon: "success",
-                        timer: 1500,
-                        showConfirmButton: false
-                    });
-                },
-
-                error: function (xhr) {
-                    if (estatusAnterior) {
-                        $select.val(estatusAnterior);
-                    }
-
-                    console.error(xhr);
-
-                    Swal.fire(
-                        "No fue posible actualizar",
-                        "Ocurrió un error al cambiar el estatus.",
-                        "error"
-                    );
-                },
-
-                complete: function () {
-                    $select
-                        .prop("disabled", false)
-                        .removeClass("is-updating");
+                    return;
                 }
+
+
+                $select
+                    .prop("disabled", true)
+                    .addClass("is-updating");
+
+
+                $.ajax({
+
+                    url: url,
+
+                    type: "POST",
+
+                    headers: {
+                        "X-CSRF-TOKEN": getCsrfToken()
+                    },
+
+                    data: {
+                        id: estatusNuevo,
+                        id_programacio: programacion,
+                        _token: getCsrfToken()
+                    },
+
+
+                    success: function () {
+
+                        var fila = $select
+                            .closest("[data-monitoreo-row]")[0];
+
+                        if (parseInt(estatusNuevo, 10) === 7) {
+
+                            if (fila) {
+
+                                MonitoreoListado.filas =
+                                    MonitoreoListado.filas.filter(
+                                        function (item) {
+                                            return item !== fila;
+                                        }
+                                    );
+
+                                MonitoreoListado.filtradas =
+                                    MonitoreoListado.filtradas.filter(
+                                        function (item) {
+                                            return item !== fila;
+                                        }
+                                    );
+
+                                fila.remove();
+
+                                MonitoreoListado.render();
+                            }
+
+                        } else {
+
+                            if (fila) {
+
+                                fila.dataset.statusId =estatusNuevo;
+                                MonitoreoListado.actualizarBusquedaFila(fila);
+                            }
+
+                            actualizarSemaforoEstatus($select);
+                            $select.data("estatus-anterior",estatusNuevo);
+                        }
+
+
+                        Swal.fire({
+                            title: "Actualizado",
+                            text: parseInt(estatusNuevo, 10) === 7
+                                ? "El servicio fue enviado a Servicios Finalizados."
+                                : "El estatus se actualizó correctamente.",
+                            icon: "success",
+                            timer: 1600,
+                            showConfirmButton: false
+                        });
+                    },
+
+
+                    error: function (xhr) {
+
+                        $select.val(estatusAnterior);
+                        actualizarSemaforoEstatus($select);
+                        console.error(xhr);
+                        Swal.fire("No fue posible actualizar","Ocurrió un error al cambiar el estatus.","error");
+                    },
+
+
+                    complete: function () {
+
+                        $select
+                            .prop("disabled", false)
+                            .removeClass("is-updating");
+                    }
+
+                });
+
             });
+
         }
     );
 
+
+    // ACTUALIZACIÓN DE FECHAS OPERATIVAS
+
     $(document).on(
         "focus",
-        'select[data-role="estatus-programacion"]',
+        '[data-role="fecha-operativa"]',
         function () {
+
             $(this).data(
-                "estatus-anterior",
+                "valor-anterior",
                 $(this).val()
             );
+        }
+    );
+
+
+    $(document).on(
+        "change",
+        '[data-role="fecha-operativa"]',
+        function () {
+
+            var $input = $(this);
+            var programacion = $input.data("programacion");
+            var campo = $input.data("campo");
+            var valor = $input.val();
+            var valorAnterior =$input.data("valor-anterior") || "";
+            var url =$("#url_fecha_estadia").val();
+
+
+            Swal.fire({
+                title: "¿Actualizar fecha?",
+                text: "La fecha operativa del servicio será modificada.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Sí, actualizar",
+                cancelButtonText: "Cancelar",
+                reverseButtons: true
+
+            }).then(function (result) {
+
+                if (!result.value) {
+                    $input.val(valorAnterior);
+                    return;
+                }
+
+                $input.prop("disabled", true);
+
+                $.ajax({
+
+                    url: url,
+                    type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": getCsrfToken()
+                    },
+
+                    data: {
+                        id_programacion: programacion,
+                        campo: campo,
+                        valor: valor,
+                        _token: getCsrfToken()
+                    },
+
+                    success: function () {
+
+                        $input.data("valor-anterior",valor);
+
+                        Swal.fire({
+                            title: "Fecha actualizada",
+                            icon: "success",
+                            timer: 1200,
+                            showConfirmButton: false
+                        });
+                    },
+
+                    error: function (xhr) {
+                        $input.val(valorAnterior);
+                        console.error(xhr);
+                        Swal.fire("No fue posible actualizar","La fecha no pudo ser guardada.","error");
+                    },
+
+                    complete: function () {
+                        $input.prop("disabled",false);
+                    }
+
+                });
+
+            });
+
+        }
+    );
+
+    // ACTUALIZACIÓN DE PUNTUALIDAD
+
+
+    function actualizarVisualPuntualidad($select) {
+
+        var valor = parseInt($select.val(),10);
+        var $wrapper =$select.closest(".monitoreo-puntualidad-wrapper");
+        var $dot =$wrapper.find('[data-role="puntualidad-semaforo"]');
+        var $fila =$select.closest("[data-monitoreo-row]");
+        var $causa =$fila.find('[data-role="puntualidad-causa"]');
+
+        $dot.removeClass("monitoreo-puntualidad-dot--gris " +"monitoreo-puntualidad-dot--verde " +"monitoreo-puntualidad-dot--rojo");
+
+        if (!valor) {
+
+            $dot.addClass("monitoreo-puntualidad-dot--gris");
+            $causa.text("-");
+            return;
+        }
+
+        if (valor === 1) {
+            $dot.addClass("monitoreo-puntualidad-dot--verde");
+            $causa.text("-");
+            return;
+        }
+
+        $dot.addClass("monitoreo-puntualidad-dot--rojo");
+
+        var causa =$select.find("option:selected").data("causa");
+
+        $causa.text(causa || "-");
+    }
+
+
+    $(document).on(
+        "focus",
+        '[data-role="puntualidad"]',
+        function () {
+
+            $(this).data(
+                "puntualidad-anterior",
+                $(this).val()
+            );
+        }
+    );
+
+
+    $(document).on(
+        "change",
+        '[data-role="puntualidad"]',
+        function () {
+
+            var $select = $(this);
+            var programacion = $select.data("programacion");
+            var anterior = String($select.data("puntualidad-anterior") || "");
+            var nuevo = String($select.val());
+            var texto = $select.find("option:selected").text().trim();
+            var url = $("#url_itinerario").val();
+
+            Swal.fire({
+                title: "¿Actualizar puntualidad?",
+                text: nuevo
+                    ? "La puntualidad cambiará a \"" + texto + "\"."
+                    : "Se quitará el estatus de puntualidad.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Sí, actualizar",
+                cancelButtonText: "Cancelar",
+                reverseButtons: true
+
+            }).then(function (result) {
+
+                if (!result.value) {
+                    $select.val(anterior);
+                    actualizarVisualPuntualidad($select);
+                    return;
+                }
+
+                $select.prop("disabled",true);
+
+                $.ajax({
+
+                    url: url,
+                    type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN":
+                            getCsrfToken()
+                    },
+
+                    data: {
+                        id_programacion:programacion,
+                        estatus_itinerario:nuevo,
+                        _token:getCsrfToken()
+                    },
+
+                    success: function () {
+
+                        $select.data("puntualidad-anterior",nuevo);
+                        actualizarVisualPuntualidad($select);
+
+                        var fila =$select.closest("[data-monitoreo-row]")[0];
+
+                        if (fila) {
+                            MonitoreoListado.actualizarBusquedaFila(fila);
+                        }
+
+
+                        Swal.fire({
+                            title:
+                                "Puntualidad actualizada",
+                            icon: "success",
+                            timer: 1200,
+                            showConfirmButton: false
+                        });
+                    },
+
+
+                    error: function (xhr) {
+                        $select.val(anterior);
+                        actualizarVisualPuntualidad($select);
+                        console.error(xhr);
+                        Swal.fire("No fue posible actualizar","La puntualidad no pudo ser guardada.","error");
+                    },
+
+
+                    complete: function () {
+                        $select.prop("disabled",false);
+                    }
+
+                });
+
+            });
+
         }
     );
 

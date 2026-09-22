@@ -296,16 +296,23 @@ var Modulo = function() {
     var initSinCustodio = function() {
 
         var ID_SIN_CUSTODIO = "153";
+        var ID_CUSTODIO_EMERGENTE = "154";
 
         var $custodio = $("#custodio_id");
         var $radioSi = $("#op_c_uno");
         var $radioNo = $("#op_c_dos");
         var $contenedorAcompanantes = $("#div_custodios");
 
+        var $contenedorEmergente = $("#contenedor_custodio_emergente");
+        var $custodioEmergente = $("#custodio_emergente");
+
         function actualizarEstadoCustodio() {
 
             var custodioId = $custodio.val();
 
+            // ============================================
+            // SIN CUSTODIO
+            // ============================================
             if (custodioId === ID_SIN_CUSTODIO) {
 
                 $radioNo.prop("checked", true);
@@ -317,11 +324,46 @@ var Modulo = function() {
 
                 $("#tbodyDocumentos").empty();
 
-            } else {
+                // Ocultar y limpiar custodio emergente
+                $contenedorEmergente
+                    .stop(true, true)
+                    .slideUp(180);
+
+                $custodioEmergente
+                    .removeAttr("required")
+                    .val("");
+
+                return;
+            }
+
+            // ============================================
+            // CUSTODIO EMERGENTE
+            // ============================================
+            if (custodioId === ID_CUSTODIO_EMERGENTE) {
 
                 $radioSi.prop("disabled", false);
 
+                $contenedorEmergente
+                    .stop(true, true)
+                    .slideDown(180);
+
+                $custodioEmergente.attr("required", true);
+
+                return;
             }
+
+            // ============================================
+            // CUSTODIO NORMAL
+            // ============================================
+            $radioSi.prop("disabled", false);
+
+            $contenedorEmergente
+                .stop(true, true)
+                .slideUp(180);
+
+            $custodioEmergente
+                .removeAttr("required")
+                .val("");
         }
 
         $custodio.on("change", function() {

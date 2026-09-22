@@ -1313,6 +1313,78 @@ tr.programacion-row-sin-custodio td {
     min-width: 980px;
 }
 
+/* =========================================================
+   CUSTODIO EMERGENTE
+   ========================================================= */
+
+.programacion-custodio-cell--emergente {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.programacion-custodio-avatar--emergente {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(235, 167, 47, .45);
+    border-radius: 50%;
+
+    background: rgba(235, 167, 47, .08);
+    color: var(--st-gold);
+
+    font-size: .58rem;
+    font-weight: 700;
+}
+
+.programacion-custodio-cell--emergente .programacion-custodio-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+
+    min-width: 0;
+}
+
+.programacion-custodio-name--emergente {
+    display: block;
+
+    color: #fff;
+    font-size: .62rem;
+    font-weight: 600;
+    line-height: 1.2;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.programacion-custodio-emergente-badge {
+    display: inline-flex;
+    align-items: center;
+
+    width: fit-content;
+    padding: 2px 6px;
+
+    border: 1px solid rgba(235, 167, 47, .22);
+    border-radius: 4px;
+
+    background: rgba(235, 167, 47, .08);
+    color: var(--st-gold);
+
+    font-size: .48rem;
+    font-weight: 700;
+    line-height: 1;
+
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
 /* ==========================================================================
    ESTATUS Y RIESGO
    ========================================================================== */
@@ -2254,9 +2326,26 @@ select.monitoreo-input option {
     overflow-x: auto;
 }
 
+.monitoreo-table-wrapper::-webkit-scrollbar {
+    height: 6px;
+}
+
+.monitoreo-table-wrapper::-webkit-scrollbar-track {
+    background: #0c131d;
+}
+
+.monitoreo-table-wrapper::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #2d3d52;
+}
+
+.monitoreo-table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #3a4d65;
+}
+
 .monitoreo-table {
     width: 100%;
-    min-width: 1080px;
+    min-width: 1720px;
     margin: 0;
     border-collapse: separate;
     border-spacing: 0;
@@ -2269,6 +2358,43 @@ select.monitoreo-input option {
 
 .monitoreo-operational-date:not(:empty) {
     font-variant-numeric: tabular-nums;
+}
+
+.monitoreo-col-fecha-operativa {
+    min-width: 158px;
+}
+
+.monitoreo-date-input {
+    width: 148px !important;
+    min-width: 148px;
+    height: 29px !important;
+    padding: 3px 6px !important;
+    background: #0d1722 !important;
+    border: 1px solid var(--mon-border) !important;
+    border-radius: 5px !important;
+    color: #aab6c5 !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: .60rem !important;
+    color-scheme: dark;
+    box-shadow: none !important;
+    transition: .18s ease;
+}
+
+.monitoreo-date-input:hover {
+    border-color: #3c5069 !important;
+    color: #dce4ee !important;
+}
+
+.monitoreo-date-input:focus {
+    border-color: var(--mon-gold) !important;
+    color: #fff !important;
+    box-shadow: 0 0 0 3px rgba(235, 167, 47, .07) !important;
+    outline: none;
+}
+
+.monitoreo-date-input:disabled {
+    opacity: .55;
+    cursor: wait;
 }
 
 .monitoreo-acompanantes-value {
@@ -2332,6 +2458,13 @@ select.monitoreo-input option {
 
 .monitoreo-folio:hover {
     color: var(--mon-gold-2) !important;
+}
+
+.monitoreo-bitacora-servicio {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
 }
 
 .monitoreo-client {
@@ -2494,14 +2627,99 @@ td {
     white-space: nowrap;
 }
 
+/* ==========================================================================
+   CUSTODIO EMERGENTE
+   ========================================================================== */
+
+.monitoreo-custodio--emergente {
+    min-width: 145px;
+}
+
+.monitoreo-custodio--emergente .monitoreo-custodio-avatar {
+    border: 1px solid rgba(77, 141, 255, .32);
+    background: rgba(77, 141, 255, .10);
+    color: #69a0ff;
+}
+
+.monitoreo-custodio-emergente-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+.monitoreo-custodio--emergente .monitoreo-custodio-name {
+    max-width: 125px;
+    overflow: hidden;
+    color: #fff;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.monitoreo-custodio-emergente-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 5px;
+    border: 1px solid rgba(77, 141, 255, .18);
+    border-radius: 4px;
+    background: rgba(77, 141, 255, .07);
+    color: #69a0ff;
+    font-size: .43rem;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+   SEMÁFORO DE ESTATUS
+   ========================================================================== */
+
+.monitoreo-status-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+}
+
+.monitoreo-status-dot {
+    width: 8px;
+    height: 8px;
+    flex: 0 0 8px;
+    display: inline-block;
+    border-radius: 50%;
+}
+
+.monitoreo-status-dot--gris {
+    background: #748398;
+    box-shadow: 0 0 0 3px rgba(116, 131, 152, .10);
+}
+
+.monitoreo-status-dot--verde {
+    background: var(--mon-green);
+    box-shadow: 0 0 0 3px rgba(32, 201, 151, .10);
+}
+
+.monitoreo-status-dot--amarillo {
+    background: var(--mon-orange);
+    box-shadow: 0 0 0 3px rgba(245, 166, 35, .10);
+}
+
+.monitoreo-status-dot--rojo {
+    background: var(--mon-red);
+    box-shadow: 0 0 0 3px rgba(239, 83, 91, .10);
+}
+
 
 /* ==========================================================================
    SELECT ESTATUS
    ========================================================================== */
 
 .monitoreo-status-select {
-    width: 100% !important;
-    min-width: 135px;
+    width: 118px !important;
+    min-width: 118px;
     height: 30px !important;
     padding: 3px 25px 3px 8px !important;
     background: #0d1722 !important;
@@ -2530,8 +2748,92 @@ td {
 }
 
 /* ==========================================================================
+   PUNTUALIDAD
+   ========================================================================== */
+
+/*.monitoreo-col-puntualidad {
+    min-width: 190px;
+}*/
+
+.monitoreo-col-causa {
+    min-width: 100px;
+}
+
+.monitoreo-puntualidad-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+}
+
+.monitoreo-puntualidad-dot {
+    width: 8px;
+    height: 8px;
+    flex: 0 0 8px;
+    display: inline-block;
+    border-radius: 50%;
+}
+
+.monitoreo-puntualidad-dot--gris {
+    background: #748398;
+    box-shadow: 0 0 0 3px rgba(116, 131, 152, .10);
+}
+
+.monitoreo-puntualidad-dot--verde {
+    background: var(--mon-green);
+    box-shadow: 0 0 0 3px rgba(32, 201, 151, .10);
+}
+
+.monitoreo-puntualidad-dot--rojo {
+    background: var(--mon-red);
+    box-shadow: 0 0 0 3px rgba(239, 83, 91, .10);
+}
+
+.monitoreo-puntualidad-select {
+    width: 100px !important;
+    min-width: 100px;
+    height: 30px !important;
+    padding: 3px 25px 3px 8px !important;
+    background: #0d1722 !important;
+    border: 1px solid var(--mon-border) !important;
+    border-radius: 5px !important;
+    color: #dce4ee !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: .52rem !important;
+    box-shadow: none !important;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.monitoreo-puntualidad-select:hover {
+    border-color: #3c5069 !important;
+}
+
+.monitoreo-puntualidad-select:focus {
+    border-color: var(--mon-gold) !important;
+    box-shadow: 0 0 0 3px rgba(235, 167, 47, .07) !important;
+    outline: none;
+}
+
+.monitoreo-puntualidad-select:disabled {
+    opacity: .55;
+    cursor: wait;
+}
+
+.monitoreo-causa {
+    max-width: 180px;
+    color: #8d9caf !important;
+    font-size: .52rem !important;
+    line-height: 1.35 !important;
+}
+
+/* ==========================================================================
    ACCIONES
    ========================================================================== */
+
+.monitoreo-col-acciones {
+    min-width: 75px;
+}
 
 .monitoreo-row-actions {
     display: flex;
@@ -3456,6 +3758,98 @@ td {
 }
 
 /* ==========================================================================
+   DETALLE - SERVICIO ARMADO
+   ========================================================================== */
+
+.monitoreo-detail-armed {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--mon-gold);
+}
+
+
+/* ==========================================================================
+   DETALLE - ESTADOS DEL CUSTODIO
+   ========================================================================== */
+
+.monitoreo-custodio-profile__avatar--pending {
+    border: 1px solid rgba(245, 166, 35, .28);
+    background: rgba(245, 166, 35, .10);
+    color: var(--mon-orange);
+}
+
+.monitoreo-custodio-profile__avatar--emergente {
+    border: 1px solid rgba(77, 141, 255, .30);
+    background: rgba(77, 141, 255, .10);
+    color: var(--mon-blue);
+}
+
+.monitoreo-connected-badge--pending {
+    background: rgba(245, 166, 35, .10);
+    color: var(--mon-orange);
+}
+
+.monitoreo-connected-badge--pending > span {
+    background: var(--mon-orange);
+}
+
+.monitoreo-connected-badge--emergente {
+    background: rgba(77, 141, 255, .10);
+    color: var(--mon-blue);
+}
+
+.monitoreo-connected-badge--emergente > span {
+    background: var(--mon-blue);
+}
+
+
+/* ==========================================================================
+   DETALLE - CONTROL OPERATIVO
+   ========================================================================== */
+
+.monitoreo-operational-card {
+    margin-bottom: 15px;
+}
+
+.monitoreo-operational-detail-grid {
+    padding: 13px;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.monitoreo-operational-detail {
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid var(--mon-border-soft);
+    border-radius: 7px;
+    background: rgba(255, 255, 255, .012);
+}
+
+.monitoreo-operational-detail > span {
+    display: block;
+    margin-bottom: 5px;
+    color: #708097;
+    font-size: .48rem;
+    line-height: 1.35;
+}
+
+.monitoreo-operational-detail > strong {
+    display: block;
+    color: #fff;
+    font-size: .57rem;
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.monitoreo-detail-punctuality {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+/* ==========================================================================
    BITÁCORA / TIMELINE
    ========================================================================== */
 
@@ -3662,6 +4056,264 @@ td {
     color: #9aabbf;
 }
 
+/*/table de incidencias y de observaciones/*/
+
+#kdatatable_observaciones_wrapper,
+#kdatatable_incidenciass_wrapper {
+    padding: 11px 12px 10px;
+    color: var(--mon-muted);
+    font-family: 'Poppins', sans-serif;
+    font-size: .52rem;
+}
+
+#kdatatable_observaciones_wrapper > .row,
+#kdatatable_incidenciass_wrapper > .row {
+    margin-left: 0;
+    margin-right: 0;
+    align-items: center;
+}
+
+#kdatatable_observaciones_wrapper > .row:first-child,
+#kdatatable_incidenciass_wrapper > .row:first-child {
+    margin-bottom: 10px;
+}
+
+#kdatatable_observaciones_wrapper > .row:last-child,
+#kdatatable_incidenciass_wrapper > .row:last-child {
+    margin-top: 10px;
+}
+
+#kdatatable_observaciones_wrapper .dataTables_length,
+#kdatatable_incidenciass_wrapper .dataTables_length {
+    display: flex;
+    align-items: center;
+    min-height: 32px;
+}
+
+#kdatatable_observaciones_wrapper .dataTables_length label,
+#kdatatable_incidenciass_wrapper .dataTables_length label {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--mon-muted);
+    font-size: .50rem;
+    font-weight: 400;
+}
+
+#kdatatable_observaciones_wrapper .dataTables_length select,
+#kdatatable_incidenciass_wrapper .dataTables_length select {
+    width: 58px;
+    height: 31px;
+    margin: 0 2px;
+    padding: 4px 20px 4px 8px;
+    border: 1px solid var(--mon-border);
+    border-radius: 6px;
+    background-color: var(--mon-input);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: .58rem;
+    outline: none;
+    box-shadow: none;
+}
+
+#kdatatable_observaciones_wrapper .dataTables_filter,
+#kdatatable_incidenciass_wrapper .dataTables_filter {
+    text-align: right;
+}
+
+#kdatatable_observaciones_wrapper .dataTables_filter label,
+#kdatatable_incidenciass_wrapper .dataTables_filter label {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 7px;
+    color: var(--mon-muted);
+    font-size: .50rem;
+    font-weight: 400;
+}
+
+#kdatatable_observaciones_wrapper .dataTables_filter input,
+#kdatatable_incidenciass_wrapper .dataTables_filter input {
+    width: 190px;
+    height: 31px;
+    margin-left: 0;
+    padding: 5px 9px;
+    border: 1px solid var(--mon-border);
+    border-radius: 6px;
+    background: var(--mon-input);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: .56rem;
+    outline: none;
+    box-shadow: none;
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+#kdatatable_observaciones_wrapper .dataTables_filter input:focus,
+#kdatatable_incidenciass_wrapper .dataTables_filter input:focus {
+    border-color: rgba(235, 167, 47, .55);
+    box-shadow: 0 0 0 3px rgba(235, 167, 47, .06);
+}
+
+
+#kdatatable_observaciones_wrapper .table-responsive,
+#kdatatable_incidenciass_wrapper .table-responsive {
+    overflow-x: auto;
+    border: 0;
+}
+
+#kdatatable_observaciones,
+#kdatatable_incidenciass {
+    width: 100% !important;
+    margin: 0 !important;
+    border-collapse: collapse !important;
+}
+
+#kdatatable_observaciones thead th,
+#kdatatable_incidenciass thead th {
+    padding: 9px 8px !important;
+    border-top: 0 !important;
+    border-bottom: 1px solid var(--mon-border) !important;
+    background: transparent !important;
+    color: #73869e !important;
+    font-size: .48rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+#kdatatable_observaciones tbody td,
+#kdatatable_incidenciass tbody td {
+    padding: 10px 8px !important;
+    border-top: 0 !important;
+    border-bottom: 1px solid var(--mon-border-soft) !important;
+    background: transparent !important;
+    color: var(--mon-text) !important;
+    font-size: .52rem !important;
+    vertical-align: middle;
+}
+
+#kdatatable_observaciones tbody tr:last-child td,
+#kdatatable_incidenciass tbody tr:last-child td {
+    border-bottom: 0 !important;
+}
+
+
+#kdatatable_observaciones .dataTables_empty,
+#kdatatable_incidenciass .dataTables_empty {
+    height: 58px;
+    color: var(--mon-muted) !important;
+    font-size: .52rem !important;
+    text-align: center !important;
+}
+
+
+#kdatatable_observaciones_wrapper .dataTables_info,
+#kdatatable_incidenciass_wrapper .dataTables_info {
+    padding-top: 0 !important;
+    color: var(--mon-muted);
+    font-size: .49rem;
+    line-height: 28px;
+}
+
+#kdatatable_observaciones_wrapper .dataTables_paginate,
+#kdatatable_incidenciass_wrapper .dataTables_paginate {
+    padding-top: 0 !important;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#kdatatable_observaciones_wrapper .pagination,
+#kdatatable_incidenciass_wrapper .pagination {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+#kdatatable_observaciones_wrapper .page-item .page-link,
+#kdatatable_incidenciass_wrapper .page-item .page-link {
+    min-width: 29px;
+    height: 29px;
+    margin: 0;
+    padding: 0 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--mon-border);
+    border-radius: 6px;
+    background: var(--mon-input);
+    color: var(--mon-muted);
+    font-size: .51rem;
+    font-weight: 600;
+    line-height: 1;
+    box-shadow: none;
+}
+
+#kdatatable_observaciones_wrapper .page-item:not(.disabled) .page-link:hover,
+#kdatatable_incidenciass_wrapper .page-item:not(.disabled) .page-link:hover {
+    border-color: rgba(235, 167, 47, .45);
+    background: rgba(235, 167, 47, .08);
+    color: var(--mon-gold);
+}
+
+#kdatatable_observaciones_wrapper .page-item.active .page-link,
+#kdatatable_incidenciass_wrapper .page-item.active .page-link {
+    border-color: var(--mon-gold);
+    background: var(--mon-gold);
+    color: #111820;
+}
+
+#kdatatable_observaciones_wrapper .page-item.disabled .page-link,
+#kdatatable_incidenciass_wrapper .page-item.disabled .page-link {
+    border-color: rgba(148, 163, 184, .08);
+    background: rgba(148, 163, 184, .04);
+    color: #526074;
+    opacity: .55;
+    cursor: default;
+}
+
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 767.98px) {
+
+    #kdatatable_observaciones_wrapper .dataTables_filter,
+    #kdatatable_incidenciass_wrapper .dataTables_filter {
+        margin-top: 8px;
+        text-align: left;
+    }
+
+    #kdatatable_observaciones_wrapper .dataTables_filter label,
+    #kdatatable_incidenciass_wrapper .dataTables_filter label {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    #kdatatable_observaciones_wrapper .dataTables_filter input,
+    #kdatatable_incidenciass_wrapper .dataTables_filter input {
+        width: 100%;
+    }
+
+    #kdatatable_observaciones_wrapper .dataTables_info,
+    #kdatatable_incidenciass_wrapper .dataTables_info {
+        line-height: 1.5;
+        margin-bottom: 8px;
+    }
+
+    #kdatatable_observaciones_wrapper .dataTables_paginate,
+    #kdatatable_incidenciass_wrapper .dataTables_paginate {
+        justify-content: flex-start;
+    }
+}
+
+
 /* ==========================================================================
    RESPONSIVE - LAPTOP
    ========================================================================== */
@@ -3692,6 +4344,8 @@ td {
     .monitoreo-status-info {
         margin: 0;
     }
+
+
 }
 
 /* ==========================================================================
@@ -3745,6 +4399,10 @@ td {
 
     .monitoreo-records-grid {
         grid-template-columns: 1fr;
+    }
+
+    .monitoreo-operational-detail-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
 
@@ -3868,6 +4526,11 @@ td {
         grid-template-columns: 1fr;
         gap: 3px;
     }
+
+    .monitoreo-operational-detail-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
 }
 
 /* ==========================================================================
@@ -3890,6 +4553,10 @@ td {
 
     #map-monitoring {
         min-height: 280px;
+    }
+
+    .monitoreo-operational-detail-grid {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -4439,14 +5106,10 @@ textarea.transport-input {
     width: 100%;
     min-height: 38px;
     padding: 6px 9px;
-
     display: flex;
     align-items: center;
-
     gap: 8px;
-
     background: rgba(15, 25, 36, .62);
-
     border: 1px dashed rgba(129, 144, 165, .24);
     border-radius: 7px;
 }
@@ -4454,17 +5117,12 @@ textarea.transport-input {
 .transport-readonly__icon {
     width: 27px;
     height: 27px;
-
     flex: 0 0 27px;
-
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 6px;
-
     background: rgba(129, 144, 165, .08);
-
     color: #718197;
 }
 
@@ -4479,30 +5137,21 @@ textarea.transport-input {
 
 .transport-readonly__content strong {
     display: block;
-
     overflow: hidden;
-
     color: #bac5d2;
-
     font-size: .59rem;
     line-height: 1.3;
     font-weight: 600;
-
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 .transport-readonly__content small {
     display: block;
-
     margin-top: 1px;
-
     overflow: hidden;
-
     color: #6f7f94;
-
     font-size: .46rem;
-
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -4510,21 +5159,78 @@ textarea.transport-input {
 .transport-readonly__badge {
     min-height: 20px;
     padding: 3px 7px;
-
     display: inline-flex;
     align-items: center;
-
     border-radius: 12px;
-
     background: rgba(129, 144, 165, .07);
-
     color: #718197;
-
     font-size: .43rem;
     font-weight: 600;
-
     white-space: nowrap;
 }
+
+/* ==========================================================================
+   CUSTODIO EMERGENTE - EDICIÓN DE SERVICIO
+   ========================================================================== */
+
+.transport-emergency-info {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(77, 141, 255, .22);
+    border-radius: 7px;
+
+    background: rgba(77, 141, 255, .06);
+}
+
+.transport-emergency-info__icon {
+    width: 31px;
+    height: 31px;
+    flex: 0 0 31px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(77, 141, 255, .22);
+    border-radius: 7px;
+    background: rgba(77, 141, 255, .08);
+    color: #69a0ff;
+    font-size: .85rem;
+}
+
+.transport-emergency-info > div {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.transport-emergency-info small {
+    color: #69a0ff;
+    font-size: .46rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: .04em;
+}
+
+.transport-emergency-info strong {
+    overflow: hidden;
+    color: #fff;
+    font-size: .60rem;
+    font-weight: 600;
+    line-height: 1.35;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.transport-emergency-info > div > span {
+    color: #78889d;
+    font-size: .49rem;
+    line-height: 1.35;
+}
+
 
 @media (max-width: 480px) {
 

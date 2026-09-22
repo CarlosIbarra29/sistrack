@@ -57,7 +57,7 @@ class ProgramacionController extends Controller
         }
         $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
 
-        $programcion = Programacion::select('programacion.id','programacion.folio','programacion.tipo_servicio','pe.estatus_programacion','cli.nombre_cliente','programacion.dom_origen','programacion.dom_destino','programacion.fecha_servicio','programacion.programacion_estatus_id','programacion.op_monitoreo_id','programacion.custodio_id','programacion.folio_interno','programacion.estatus_custodio','programacion.armado_servicio')
+        $programcion = Programacion::select('programacion.id','programacion.folio','programacion.tipo_servicio','pe.estatus_programacion','cli.nombre_cliente','programacion.dom_origen','programacion.dom_destino','programacion.fecha_servicio','programacion.programacion_estatus_id','programacion.op_monitoreo_id','programacion.custodio_id','programacion.folio_interno','programacion.estatus_custodio','programacion.armado_servicio','programacion.custodio_emergente')
         ->with(['custodio','acompanantesProgramacion.custodio'])
         ->leftJoin('programacion_estatus as pe','pe.id','=','programacion.programacion_estatus_id')
         ->leftJoin('cliente as cli','cli.id','=','programacion.cliente_id')
@@ -325,6 +325,7 @@ class ProgramacionController extends Controller
             'nuevo_cliente_razon_social' => 'required_if:cliente_id,0|max:255',
             'fecha_hora' => 'required',
             'custodio_id' => 'required',
+            'custodio_emergente' => 'required_if:custodio_id,154|nullable|string|max:255',
             'programacion_id' => 'required',
             'tipo_servicio' => 'required',
             'armado_servicio' => 'required',
@@ -343,7 +344,20 @@ class ProgramacionController extends Controller
 
             $sinCustodio = ((int) $request->custodio_id === 153);
 
-            $estatusCustodio = $sinCustodio ? 1 : 0;
+            $custodioEmergente = ((int) $request->custodio_id === 154);
+
+            if ($sinCustodio) {
+
+                $estatusCustodio = 1;
+
+            } elseif ($custodioEmergente) {
+
+                $estatusCustodio = -1;
+
+            } else {
+
+                $estatusCustodio = 0;
+            }
 
             if ((int) $request->cliente_id === 0) {
 
@@ -384,6 +398,7 @@ class ProgramacionController extends Controller
                 'op_monitoreo_id' => 1,
                 'estatus_viaje_id' => 1,
                 'siaf_status' => 1,
+                'custodio_emergente' => $custodioEmergente ? trim($request->custodio_emergente) : null,
                 'created_at' =>date('Y-m-d H:i:s'),
                 'updated_at' =>date('Y-m-d H:i:s'),
                 'iduserCreated' =>auth()->user()->id,

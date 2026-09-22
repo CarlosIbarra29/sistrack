@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=1.2.1') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=1.2.2') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js?v=2.0.2') }}"></script>
+    <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js?v=2.0.3') }}"></script>
 @endpush
 
 @section('title')
@@ -33,6 +33,12 @@
                 <i class="la la-refresh"></i>
                 <span>ACTUALIZAR</span>
             </button>
+
+            <a href="{{ route('monitoreo.listamonitoreofinalizado') }}"
+               class="monitoreo-btn monitoreo-btn--secondary">
+                <i class="la la-check-circle"></i>
+                <span>SERVICIOS FINALIZADOS</span>
+            </a>
 
             <button type="button"
                     id="monitoreo_exportar"
@@ -188,15 +194,27 @@
                         </th>
 
                         <th class="monitoreo-col-fecha-operativa">
-                            Llegada trayecto
+                            Llegada punto Origen
                         </th>
 
                         <th class="monitoreo-col-fecha-operativa">
-                            Llegada a destino
+                            Inicio de servicio
                         </th>
 
                         <th class="monitoreo-col-fecha-operativa">
-                            Finalización
+                            Arribo punto de destino
+                        </th>
+
+                        <th class="monitoreo-col-fecha-operativa">
+                            Finalización de servicio
+                        </th>
+
+                        <th class="monitoreo-col-puntualidad">
+                            Puntualidad
+                        </th>
+
+                        <th class="monitoreo-col-causa">
+                            Causa
                         </th>
 
                         <th class="monitoreo-col-acciones text-center">
@@ -212,10 +230,21 @@
                             class="{{(int) $unid->custodio_id === 153 ? 'monitoreo-row-sin-custodio' : '' }}">
 
                             <td>
-                                <a href="{{ route('monitoreo.verprogramacionmon', $unid->id) }}"
-                                   class="monitoreo-folio">
-                                    {{ $unid->folio }}
-                                </a>
+                                <div class="monitoreo-bitacora-servicio">
+
+                                    <a href="{{ route('monitoreo.verprogramacionmon', $unid->id) }}"
+                                       class="monitoreo-folio">
+                                        {{ $unid->folio }}
+                                    </a>
+
+                                    @if((int) $unid->armado_servicio === 1)
+                                        <span class="monitoreo-armed-icon"
+                                              title="Servicio armado">
+                                            🔫
+                                        </span>
+                                    @endif
+
+                                </div>
                             </td>
 
                             <td class="monitoreo-id">
@@ -240,20 +269,42 @@
                             </td>
 
                             <td>
-                                <select class="form-control monitoreo-status-select"
-                                        id="programacion_id_{{ $unid->id }}"
-                                        name="programacion_id"
-                                        data-role="estatus-programacion"
-                                        data-programacion="{{ $unid->id }}">
+                                <div class="monitoreo-status-wrapper">
 
-                                    @foreach($estatus_programacion as $tp)
-                                        <option value="{{ $tp->id }}"
-                                                @selected($unid->programacion_estatus_id == $tp->id)>
-                                            {{ $tp->estatus_programacion }}
-                                        </option>
-                                    @endforeach
+                                    <span
+                                        class="monitoreo-status-dot
+                                            @if((int) $unid->programacion_estatus_id === 1)
+                                                monitoreo-status-dot--gris
+                                            @elseif((int) $unid->programacion_estatus_id === 3)
+                                                monitoreo-status-dot--verde
+                                            @elseif((int) $unid->programacion_estatus_id === 10)
+                                                monitoreo-status-dot--rojo
+                                            @else
+                                                monitoreo-status-dot--amarillo
+                                            @endif"
+                                        data-role="estatus-semaforo">
+                                    </span>
 
-                                </select>
+                                    <select class="form-control monitoreo-status-select monitoreo-status-select--compact"
+                                            id="programacion_id_{{ $unid->id }}"
+                                            name="programacion_id"
+                                            data-role="estatus-programacion"
+                                            data-programacion="{{ $unid->id }}"
+                                            data-estatus-anterior="{{ $unid->programacion_estatus_id }}">
+
+                                        @foreach($estatus_programacion as $tp)
+
+                                            <option value="{{ $tp->id }}"
+                                                    @selected($unid->programacion_estatus_id == $tp->id)>
+                                                {{ $tp->estatus_programacion }}
+                                            </option>
+
+                                        @endforeach
+
+                                    </select>
+
+                                </div>
+
                             </td>
 
                             <td class="monitoreo-client">
@@ -281,6 +332,8 @@
                             </td>
 
                             <td>
+
+                                {{-- SIN CUSTODIO --}}
                                 @if((int) $unid->custodio_id === 153)
 
                                     <div class="monitoreo-custodio monitoreo-custodio--pending">
@@ -303,12 +356,36 @@
 
                                     </div>
 
+                                {{-- CUSTODIO EMERGENTE --}}
+                                @elseif((int) $unid->custodio_id === 154)
+
+                                    <div class="monitoreo-custodio monitoreo-custodio--emergente">
+
+                                        <span class="monitoreo-custodio-avatar">
+                                            E
+                                        </span>
+
+                                        <div class="monitoreo-custodio-emergente-info">
+
+                                            <strong class="monitoreo-custodio-name">
+                                                {{ $unid->custodio_emergente ?: 'Custodio emergente' }}
+                                            </strong>
+
+                                            <small class="monitoreo-custodio-emergente-label">
+                                                Custodio emergente
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                {{-- CUSTODIO NORMAL --}}
                                 @else
 
                                     <div class="monitoreo-custodio">
 
                                         <span class="monitoreo-custodio-avatar">
-                                            {{ substr($unid->custodio->nombre_custodio ?? 'S',0,1) }}
+                                            {{ substr($unid->custodio->nombre_custodio ?? 'S', 0, 1) }}
                                         </span>
 
                                         <span class="monitoreo-custodio-name">
@@ -316,20 +393,12 @@
                                             {{ $unid->custodio->nombre_custodio ?? 'Sin asignar' }}
                                             {{ $unid->custodio->ap_paterno ?? '' }}
 
-                                            @if($unid->custodio && (int) $unid->custodio->tipo_custodio === 2)
-
-                                                <span class="monitoreo-armed-icon"
-                                                      title="Custodio armado">
-                                                    🔫
-                                                </span>
-
-                                            @endif
-
                                         </span>
 
                                     </div>
 
                                 @endif
+
                             </td>
 
                             <td class="monitoreo-muted">
@@ -359,15 +428,6 @@
                                                             {{ $acompanante->custodio->ap_materno }}
                                                         @endif
 
-                                                        @if((int) $acompanante->custodio->tipo_custodio === 2)
-
-                                                            <span class="monitoreo-armed-icon"
-                                                                  title="Custodio armado">
-                                                                🔫
-                                                            </span>
-
-                                                        @endif
-
                                                     </span>
 
                                                 </div>
@@ -388,15 +448,98 @@
                             </td>
 
                             <td class="monitoreo-date monitoreo-operational-date">
-                                {{ $unid->fechahora_inicio_trayecto == '' || $unid->fechahora_inicio_trayecto == NULL ? '-' : date('d/m/Y h:i A', strtotime($unid->fechahora_inicio_trayecto)) }}
+
+                                <input type="datetime-local"
+                                       class="form-control monitoreo-date-input"
+                                       data-role="fecha-operativa"
+                                       data-programacion="{{ $unid->id }}"
+                                       data-campo="fechahora_llegada_custodio"
+                                       value="{{ $unid->fechahora_llegada_custodio ? date('Y-m-d\TH:i', strtotime($unid->fechahora_llegada_custodio)) : '' }}">
+
                             </td>
 
                             <td class="monitoreo-date monitoreo-operational-date">
-                                {{ $unid->fechahora_llegado_destino == '' || $unid->fechahora_llegado_destino == NULL ? '-' : date('d/m/Y h:i A', strtotime($unid->fechahora_llegado_destino)) }}
+
+                                <input type="datetime-local"
+                                       class="form-control monitoreo-date-input"
+                                       data-role="fecha-operativa"
+                                       data-programacion="{{ $unid->id }}"
+                                       data-campo="fechahora_inicio_trayecto"
+                                       value="{{ $unid->fechahora_inicio_trayecto ? date('Y-m-d\TH:i', strtotime($unid->fechahora_inicio_trayecto)) : '' }}">
+
                             </td>
 
                             <td class="monitoreo-date monitoreo-operational-date">
-                                {{ $unid->fechahora_finalizacion == '' || $unid->fechahora_finalizacion == NULL ? '-' : date('d/m/Y h:i A', strtotime($unid->fechahora_finalizacion)) }}
+
+                                <input type="datetime-local"
+                                       class="form-control monitoreo-date-input"
+                                       data-role="fecha-operativa"
+                                       data-programacion="{{ $unid->id }}"
+                                       data-campo="fechahora_llegado_destino"
+                                       value="{{ $unid->fechahora_llegado_destino ? date('Y-m-d\TH:i', strtotime($unid->fechahora_llegado_destino)) : '' }}">
+
+                            </td>
+
+                            <td class="monitoreo-date monitoreo-operational-date">
+
+                                <input type="datetime-local"
+                                       class="form-control monitoreo-date-input"
+                                       data-role="fecha-operativa"
+                                       data-programacion="{{ $unid->id }}"
+                                       data-campo="fechahora_finalizacion"
+                                       value="{{ $unid->fechahora_finalizacion ? date('Y-m-d\TH:i', strtotime($unid->fechahora_finalizacion)) : '' }}">
+
+                            </td>
+
+                            <td>
+
+                                <div class="monitoreo-puntualidad-wrapper">
+
+                                    <span
+                                        class="monitoreo-puntualidad-dot
+                                            {{ (int) $unid->estatus_itinerario === 1
+                                                ? 'monitoreo-puntualidad-dot--verde'
+                                                : (!empty($unid->estatus_itinerario)
+                                                    ? 'monitoreo-puntualidad-dot--rojo'
+                                                    : 'monitoreo-puntualidad-dot--gris') }}"
+                                        data-role="puntualidad-semaforo">
+                                    </span>
+
+                                    <select class="form-control monitoreo-puntualidad-select"
+                                            data-role="puntualidad"
+                                            data-programacion="{{ $unid->id }}"
+                                            data-puntualidad-anterior="{{ $unid->estatus_itinerario }}">
+
+                                        <option value="" disabled selected>
+                                            Sin estatus
+                                        </option>
+
+                                        @foreach($estatus_itinerario as $itinerario)
+
+                                            <option value="{{ $itinerario->id }}"
+                                                    data-causa="{{ $itinerario->value }}"
+                                                    @selected($unid->estatus_itinerario == $itinerario->id)>
+
+                                                {{ $itinerario->descripcion }}   {{ $itinerario->value }}
+
+                                            </option>
+
+                                        @endforeach
+
+                                    </select>
+
+                                </div>
+
+                            </td>
+
+                            <td class="monitoreo-causa"data-role="puntualidad-causa">
+
+                                @if(empty($unid->estatus_itinerario) || (int) $unid->estatus_itinerario === 1)
+                                    -
+                                @else
+                                    {{ $unid->puntualidad_causa ?: '-' }}
+                                @endif
+
                             </td>
 
                             <td>
@@ -448,6 +591,14 @@
 <input type="hidden"
        id="url_estatus"
        value="{{ route('monitoreo.updateestatusajax') }}">
+
+<input type="hidden"
+       id="url_fecha_estadia"
+       value="{{ route('monitoreo.updatefechaestadiasajax') }}">
+
+<input type="hidden"
+       id="url_itinerario"
+       value="{{ route('monitoreo.updateitinerarioajax') }}">
 
 <input type="hidden"
        id="datatable_i18n"

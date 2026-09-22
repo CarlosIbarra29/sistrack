@@ -54,33 +54,44 @@ var ModuloEstadias = function () {
 
         var actualizarOpciones = function () {
 
-            var custodioPrincipal = String(
-                custodio.value || ''
-            );
+            var custodioPrincipal = String(custodio.value || '');
 
-            Array.prototype.forEach.call(
-                acompanantes.options,
+            var sinCustodio = custodioPrincipal === '153';
+
+            if (sinCustodio) {
+
+                acompanantes.disabled = true;
+
+                Array.prototype.forEach.call( acompanantes.options,
+                    function (option) {
+                        option.selected = false;
+                        option.disabled = false;
+                    }
+                );
+
+                return;
+            }
+
+            acompanantes.disabled = false;
+
+            Array.prototype.forEach.call(acompanantes.options,
                 function (option) {
 
-                    var esPrincipal =
-                        custodioPrincipal !== '' &&
-                        String(option.value) === custodioPrincipal;
+                    var valor = String(option.value || '');
+                    var esPrincipal = custodioPrincipal !== '' && valor === custodioPrincipal;
+                    var esSinCustodio = valor === '153';
+                    option.disabled = esPrincipal || esSinCustodio;
 
-                    option.disabled = esPrincipal;
-
-                    if (esPrincipal && option.selected) {
+                    if ((esPrincipal || esSinCustodio) && option.selected) {
                         option.selected = false;
                     }
-
                 }
             );
 
         };
 
-        custodio.addEventListener(
-            'change',
-            actualizarOpciones
-        );
+        custodio.addEventListener( 'change', actualizarOpciones);
+
 
         actualizarOpciones();
 

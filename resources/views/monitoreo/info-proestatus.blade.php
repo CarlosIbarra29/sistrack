@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=1.0.2') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=2.0.2') }}" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet"
           href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -28,21 +28,29 @@
 
 @php
     $clienteActual = $cliente->firstWhere('id', $programacion->cliente_id);
-    $custodioActual = $custodio->firstWhere('id', $programacion->custodio_id);
     $estatusActual = $estatus_programacion->firstWhere('id', $programacion->programacion_estatus_id);
     $tarifarioActual = $tarifario->firstWhere('id', $programacion->tarifario_id);
+    $custodioActual = $custodio->firstWhere('id',$programacion->custodio_id);
 
-    $nombreCustodio = $custodioActual
-        ? trim(
-            $custodioActual->nombre_custodio . ' ' .
-            $custodioActual->ap_paterno . ' ' .
-            $custodioActual->ap_materno
-        )
-        : 'Sin custodio asignado';
+    $esSinCustodio = (int) $programacion->custodio_id === 153;
+    $esCustodioEmergente = (int) $programacion->custodio_id === 154;
+    $servicioArmado = (int) $programacion->armado_servicio === 1;
 
-    $inicialCustodio = $custodioActual
-        ? strtoupper(substr($custodioActual->nombre_custodio, 0, 1))
-        : 'S';
+
+    if ($esSinCustodio) {
+        $nombreCustodio = 'Sin custodio asignado';
+        $inicialCustodio = '!';
+
+    } elseif ($esCustodioEmergente) {
+
+        $nombreCustodio = !empty($programacion->custodio_emergente)? $programacion->custodio_emergente : 'Custodio emergente';
+        $inicialCustodio = 'E';
+
+    } else {
+
+        $nombreCustodio = $custodioActual ? trim($custodioActual->nombre_custodio . ' ' .$custodioActual->ap_paterno . ' ' .$custodioActual->ap_materno) : 'Sin custodio asignado';
+        $inicialCustodio = $custodioActual ? strtoupper( substr( $custodioActual->nombre_custodio,0,1)): 'S';
+    }
 
     $nombreCliente = $clienteActual
         ? $clienteActual->nombre_cliente
@@ -77,9 +85,10 @@
             </p>
         </div>
 
-        <a href="{{ route('monitoreo.listamonitoreo') }}"
+        <a href="{{ (int) $programacion->programacion_estatus_id === 7
+                ? route('monitoreo.listamonitoreofinalizado')
+                : route('monitoreo.listamonitoreo')}}"
            class="monitoreo-btn monitoreo-btn--secondary">
-
             <i class="flaticon2-back"></i>
             Regresar
 
@@ -137,6 +146,28 @@
                         <strong>
                             {{ $programacion->tipo_servicio == 0 ? 'Foráneo' : 'Local' }}
                         </strong>
+                    </div>
+
+                    <div>
+
+                        <span>Modalidad de custodia</span>
+
+                        <strong>
+
+                            @if($servicioArmado)
+
+                                <span class="monitoreo-detail-armed">
+                                    🔫 Servicio armado
+                                </span>
+
+                            @else
+
+                                Servicio sin arma
+
+                            @endif
+
+                        </strong>
+
                     </div>
 
                     <div>
@@ -403,26 +434,79 @@
 
                 <div class="monitoreo-custodio-profile">
 
-                    <span class="monitoreo-custodio-profile__avatar">
+                    <span class="monitoreo-custodio-profile__avatar 
+                        @if($esSinCustodio)
+                            monitoreo-custodio-profile__avatar--pending
+                        @elseif($esCustodioEmergente)
+                            monitoreo-custodio-profile__avatar--emergente
+                        @endif
+                    ">
+
                         {{ $inicialCustodio }}
+
                     </span>
 
-                    <div>
-                        <strong>{{ $nombreCustodio }}</strong>
 
-                        @if($custodioActual)
+                    <div>
+
+                        <strong>
+                            {{ $nombreCustodio }}
+                        </strong>
+
+
+                        @if($esSinCustodio)
+
+                            <small>
+                                Pendiente de asignación
+                            </small>
+
+                        @elseif($esCustodioEmergente)
+
+                            <small>
+                                Custodio emergente
+                            </small>
+
+                        @elseif($custodioActual)
+
                             <small>
                                 ID: {{ $custodioActual->id }}
                             </small>
+
                         @endif
+
                     </div>
 
                 </div>
 
-                <span class="monitoreo-connected-badge">
-                    <span></span>
-                    ASIGNADO
-                </span>
+
+                @if($esSinCustodio)
+
+                    <span class="monitoreo-connected-badge monitoreo-connected-badge--pending">
+
+                        <span></span>
+                        SIN ASIGNAR
+
+                    </span>
+
+                @elseif($esCustodioEmergente)
+
+                    <span class="monitoreo-connected-badge monitoreo-connected-badge--emergente">
+
+                        <span></span>
+                        EMERGENTE
+
+                    </span>
+
+                @else
+
+                    <span class="monitoreo-connected-badge">
+
+                        <span></span>
+                        ASIGNADO
+
+                    </span>
+
+                @endif
 
             </div>
 
@@ -488,6 +572,162 @@
         </section>
 
     </div>
+
+    <section class="monitoreo-panel monitoreo-operational-card">
+
+        <div class="monitoreo-panel-header">
+
+            <div>
+
+                <span class="monitoreo-eyebrow">
+                    CONTROL OPERATIVO
+                </span>
+
+                <h6>
+                    TIEMPOS Y PUNTUALIDAD
+                </h6>
+
+            </div>
+
+            <i class="la la-clock-o monitoreo-header-icon"></i>
+
+        </div>
+
+
+        <div class="monitoreo-operational-detail-grid">
+
+            <div class="monitoreo-operational-detail">
+
+                <span>
+                    Llegada punto Origen
+                </span>
+
+                <strong>
+
+                    @if($estadias_info && !empty($estadias_info->fechahora_llegada_custodio))
+                        {{ date( 'd/m/Y H:i', strtotime( $estadias_info->fechahora_llegada_custodio)) }}
+                    @else
+                        Sin registrar
+                    @endif
+
+                </strong>
+
+            </div>
+
+            <div class="monitoreo-operational-detail">
+
+                <span>
+                    Inicio de servicio
+                </span>
+
+                <strong>
+
+                    @if($estadias_info && !empty($estadias_info->fechahora_inicio_trayecto))
+                        {{ date('d/m/Y H:i',strtotime($estadias_info->fechahora_inicio_trayecto)) }}
+                    @else
+                        Sin registrar
+                    @endif
+
+                </strong>
+
+            </div>
+
+            <div class="monitoreo-operational-detail">
+
+                <span>
+                    Arribo punto de destino
+                </span>
+
+                <strong>
+
+                    @if($estadias_info && !empty($estadias_info->fechahora_llegado_destino))
+                        {{ date('d/m/Y H:i',strtotime($estadias_info->fechahora_llegado_destino)) }}
+                    @else
+                        Sin registrar
+                    @endif
+
+                </strong>
+
+            </div>
+
+            <div class="monitoreo-operational-detail">
+
+                <span>
+                    Finalización de servicio
+                </span>
+
+                <strong>
+
+                    @if($estadias_info && !empty($estadias_info->fechahora_finalizacion))
+                        {{ date('d/m/Y H:i',strtotime($estadias_info->fechahora_finalizacion)) }}
+                    @else
+                        Sin registrar
+                    @endif
+
+                </strong>
+
+            </div>
+
+            <div class="monitoreo-operational-detail">
+
+                <span>
+                    Puntualidad
+                </span>
+
+                <strong>
+
+                    <span class="monitoreo-detail-punctuality">
+
+                        <span class="
+                            monitoreo-puntualidad-dot
+
+                            @if($puntualidad_info && (int) $puntualidad_info->id === 1)
+                                monitoreo-puntualidad-dot--verde
+
+                            @elseif($puntualidad_info)
+                                monitoreo-puntualidad-dot--rojo
+
+                            @else
+                                monitoreo-puntualidad-dot--gris
+                            @endif
+                        ">
+                        </span>
+
+
+                        @if($puntualidad_info)
+                            {{ $puntualidad_info->descripcion }}
+                        @else
+                            Sin estatus de puntualidad
+                        @endif
+
+                    </span>
+
+                </strong>
+
+            </div>
+
+            <div class="monitoreo-operational-detail">
+
+                <span>
+                    Causa
+                </span>
+
+                <strong>
+
+                    @if( !$puntualidad_info ||(int) $puntualidad_info->id === 1 ||empty($puntualidad_info->value))
+                        -
+                    @else
+                        {{ $puntualidad_info->value }}
+                    @endif
+
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </section>
 
     <section class="monitoreo-panel monitoreo-activity-card">
 

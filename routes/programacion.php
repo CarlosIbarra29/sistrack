@@ -31,10 +31,13 @@
 
 	// M O N I T O R E O
 	Route::get('/listado-monitoreo', [App\Http\Controllers\Programacion\MonitoreoController::class, 'listadomonitoreo'])->name('monitoreo.listamonitoreo');
+	Route::get('/listado-monitoreo-finalizado',[App\Http\Controllers\Programacion\MonitoreoController::class, 'listadomonitoreofinalizado'])->name('monitoreo.listamonitoreofinalizado');
 	Route::post('/monitoreo-datatable', [App\Http\Controllers\Programacion\MonitoreoController::class, 'monitoreodatatable'])->name('monitoreo.monitoreodatatable');	
 	Route::get('/modulo-estadias/{id}', [App\Http\Controllers\Programacion\MonitoreoController::class, 'moduloestadias'])->name('monitoreo.moduloestadias');
 	Route::post('/guardar-estadia', [App\Http\Controllers\Programacion\MonitoreoController::class, 'guardarestadia'])->name('monitoreo.guardarestadia'); 
 	Route::get('/info-estatuspro/{id}', [App\Http\Controllers\Programacion\MonitoreoController::class, 'infoestatuspro'])->name('monitoreo.verprogramacionmon');
 	Route::post('/update-estatus', [App\Http\Controllers\Programacion\MonitoreoController::class, 'updateestatus'])->name('monitoreo.updateestatus');
 	Route::post('/update-estatus-ajax', [App\Http\Controllers\Programacion\MonitoreoController::class, 'updateestatusajax'])->name('monitoreo.updateestatusajax');
+	Route::post('/update-fecha-estadias-ajax',[App\Http\Controllers\Programacion\MonitoreoController::class, 'updatefechaestadiasajax'])->name('monitoreo.updatefechaestadiasajax');
+	Route::post('/update-itinerario-ajax',[App\Http\Controllers\Programacion\MonitoreoController::class, 'updateitinerarioajax'])->name('monitoreo.updateitinerarioajax');
 	Route::post('/guardar-incidencia', [App\Http\Controllers\Programacion\MonitoreoController::class, 'guardarincidencia'])->name('monitoreo.guardarincidencia'); 

@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=1.2.1') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=1.2.2') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
     <script src="{{ asset('js/programacion/CatalogoProgramacion.js?v=1.3.8') }}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <script src="{{ asset('js/programacion/AgregarProgramacionUnique.js?v=1.0.5') }}"></script>
+    <script src="{{ asset('js/programacion/AgregarProgramacionUnique.js?v=1.0.6') }}"></script>
 @endpush
 
 @section('title')
@@ -367,6 +367,10 @@
                                                 Sin custodio
                                             </option>
 
+                                            <option value="154">
+                                                Custodio emergente
+                                            </option>
+
                                             @foreach($custodio as $cli)
 
                                                 {{-- Seguridad por si algún día el 153 cambia de estatus --}}
@@ -383,6 +387,24 @@
                                             @endforeach
 
                                         </select>
+
+                                    </div>
+
+                                    <div class="form-group programacion-field-custodio-emergente"
+                                         id="contenedor_custodio_emergente"
+                                         style="display: none;">
+
+                                        <label class="app-label">
+                                            Nombre completo del custodio emergente *
+                                        </label>
+
+                                        <input type="text"
+                                               class="form-control app-input"
+                                               name="custodio_emergente"
+                                               id="custodio_emergente"
+                                               placeholder="Nombre completo del custodio emergente"
+                                               autocomplete="off"
+                                               maxlength="255">
 
                                     </div>
 
@@ -647,11 +669,7 @@
                                             <div class="programacion-custodio-cell programacion-custodio-cell--pending">
 
                                                 <div class="programacion-custodio-avatar programacion-custodio-avatar--pending">
-
-                                                    <span>
-                                                        !
-                                                    </span>
-
+                                                    <span>!</span>
                                                 </div>
 
                                                 <div class="programacion-custodio-info">
@@ -668,6 +686,29 @@
 
                                             </div>
 
+                                        @elseif((int) $unid->custodio_id === 154)
+
+                                            <div class="programacion-custodio-cell programacion-custodio-cell--emergente">
+
+                                                <div class="programacion-custodio-avatar programacion-custodio-avatar--emergente">
+                                                    <span>E</span>
+                                                </div>
+
+                                                <div class="programacion-custodio-info">
+
+                                                    <span class="programacion-custodio-name programacion-custodio-name--emergente">
+                                                        {{ $unid->custodio_emergente }}
+                                                    </span>
+
+                                                    <span class="programacion-custodio-emergente-badge">
+                                                        Emergente
+                                                    </span>
+
+                                                </div>
+
+                                            </div>
+
+
                                         @else
 
                                             <div class="programacion-custodio-cell">
@@ -675,7 +716,7 @@
                                                 <div class="programacion-custodio-avatar">
 
                                                     <span>
-                                                        {{ substr( $unid->custodio->nombre_custodio ?? 'S',0,1) }}
+                                                        {{ substr($unid->custodio->nombre_custodio ?? 'S', 0, 1) }}
                                                     </span>
 
                                                 </div>
@@ -683,9 +724,7 @@
                                                 <div class="programacion-custodio-info">
 
                                                     <span class="programacion-custodio-name">
-
                                                         {{ $unid->custodio->nombre_custodio ?? 'Sin asignar' }}
-
                                                     </span>
 
                                                 </div>

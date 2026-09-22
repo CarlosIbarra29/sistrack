@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=2.0.3') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=2.0.4') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
@@ -62,7 +62,9 @@
 
         </div>
 
-        <a href="{{ route('monitoreo.listamonitoreo') }}" class="transport-btn transport-btn--secondary">
+        <a href="{{(int) $programacion->programacion_estatus_id === 7
+        ? route('monitoreo.listamonitoreofinalizado')
+        : route('monitoreo.listamonitoreo')}}" class="transport-btn transport-btn--secondary">
             <i class="flaticon2-back"></i>
             Regresar
         </a>
@@ -294,29 +296,80 @@
 
                         </label>
 
-                        <select class="form-control transport-input"
-                                id="custodio_id"
-                                name="custodio_id"
-                                >
+                        @if((int) $programacion->custodio_id === 154 &&!empty($programacion->custodio_emergente))
 
-                            <option value=""  disabled>
-                                Selecciona el custodio
+                            <div class="transport-emergency-info">
+
+                                <span class="transport-emergency-info__icon">
+                                    <i class="la la-exclamation-triangle"></i>
+                                </span>
+
+                                <div>
+
+                                    <small>
+                                        CUSTODIO EMERGENTE REGISTRADO
+                                    </small>
+
+                                    <strong>
+                                        {{ $programacion->custodio_emergente }}
+                                    </strong>
+
+                                    <span>
+                                        Puedes asignar un custodio del catálogo sin perder este antecedente.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        @endif
+
+                        <select class="form-control transport-input"
+                            id="custodio_id"
+                            name="custodio_id">
+
+                        <option value="" disabled
+                                @selected(empty($programacion->custodio_id))>
+                            Selecciona el custodio
+                        </option>
+
+                        @if((int) $programacion->custodio_id === 153)
+
+                            <option value="153" selected>
+                                Sin custodio
                             </option>
 
-                            @foreach($custodios as $custodio)
+                        @elseif((int) $programacion->custodio_id === 154)
 
-                                <option value="{{ $custodio->id }}"
-                                        @selected($programacion->custodio_id == $custodio->id)>
+                            <option value="154" selected>
 
-                                    {{ $custodio->nombre_custodio }}
-                                    {{ $custodio->ap_paterno }}
-                                    {{ $custodio->ap_materno }}
+                                Custodio emergente
 
-                                </option>
+                                @if(!empty($programacion->custodio_emergente))
+                                    - {{ $programacion->custodio_emergente }}
+                                @endif
 
-                            @endforeach
+                            </option>
 
-                        </select>
+                        @endif
+
+                        @foreach($custodios as $custodio)
+
+                            <option value="{{ $custodio->id }}"
+                                    @selected(
+                                        (int) $programacion->custodio_id ===
+                                        (int) $custodio->id
+                                    )>
+
+                                {{ $custodio->nombre_custodio }}
+                                {{ $custodio->ap_paterno }}
+                                {{ $custodio->ap_materno }}
+
+                            </option>
+
+                        @endforeach
+
+                    </select>
 
                     </div>
 
@@ -581,7 +634,7 @@
                     <div class="transport-field">
 
                         <label class="transport-label" for="fechahora_llegada_custodio">
-                            Llegada del custodio
+                            Llegada punto Origen
                         </label>
 
                         <div class="transport-input-icon">
@@ -602,7 +655,7 @@
                     <div class="transport-field">
 
                         <label class="transport-label" for="fechahora_inicio_trayecto">
-                            Inicio de trayecto
+                            Inicio de servicio
                         </label>
 
                         <div class="transport-input-icon">
@@ -623,7 +676,7 @@
                     <div class="transport-field">
 
                         <label class="transport-label" for="fechahora_llegado_destino">
-                            Llegada a destino
+                            Arribo punto de destino
                         </label>
 
                         <div class="transport-input-icon">
@@ -645,7 +698,7 @@
 
                         <label class="transport-label"
                                for="fechahora_finalizacion">
-                            Finalización
+                            Finalización de servicio
                         </label>
 
                         <div class="transport-input-icon">
@@ -662,6 +715,46 @@
 
                     </div>
 
+                    {{-- PUNTUALIDAD --}}
+                    <div class="transport-field">
+
+                        <label class="transport-label" for="estatus_itinerario">
+                            Puntualidad
+                        </label>
+
+                        <select class="form-control transport-input"
+                                id="estatus_itinerario"
+                                name="estatus_itinerario">
+
+                            <option value="">
+                                Sin estatus de puntualidad
+                            </option>
+
+                            @foreach($estatus_itinerario as $itinerario)
+
+                                <option value="{{ $itinerario->id }}"
+                                        @selected(
+                                            $estadias_info &&
+                                            (int) $estadias_info->estatus_itinerario === (int) $itinerario->id
+                                        )>
+
+                                    {{ $itinerario->descripcion }}
+
+                                    @if(
+                                        (int) $itinerario->id !== 1 &&
+                                        !empty($itinerario->value)
+                                    )
+                                        - {{ $itinerario->value }}
+                                    @endif
+
+                                </option>
+
+                            @endforeach
+
+                        </select>
+
+                    </div>
+
                 </div>
 
             </div>
@@ -670,7 +763,9 @@
 
         <footer class="transport-form-footer">
 
-            <a href="{{ route('monitoreo.listamonitoreo') }}"
+            <a href="{{(int) $programacion->programacion_estatus_id === 7
+                    ? route('monitoreo.listamonitoreofinalizado')
+                    : route('monitoreo.listamonitoreo')}}"
                class="transport-btn transport-btn--secondary">
 
                 <i class="la la-times"></i>
