@@ -30,6 +30,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapCustodioRoutes();
         $this->mapTarifarioRoutes();
         $this->mapProgramacionRoutes();
+        $this->mapNotificacionesRoutes();
 
     }
 
@@ -113,6 +114,14 @@ class RouteServiceProvider extends ServiceProvider
             ->prefix('programacion')
             ->namespace($this->namespace . '\Programacion')
             ->group(base_path('routes/programacion.php'));
+    }
+
+    protected function mapNotificacionesRoutes()
+    {
+        Route::middleware('web')
+            ->prefix('notificaciones')
+            ->namespace($this->namespace . '\Notificaciones')
+            ->group(base_path('routes/notificaciones.php'));        
     }
     
 

@@ -146,6 +146,7 @@
                                 <th style="width: 13%;">ARMADA <i class="fas fa-sort text-muted ms-1" style="font-size: 0.65rem;"></i></th>
                                 <th style="width: 13%;">LÍNEA DE TRANSPORTE <i class="fas fa-sort text-muted ms-1" style="font-size: 0.65rem;"></i></th>
                                 <th style="width: 13%;">NOMBRE DEL OPERADOR <i class="fas fa-sort text-muted ms-1" style="font-size: 0.65rem;"></i></th>
+                                <th style="width: 13%;">Estatus <i class="fas fa-sort text-muted ms-1" style="font-size: 0.65rem;"></i></th>
                                 <th style="width: 12%;" class="text-center">Opciones</th>
                             </tr>
                         </thead>
@@ -167,18 +168,26 @@
 
                                     <td class="text-white-50">{{ $unid->linea_transporte  }}  </td>
                                     <td class="text-white-50">{{ $unid->nombre_operador  }}  </td>
+                                    <td class="text-white-50">
+                                        @if($unid->estatus == 0) 
+                                            <span class="label font-weight-bold label-outline-warning label-inline" > Pendiente</span>
+                                        @else 
+                                            Si 
+                                        @endif
+                                    </td>
                                     <td class="text-center">
-  {{--                                       <div class="d-flex justify-content-center gap-2">
-                                            <a href="{{ route('cliente.vercliente', $unid->id) }}" class="text-decoration-none text-muted px-1" title="Ver cliente" data-toggle="tooltip" data-theme="dark" data-placement="top">
+                                        <div class="d-flex justify-content-center gap-2">
+                                            <a href="{{ route('procli.verservicio', $unid->id) }}" class="text-decoration-none text-muted px-1" title="Ver servicio" data-toggle="tooltip" data-theme="dark" data-placement="top">
                                                 <i class="far fa-eye text-white" style="font-size: 1rem;"></i>
                                             </a>
-                                            <a href="{{ route('cliente.editarcliente', $unid->id) }}" class="text-decoration-none text-muted px-1" title="Editar cliente" data-toggle="tooltip" data-theme="dark" data-placement="top">
-                                                <i class="far fa-edit text-white" style="font-size: 1rem;"></i>
-                                            </a>
-                                            <a href="javascript:void(0);" onClick="deletecliente(`{{ $unid->id }} `,`{{ $unid->id }}`)" class="text-decoration-none text-muted px-1" title="Desactivar cliente" data-toggle="modal" data-target="#model_delete_user" data-placement="top">
-                                                <i class="far fa-trash-alt text-white" style="font-size: 1rem;"></i>
-                                            </a>
-                                        </div> --}}
+                                            @if($role != 17)
+                                                <a href="{{ route('procli.complementarservicio', $unid->id) }}" class="text-decoration-none text-muted px-1" title="Complementar servicio" data-toggle="tooltip" data-theme="dark" data-placement="top">
+                                                    <i class="far fa-edit text-white" style="font-size: 1rem;"></i>
+                                                </a>
+                                            @endif
+
+
+                                        </div>
                                     </td>
                                 </tr>
                                 @php $num ++; @endphp

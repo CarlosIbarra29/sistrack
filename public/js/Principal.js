@@ -190,8 +190,43 @@ var Principal = (function () {
                 case "procli.listaservicios":
                 break;
 
+                case "procli.verservicio":
+                break;
+
+                case "procli.complementarservicio":
+                break;
+
             }
         }
+
+
+        //activar menu de Notificaciones
+        function activeMenuNotificacionese() {
+            $("#menuNotificaciones").addClass("menu-item-active");
+            $("#menuNotificaciones").addClass("menu-item-open");
+        }
+
+
+        //rutas para el menu de clientes
+        if (routeName.includes("notificaciones")) {
+            activeMenuNotificacionese();
+            //we addd the active class to the menuUsuarios parent item
+            // $("#menuRegistroMonitoreo").addClass("menu-item-active");
+            // $("#menuRegistroMonitoreo").addClass("menu-item-open");
+
+            switch (routeName) {
+                case "notificaciones.catalogonotificaciones":
+                    //we add the class 'menu-item-open' to id menuListadoUsuarios
+                    // $("#menuListadoMonitoreo").addClass("menu-item-open");
+                    break;
+                case "notificaciones.vernotificacionservcliente":
+                    break;
+                    
+
+
+            }
+        }
+
 
 
 

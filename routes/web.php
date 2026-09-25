@@ -38,4 +38,7 @@ Route::get('/tablero-viaje-programado/{id}', [App\Http\Controllers\Tablero\Table
 Route::post('/evidencia-bitacora', [App\Http\Controllers\Tablero\TableroController::class, 'evidenciabitacora'])->name('tablero.evidenciabitacora');
 Route::post('/viaje-cambiostatus', [App\Http\Controllers\Tablero\TableroController::class, 'viajecambiostatus'])->name('tablero.viajecambiostatus');
 
+
+
+
 require __DIR__.'/auth.php';

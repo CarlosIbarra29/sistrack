@@ -149,7 +149,7 @@
 
 
                         <li id="menuNotificaciones" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                            <a href="" class="menu-link menu-toggle">
+                            <a href="{{ route('notificaciones.catalogonotificaciones') }}" class="menu-link menu-toggle">
                                 <i class="flaticon2-checking  menu-icon"></i>
                                 <span class="menu-text">Notificaciones</span>
                                 <!--<i class="menu-arrow"></i>-->
