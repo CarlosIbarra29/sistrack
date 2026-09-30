@@ -48,6 +48,16 @@
 
         </div>
 
+        @if($data->estatus  == 0)
+            <button id="marcar_leido"
+               class="nuevo-servicio-btn nuevo-servicio-btn--secondary">
+
+                <i class="far fa-eye text-white"></i>
+                Marcar como "Solicitud Atendida" 
+
+            </button>
+        @endif
+
         <a href="{{ route('procli.listaservicios') }}"
            class="nuevo-servicio-btn nuevo-servicio-btn--secondary">
 
@@ -421,7 +431,71 @@
 
                             <div class="section-controls">
 
-                                <div class="programacion-field-grid programacion-field-grid--personal">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label class="app-label">Cliente </label>
+                                        <select class="form-control  app-input" id="users_custodios" name="users_custodios" >
+                                            <option value="">Selecciona una opción</option>
+                                            @foreach($cliente as $cli)
+                                                <option value="{{ $cli->id }}" data-nombre="{{ $cli->razon_social }}">
+                                                    Razon social: {{ $cli->razon_social }}, Nombre cliente: {{ $cli->nombre_cliente }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <label class="app-label">
+                                            Tipo de servicio
+                                        </label>
+
+                                        <div class="compact-radio-group">
+
+                                            <label class="compact-radio-item">
+                                                <input type="radio"
+                                                       
+                                                       name="tipo_servicio"
+                                                       value="0" required>
+
+                                                <span>
+                                                    <i class="la la-road"></i>
+                                                    Foráneo
+                                                </span>
+                                            </label>
+
+                                            <label class="compact-radio-item">
+                                                <input type="radio"
+                                                       name="tipo_servicio"
+                                                       value="1">
+
+                                                <span>
+                                                    <i class="la la-map-marker"></i>
+                                                    Local
+                                                </span>
+                                            </label>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <label class="app-label">
+                                            Folio
+                                            <span class="programacion-label-optional">
+                                                Cliente
+                                            </span>
+                                        </label>
+
+                                        <input type="text"
+                                               class="form-control app-input"
+                                               name="folio_interno"
+                                               id="folio_interno"
+                                               placeholder="Folio proporcionado por el cliente"
+                                               autocomplete="off">
+                                    </div>
+                                </div>
+
+
+                                <div class="programacion-field-grid programacion-field-grid--personal mt-4">
 
                                     <div class="form-group programacion-field-custodio">
                                         <label class="app-label">
