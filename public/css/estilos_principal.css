@@ -6553,3 +6553,169 @@ textarea.nuevo-servicio-input {
     }
 
 }
+
+
+/*VER SERVICIO - TRANSPORTES*/
+
+.monitoreo-transportes-card {
+    margin-bottom: 15px;
+}
+
+.monitoreo-transportes-body {
+    padding: 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.monitoreo-transporte-item {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--mon-border-soft);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .012);
+}
+
+.monitoreo-transporte-item__header {
+    min-height: 48px;
+    padding: 9px 11px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--mon-border-soft);
+    background: rgba(255, 255, 255, .012);
+}
+
+.monitoreo-transporte-title {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.monitoreo-transporte-icon {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(77, 141, 255, .22);
+    border-radius: 7px;
+    background: rgba(77, 141, 255, .07);
+    color: var(--mon-blue);
+}
+
+.monitoreo-transporte-icon i {
+    margin: 0;
+    font-size: .9rem;
+}
+
+.monitoreo-transporte-title small {
+    display: block;
+    margin-bottom: 2px;
+    color: #65758b;
+    font-size: .43rem;
+    font-weight: 700;
+    letter-spacing: .10em;
+}
+
+.monitoreo-transporte-title strong {
+    display: block;
+    color: #fff;
+    font-size: .61rem;
+    font-weight: 600;
+}
+
+.monitoreo-transporte-grid {
+    padding: 11px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.monitoreo-transporte-detail {
+    min-width: 0;
+    padding: 9px 10px;
+    border: 1px solid rgba(148, 163, 184, .08);
+    border-radius: 6px;
+    background: rgba(0, 0, 0, .06);
+}
+
+.monitoreo-transporte-detail > span {
+    display: block;
+    margin-bottom: 5px;
+    color: #708097;
+    font-size: .47rem;
+    line-height: 1.35;
+}
+
+.monitoreo-transporte-detail > strong {
+    display: block;
+    overflow-wrap: anywhere;
+    color: #fff;
+    font-size: .57rem;
+    line-height: 1.45;
+    font-weight: 600;
+}
+
+.monitoreo-transporte-detail > strong i {
+    margin-right: 4px;
+    color: #71839a;
+}
+
+.monitoreo-transporte-detail--full {
+    grid-column: 1 / -1;
+}
+
+.monitoreo-transportes-empty {
+    min-height: 72px;
+    padding: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 1px dashed var(--mon-border-soft);
+    border-radius: 8px;
+    color: #708097;
+}
+
+.monitoreo-transportes-empty > i {
+    font-size: 1.2rem;
+}
+
+.monitoreo-transportes-empty strong {
+    display: block;
+    margin-bottom: 2px;
+    color: #aeb9c7;
+    font-size: .58rem;
+}
+
+.monitoreo-transportes-empty span {
+    display: block;
+    font-size: .49rem;
+}
+
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 991.98px) {
+
+    .monitoreo-transporte-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 575.98px) {
+
+    .monitoreo-transporte-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .monitoreo-transporte-detail--full {
+        grid-column: auto;
+    }
+
+}
