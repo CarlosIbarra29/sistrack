@@ -172,8 +172,8 @@ var Modulo = function() {
             "<tr id='trDocumento"+contadorDocumentos+"'>",
 
             "    <td>" +
-            "       <div class='form-group mb-0'>" +
-            "          <select class='form-control' name='id_documento["+contadorDocumentos+"]' id='id_documento"+contadorDocumentos+"' required>",
+            "       <div class='programacion-extra-select-wrap'>" +
+            "          <select class='programacion-acompanante-select' name='id_documento["+contadorDocumentos+"]' id='id_documento"+contadorDocumentos+"' required>",
             "              <option value=''>Selecciona un opción</option>",
             lista,
             "          </select>",
@@ -188,6 +188,19 @@ var Modulo = function() {
 
             ""].join(""));
         $("#tblDocumentos tbody").append(html); //agrega el html creado
+
+        $("#id_documento" + contadorDocumentos).select2({
+
+            width: "100%",
+            placeholder: "Selecciona un acompañante...",
+            allowClear: false,
+            dropdownCssClass: "programacion-acompanante-dropdown",
+            language: { noResults: function() { return "No se encontraron custodios";},  
+                        searching: function() {return "Buscando...";}
+
+            }
+
+        });
         //agrega validación del elemento creado
         validador.addField('id_documento[' + contadorDocumentos + ']', tipoArchivoValidador);
         KTApp.initTooltips(); //inicia tooltip del elemento creado

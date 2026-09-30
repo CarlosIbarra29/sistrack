@@ -244,21 +244,57 @@ class MonitoreoController extends Controller
         return response()->json($response);
     }
 
+    // public function moduloestadias($id_programacion)
+    // {
+    //     $programacion = Programacion::where('id', $id_programacion)->firstOrFail();
+    //     $estadias_info = EstadiasProgramacion::where('programacion_id',$id_programacion)->first();
+    //     $op_estadia = $estadias_info === null ? 0 : 1;
+    //     $estatus_programacion = EstatusProgramacion::orderBy('estatus_programacion')->get();
+    //     $estatus_itinerario = Estatusitinerario::where('activo', 1)->orderBy('id')->get();
+
+    //     $clientes = Cliente::where('siaf_status',1)
+    //     ->orderBy('nombre_cliente')
+    //     ->get();
+
+    //     $custodios = Custodio::where('siaf_status',1)
+    //     ->orderBy('nombre_custodio')
+    //     ->get();
+
+    //     $acompanantes_ids = AcompanantesProgramacion::where('programacion_id',$id_programacion)
+    //     ->pluck('custodio_id')
+    //     ->map(function ($id) {
+    //         return (int) $id;
+    //     })
+    //     ->toArray();
+
+    //     return view(
+    //         'monitoreo.crear-estadias',
+    //         compact(
+    //             'programacion',
+    //             'estadias_info',
+    //             'op_estadia',
+    //             'estatus_programacion',
+    //             'clientes',
+    //             'custodios',
+    //             'acompanantes_ids',
+    //             'id_programacion',
+    //             'estatus_itinerario'
+    //         )
+    //     );
+    // }
+
     public function moduloestadias($id_programacion)
     {
         $programacion = Programacion::where('id', $id_programacion)->firstOrFail();
-        $estadias_info = EstadiasProgramacion::where('programacion_id',$id_programacion)->first();
-        $op_estadia = $estadias_info === null ? 0 : 1;
+        $transportes = EstadiasProgramacion::where('programacion_id',$id_programacion)->orderBy('id')->get();
+
+        $estadias_info = $transportes->first();
+        $op_estadia = $transportes->isEmpty() ? 0 : 1;
+
         $estatus_programacion = EstatusProgramacion::orderBy('estatus_programacion')->get();
-        $estatus_itinerario = Estatusitinerario::where('activo', 1)->orderBy('id')->get();
-
-        $clientes = Cliente::where('siaf_status',1)
-        ->orderBy('nombre_cliente')
-        ->get();
-
-        $custodios = Custodio::where('siaf_status',1)
-        ->orderBy('nombre_custodio')
-        ->get();
+        $estatus_itinerario = Estatusitinerario::where('activo',1)->orderBy('id')->get();
+        $clientes = Cliente::where('siaf_status',1)->orderBy('nombre_cliente')->get();
+        $custodios = Custodio::where('siaf_status',1)->orderBy('nombre_custodio')->get();
 
         $acompanantes_ids = AcompanantesProgramacion::where('programacion_id',$id_programacion)
         ->pluck('custodio_id')
@@ -272,6 +308,7 @@ class MonitoreoController extends Controller
             compact(
                 'programacion',
                 'estadias_info',
+                'transportes',
                 'op_estadia',
                 'estatus_programacion',
                 'clientes',
@@ -300,11 +337,19 @@ class MonitoreoController extends Controller
 
             'observaciones_programacion' => 'nullable|string',
 
-            'linea_transportista' => 'nullable|string',
-            'nombre_conductor' => 'nullable|string',
-            'telefono' => 'nullable',
-            'placas' => 'nullable|string',
-            'observaciones' => 'nullable|string',
+            // 'linea_transportista' => 'nullable|string',
+            // 'nombre_conductor' => 'nullable|string',
+            // 'telefono' => 'nullable',
+            // 'placas' => 'nullable|string',
+            // 'observaciones' => 'nullable|string',
+
+            'transportes' => 'nullable|array',
+            'transportes.*.id' => 'nullable|integer',
+            'transportes.*.linea_transportista' => 'nullable|string',
+            'transportes.*.nombre_conductor' => 'nullable|string',
+            'transportes.*.telefono' => 'nullable',
+            'transportes.*.placas' => 'nullable|string',
+            'transportes.*.generales_unidad' => 'nullable|string',
 
             'fechahora_llegada_custodio' => 'nullable|date',
             'fechahora_inicio_trayecto' => 'nullable|date',
@@ -427,41 +472,117 @@ class MonitoreoController extends Controller
                 }
             }
 
-            $dataEstadia = [
+            // $dataEstadia = [
 
-                'programacion_id' =>$request->id_programacion,
-                'nombre_conductor' =>$request->nombre_conductor ?: null,
-                'linea_transportistas' =>$request->linea_transportista ?: null,
-                'telefono' =>$request->telefono ?: null,
-                'placas' =>$request->placas ?: null,
-                'generales_unidad' =>$request->observaciones ?: null,
+            //     'programacion_id' =>$request->id_programacion,
+            //     'nombre_conductor' =>$request->nombre_conductor ?: null,
+            //     'linea_transportistas' =>$request->linea_transportista ?: null,
+            //     'telefono' =>$request->telefono ?: null,
+            //     'placas' =>$request->placas ?: null,
+            //     'generales_unidad' =>$request->observaciones ?: null,
+            //     'fechahora_llegada_custodio' =>$request->fechahora_llegada_custodio ?: null,
+            //     'fechahora_inicio_trayecto' =>$request->fechahora_inicio_trayecto ?: null,
+            //     'fechahora_llegado_destino' =>$request->fechahora_llegado_destino ?: null,
+            //     'fechahora_finalizacion' =>$request->fechahora_finalizacion ?: null,
+            //     'estatus_itinerario' => $request->filled('estatus_itinerario') ? $request->estatus_itinerario : null,
+            //     'updated_at' => date('Y-m-d H:i:s'),
+            //     'iduserUpdated' => auth()->user()->id
+
+            // ];
+
+
+            // if ((int) $request->op_estadias === 0) {
+
+            //     $dataEstadia['created_at'] =date('Y-m-d H:i:s');
+            //     $dataEstadia['iduserCreated'] = auth()->user()->id;
+
+            //     EstadiasProgramacion::insert( $dataEstadia);
+            //     $mensaje ='La información del servicio se agregó correctamente';
+
+
+            // } else {
+
+            //     EstadiasProgramacion::where( 'programacion_id', $request->id_programacion )->update($dataEstadia);
+            //     $mensaje = 'La información del servicio se modificó correctamente';
+
+            // }
+
+            $dataOperativa = [
                 'fechahora_llegada_custodio' =>$request->fechahora_llegada_custodio ?: null,
                 'fechahora_inicio_trayecto' =>$request->fechahora_inicio_trayecto ?: null,
                 'fechahora_llegado_destino' =>$request->fechahora_llegado_destino ?: null,
                 'fechahora_finalizacion' =>$request->fechahora_finalizacion ?: null,
-                'estatus_itinerario' => $request->filled('estatus_itinerario') ? $request->estatus_itinerario : null,
+                'estatus_itinerario' =>$request->filled('estatus_itinerario') ? $request->estatus_itinerario : null,
                 'updated_at' => date('Y-m-d H:i:s'),
                 'iduserUpdated' => auth()->user()->id
-
             ];
 
+            $transportes = collect($request->input('transportes', []));
 
-            if ((int) $request->op_estadias === 0) {
+            $idsConservados = [];
 
-                $dataEstadia['created_at'] =date('Y-m-d H:i:s');
-                $dataEstadia['iduserCreated'] = auth()->user()->id;
+            foreach ($transportes as $transporte) {
 
-                EstadiasProgramacion::insert( $dataEstadia);
-                $mensaje ='La información del servicio se agregó correctamente';
+                $tieneInformacion =
+                    !empty($transporte['linea_transportista']) ||
+                    !empty($transporte['nombre_conductor']) ||
+                    !empty($transporte['telefono']) ||
+                    !empty($transporte['placas']) ||
+                    !empty($transporte['generales_unidad']);
 
 
-            } else {
+                if (!$tieneInformacion) {
+                    continue;
+                }
 
-                EstadiasProgramacion::where( 'programacion_id', $request->id_programacion )->update($dataEstadia);
-                $mensaje = 'La información del servicio se modificó correctamente';
 
+                $dataTransporte = array_merge(
+                    $dataOperativa,
+                    [
+
+                        'programacion_id' =>$request->id_programacion,
+                        'linea_transportistas' =>!empty($transporte['linea_transportista']) ? $transporte['linea_transportista'] : null,
+                        'nombre_conductor' =>!empty($transporte['nombre_conductor']) ? $transporte['nombre_conductor'] : null,
+                        'telefono' =>!empty($transporte['telefono']) ? $transporte['telefono'] : null,
+                        'placas' =>!empty($transporte['placas']) ? $transporte['placas'] : null,
+                        'generales_unidad' =>!empty($transporte['generales_unidad']) ? $transporte['generales_unidad'] : null
+                    ]
+                );
+
+
+                if (!empty($transporte['id'])) {
+
+                    $idTransporte = (int) $transporte['id'];
+
+                    EstadiasProgramacion::where('id',$idTransporte)
+                    ->where('programacion_id',$request->id_programacion)
+                    ->update($dataTransporte);
+
+                    $idsConservados[] = $idTransporte;
+
+                } else {
+
+                    $dataTransporte['created_at'] =date('Y-m-d H:i:s');
+                    $dataTransporte['iduserCreated'] =auth()->user()->id;
+                    $nuevoId = EstadiasProgramacion::insertGetId($dataTransporte);
+                    $idsConservados[] = $nuevoId;
+                }
             }
 
+
+            $queryEliminar = EstadiasProgramacion::where('programacion_id',$request->id_programacion);
+
+            if (!empty($idsConservados)) {
+                $queryEliminar->whereNotIn('id',$idsConservados);
+            }
+
+            $queryEliminar->delete();
+
+            if ((int) $request->op_estadias === 0) {
+                $mensaje = 'La información del servicio se agregó correctamente';
+            } else {
+                $mensaje = 'La información del servicio se modificó correctamente';
+            }
 
             DB::commit();
 
@@ -469,23 +590,21 @@ class MonitoreoController extends Controller
 
             if ((int) $request->programacion_estatus_id === 7) {
 
-                return redirect()->route(
-                    'monitoreo.listamonitoreofinalizado'
-                );
+                return redirect()->route('monitoreo.listamonitoreofinalizado');
             }
 
             return redirect()->route('monitoreo.listamonitoreo');
 
         } catch (\Throwable $e) {
 
-    DB::rollBack();
+        DB::rollBack();
 
-    dd([
-        'mensaje' => $e->getMessage(),
-        'archivo' => $e->getFile(),
-        'linea' => $e->getLine()
-    ]);
-}
+            dd([
+                'mensaje' => $e->getMessage(),
+                'archivo' => $e->getFile(),
+                'linea' => $e->getLine()
+            ]);
+        }
     }
 
     // public function infoestatuspro($id_programacion)
