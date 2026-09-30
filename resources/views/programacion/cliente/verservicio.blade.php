@@ -7,7 +7,7 @@
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('js/programacion/AgregarProgramacionCliente.js') }}"></script>
+        <script src="{{ asset('js/programacion/EditarProgramacionNew.js?v=1.0.2') }}"></script>
 @endpush
 
 @section('title')
@@ -45,6 +45,21 @@
 
         </div>
 
+        @if($data->programacion_id == null || $data->programacion_id == "" )
+
+        @else
+            @if($data->estatus == 0 )
+                <button id="marcar_leido"
+                   class="nuevo-servicio-btn nuevo-servicio-btn--secondary">
+
+                    <i class="far fa-eye text-white"></i>
+                    Marcar como "Solicitud Atendida" 
+
+                </button>
+            @endif
+        @endif
+
+
         <a href="{{ route('procli.listaservicios') }}"
            class="nuevo-servicio-btn nuevo-servicio-btn--secondary">
 
@@ -52,6 +67,12 @@
             Regresar
 
         </a>
+
+        <form method="post" id="marcar_atendida" action="{{ route('procli.editaratendida') }}" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" name="id" id="id_servicio" value="{{ $data->id }}">
+        </form>
+
 
     </header>
 
@@ -365,6 +386,299 @@
             </footer>
         </form>
     </section>
+
+    @if($data->programacion_id ==null || $data->programacion_id == "")
+    @else
+    <section class="panel-dark programacion-form-panel mt-4">
+        <div class="programacion-card-header">
+            <div>
+                <span class="programacion-eyebrow">SERVICIO {{ $programacion->folio }}</span>
+                <h6>DATOS DE LA PROGRAMACIÓN</h6>
+            </div>
+        </div>
+
+        <form action="{{ route('programacion.modificarprogramacion') }}"
+              method="post"
+              id="submit_programacion"
+              enctype="multipart/form-data"
+              class="programacion-form">
+
+            @csrf
+
+
+            <div class="programacion-form-grid">
+
+                {{-- 01 CLIENTE --}}
+                <section class="form-row-section form-row-section--origen">
+                    <div class="section-meta">
+                        <span class="section-number">01</span>
+                        <div>
+                            <h3>Cliente</h3>
+                            <p>Cliente solicitante, horario y variables del servicio.</p>
+                        </div>
+                    </div>
+
+                    <div class="section-controls">
+                        <div class="programacion-field-grid programacion-field-grid--origin">
+
+                            <div class="form-group programacion-field-client">
+                                <label class="app-label">Razón Social *</label>
+                                     @foreach($cliente as $cli)
+                                        @if($cli->id  == $programacion->cliente_id)
+                                            <p>{{ $cli->nombre_cliente }} / {{ $cli->razon_social }}</p>
+                                        @endif
+                                    @endforeach
+                            </div>
+
+                            <div class="form-group programacion-field-date">
+                                <label class="app-label">Fecha y hora de servicio</label>
+                                <span>{{ \Carbon\Carbon::parse($programacion->fecha_servicio)->format('Y-m-d\\TH:i') }}</span>
+                            </div>
+
+                            <div class="form-group programacion-field-folio">
+                                <label class="app-label">
+                                    Folio <span class="programacion-label-optional">Cliente</span>
+                                </label><br>
+                                <span>{{ $programacion->folio_interno }}</span>
+                            </div>
+
+                            <div class="form-group programacion-choice-block">
+                                <label class="app-label">Tipo de servicio *</label>
+                                <div class="compact-radio-group">
+                                    <label class="compact-radio-item">
+                                        <input type="radio" name="tipo_servicio" value="0"
+                                               {{ (int)$programacion->tipo_servicio === 0 ? 'checked' : '' }} required disable>
+                                        <span><i class="la la-road"></i> Foráneo</span>
+                                    </label>
+                                    <label class="compact-radio-item">
+                                        <input type="radio" name="tipo_servicio" value="1"
+                                               {{ (int)$programacion->tipo_servicio === 1 ? 'checked' : '' }} disable>
+                                        <span><i class="la la-map-marker"></i> Local</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group programacion-choice-block">
+                                <label class="app-label">Armado *</label>
+                                <div class="compact-radio-group">
+                                    <label class="compact-radio-item">
+                                        <input type="radio" name="armado_servicio" value="1"
+                                               {{ (int)$programacion->armado_servicio === 1 ? 'checked' : '' }} required>
+                                        <span><i class="la la-check"></i> Sí</span>
+                                    </label>
+                                    <label class="compact-radio-item">
+                                        <input type="radio" name="armado_servicio" value="2"
+                                               {{ (int)$programacion->armado_servicio === 2 ? 'checked' : '' }}>
+                                        <span><i class="la la-times"></i> No</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            {{-- <!-- PREPARADO PARA FUTURO: TARIFARIO -->
+
+                                <!-- <div class="form-group">
+                                    <label class="font-weight-bold">Tarifario</label>
+                                    <select class="form-control form-control-lg" name="id_tarifa" required>
+                                        @foreach($tarifario as $tp)
+                                            <option value="{{ $tp->id }}" @selected($programacion->tarifario_id == $tp->id)>
+                                                Origen: {{ $tp->origen }} - Destino: {{ $tp->destino }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div> -->
+                            --}}
+                            
+
+                        </div>
+                    </div>
+                </section>
+
+                {{-- 02 RUTA --}}
+                <section class="form-row-section form-row-section--rutas">
+                    <div class="section-meta">
+                        <span class="section-number">02</span>
+                        <div>
+                            <h3>Origen-Destino</h3>
+                            <p>Puntos geográficos de partida y destino del servicio.</p>
+                        </div>
+                    </div>
+
+                    <div class="section-controls">
+                        <div class="programacion-field-grid">
+                            <div class="form-group">
+                                <label class="app-label">Domicilio origen</label>
+                                <span>{{ $programacion->dom_origen }}</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="app-label">Domicilio destino</label>
+                                <span>{{ $programacion->dom_destino }}</span>
+                            </div>
+
+                            <div class="form-group programacion-field-status">
+                                
+                                <label class="app-label">Estatus *</label>
+
+                                <div class="programacion-status-select">
+
+                                    <i class="la la-flag"></i>
+
+                                     @foreach($estatus_programacion_data as $estatus)
+                                        @if($estatus->id  == $programacion->programacion_estatus_id)
+                                            <p>{{ $estatus->estatus_programacion }}</p>
+                                        @endif
+                                    @endforeach
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {{-- 03 PERSONAL --}}
+                <section class="form-row-section form-row-section--personal">
+                    <div class="section-meta">
+                        <span class="section-number">03</span>
+                        <div>
+                            <h3>Personal</h3>
+                            <p>Custodio principal y acompañantes secundarios.</p>
+                        </div>
+                    </div>
+
+                    <div class="section-controls">
+                        <div class="programacion-field-grid programacion-field-grid--personal">
+
+                            <div class="form-group programacion-field-custodio">
+                                <label class="app-label">Custodio Principal *</label>
+                                <select class="form-control app-input" id="custodio_id" name="custodio_id" required>
+                                    <option value="153" @selected((int)$programacion->custodio_id === 153)>Sin custodio</option>
+                                    <option value="154" @selected((int)$programacion->custodio_id === 154)>Custodio emergente</option>
+
+                                    @foreach($custodio as $cli)
+                                        @if((int)$cli->id !== 153 && (int)$cli->id !== 154)
+                                            <option value="{{ $cli->id }}" @selected((int)$programacion->custodio_id === (int)$cli->id)>
+                                                {{ $cli->nombre_custodio }} {{ $cli->ap_paterno }} {{ $cli->ap_materno }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group programacion-field-custodio-emergente"
+                                 id="contenedor_custodio_emergente"
+                                 style="display:none;">
+                                <label class="app-label">Nombre completo del custodio emergente *</label>
+                                <input type="text"
+                                       class="form-control app-input"
+                                       name="custodio_emergente"
+                                       id="custodio_emergente"
+                                       value="{{ $programacion->custodio_emergente }}"
+                                       placeholder="Nombre completo del custodio emergente"
+                                       maxlength="255">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="app-label">¿Lleva Acompañantes?</label>
+                                <div class="compact-radio-group">
+                                    <label class="compact-radio-item">
+                                        <input type="radio" name="op_custodios" id="op_c_uno" value="0"
+                                               {{ (int)$programacion->acompanantes === 0 ? 'checked' : '' }}>
+                                        <span><i class="la la-user-plus"></i> Sí</span>
+                                    </label>
+                                    <label class="compact-radio-item">
+                                        <input type="radio" name="op_custodios" id="op_c_dos" value="1"
+                                               {{ (int)$programacion->acompanantes === 1 ? 'checked' : '' }}>
+                                        <span><i class="la la-user"></i> No</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="div_custodios" class="programacion-extra-custodios">
+                            <div class="programacion-extra-header">
+                                <div class="programacion-extra-heading">
+                                    <span class="programacion-extra-icon">
+                                        <i class="la la-users"></i>
+                                    </span>
+
+                                    <div>
+                                        <span class="programacion-extra-title">
+                                            Acompañantes asignados
+                                        </span>
+                                        <small>
+                                            Personal adicional para este servicio
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="programacion-extra-table-wrapper">
+
+                                <table class="programacion-extra-table"
+                                       id="tblDocumentos">
+
+                                    <tbody id="tbodyDocumentos">
+
+                                        @foreach($acompanantes_pro as $documento)
+
+                                            <tr id="trDocumento{{ $documento->id }}">
+
+                                                <td>
+                                                    <div class="programacion-extra-person">
+                                                        <span class="programacion-extra-person-icon">
+                                                            <i class="la la-user"></i>
+                                                        </span>
+
+                                                        <span class="programacion-extra-person-name">
+                                                            {{ $documento->custodio->nombre_custodio }}
+                                                            {{ $documento->custodio->ap_paterno }}
+                                                            {{ $documento->custodio->ap_materno }}
+                                                        </span>
+                                                    </div>
+                                                </td>
+
+                                                <td class="programacion-extra-option">
+
+
+                                                </td>
+
+                                            </tr>
+
+                                        @endforeach
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="programacion-form-bottom">
+                <section class="programacion-notes-block">
+                    <div class="section-meta section-meta--inline">
+                        <span class="section-number">04</span>
+                        <div>
+                            <h3>Notas</h3>
+                            <p>Observaciones críticas u operacionales a considerar.</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ $programacion->observaciones }}
+                    </div>
+                </section>
+
+            </div>
+        </form>
+    </section>
+
+
+    @endif
+
 
 </div>
 

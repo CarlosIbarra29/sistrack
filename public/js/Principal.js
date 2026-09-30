@@ -196,6 +196,9 @@ var Principal = (function () {
                 case "procli.complementarservicio":
                 break;
 
+                case "procli.editarservicio":
+                break;
+
             }
         }
 

@@ -94,6 +94,13 @@
       </div>
   </div>
 
+
+  <div class="row">
+    <div class="col-lg-12">
+      <img src="{{ asset('img/cliente_dash.jpeg') }}" width="100%">
+    </div>
+  </div>
+
 @else
 
  

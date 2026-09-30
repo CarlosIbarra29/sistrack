@@ -177,13 +177,18 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center gap-2">
+                                            
                                             <a href="{{ route('procli.verservicio', $unid->id) }}" class="text-decoration-none text-muted px-1" title="Ver servicio" data-toggle="tooltip" data-theme="dark" data-placement="top">
                                                 <i class="far fa-eye text-white" style="font-size: 1rem;"></i>
                                             </a>
+
                                             @if($role != 17)
-                                                <a href="{{ route('procli.complementarservicio', $unid->id) }}" class="text-decoration-none text-muted px-1" title="Complementar servicio" data-toggle="tooltip" data-theme="dark" data-placement="top">
-                                                    <i class="far fa-edit text-white" style="font-size: 1rem;"></i>
-                                                </a>
+                                                @if($unid->programacion_id == null || $unid->programacion_id == "" )
+                                                    <a href="{{ route('procli.complementarservicio', $unid->id) }}" class="text-decoration-none text-muted px-1" title="Complementar servicio" data-toggle="tooltip" data-theme="dark" data-placement="top">
+                                                        <i class="far fa-edit text-white" style="font-size: 1rem;"></i>
+                                                    </a>
+                                                @endif
+
                                             @endif
 
 

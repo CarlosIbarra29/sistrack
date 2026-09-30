@@ -27,7 +27,8 @@
 	Route::get('/ver-servicio-cliente/{id}', [App\Http\Controllers\Programacion\ProgramacionClienteController::class, 'verservicio'])->name('procli.verservicio');
 	Route::get('/complementar-servicio-cliente/{id}', [App\Http\Controllers\Programacion\ProgramacionClienteController::class, 'complementarservicio'])->name('procli.complementarservicio');
 	Route::post('/complementar-servicio', [App\Http\Controllers\Programacion\ProgramacionClienteController::class, 'addcomplementarservicio'])->name('procli.addcomplementarservicio');
-
+	Route::get('/editar-servicio-cliente/{id}', [App\Http\Controllers\Programacion\ProgramacionClienteController::class, 'editarservicio'])->name('procli.editarservicio');
+	Route::post('/editar-atendida', [App\Http\Controllers\Programacion\ProgramacionClienteController::class, 'editaratendida'])->name('procli.editaratendida');
 
 	//GUARDAR PROGRAMACION DESDE MISMA PAGINA
 	Route::post('/guardar-programacionnew', [App\Http\Controllers\Programacion\ProgramacionController::class, 'guardarprogramacionnew'])->name('programacion.guardarprogramacionnew'); 

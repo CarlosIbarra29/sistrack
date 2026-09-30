@@ -390,3 +390,36 @@ jQuery(document).ready(
 
     }
 );
+
+
+
+
+$("#marcar_leido").click(function() {
+    Swal.fire({
+    title: "Estas seguro de marcar el servicio como Atendida? ",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Si, Marcar!",
+    cancelButtonText: "No, Cancelar!",
+    reverseButtons: true,
+      confirmButtonColor: "#73ab17",
+      cancelButtonColor: "#cc0c73",
+  }).then(function(result) {
+    if (result.value) {
+      // document.getElementById("id_lic_act").value = id;
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Espere un momento, la información esta siendo procesada",
+          showConfirmButton: false
+      });
+      document.getElementById("marcar_atendida").submit();
+    } else if (result.dismiss === "cancel") {
+      Swal.fire(
+         "Cancelada",
+        "La acción fue cancelada",
+        "error"
+      )
+    }
+  });
+});

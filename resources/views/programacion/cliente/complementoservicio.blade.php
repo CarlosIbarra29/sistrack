@@ -381,7 +381,6 @@
 
 
 
-@if($data->programacion_id  == "" || $data->programacion_id  == null)
     {{-- =========================================================
         PANEL PRINCIPAL
     ========================================================== --}}
@@ -414,8 +413,8 @@
             <div class="nuevo-servicio-panel-body">
             </div>
                     <input type="hidden" name="id_servicio_cliente" value="{{ $data->id }}">
-                    <input type="hidden" name="dom_origen" value="{{ $data->ubicacion_origen }}">
-                    <input type="hidden" name="dom_destino" value="{{ $data->ubicacion_destino }}">
+                    <input type="hidden" name="dom_origen" value="{{ $data->direccion_origen }}">
+                    <input type="hidden" name="dom_destino" value="{{ $data->direccion_destino }}">
                     <input type="hidden" name="armado_servicio" value="{{ $data->armada }}">
                     <input type="hidden" name="linea_transportista" value="{{ $data->linea_transporte }}">
 
@@ -724,7 +723,7 @@
 
         
     </section>
-@endif
+
 
 
 </div>

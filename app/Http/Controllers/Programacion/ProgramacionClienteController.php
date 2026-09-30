@@ -109,7 +109,21 @@ class ProgramacionClienteController extends Controller
     {
         $data = Programacioncliente::where('id', $id_servicio)->first();
 
-        return view('programacion.cliente.verservicio', compact('data'));
+        $cliente = Cliente::where('siaf_status', 1)->get();
+        // $tarifario = Tarifario::where('siaf_status', 1)->get();
+        $custodio = Custodio::where('siaf_status', 1)->get();
+        $estatus_programacion_data = EstatusProgramacion::where('estatus_activo', 1)->where('estatus_pgr', 1)->get();
+
+
+        if($data->programacion_id == null ){
+            $programacion = ""; 
+            $acompanantes_pro ="";
+        }else{
+            $programacion = Programacion::where('id', $data->programacion_id)->first();
+            $acompanantes_pro = AcompanantesProgramacion::where('programacion_id', $programacion->id)->get();
+        }
+        // dd($data);
+        return view('programacion.cliente.verservicio', compact('data', 'cliente', 'custodio', 'programacion', 'acompanantes_pro', 'estatus_programacion_data'));
     }
 
     public function complementarservicio($id_servicio)
@@ -133,7 +147,6 @@ class ProgramacionClienteController extends Controller
     {
 
 
-            // DB::beginTransaction();
 
             $clienteId = $request->cliente_id;
 
@@ -238,8 +251,42 @@ class ProgramacionClienteController extends Controller
         session()->flash('success', 'La programación se modifico correctamente');
         return redirect()->route('procli.listaservicios');
 
+    }
 
 
+    public function editarservicio($id_programacion)
+    {
+        // dd($id_programacion);
+        $cliente = Cliente::where('siaf_status', 1)->get();
+        // $tarifario = Tarifario::where('siaf_status', 1)->get();
+        $custodio = Custodio::where('siaf_status', 1)->get();
+        $programacion = Programacion::where('id', $id_programacion)->first();
+        $acompanantes_pro = AcompanantesProgramacion::where('programacion_id', $id_programacion)->get();
+        $estatus_programacion_data = EstatusProgramacion::where('estatus_activo', 1)->where('estatus_pgr', 1)->get();
+        //tipo de documentos en formato json
+        $cadenaTipoDocumento = "";
+        foreach($custodio as $documento){
+            $cadenaTipoDocumento .= '"'.$documento->id.'":"'.$documento->nombre_custodio. " ".$documento->ap_paterno. " ". $documento->ap_materno.'",';
+        }
+        $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
+
+
+        return view('programacion.cliente.editarservicio', compact('cliente', 'custodio', 'cadenaTipoDocumento', 'programacion', 'acompanantes_pro', 'id_programacion','estatus_programacion_data'));   
 
     }
+
+    public function editaratendida(Request $request)
+    {
+        $data = [
+            'estatus' => 1,
+            'iduserUpdated' =>auth()->user()->id,
+            'updated_at' =>date('Y-m-d H:i:s')
+        ];  
+
+        Programacioncliente::where('id', $request->id)->update($data);
+
+        session()->flash('success', 'La programación se modifico correctamente');
+        return redirect()->route('procli.listaservicios');
+    }
+
 }
