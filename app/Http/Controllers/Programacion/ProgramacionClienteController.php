@@ -56,12 +56,27 @@ class ProgramacionClienteController extends Controller
 
     public function nuevoservicio()
     {
-    	return view('programacion.cliente.nuevoservicio');
+        $role = auth()->user()->role;
+        
+        if($role == 17){
+           $user = auth()->user()->id;
+        }else{
+            $user = User::where('role', 17)->get();
+        }
+
+
+    	return view('programacion.cliente.nuevoservicio', compact('user', 'role'));
     }
 
     public function guardarserviciocliente(Request $request)
     {
-       
+
+        $role = auth()->user()->role;
+        if($role == 17){
+           $user = auth()->user()->id;
+        }else{
+            $user = $request->user_id;
+        }
 
         $data = [
             'ubicacion_origen' => $request->ubicacion_origen,
@@ -78,7 +93,7 @@ class ProgramacionClienteController extends Controller
             'estatus' => 0,
             'created_at' =>date('Y-m-d H:i:s'),
             'updated_at' =>date('Y-m-d H:i:s'),
-            'iduserCreated' =>auth()->user()->id,
+            'iduserCreated' => $user,
             'iduserUpdated' =>auth()->user()->id,
         ];  
          // dd($data);

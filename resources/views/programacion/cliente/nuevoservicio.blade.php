@@ -85,17 +85,52 @@
 
         <form action="{{ route('procli.guardarserviciocliente') }}"  method="post" id="submit_programacion" enctype="multipart/form-data">
             @csrf
+
+
+
+
             <div class="nuevo-servicio-panel-body">
 
+                @if($role == 17)
+                    <input type="hidden" name="user_id" value="{{ $user }}">
+                @else
+                        <div class="row">
+                            <div class="col-lg-6">
+                                    <label class="nuevo-servicio-label">
+                                        Usuario
+                                    </label>
+
+                                    <div class="nuevo-servicio-input-icon">
+
+                                        <i class="la la-user"></i>
+
+                                        <select class="form-control  app-input" id="user_id" name="user_id" >
+                                            <option value="">Selecciona una opción</option>
+                                            @foreach($user as $us)
+                                                <option value="{{ $us->id }}" data-nombre="{{ $us->name }}">
+                                                    {{ $us->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+
+                                    </div>
+   
+                            </div>
+                        </div>
+                @endif
                 {{-- =====================================================
                     ORIGEN / DESTINO
                 ====================================================== --}}
-                <div class="nuevo-servicio-section">
+                <div class="nuevo-servicio-section mt-4">
+
 
                     <div class="nuevo-servicio-section-grid">
 
                         {{-- ORIGEN --}}
-                        <div class="nuevo-servicio-location-block">
+
+
+
+                        <div class="nuevo-servicio-location-block ">
 
                             <div class="nuevo-servicio-section-label">
                                 UBICACIÓN / DIRECCIÓN ORIGEN
