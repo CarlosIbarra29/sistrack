@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=2.0.2') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=2.0.3') }}" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet"
           href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -572,6 +572,143 @@
         </section>
 
     </div>
+
+    <!-- TRANSPORTES DEL SERVICIO -->
+    <section class="monitoreo-panel monitoreo-transportes-card">
+
+        <div class="monitoreo-panel-header">
+
+            <div>
+
+                <span class="monitoreo-eyebrow">
+                    INFORMACIÓN LOGÍSTICA
+                </span>
+
+                <h6>
+                    TRANSPORTE Y CONDUCTOR
+
+                    <span class="monitoreo-counter">
+                        {{ $transportes->count() }}
+                    </span>
+                </h6>
+
+            </div>
+
+            <i class="la la-truck monitoreo-header-icon"></i>
+
+        </div>
+
+        <div class="monitoreo-transportes-body">
+
+            @forelse($transportes as $index => $transporte)
+
+                <div class="monitoreo-transporte-item">
+
+                    <div class="monitoreo-transporte-item__header">
+
+                        <div class="monitoreo-transporte-title">
+
+                            <span class="monitoreo-transporte-icon">
+                                <i class="la la-truck"></i>
+                            </span>
+
+                            <div>
+                                <small>TRANSPORTE</small>
+                                <strong>Transporte {{ $index + 1 }}</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="monitoreo-transporte-grid">
+
+                        <div class="monitoreo-transporte-detail">
+
+                            <span>Línea transportista</span>
+                            <strong>
+                                {{ !empty($transporte->linea_transportistas) ? $transporte->linea_transportistas : 'Sin registrar' }}
+                            </strong>
+
+                        </div>
+
+                        <div class="monitoreo-transporte-detail">
+
+                            <span> Nombre del conductor</span>
+                            <strong>
+                                {{ !empty($transporte->nombre_conductor) ? $transporte->nombre_conductor : 'Sin registrar' }}
+                            </strong>
+
+                        </div>
+
+                        <div class="monitoreo-transporte-detail">
+
+                            <span>Teléfono</span>
+
+                            <strong>
+
+                                @if(!empty($transporte->telefono))
+                                    <i class="la la-phone"></i>
+                                    {{ $transporte->telefono }}
+                                @else
+                                    Sin registrar
+                                @endif
+
+                            </strong>
+
+                        </div>
+
+                        <div class="monitoreo-transporte-detail">
+
+                            <span>Placas</span>
+
+                            <strong>
+                                {{ !empty($transporte->placas) ? $transporte->placas : 'Sin registrar' }}
+                            </strong>
+
+                        </div>
+
+                        <div class="monitoreo-transporte-detail monitoreo-transporte-detail--full">
+
+                            <span>
+                                Generales de la unidad
+                            </span>
+
+                            <strong>
+                                {{ !empty($transporte->generales_unidad) ? $transporte->generales_unidad : 'Sin registrar' }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            @empty
+
+                <div class="monitoreo-transportes-empty">
+
+                    <i class="la la-truck"></i>
+
+                    <div>
+
+                        <strong>
+                            Sin datos de transporte
+                        </strong>
+
+                        <span>
+                            Este servicio todavía no tiene información de transporte registrada.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            @endforelse
+
+        </div>
+
+    </section>
 
     <section class="monitoreo-panel monitoreo-operational-card">
 
