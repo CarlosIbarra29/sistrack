@@ -136,12 +136,170 @@ var ModuloEstadias = function () {
 
     };
 
+    var inicializarTransportes = function () {
+
+        var container =document.getElementById('transportesContainer');
+        var btnAgregar =document.getElementById('btnAgregarTransporte');
+        var template =document.getElementById('templateTransporte');
+
+        if (!container || !btnAgregar || !template) {
+            return;
+        }
+
+        var reindexarTransportes = function () {
+
+            var items = container.querySelectorAll('[data-transporte-item]' );
+
+
+            Array.prototype.forEach.call(
+                items,
+                function (item, index) {
+
+                    var numero =item.querySelector('.transport-unit-number');
+
+                    if (numero) {
+                        numero.textContent ='Transporte ' + (index + 1);
+                    }
+
+                    var campos = item.querySelectorAll('[data-field]');
+
+                    Array.prototype.forEach.call(
+                        campos,
+                        function (campo) {
+
+                            var nombre = campo.getAttribute('data-field');
+                            campo.name ='transportes[' +index +'][' + nombre +']';
+
+                        }
+                    );
+
+                }
+            );
+
+            var botonesEliminar =container.querySelectorAll('[data-remove-transporte]');
+
+            Array.prototype.forEach.call(
+                botonesEliminar,
+                function (boton) {
+
+                    boton.style.display =
+                        items.length > 1
+                            ? ''
+                            : 'none';
+
+                }
+            );
+
+        };
+
+        var prepararExistentes = function () {
+
+            var items =container.querySelectorAll('[data-transporte-item]');
+
+            Array.prototype.forEach.call(
+                items,
+                function (item) {
+
+                    var campos =item.querySelectorAll('input[name], textarea[name]');
+
+                    Array.prototype.forEach.call(
+                        campos,
+                        function (campo) {
+
+                            var name = campo.getAttribute('name') || '';
+                            var coincidencia = name.match(/\[([^\]]+)\]$/);
+
+                            if (coincidencia) {
+                                campo.setAttribute('data-field',coincidencia[1]);
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+        };
+
+        btnAgregar.addEventListener(
+            'click',
+            function () {
+
+                var fragmento =template.content.cloneNode(true);
+                container.appendChild(fragmento);
+                reindexarTransportes();
+
+                var items =container.querySelectorAll('[data-transporte-item]');
+                var ultimo =items[items.length - 1];
+
+                if (ultimo) {
+
+                    ultimo.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+
+                }
+
+            }
+        );
+
+        container.addEventListener(
+            'click',
+            function (e) {
+
+                var boton = e.target.closest('[data-remove-transporte]');
+
+                if (!boton) {
+                    return;
+                }
+
+                var items = container.querySelectorAll('[data-transporte-item]');
+
+                if (items.length <= 1) {
+                    return;
+                }
+
+                var item =boton.closest('[data-transporte-item]');
+
+                if (!item) { return;}
+
+                Swal.fire({
+
+                    title: '¿Eliminar transporte?',
+                    text:'Los datos de este transporte dejarán de estar asociados al servicio.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText:'Sí, eliminar',
+                    cancelButtonText:'Cancelar',
+                    reverseButtons: true
+
+                }).then(function (result) {
+
+                    if (!result.value) {
+                        return;
+                    }
+
+                    item.remove();
+                    reindexarTransportes();
+
+                });
+
+            }
+        );
+
+        prepararExistentes();
+        reindexarTransportes();
+
+    };
+
     return {
 
         init: function () {
 
             inicializarGuardado();
             inicializarAcompanantes();
+            inicializarTransportes();
             inicializarLimpiar();
 
         }

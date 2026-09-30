@@ -768,21 +768,17 @@
         }
     );
 
-
+    // ======================================================================
     // ACTUALIZACIÓN DE FECHAS OPERATIVAS
+    // ======================================================================
 
     $(document).on(
         "focus",
         '[data-role="fecha-operativa"]',
         function () {
-
-            $(this).data(
-                "valor-anterior",
-                $(this).val()
-            );
+            $(this).data("valor-anterior",$(this).val());
         }
     );
-
 
     $(document).on(
         "change",
@@ -790,69 +786,57 @@
         function () {
 
             var $input = $(this);
+
             var programacion = $input.data("programacion");
             var campo = $input.data("campo");
             var valor = $input.val();
-            var valorAnterior =$input.data("valor-anterior") || "";
-            var url =$("#url_fecha_estadia").val();
+            var valorAnterior = $input.data("valor-anterior") || "";
+            var url = $("#url_fecha_estadia").val();
 
+            if (String(valor) === String(valorAnterior)) {
+                return;
+            }
 
-            Swal.fire({
-                title: "¿Actualizar fecha?",
-                text: "La fecha operativa del servicio será modificada.",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Sí, actualizar",
-                cancelButtonText: "Cancelar",
-                reverseButtons: true
+            $input.prop("disabled", true);
 
-            }).then(function (result) {
+            $.ajax({
 
-                if (!result.value) {
+                url: url,
+                type: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": getCsrfToken()
+                },
+
+                data: {
+                    id_programacion: programacion,
+                    campo: campo,
+                    valor: valor,
+                    _token: getCsrfToken()
+                },
+
+                success: function () {
+
+                    $input.data("valor-anterior",valor);
+
+                    Swal.fire({
+                        title: "Fecha actualizada",
+                        icon: "success",
+                        timer: 1200,
+                        showConfirmButton: false
+                    });
+                },
+
+                error: function (xhr) {
+
                     $input.val(valorAnterior);
-                    return;
+                    console.error(xhr);
+                    Swal.fire("No fue posible actualizar","La fecha no pudo ser guardada.","error");
+                },
+
+
+                complete: function () {
+                    $input.prop("disabled",false);
                 }
-
-                $input.prop("disabled", true);
-
-                $.ajax({
-
-                    url: url,
-                    type: "POST",
-                    headers: {
-                        "X-CSRF-TOKEN": getCsrfToken()
-                    },
-
-                    data: {
-                        id_programacion: programacion,
-                        campo: campo,
-                        valor: valor,
-                        _token: getCsrfToken()
-                    },
-
-                    success: function () {
-
-                        $input.data("valor-anterior",valor);
-
-                        Swal.fire({
-                            title: "Fecha actualizada",
-                            icon: "success",
-                            timer: 1200,
-                            showConfirmButton: false
-                        });
-                    },
-
-                    error: function (xhr) {
-                        $input.val(valorAnterior);
-                        console.error(xhr);
-                        Swal.fire("No fue posible actualizar","La fecha no pudo ser guardada.","error");
-                    },
-
-                    complete: function () {
-                        $input.prop("disabled",false);
-                    }
-
-                });
 
             });
 

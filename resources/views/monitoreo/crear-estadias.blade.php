@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=2.0.4') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=2.0.5') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('js/monitoreo/AgregarEstadias.js?v=2.0.3') }}"></script>
+    <script src="{{ asset('js/monitoreo/AgregarEstadias.js?v=2.0.4') }}"></script>
 @endpush
 
 @section('title')
@@ -472,6 +472,7 @@
         {{-- =========================================================
             DATOS DEL TRANSPORTE
         ========================================================== --}}
+
         <section class="transport-panel transport-panel--highlight">
 
             <div class="transport-panel-header">
@@ -483,6 +484,7 @@
                     </span>
 
                     <div>
+
                         <span class="transport-eyebrow">
                             INFORMACIÓN LOGÍSTICA
                         </span>
@@ -490,62 +492,215 @@
                         <h6>
                             DATOS DEL TRANSPORTE Y CONDUCTOR
                         </h6>
+
                     </div>
+
+                </div>
+
+                <button type="button" id="btnAgregarTransporte" class="transport-btn transport-btn--secondary">
+                    <i class="la la-plus"></i>
+                    Añadir datos de transporte
+                </button>
+
+            </div>
+
+            <div class="transport-panel-body">
+
+                <div id="transportesContainer">
+
+                    @php $transportesVista = $transportes->count() ? $transportes : collect([null]); @endphp
+
+                    @foreach($transportesVista as $index => $transporte)
+
+                        <div class="transport-unit-card"
+                             data-transporte-item>
+
+                            <div class="transport-unit-card__header">
+
+                                <div>
+
+                                    <span class="transport-eyebrow">
+                                        TRANSPORTE
+                                    </span>
+
+                                    <strong class="transport-unit-number">
+                                        Transporte {{ $index + 1 }}
+                                    </strong>
+
+                                </div>
+
+
+                                <button type="button" class="transport-remove-btn" data-remove-transporte title="Eliminar transporte">
+
+                                    <i class="la la-trash"></i>
+                                    Eliminar
+
+                                </button>
+
+                            </div>
+
+                            <input type="hidden" name="transportes[{{ $index }}][id]" value="{{ $transporte->id ?? '' }}">
+
+                            <div class="transport-vehicle-grid">
+
+                                <div class="transport-field">
+
+                                    <label class="transport-label">
+                                        Línea transportista
+                                        <span>*</span>
+                                    </label>
+
+                                    <input type="text" class="form-control transport-input" name="transportes[{{ $index }}][linea_transportista]" value="{{ $transporte->linea_transportistas ?? '' }}" placeholder="Nombre de la línea transportista">
+
+                                </div>
+
+                                <div class="transport-field">
+
+                                    <label class="transport-label">
+                                        Nombre del conductor
+                                        <span>*</span>
+                                    </label>
+
+                                    <input type="text"
+                                           class="form-control transport-input"
+                                           name="transportes[{{ $index }}][nombre_conductor]"
+                                           value="{{ $transporte->nombre_conductor ?? '' }}"
+                                           placeholder="Nombre completo del conductor">
+
+                                </div>
+
+                                <div class="transport-field">
+
+                                    <label class="transport-label">
+                                        Teléfono
+                                        <span>*</span>
+                                    </label>
+
+                                    <div class="transport-input-icon">
+
+                                        <i class="la la-phone"></i>
+
+                                        <input type="tel"
+                                               class="form-control transport-input"
+                                               name="transportes[{{ $index }}][telefono]"
+                                               value="{{ $transporte->telefono ?? '' }}"
+                                               placeholder="Teléfono del conductor">
+
+                                    </div>
+
+                                </div>
+
+                                <div class="transport-field">
+
+                                    <label class="transport-label">
+                                        Placas
+                                        <span>*</span>
+                                    </label>
+
+                                    <input type="text"
+                                           class="form-control transport-input"
+                                           name="transportes[{{ $index }}][placas]"
+                                           value="{{ $transporte->placas ?? '' }}"
+                                           placeholder="Placas de la unidad">
+
+                                </div>
+
+                                <div class="transport-field transport-field--full">
+
+                                    <label class="transport-label">
+                                        Generales de la unidad
+                                    </label>
+
+                                    <textarea
+                                        class="form-control transport-input transport-textarea"
+                                        name="transportes[{{ $index }}][generales_unidad]"
+                                        rows="3"
+                                        placeholder="Marca, modelo, color, tipo de caja u otros datos de la unidad...">{{ $transporte->generales_unidad ?? '' }}</textarea>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    @endforeach
 
                 </div>
 
             </div>
 
+        </section>
 
-            <div class="transport-panel-body">
+        <template id="templateTransporte">
+
+            <div class="transport-unit-card" data-transporte-item>
+
+                <div class="transport-unit-card__header">
+                    <div>
+
+                        <span class="transport-eyebrow">
+                            TRANSPORTE
+                        </span>
+
+                        <strong class="transport-unit-number">
+                            Transporte
+                        </strong>
+
+                    </div>
+
+
+                    <button type="button"
+                            class="transport-remove-btn"
+                            data-remove-transporte
+                            title="Eliminar transporte">
+
+                        <i class="la la-trash"></i>
+
+                        Eliminar
+
+                    </button>
+
+                </div>
+
+                <input type="hidden"data-field="id"value="">
 
                 <div class="transport-vehicle-grid">
 
                     <div class="transport-field">
 
-                        <label class="transport-label" for="linea_transportista">
+                        <label class="transport-label">
                             Línea transportista
                             <span>*</span>
                         </label>
 
                         <input type="text"
                                class="form-control transport-input"
-                               name="linea_transportista"
-                               id="linea_transportista"
-                               value="{{ $estadias_info->linea_transportistas ?? '' }}"
-                               placeholder="Nombre de la línea transportista"
-                               >
+                               data-field="linea_transportista"
+                               placeholder="Nombre de la línea transportista">
 
                     </div>
 
 
-                    {{-- CONDUCTOR --}}
                     <div class="transport-field">
 
-                        <label class="transport-label" for="nombre_conductor">
+                        <label class="transport-label">
                             Nombre del conductor
                             <span>*</span>
-
                         </label>
 
                         <input type="text"
                                class="form-control transport-input"
-                               name="nombre_conductor"
-                               id="nombre_conductor"
-                               value="{{ $estadias_info->nombre_conductor ?? '' }}"
-                               placeholder="Nombre completo del conductor"
-                               >
+                               data-field="nombre_conductor"
+                               placeholder="Nombre completo del conductor">
 
                     </div>
 
 
-                    {{-- TELÉFONO --}}
                     <div class="transport-field">
 
-                        <label class="transport-label" for="telefono">
+                        <label class="transport-label">
                             Teléfono
                             <span>*</span>
-
                         </label>
 
                         <div class="transport-input-icon">
@@ -554,11 +709,8 @@
 
                             <input type="tel"
                                    class="form-control transport-input"
-                                   name="telefono"
-                                   id="telefono"
-                                   value="{{ $estadias_info->telefono ?? '' }}"
-                                   placeholder="Teléfono del conductor"
-                                   >
+                                   data-field="telefono"
+                                   placeholder="Teléfono del conductor">
 
                         </div>
 
@@ -567,32 +719,30 @@
 
                     <div class="transport-field">
 
-                        <label class="transport-label" for="placas">
+                        <label class="transport-label">
                             Placas
                             <span>*</span>
                         </label>
 
                         <input type="text"
                                class="form-control transport-input"
-                               name="placas"
-                               id="placas"
-                               value="{{ $estadias_info->placas ?? '' }}"
-                               placeholder="Placas de la unidad"
-                               >
+                               data-field="placas"
+                               placeholder="Placas de la unidad">
 
                     </div>
 
+
                     <div class="transport-field transport-field--full">
 
-                        <label class="transport-label" for="generales_unidad">
+                        <label class="transport-label">
                             Generales de la unidad
                         </label>
 
-                        <textarea class="form-control transport-input transport-textarea"
-                                  name="observaciones"
-                                  id="generales_unidad"
-                                  rows="3"
-                                  placeholder="Marca, modelo, color, tipo de caja u otros datos de la unidad...">{{ $estadias_info->generales_unidad ?? '' }}</textarea>
+                        <textarea
+                            class="form-control transport-input transport-textarea"
+                            data-field="generales_unidad"
+                            rows="3"
+                            placeholder="Marca, modelo, color, tipo de caja u otros datos de la unidad..."></textarea>
 
                     </div>
 
@@ -600,7 +750,7 @@
 
             </div>
 
-        </section>
+        </template>
 
         <section class="transport-panel">
 

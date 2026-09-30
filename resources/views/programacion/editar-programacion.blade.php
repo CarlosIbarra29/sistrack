@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
+@push('styles')
+    <link href="{{ asset('css/estilos_principal.css?v=1.2.5') }}" rel="stylesheet" type="text/css" />
+@endpush
+
 @push('scripts')
-    <script src="{{ asset('js/programacion/EditarProgramacion.js') }}"></script>
+    <script src="{{ asset('js/programacion/EditarProgramacionNew.js?v=1.0.2') }}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
 
@@ -10,111 +14,149 @@
 @endsection
 
 @section('content')
+<div class="dashboard-dark programacion-page programacion-edit-page">
 
-<div class="container-fluid">
+    <header class="programacion-page-header programacion-edit-header">
 
-    <div class="row mb-8">
-        <div class="col-lg-12">
-            <div class="d-flex justify-content-between align-items-center bg-white rounded shadow-sm px-6 py-5 border-left border-warning"
-                 style="border-left-width:5px !important;">
-                <div>
-                    <h2 class="mb-1 font-weight-bold text-dark">Editar Programación</h2>
-                    <span class="text-muted">Actualice los datos del servicio. Estatus actual: 
-                        <strong class="text-danger">{{ $programacion->programacionEstatus->estatus_programacion }}</strong>
-                    </span>
-                </div>
+        <div class="programacion-edit-header-main">
+            <span class="programacion-edit-header-icon">
+                <i class="la la-edit"></i>
+            </span>
 
-                <a href="{{ route('programacion.listadoprogramacion') }}"
-                   class="btn btn-outline-warning font-weight-bold">
-                    <i class="flaticon2-back"></i> Regresar
-                </a>
+            <div class="programacion-edit-header-copy">
+                <span class="programacion-eyebrow">
+                    PROGRAMACIÓN
+                </span>
+
+                <h2 class="programacion-page-title">
+                    Editar Programación
+                </h2>
+
+                <p class="programacion-page-subtitle">
+                    Actualiza los datos operativos del servicio.
+                    Estatus actual:
+                    <strong>
+                        {{ $programacion->programacionEstatus->estatus_programacion }}
+                    </strong>
+                </p>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card card-custom shadow-sm border-0">
+        <div class="programacion-header-actions">
+            <a href="{{ route('programacion.listadoprogramacion') }}"
+               class="programacion-edit-back">
+                <i class="flaticon2-back"></i>
+                <span>Regresar</span>
 
-                <form action="{{ route('programacion.modificarprogramacion') }}" 
-                      method="post" 
-                      id="submit_programacion" 
-                      enctype="multipart/form-data">
+            </a>
+        </div>
 
-                    @csrf
-                    <input type="hidden" name="id_programacion" value="{{ $id_programacion }}">
-                    <input type="hidden" id="documentoEliminarPath" value="{{ route('programacion.eliminarcustodioprogramacion') }}">
-                    <input type='hidden' id='url_tarifario' value='{{ route('programacion.obtenertarifas') }}'>
-                    <input type='hidden' id='tipoArchivo' value='{{ $cadenaTipoDocumento }}'>
+    </header>
 
-                    <div class="card-body px-10 py-8">
+    <section class="panel-dark programacion-form-panel">
+        <div class="programacion-card-header">
+            <div>
+                <span class="programacion-eyebrow">SERVICIO {{ $programacion->folio }}</span>
+                <h6>DATOS DE LA PROGRAMACIÓN</h6>
+            </div>
+        </div>
 
-                        <div class="bg-light rounded p-6 mb-8 border">
-                            <h5 class="font-weight-bold text-dark mb-6">Datos de la programación</h5>
+        <form action="{{ route('programacion.modificarprogramacion') }}"
+              method="post"
+              id="submit_programacion"
+              enctype="multipart/form-data"
+              class="programacion-form">
 
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label class="font-weight-bold">Razón Social</label>
-                                    <select class="form-control form-control-lg" name="cliente_id" required>
-                                        @foreach($cliente as $tp)
-                                            <option value="{{ $tp->id }}" @selected($programacion->cliente_id == $tp->id)>
-                                                {{ $tp->nombre_cliente }} / {{ $tp->razon_social }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
+            @csrf
 
-                                <div class="col-lg-6">
-                                    <label class="font-weight-bold">Fecha y hora de servicio</label>
-                                    <input type="datetime-local" class="form-control form-control-lg"
-                                           name="fecha_hora" value="{{ $programacion->fecha_servicio }}" required>
+            <input type="hidden" name="id_programacion" value="{{ $id_programacion }}">
+            <input type="hidden" id="documentoEliminarPath" value="{{ route('programacion.eliminarcustodioprogramacion') }}">
+            <input type="hidden" id="tipoArchivo" value='{{ $cadenaTipoDocumento }}'>
+
+            <div class="programacion-form-grid">
+
+                {{-- 01 CLIENTE --}}
+                <section class="form-row-section form-row-section--origen">
+                    <div class="section-meta">
+                        <span class="section-number">01</span>
+                        <div>
+                            <h3>Cliente</h3>
+                            <p>Cliente solicitante, horario y variables del servicio.</p>
+                        </div>
+                    </div>
+
+                    <div class="section-controls">
+                        <div class="programacion-field-grid programacion-field-grid--origin">
+
+                            <div class="form-group programacion-field-client">
+                                <label class="app-label">Razón Social *</label>
+                                <select class="form-control app-input" id="cliente_id" name="cliente_id" required>
+                                    @foreach($cliente as $cli)
+                                        <option value="{{ $cli->id }}" @selected((int)$programacion->cliente_id === (int)$cli->id)>
+                                            {{ $cli->nombre_cliente }} / {{ $cli->razon_social }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group programacion-field-date">
+                                <label class="app-label">Fecha y hora de servicio *</label>
+                                <input type="datetime-local"
+                                       class="form-control app-input"
+                                       name="fecha_hora"
+                                       id="fecha_hora"
+                                       value="{{ \Carbon\Carbon::parse($programacion->fecha_servicio)->format('Y-m-d\\TH:i') }}"
+                                       required>
+                            </div>
+
+                            <div class="form-group programacion-field-folio">
+                                <label class="app-label">
+                                    Folio <span class="programacion-label-optional">Cliente</span>
+                                </label>
+                                <input type="text"
+                                       class="form-control app-input"
+                                       name="folio_interno"
+                                       id="folio_interno"
+                                       value="{{ $programacion->folio_interno }}"
+                                       placeholder="Folio proporcionado por el cliente"
+                                       autocomplete="off">
+                            </div>
+
+                            <div class="form-group programacion-choice-block">
+                                <label class="app-label">Tipo de servicio *</label>
+                                <div class="compact-radio-group">
+                                    <label class="compact-radio-item">
+                                        <input type="radio" name="tipo_servicio" value="0"
+                                               {{ (int)$programacion->tipo_servicio === 0 ? 'checked' : '' }} required>
+                                        <span><i class="la la-road"></i> Foráneo</span>
+                                    </label>
+                                    <label class="compact-radio-item">
+                                        <input type="radio" name="tipo_servicio" value="1"
+                                               {{ (int)$programacion->tipo_servicio === 1 ? 'checked' : '' }}>
+                                        <span><i class="la la-map-marker"></i> Local</span>
+                                    </label>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <div class="col-lg-2">
-                                    <label class="font-weight-bold">Tipo de servicio</label>
-                                    <div class="radio-inline mt-2">
-                                        <label class="radio">
-                                            <input type="radio" name="tipo_servicio" value="0" {{ $programacion->tipo_servicio == 0 ? 'checked' : '' }}>
-                                            <span></span> Foráneo
-                                        </label>
-                                        <label class="radio">
-                                            <input type="radio" name="tipo_servicio" value="1" {{ $programacion->tipo_servicio == 1 ? 'checked' : '' }}>
-                                            <span></span> Local
-                                        </label>
-                                    </div>
+                            <div class="form-group programacion-choice-block">
+                                <label class="app-label">Armado *</label>
+                                <div class="compact-radio-group">
+                                    <label class="compact-radio-item">
+                                        <input type="radio" name="armado_servicio" value="1"
+                                               {{ (int)$programacion->armado_servicio === 1 ? 'checked' : '' }} required>
+                                        <span><i class="la la-check"></i> Sí</span>
+                                    </label>
+                                    <label class="compact-radio-item">
+                                        <input type="radio" name="armado_servicio" value="2"
+                                               {{ (int)$programacion->armado_servicio === 2 ? 'checked' : '' }}>
+                                        <span><i class="la la-times"></i> No</span>
+                                    </label>
                                 </div>
+                            </div>
 
-                                <div class="col-lg-2"> 
-                                    <label class="font-weight-bold">Armado</label>
-                                    <div class="radio-inline mt-2">
-                                        <label class="radio">
-                                            <input type="radio" name="armado_servicio" value="0" {{ $programacion->armado_servicio == 0 ? 'checked' : '' }}>
-                                            <span></span> Si
-                                        </label>
-                                        <label class="radio ml-4"> 
-                                            <input type="radio" name="armado_servicio" value="1" {{ $programacion->armado_servicio == 1 ? 'checked' : '' }}>
-                                            <span></span> No
-                                        </label>
-                                    </div>
-                                </div>
+                            {{-- <!-- PREPARADO PARA FUTURO: TARIFARIO -->
 
-                                <div class="col-lg-2">
-                                    <label class="font-weight-bold">Monitoreo</label>
-                                    <div class="radio-inline mt-2">
-                                        <label class="radio">
-                                            <input type="radio" name="op_monitoreo_id" value="1" {{ $programacion->op_monitoreo_id == 1 ? 'checked' : '' }}>
-                                            <span></span> Monitoreo 1
-                                        </label>
-                                        <label class="radio">
-                                            <input type="radio" name="op_monitoreo_id" value="2" {{ $programacion->op_monitoreo_id == 2 ? 'checked' : '' }}>
-                                            <span></span> Monitoreo 2
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
+                                <!-- <div class="form-group">
                                     <label class="font-weight-bold">Tarifario</label>
                                     <select class="form-control form-control-lg" name="id_tarifa" required>
                                         @foreach($tarifario as $tp)
@@ -123,138 +165,230 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                </div>
-                            </div>
+                                </div> -->
+                            --}}
+                            
 
-                            <div class="form-group row">
-                                <div class="col-lg-6"> 
-                                    <label class="font-weight-bold">Folio Interno</label>
-                                    <input type="text" class="form-control form-control-lg" 
-                                           name="folio_interno" value="{{ $programacion->folio_interno }}" required>
-                                </div>
-
-                                <div class="col-lg-6"> 
-                                    <label class="font-weight-bold">Cliente</label>
-                                    <input type="text" class="form-control form-control-lg" 
-                                           name="linea_transportista" value="{{ $programacion->linea_transportista }}" required>
-                                </div>
-                            </div>
                         </div>
+                    </div>
+                </section>
 
-                        <div class="bg-light rounded p-6 mb-8 border">
-                            <h5 class="font-weight-bold text-dark mb-6">Rutas del servicio</h5>
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label class="font-weight-bold">Domicilio origen</label>
-                                    <input type="text" class="form-control form-control-lg"
-                                           name="dom_origen" value="{{ $programacion->dom_origen }}" required>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <label class="font-weight-bold">Domicilio destino</label>
-                                    <input type="text" class="form-control form-control-lg"
-                                           name="dom_destino" value="{{ $programacion->dom_destino }}" required>
-                                </div>
-                            </div>
+                {{-- 02 RUTA --}}
+                <section class="form-row-section form-row-section--rutas">
+                    <div class="section-meta">
+                        <span class="section-number">02</span>
+                        <div>
+                            <h3>Origen-Destino</h3>
+                            <p>Puntos geográficos de partida y destino del servicio.</p>
                         </div>
+                    </div>
 
-                        <div class="bg-light rounded p-6 mb-8 border">
-                            <h5 class="font-weight-bold text-dark mb-6">Asignación de personal</h5>
+                    <div class="section-controls">
+                        <div class="programacion-field-grid">
+                            <div class="form-group">
+                                <label class="app-label">Domicilio origen *</label>
+                                <input type="text" class="form-control app-input"
+                                       name="dom_origen" value="{{ $programacion->dom_origen }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="app-label">Domicilio destino *</label>
+                                <input type="text" class="form-control app-input"
+                                       name="dom_destino" value="{{ $programacion->dom_destino }}" required>
+                            </div>
 
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label class="font-weight-bold">Custodio Principal</label>
-                                    <select class="form-control form-control-lg" name="custodio_id" required>
-                                        @foreach($custodio as $tp)
-                                            <option value="{{ $tp->id }}" @selected($programacion->custodio_id == $tp->id)>
-                                                {{ $tp->nombre_custodio }} {{ $tp->ap_paterno }} {{ $tp->ap_materno }}
+                            <div class="form-group programacion-field-status">
+                                
+                                <label class="app-label">Estatus *</label>
+
+                                <div class="programacion-status-select">
+
+                                    <i class="la la-flag"></i>
+
+                                    <select class="form-control app-input" id="programacion_id" name="programacion_id" required>
+
+                                        @foreach($estatus_programacion_data as $estatus)
+
+                                            <option value="{{ $estatus->id }}"
+                                                @selected((int)$programacion->programacion_estatus_id === (int)$estatus->id)>
+                                                {{ $estatus->estatus_programacion }}
+
                                             </option>
+
                                         @endforeach
                                     </select>
                                 </div>
 
-                                <div class="col-lg-6">
-                                    <label class="font-weight-bold">Acompañantes</label>
-                                    <div class="radio-inline mt-2">
-                                        <label class="radio">
-                                            <input type="radio" name="op_custodios" value="0" {{ $programacion->acompanantes == 0 ? 'checked' : '' }} />
-                                            <span></span> Si
-                                        </label>
-                                        <label class="radio">
-                                            <input type="radio" name="op_custodios" value="1" {{ $programacion->acompanantes == 1 ? 'checked' : '' }} />
-                                            <span></span> No
-                                        </label>
-                                    </div>
-                                </div>
                             </div>
-
-                            <div class="card card-custom gutter-b mt-4 {{ $programacion->acompanantes == 1 ? 'd-none' : '' }}" 
-                                 id="div_custodios" style="background-color: #ffffff; border: 1px solid #ebedf3;">
-                                <div class="card-header">
-                                    <div class="card-title">
-                                        <h3 class="card-label text-dark" style="font-size: 1rem;">Lista de Acompañantes</h3>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row form-group">
-                                        <div class="col-lg-12">
-                                            <table class='table table-bordered table-hover' id='tblDocumentos'>
-                                                <thead>
-                                                    <tr>
-                                                        <th>Custodio</th>
-                                                        <th style="width: 50px;">Opción</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id='tbodyDocumentos'>
-                                                    @foreach($acompanantes_pro as $documento)
-                                                        <tr id="trDocumento{{ $documento->id }}">
-                                                            <td>
-                                                                {{ $documento->custodio->nombre_custodio }} {{ $documento->custodio->ap_paterno }} {{ $documento->custodio->ap_materno }}
-                                                            </td>
-                                                            <td>
-                                                                <a href="#" class="btn btn-sm btn-icon btn-outline-danger hrefEliminarDocumento" data-id="{{ $documento->id }}">
-                                                                    <i class="flaticon-delete"></i>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <a href="#" class="btn btn-icon btn-outline-warning btn-circle btn-sm hrefAgregarOtro" data-toggle="tooltip" title="Agregar acompañante">
-                                                <i class="flaticon2-plus"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-light rounded p-6 mb-8 border">
-                            <h5 class="font-weight-bold text-dark mb-6">Observaciones</h5>
-                            <div class="form-group row">
-                                <div class="col-lg-12">
-                                    <textarea class="form-control" name="observaciones" rows="4" style="resize: none;">{{ $programacion->observaciones }}</textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-footer bg-white border-top text-right">
-                            <button type="button" id="btnGuardar" class="btn btn-warning font-weight-bold px-8 mr-2">
-                                <i class="flaticon2-check-mark"></i> Guardar Cambios
-                            </button>
-                            <a href="{{ route('programacion.listadoprogramacion') }}" class="btn btn-secondary font-weight-bold px-8">
-                                Cancelar
-                            </a>
                         </div>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+                </section>
 
+                {{-- 03 PERSONAL --}}
+                <section class="form-row-section form-row-section--personal">
+                    <div class="section-meta">
+                        <span class="section-number">03</span>
+                        <div>
+                            <h3>Personal</h3>
+                            <p>Custodio principal y acompañantes secundarios.</p>
+                        </div>
+                    </div>
+
+                    <div class="section-controls">
+                        <div class="programacion-field-grid programacion-field-grid--personal">
+
+                            <div class="form-group programacion-field-custodio">
+                                <label class="app-label">Custodio Principal *</label>
+                                <select class="form-control app-input" id="custodio_id" name="custodio_id" required>
+                                    <option value="153" @selected((int)$programacion->custodio_id === 153)>Sin custodio</option>
+                                    <option value="154" @selected((int)$programacion->custodio_id === 154)>Custodio emergente</option>
+
+                                    @foreach($custodio as $cli)
+                                        @if((int)$cli->id !== 153 && (int)$cli->id !== 154)
+                                            <option value="{{ $cli->id }}" @selected((int)$programacion->custodio_id === (int)$cli->id)>
+                                                {{ $cli->nombre_custodio }} {{ $cli->ap_paterno }} {{ $cli->ap_materno }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group programacion-field-custodio-emergente"
+                                 id="contenedor_custodio_emergente"
+                                 style="display:none;">
+                                <label class="app-label">Nombre completo del custodio emergente *</label>
+                                <input type="text"
+                                       class="form-control app-input"
+                                       name="custodio_emergente"
+                                       id="custodio_emergente"
+                                       value="{{ $programacion->custodio_emergente }}"
+                                       placeholder="Nombre completo del custodio emergente"
+                                       maxlength="255">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="app-label">¿Lleva Acompañantes?</label>
+                                <div class="compact-radio-group">
+                                    <label class="compact-radio-item">
+                                        <input type="radio" name="op_custodios" id="op_c_uno" value="0"
+                                               {{ (int)$programacion->acompanantes === 0 ? 'checked' : '' }}>
+                                        <span><i class="la la-user-plus"></i> Sí</span>
+                                    </label>
+                                    <label class="compact-radio-item">
+                                        <input type="radio" name="op_custodios" id="op_c_dos" value="1"
+                                               {{ (int)$programacion->acompanantes === 1 ? 'checked' : '' }}>
+                                        <span><i class="la la-user"></i> No</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="div_custodios" class="programacion-extra-custodios">
+                            <div class="programacion-extra-header">
+                                <div class="programacion-extra-heading">
+                                    <span class="programacion-extra-icon">
+                                        <i class="la la-users"></i>
+                                    </span>
+
+                                    <div>
+                                        <span class="programacion-extra-title">
+                                            Acompañantes asignados
+                                        </span>
+                                        <small>
+                                            Personal adicional para este servicio
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <a href="#"
+                                   class="hrefAgregarOtro programacion-add-extra">
+                                    <i class="la la-plus"></i>
+                                    <span>Agregar</span>
+                                </a>
+                            </div>
+
+                            <div class="programacion-extra-table-wrapper">
+
+                                <table class="programacion-extra-table"
+                                       id="tblDocumentos">
+
+                                    <tbody id="tbodyDocumentos">
+
+                                        @foreach($acompanantes_pro as $documento)
+
+                                            <tr id="trDocumento{{ $documento->id }}">
+
+                                                <td>
+                                                    <div class="programacion-extra-person">
+                                                        <span class="programacion-extra-person-icon">
+                                                            <i class="la la-user"></i>
+                                                        </span>
+
+                                                        <span class="programacion-extra-person-name">
+                                                            {{ $documento->custodio->nombre_custodio }}
+                                                            {{ $documento->custodio->ap_paterno }}
+                                                            {{ $documento->custodio->ap_materno }}
+                                                        </span>
+                                                    </div>
+                                                </td>
+
+                                                <td class="programacion-extra-option">
+
+                                                    <a href="#"
+                                                       class="programacion-extra-delete hrefEliminarDocumento"
+                                                       data-id="{{ $documento->id }}"
+                                                       data-documento="{{ $documento->custodio->nombre_custodio }} {{ $documento->custodio->ap_paterno }}"
+                                                       title="Eliminar acompañante">
+
+                                                        <i class="la la-trash"></i>
+
+                                                    </a>
+
+                                                </td>
+
+                                            </tr>
+
+                                        @endforeach
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="programacion-form-bottom">
+                <section class="programacion-notes-block">
+                    <div class="section-meta section-meta--inline">
+                        <span class="section-number">04</span>
+                        <div>
+                            <h3>Notas</h3>
+                            <p>Observaciones críticas u operacionales a considerar.</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea class="form-control app-input programacion-notes"
+                                  name="observaciones"
+                                  id="observaciones"
+                                  rows="3"
+                                  placeholder="Escriba comentarios adicionales aquí...">{{ $programacion->observaciones }}</textarea>
+                    </div>
+                </section>
+
+                <div class="panel-footer-actions">
+                    <a href="{{ route('programacion.listadoprogramacion') }}" class="btn btn-action-secondary">
+                        <i class="la la-times"></i> Cancelar
+                    </a>
+                    <button type="button" id="btnGuardar" class="btn btn-action-primary">
+                        <i class="la la-save"></i> Guardar Cambios
+                    </button>
+                </div>
+            </div>
+        </form>
+    </section>
+</div>
 @endsection

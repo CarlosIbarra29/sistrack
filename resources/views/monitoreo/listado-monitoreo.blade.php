@@ -6,7 +6,7 @@
 
 @push('scripts')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js?v=2.0.3') }}"></script>
+    <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js?v=2.0.4') }}"></script>
 @endpush
 
 @section('title')

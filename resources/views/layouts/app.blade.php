@@ -6,8 +6,8 @@
     <meta charset="utf-8" />
     <meta name="description" content="Sistrack for SISPROTEC" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <link rel="shortcut icon" href="{{ asset('theme/assets/media/logos/favicon.ico') }}" />
+    <link rel="icon" type="image/png" href="img/logos/logo_login.png">
+    <link rel="shortcut icon" href="/img/logos/logo_login.png" />
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <!--end::Fonts-->

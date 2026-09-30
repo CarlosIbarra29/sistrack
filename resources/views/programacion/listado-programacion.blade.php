@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=1.2.2') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=2.1.3') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
     <script src="{{ asset('js/programacion/CatalogoProgramacion.js?v=1.3.8') }}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <script src="{{ asset('js/programacion/AgregarProgramacionUnique.js?v=1.0.6') }}"></script>
+    <script src="{{ asset('js/programacion/AgregarProgramacionUnique.js?v=1.0.7') }}"></script>
 @endpush
 
 @section('title')
@@ -446,40 +446,42 @@
                                 </div>
 
                                 {{-- ACOMPAÑANTES --}}
-                                <div id="div_custodios"
-                                     class="programacion-extra-custodios">
+                                <div id="div_custodios" class="programacion-extra-custodios">
+                                    <div class="programacion-extra-header">
 
-                                    <label class="app-label programacion-extra-title">
-                                        Acompañantes Extras
-                                    </label>
+                                        <div class="programacion-extra-heading">
+                                            <span class="programacion-extra-icon">
+                                                <i class="la la-users"></i>
+                                            </span>
 
-                                    <div class="table-responsive programacion-extra-table-wrapper">
+                                            <div>
+                                                <span class="programacion-extra-title">
+                                                    Acompañantes asignados
+                                                </span>
+                                                <small>
+                                                    Personal adicional para este servicio
+                                                </small>
+                                            </div>
+                                        </div>
 
-                                        <table class="table table-bordered m-0 text-white programacion-extra-table"
+                                        <a href="#"
+                                           class="hrefAgregarOtro programacion-add-extra">
+                                            <i class="la la-plus"></i>
+                                            <span>Agregar</span>
+                                        </a>
+
+                                    </div>
+
+                                    <div class="programacion-extra-table-wrapper">
+
+                                        <table class="programacion-extra-table"
                                                id="tblDocumentos">
-
-                                            <thead>
-                                                <tr>
-                                                    <th>Custodio</th>
-                                                    <th class="text-center programacion-extra-option">
-                                                        Opción
-                                                    </th>
-                                                </tr>
-                                            </thead>
 
                                             <tbody id="tbodyDocumentos"></tbody>
 
                                         </table>
 
                                     </div>
-
-                                    <a href="#"
-                                       class="btn btn-action-secondary btn-sm hrefAgregarOtro programacion-add-extra">
-
-                                        <i class="flaticon2-plus"></i>
-                                        Agregar otro
-
-                                    </a>
 
                                 </div>
 

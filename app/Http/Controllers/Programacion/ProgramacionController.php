@@ -386,7 +386,7 @@ class ProgramacionController extends Controller
                 'folio_interno' => $request->filled('folio_interno') ? trim($request->folio_interno) : null,
                 'custodio_id' => $request->custodio_id,
                 'estatus_custodio' => $estatusCustodio,
-                'tarifario_id' => 1,
+                // 'tarifario_id' => 1,
                 'programacion_estatus_id' =>$request->programacion_id,
                 'tipo_servicio' =>$request->tipo_servicio,
                 'fecha_servicio' =>$request->fecha_hora,
@@ -451,10 +451,11 @@ class ProgramacionController extends Controller
     public function editarprogramacion($id_programacion)
     {
         $cliente = Cliente::where('siaf_status', 1)->get();
-        $tarifario = Tarifario::where('siaf_status', 1)->get();
+        // $tarifario = Tarifario::where('siaf_status', 1)->get();
         $custodio = Custodio::where('siaf_status', 1)->get();
         $programacion = Programacion::where('id', $id_programacion)->first();
         $acompanantes_pro = AcompanantesProgramacion::where('programacion_id', $id_programacion)->get();
+        $estatus_programacion_data = EstatusProgramacion::where('estatus_activo', 1)->where('estatus_pgr', 1)->get();
         //tipo de documentos en formato json
         $cadenaTipoDocumento = "";
         foreach($custodio as $documento){
@@ -463,7 +464,9 @@ class ProgramacionController extends Controller
         $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
 
 
-        return view('programacion.editar-programacion', compact('cliente', 'tarifario', 'custodio', 'cadenaTipoDocumento', 'programacion', 'acompanantes_pro', 'id_programacion'));       
+        // return view('programacion.editar-programacion', compact('cliente', 'tarifario', 'custodio', 'cadenaTipoDocumento', 'programacion', 'acompanantes_pro', 'id_programacion','estatus_programacion_data')); 
+
+        return view('programacion.editar-programacion', compact('cliente', 'custodio', 'cadenaTipoDocumento', 'programacion', 'acompanantes_pro', 'id_programacion','estatus_programacion_data'));       
     }
 
     public function eliminarcustodioprogramacion(Request $request)
@@ -484,49 +487,100 @@ class ProgramacionController extends Controller
 
     public function modificarprogramacion(Request $request)
     {
-        $data = [
-            'cliente_id' => $request->cliente_id,
-            'tarifario_id' => $request->id_tarifa,
-            'custodio_id' => $request->custodio_id,
-            'tipo_servicio' => $request->tipo_servicio,
-            'fecha_servicio' => $request->fecha_hora,
-            'acompanantes'=> $request->op_custodios,
-            'dom_origen' => $request->dom_origen,
-            'dom_destino' => $request->dom_destino,
-            'observaciones' => $request->observaciones,
-            'op_monitoreo_id' => $request->op_monitoreo_id,
 
-            // Nuevo
-            'folio_interno' => $request->folio_interno,
-            'linea_transportista' => $request->linea_transportista,
-            'armado_servicio' => $request->armado_servicio,
-            'siaf_status' =>1,
-            'updated_at' =>date('Y-m-d H:i:s'),
-            'iduserUpdated' =>auth()->user()->id,
-        ];
+        $request->validate([
+            'cliente_id' => 'required',
+            'fecha_hora' => 'required',
+            'custodio_id' => 'required',
+            'custodio_emergente' => 'required_if:custodio_id,154|nullable|string|max:255',
+            'tipo_servicio' => 'required',
+            'armado_servicio' => 'required',
+            'dom_origen' => 'required',
+            'dom_destino' => 'required',
+            'programacion_id' => 'required',
+            'folio_interno' => 'nullable|max:255',
+        ]);
 
-        Programacion::where('id', $request->id_programacion)->update($data);
+        $sinCustodio = ((int) $request->custodio_id === 153);
+        $custodioEmergente = ((int) $request->custodio_id === 154);
 
-        $colIdDocumento = $request->id_documento;
-        if($request->op_custodios == 0){
-            if($request->id_documento){
-                foreach($request->id_documento as $indice => $archivo)
-                {
-                    $data = [
-                        'programacion_id' => $request->id_programacion,
-                        'custodio_id' =>$colIdDocumento[$indice],
-                        'created_at' =>date('Y-m-d H:i:s'),
-                        'updated_at' =>date('Y-m-d H:i:s')
-                    ];
-
-                    AcompanantesProgramacion::insert($data);
-                }
-            }
+        if ($sinCustodio) {
+            $estatusCustodio = 1;
+        } elseif ($custodioEmergente) {
+            $estatusCustodio = -1;
+        } else {
+            $estatusCustodio = 0;
         }
 
+        try {
 
-        session()->flash('success', 'La programación se modifico correctamente');
-        return redirect()->route('programacion.listadoprogramacion');
+            DB::beginTransaction();
+
+            $data = [
+                'cliente_id' => $request->cliente_id,
+                'programacion_estatus_id' => $request->programacion_id,
+                // 'tarifario_id' => $request->id_tarifa,
+                'tarifario_id' => null,
+                'custodio_id' => $request->custodio_id,
+                'estatus_custodio' => $estatusCustodio,
+                'tipo_servicio' => $request->tipo_servicio,
+                'fecha_servicio' => $request->fecha_hora,
+                'acompanantes' => $sinCustodio ? 1 : $request->op_custodios,
+                'dom_origen' => $request->dom_origen,
+                'dom_destino' => $request->dom_destino,
+                'observaciones' => $request->observaciones,
+                // 'op_monitoreo_id' => $request->op_monitoreo_id,
+
+                // Nuevo
+                'folio_interno' => $request->filled('folio_interno') ? trim($request->folio_interno) : null,
+                // 'linea_transportista' => $request->linea_transportista,
+                'armado_servicio' => $request->armado_servicio,
+                'custodio_emergente' => $custodioEmergente ? trim($request->custodio_emergente) : null,
+                'siaf_status' =>1,
+                'updated_at' =>date('Y-m-d H:i:s'),
+                'iduserUpdated' =>auth()->user()->id,
+            ];
+
+            Programacion::where('id', $request->id_programacion)->update($data);
+
+            if ($sinCustodio || (int) $request->op_custodios === 1) {
+
+                AcompanantesProgramacion::where('programacion_id',$request->id_programacion)->delete();
+            }
+
+            if (!$sinCustodio &&(int) $request->op_custodios === 0 &&!empty($request->id_documento)) {
+
+                foreach ($request->id_documento as $custodioId) {
+
+                    $dataAcompanante = [
+
+                        'programacion_id' =>$request->id_programacion,
+                        'custodio_id' =>$custodioId,
+                        'created_at' =>date('Y-m-d H:i:s'),
+                        'updated_at' =>date('Y-m-d H:i:s'),
+
+                    ];
+
+                    AcompanantesProgramacion::insert($dataAcompanante);
+                }
+            }
+
+            DB::commit();
+
+            session()->flash('success', 'La programación se modifico correctamente');
+            return redirect()->route('programacion.listadoprogramacion');
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            \Log::error('Error al modificar programación: ' .$e->getMessage());
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error','Ocurrió un error al modificar la programación.');
+        }
     }
 
     public function deasactivarprogramacion(Request $request)
