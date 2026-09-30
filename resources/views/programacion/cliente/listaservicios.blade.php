@@ -172,7 +172,7 @@
                                         @if($unid->estatus == 0) 
                                             <span class="label font-weight-bold label-outline-warning label-inline" > Pendiente</span>
                                         @else 
-                                            Si 
+                                            <span class="label font-weight-bold label-outline-success label-inline" > Atendida</span> 
                                         @endif
                                     </td>
                                     <td class="text-center">

@@ -128,4 +128,118 @@ class ProgramacionClienteController extends Controller
 
         return view('programacion.cliente.complementoservicio', compact('data', 'custodio', 'cliente', 'estatus_programacion_data', 'cadenaTipoDocumento'));
     }
+
+    public function addcomplementarservicio(Request $request)
+    {
+
+
+            // DB::beginTransaction();
+
+            $clienteId = $request->cliente_id;
+
+            $sinCustodio = ((int) $request->custodio_id === 153);
+
+            $custodioEmergente = ((int) $request->custodio_id === 154);
+
+            if ($sinCustodio) {
+
+                $estatusCustodio = 1;
+
+            } elseif ($custodioEmergente) {
+
+                $estatusCustodio = -1;
+
+            } else {
+
+                $estatusCustodio = 0;
+            }
+
+            if ((int) $request->cliente_id === 0) {
+
+                $razonSocial = trim(
+                    $request->nuevo_cliente_razon_social
+                );
+
+                $nuevoCliente = Cliente::create([
+                    'num_list' => $this->folio->getFolioCliente(),
+                    'razon_social' => $razonSocial,
+                    'nombre_cliente' => $razonSocial,
+                    'siaf_status' => 1,
+                    'iduserCreated' => auth()->user()->id,
+                    'iduserUpdated' => auth()->user()->id,
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);
+
+                $clienteId = $nuevoCliente->id;
+            }
+
+            $data = [
+
+                'folio' => $this->folio->getFolioProgramacion(),
+                'cliente_id' => $clienteId,
+                'folio_interno' => $request->filled('folio_interno') ? trim($request->folio_interno) : null,
+                'custodio_id' => $request->custodio_id,
+                'estatus_custodio' => $estatusCustodio,
+                // 'tarifario_id' => 1,
+                'programacion_estatus_id' =>$request->programacion_id,
+                'tipo_servicio' =>$request->tipo_servicio,
+                'fecha_servicio' =>$request->fecha_hora,
+                'acompanantes' =>$sinCustodio ? 1 : $request->op_custodios,
+                'dom_origen' =>$request->dom_origen,
+                'dom_destino' =>$request->dom_destino,
+                'observaciones' =>$request->observaciones,
+                'armado_servicio' =>$request->armado_servicio,
+                'op_monitoreo_id' => 1,
+                'estatus_viaje_id' => 1,
+                'siaf_status' => 1,
+                'custodio_emergente' => $custodioEmergente ? trim($request->custodio_emergente) : null,
+                'created_at' =>date('Y-m-d H:i:s'),
+                'updated_at' =>date('Y-m-d H:i:s'),
+                'iduserCreated' =>auth()->user()->id,
+                'iduserUpdated' =>auth()->user()->id,
+            ];
+             // dd($data);
+            // Insertamos la programación.
+            $id_programacion = Programacion::insertGetId($data);
+
+
+             // ACOMPAÑANTES
+            if (!$sinCustodio &&(int) $request->op_custodios === 0 && !empty($request->id_documento)) {
+
+                $colIdDocumento = $request->id_documento;
+
+                foreach ($colIdDocumento as $indice => $custodioId) {
+
+                    $dataAcompanante = [
+                        'programacion_id' =>$id_programacion,
+                        'custodio_id' =>$custodioId,
+                        'created_at' =>date('Y-m-d H:i:s'),
+                        'updated_at' =>date('Y-m-d H:i:s'),
+                    ];
+
+                    AcompanantesProgramacion::insert($dataAcompanante);
+                }
+            }
+
+            // DB::commit();
+
+
+        $data = [
+            'programacion_id' => $id_programacion,
+            // 'estatus' => 1,
+            'iduserUpdated' =>auth()->user()->id,
+            'updated_at' =>date('Y-m-d H:i:s')
+        ];  
+
+        Programacioncliente::where('id', $request->id_servicio_cliente)->update($data);
+
+
+        session()->flash('success', 'La programación se modifico correctamente');
+        return redirect()->route('procli.listaservicios');
+
+
+
+
+    }
 }

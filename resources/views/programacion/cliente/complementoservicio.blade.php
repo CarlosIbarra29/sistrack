@@ -72,6 +72,8 @@
     {{-- =========================================================
         PANEL PRINCIPAL
     ========================================================== --}}
+
+
     <section class="nuevo-servicio-panel is-collapsed">
 
         <div class="nuevo-servicio-panel-header">
@@ -379,6 +381,7 @@
 
 
 
+@if($data->programacion_id  == "" || $data->programacion_id  == null)
     {{-- =========================================================
         PANEL PRINCIPAL
     ========================================================== --}}
@@ -406,10 +409,19 @@
 
         </div>
 
-        <form action="{{ route('procli.guardarserviciocliente') }}"  method="post" id="submit_programacion" enctype="multipart/form-data">
+        <form action="{{ route('procli.addcomplementarservicio') }}"  method="post" id="submit_programacioncliente" enctype="multipart/form-data">
             @csrf
             <div class="nuevo-servicio-panel-body">
             </div>
+                    <input type="hidden" name="id_servicio_cliente" value="{{ $data->id }}">
+                    <input type="hidden" name="dom_origen" value="{{ $data->ubicacion_origen }}">
+                    <input type="hidden" name="dom_destino" value="{{ $data->ubicacion_destino }}">
+                    <input type="hidden" name="armado_servicio" value="{{ $data->armada }}">
+                    <input type="hidden" name="linea_transportista" value="{{ $data->linea_transporte }}">
+
+                    <div style="display: none;">
+                        <input type="datetime-local" class="form-control nuevo-servicio-input" name="fecha_servicio" id="fecha_servicio" value="{{ $data->fechahora_servicio }}">
+                    </div>
 
                     <input type="hidden"
                            id="tipoArchivo"
@@ -432,9 +444,9 @@
                             <div class="section-controls">
 
                                 <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <label class="app-label">Cliente </label>
-                                        <select class="form-control  app-input" id="users_custodios" name="users_custodios" >
+                                        <select class="form-control  app-input" id="cliente_id" name="cliente_id" >
                                             <option value="">Selecciona una opción</option>
                                             @foreach($cliente as $cli)
                                                 <option value="{{ $cli->id }}" data-nombre="{{ $cli->razon_social }}">
@@ -444,7 +456,7 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <label class="app-label">
                                             Tipo de servicio
                                         </label>
@@ -477,7 +489,37 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-4">
+
+                                </div>
+
+                                <div class="row mt-4">
+                                    <div class="col-lg-6 form-group programacion-field-status">
+                                        <label class="app-label">
+                                            Estatus *
+                                        </label>
+
+                                        <div class="programacion-status-select">
+
+                                            <select class="form-control app-input"
+                                                    id="programacion_id"
+                                                    name="programacion_id"
+                                                    required>
+
+                                                <option value="" disabled selected>
+                                                    Selecciona el estatus
+                                                </option>
+
+                                                @foreach($estatus_programacion_data as $estatus)
+                                                    <option value="{{ $estatus->id }}">
+                                                        {{ $estatus->estatus_programacion }}
+                                                    </option>
+                                                @endforeach
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 form-group programacion-field-status">
                                         <label class="app-label">
                                             Folio
                                             <span class="programacion-label-optional">
@@ -492,6 +534,7 @@
                                                placeholder="Folio proporcionado por el cliente"
                                                autocomplete="off">
                                     </div>
+
                                 </div>
 
 
@@ -662,11 +705,11 @@
                             </div>
 
                         </section>
-
+                </form>
                         <div class="panel-footer-actions">
 
                             <button type="button"
-                                    id="btnGuardar"
+                                    id="btnGuardarServicioCliente"
                                     class="btn btn-action-primary">
 
                                 <i class="la la-save"></i>
@@ -679,9 +722,9 @@
                     </div>
 
 
-        </form>
+        
     </section>
-
+@endif
 
 
 </div>
