@@ -108,6 +108,14 @@
             @csrf
             <div class="nuevo-servicio-panel-body">
 
+
+                <div class="row">
+                    <div class="col-lg-9"></div>
+                    <div class="col-lg-3">
+                        Usuario: {{ $data->userCreated->name }}
+                    </div>
+                </div>
+
                 {{-- =====================================================
                     ORIGEN / DESTINO
                 ====================================================== --}}
