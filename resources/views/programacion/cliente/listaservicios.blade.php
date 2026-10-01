@@ -147,6 +147,7 @@
                                 <th style="width: 13%;">LÍNEA DE TRANSPORTE <i class="fas fa-sort text-muted ms-1" style="font-size: 0.65rem;"></i></th>
                                 <th style="width: 13%;">NOMBRE DEL OPERADOR <i class="fas fa-sort text-muted ms-1" style="font-size: 0.65rem;"></i></th>
                                 <th style="width: 13%;">Estatus <i class="fas fa-sort text-muted ms-1" style="font-size: 0.65rem;"></i></th>
+                                <th style="width: 13%;">Usuario <i class="fas fa-sort text-muted ms-1" style="font-size: 0.65rem;"></i></th>
                                 <th style="width: 12%;" class="text-center">Opciones</th>
                             </tr>
                         </thead>
@@ -174,6 +175,9 @@
                                         @else 
                                             <span class="label font-weight-bold label-outline-success label-inline" > Atendida</span> 
                                         @endif
+                                    </td>
+                                    <td>
+                                        {{ $unid->userCreated->name  }}
                                     </td>
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center gap-2">
