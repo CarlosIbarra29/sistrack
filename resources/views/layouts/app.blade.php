@@ -147,11 +147,19 @@
                             </a>
                         </li>
 
+                        @php
+                            $notificaciones = \App\Models\Notificaciones\Notificaciones::where('estatus', 0)->get();
+                            $pendientes = count($notificaciones);
+                        @endphp
+
 
                         <li id="menuNotificaciones" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                             <a href="{{ route('notificaciones.catalogonotificaciones') }}" class="menu-link menu-toggle">
                                 <i class="flaticon2-checking  menu-icon"></i>
-                                <span class="menu-text">Notificaciones</span>
+                                <span class="menu-text">
+                                    Notificaciones  
+                                    <span class="label font-weight-bold label-outline-warning label-inline mr-2"> {{ $pendientes }}</span>
+                                </span>
                                 <!--<i class="menu-arrow"></i>-->
                             </a>
                         </li>

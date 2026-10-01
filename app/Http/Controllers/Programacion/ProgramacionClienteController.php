@@ -162,7 +162,6 @@ class ProgramacionClienteController extends Controller
     {
 
 
-
             $clienteId = $request->cliente_id;
 
             $sinCustodio = ((int) $request->custodio_id === 153);
@@ -212,7 +211,7 @@ class ProgramacionClienteController extends Controller
                 // 'tarifario_id' => 1,
                 'programacion_estatus_id' =>$request->programacion_id,
                 'tipo_servicio' =>$request->tipo_servicio,
-                'fecha_servicio' =>$request->fecha_hora,
+                'fecha_servicio' =>$request->fecha_servicio,
                 'acompanantes' =>$sinCustodio ? 1 : $request->op_custodios,
                 'dom_origen' =>$request->dom_origen,
                 'dom_destino' =>$request->dom_destino,

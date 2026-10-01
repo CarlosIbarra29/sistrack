@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use App\Models\RolPermiso;
+use App\Models\Notificaciones\Notificaciones;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 
 class AuthenticatedSessionController extends Controller
@@ -68,6 +69,10 @@ class AuthenticatedSessionController extends Controller
         }
 
         $request->session()->put('permisos', $permiso_array); // Variable para los permisos
+
+        $notificacion = Notificaciones::where('siaf_status_id', 0)->get();
+
+        $request->session()->put('notificaciones', count($notificacion)); // Variable para los permisos
 
         return redirect()->intended(RouteServiceProvider::HOME);
     } catch (ThrottleRequestsException $e) {

@@ -63,7 +63,9 @@
                                         </span>
                                     </td>
 
-                                    <td class="text-white-50">{{ $unid->userCreated->name  }}  </td>
+                                    <td class="text-white-50">
+                                        {{-- {{ $unid->userCreated->name  }}   --}}
+                                    </td>
 
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center gap-2">
