@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=2.1.0') }}"
+    <link href="{{ asset('css/estilos_principal.css?v=3.1.3') }}"
           rel="stylesheet"
           type="text/css" />
 @endpush
@@ -16,21 +16,21 @@
 
 @section('content')
 
-<div class="nuevo-servicio-page">
+<div class="detalle-servicio-page">
 
     {{-- =========================================================
         ENCABEZADO
     ========================================================== --}}
-    <header class="nuevo-servicio-header">
+    <header class="detalle-servicio-header">
 
-        <div class="nuevo-servicio-heading">
+        <div class="detalle-servicio-heading">
 
-            <span class="nuevo-servicio-header-icon">
+            <span class="detalle-servicio-header-icon">
                 <i class="la la-clipboard"></i>
             </span>
 
             <div>
-                <span class="nuevo-servicio-eyebrow">
+                <span class="detalle-servicio-eyebrow">
                     PROGRAMACIÓN DE SERVICIOS
                 </span>
 
@@ -48,9 +48,9 @@
         @if($data->programacion_id == null || $data->programacion_id == "" )
 
         @else
-            @if($data->estatus == 0 )
+            @if($data->estatus == 0 && $role != 17)
                 <button id="marcar_leido"
-                   class="nuevo-servicio-btn nuevo-servicio-btn--secondary">
+                   class="detalle-servicio-btn detalle-servicio-btn--secondary">
 
                     <i class="far fa-eye text-white"></i>
                     Marcar como "Solicitud Atendida" 
@@ -61,7 +61,7 @@
 
 
         <a href="{{ route('procli.listaservicios') }}"
-           class="nuevo-servicio-btn nuevo-servicio-btn--secondary">
+           class="detalle-servicio-btn detalle-servicio-btn--secondary">
 
             <i class="flaticon2-back"></i>
             Regresar
@@ -80,18 +80,18 @@
     {{-- =========================================================
         PANEL PRINCIPAL
     ========================================================== --}}
-    <section class="nuevo-servicio-panel">
+    <section class="detalle-servicio-panel">
 
-        <div class="nuevo-servicio-panel-header">
+        <div class="detalle-servicio-panel-header">
 
-            <div class="nuevo-servicio-panel-title">
+            <div class="detalle-servicio-panel-title">
 
-                <span class="nuevo-servicio-panel-icon">
+                <span class="detalle-servicio-panel-icon">
                     <i class="la la-clipboard-list"></i>
                 </span>
 
                 <div>
-                    <span class="nuevo-servicio-eyebrow">
+                    <span class="detalle-servicio-eyebrow">
                         SOLICITUD
                     </span>
 
@@ -106,7 +106,7 @@
 
         <form action="{{ route('procli.guardarserviciocliente') }}"  method="post" id="submit_programacion" enctype="multipart/form-data">
             @csrf
-            <div class="nuevo-servicio-panel-body">
+            <div class="detalle-servicio-panel-body">
 
 
                 <div class="row">
@@ -119,26 +119,26 @@
                 {{-- =====================================================
                     ORIGEN / DESTINO
                 ====================================================== --}}
-                <div class="nuevo-servicio-section">
+                <div class="detalle-servicio-section">
 
-                    <div class="nuevo-servicio-section-grid">
+                    <div class="detalle-servicio-section-grid">
 
                         {{-- ORIGEN --}}
-                        <div class="nuevo-servicio-location-block">
+                        <div class="detalle-servicio-location-block">
 
-                            <div class="nuevo-servicio-section-label">
+                            <div class="detalle-servicio-section-label">
                                 UBICACIÓN / DIRECCIÓN ORIGEN
                             </div>
 
-                            <div class="nuevo-servicio-location-grid">
+                            <div class="detalle-servicio-location-grid">
 
-                                <div class="nuevo-servicio-field">
+                                <div class="detalle-servicio-field">
 
-                                    <label class="nuevo-servicio-label">
+                                    <label class="detalle-servicio-label">
                                         Ubicación
                                     </label>
 
-                                    <div class="nuevo-servicio-input-icon">
+                                    <div class="detalle-servicio-input-icon">
                                         <i class="la la-map-marker"></i>
                                         <span>{{ $data->ubicacion_origen }}</span>
                                     </div>
@@ -146,9 +146,9 @@
                                 </div>
 
 
-                                <div class="nuevo-servicio-field">
+                                <div class="detalle-servicio-field">
 
-                                    <label class="nuevo-servicio-label">
+                                    <label class="detalle-servicio-label">
                                         Dirección
                                     </label>
                                     <span>{{ $data->direccion_origen }}</span>
@@ -161,30 +161,30 @@
 
 
                         {{-- DESTINO --}}
-                        <div class="nuevo-servicio-location-block">
+                        <div class="detalle-servicio-location-block">
 
-                            <div class="nuevo-servicio-section-label">
+                            <div class="detalle-servicio-section-label">
                                 UBICACIÓN / DIRECCIÓN DESTINO
                             </div>
 
-                            <div class="nuevo-servicio-location-grid">
+                            <div class="detalle-servicio-location-grid">
 
-                                <div class="nuevo-servicio-field">
+                                <div class="detalle-servicio-field">
 
-                                    <label class="nuevo-servicio-label">
+                                    <label class="detalle-servicio-label">
                                         Ubicación
                                     </label>
 
-                                    <div class="nuevo-servicio-input-icon">
+                                    <div class="detalle-servicio-input-icon">
                                         <span>{{ $data->ubicacion_destino }}</span>
                                     </div>
 
                                 </div>
 
 
-                                <div class="nuevo-servicio-field">
+                                <div class="detalle-servicio-field">
 
-                                    <label class="nuevo-servicio-label">
+                                    <label class="detalle-servicio-label">
                                         Dirección
                                     </label>
                                     <span>{{ $data->direccion_destino }}</span>
@@ -200,24 +200,24 @@
                 </div>
 
 
-                <div class="nuevo-servicio-divider"></div>
+                <div class="detalle-servicio-divider"></div>
 
 
                 {{-- =====================================================
                     FECHA / ARMADA
                 ====================================================== --}}
-                <div class="nuevo-servicio-section">
+                <div class="detalle-servicio-section">
 
-                    <div class="nuevo-servicio-main-grid">
+                    <div class="detalle-servicio-main-grid">
 
                         {{-- FECHA Y HORA --}}
-                        <div class="nuevo-servicio-field">
+                        <div class="detalle-servicio-field">
 
-                            <div class="nuevo-servicio-section-label">
+                            <div class="detalle-servicio-section-label">
                                 FECHA Y HORA DEL SERVICIO
                             </div>
 
-                            <div class="nuevo-servicio-input-icon">
+                            <div class="detalle-servicio-input-icon">
                                 <span>{{ $data->fechahora_servicio }}</span>
 
                             </div>
@@ -226,15 +226,15 @@
 
 
                         {{-- ARMADA --}}
-                        <div class="nuevo-servicio-field">
+                        <div class="detalle-servicio-field">
 
-                            <div class="nuevo-servicio-section-label">
+                            <div class="detalle-servicio-section-label">
                                 ARMADA
                             </div>
 
-                            <div class="nuevo-servicio-choice-group">
+                            <div class="detalle-servicio-choice-group">
 
-                                <label class="nuevo-servicio-choice">
+                                <label class="detalle-servicio-choice">
 
                                     <input type="radio"
                                            name="armada"
@@ -248,7 +248,7 @@
                                 </label>
 
 
-                                <label class="nuevo-servicio-choice">
+                                <label class="detalle-servicio-choice">
 
                                     <input type="radio"
                                            name="armada"
@@ -270,24 +270,24 @@
                 </div>
 
 
-                <div class="nuevo-servicio-divider"></div>
+                <div class="detalle-servicio-divider"></div>
 
 
                 {{-- =====================================================
                     TRANSPORTE / OPERADOR
                 ====================================================== --}}
-                <div class="nuevo-servicio-section">
+                <div class="detalle-servicio-section">
 
-                    <div class="nuevo-servicio-main-grid">
+                    <div class="detalle-servicio-main-grid">
 
                         {{-- LÍNEA TRANSPORTE --}}
-                        <div class="nuevo-servicio-field">
+                        <div class="detalle-servicio-field">
 
-                            <div class="nuevo-servicio-section-label">
+                            <div class="detalle-servicio-section-label">
                                 LÍNEA DE TRANSPORTE
                             </div>
 
-                            <div class="nuevo-servicio-input-icon">
+                            <div class="detalle-servicio-input-icon">
                                 <span>{{ $data->linea_transporte }}</span>
                             </div>
 
@@ -295,13 +295,13 @@
 
 
                         {{-- OPERADOR --}}
-                        <div class="nuevo-servicio-field">
+                        <div class="detalle-servicio-field">
 
-                            <div class="nuevo-servicio-section-label">
+                            <div class="detalle-servicio-section-label">
                                 NOMBRE DEL OPERADOR
                             </div>
 
-                            <div class="nuevo-servicio-input-icon">
+                            <div class="detalle-servicio-input-icon">
                                 <span>{{ $data->nombre_operador }}</span>
                             </div>
 
@@ -312,28 +312,28 @@
                 </div>
 
 
-                <div class="nuevo-servicio-divider"></div>
+                <div class="detalle-servicio-divider"></div>
 
 
                 {{-- =====================================================
                     PLACAS / TELÉFONO
                 ====================================================== --}}
-                <div class="nuevo-servicio-section">
+                <div class="detalle-servicio-section">
 
-                    <div class="nuevo-servicio-main-grid">
+                    <div class="detalle-servicio-main-grid">
 
                         {{-- PLACAS --}}
-                        <div class="nuevo-servicio-field">
+                        <div class="detalle-servicio-field">
 
-                            <div class="nuevo-servicio-section-label">
+                            <div class="detalle-servicio-section-label">
                                 PLACAS
                             </div>
 
-                            <div class="nuevo-servicio-input-icon">
+                            <div class="detalle-servicio-input-icon">
                                 <span>{{ $data->placas }}</span>
                             </div>
 
-                            <small class="nuevo-servicio-help">
+                            <small class="detalle-servicio-help">
                                 Ej. 12-AB-34 o 123-ABC
                             </small>
 
@@ -341,17 +341,17 @@
 
 
                         {{-- TELÉFONO --}}
-                        <div class="nuevo-servicio-field">
+                        <div class="detalle-servicio-field">
 
-                            <div class="nuevo-servicio-section-label">
+                            <div class="detalle-servicio-section-label">
                                 NÚMERO TELEFÓNICO
                             </div>
 
-                            <div class="nuevo-servicio-input-icon">
+                            <div class="detalle-servicio-input-icon">
                                 <span>{{ $data->numero_telefono }}</span>
                             </div>
 
-                            <small class="nuevo-servicio-help">
+                            <small class="detalle-servicio-help">
                                 Ej. 55 1234 5678
                             </small>
 
@@ -362,17 +362,17 @@
                 </div>
 
 
-                <div class="nuevo-servicio-divider"></div>
+                <div class="detalle-servicio-divider"></div>
 
 
                 {{-- =====================================================
                     OBSERVACIONES
                 ====================================================== --}}
-                <div class="nuevo-servicio-section">
+                <div class="detalle-servicio-section">
 
-                    <div class="nuevo-servicio-field">
+                    <div class="detalle-servicio-field">
 
-                        <div class="nuevo-servicio-section-label">
+                        <div class="detalle-servicio-section-label">
                             OBSERVACIONES
                         </div>
 
@@ -388,7 +388,7 @@
             {{-- =========================================================
                 FOOTER VISUAL
             ========================================================== --}}
-            <footer class="nuevo-servicio-footer">
+            <footer class="detalle-servicio-footer">
 
 
             </footer>
@@ -397,7 +397,7 @@
 
     @if($data->programacion_id ==null || $data->programacion_id == "")
     @else
-    <section class="panel-dark programacion-form-panel mt-4">
+    <section class="panel-dark programacion-form-panel detalle-programacion-cliente mt-4">
         <div class="programacion-card-header">
             <div>
                 <span class="programacion-eyebrow">SERVICIO {{ $programacion->folio }}</span>

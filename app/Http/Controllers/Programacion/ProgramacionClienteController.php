@@ -123,7 +123,7 @@ class ProgramacionClienteController extends Controller
     public function verservicio($id_servicio)
     {
         $data = Programacioncliente::where('id', $id_servicio)->first();
-
+        $role = auth()->user()->role;
         $cliente = Cliente::where('siaf_status', 1)->get();
         // $tarifario = Tarifario::where('siaf_status', 1)->get();
         $custodio = Custodio::where('siaf_status', 1)->get();
@@ -138,7 +138,7 @@ class ProgramacionClienteController extends Controller
             $acompanantes_pro = AcompanantesProgramacion::where('programacion_id', $programacion->id)->get();
         }
         // dd($data);
-        return view('programacion.cliente.verservicio', compact('data', 'cliente', 'custodio', 'programacion', 'acompanantes_pro', 'estatus_programacion_data'));
+        return view('programacion.cliente.verservicio', compact('data', 'cliente', 'custodio', 'programacion', 'acompanantes_pro', 'estatus_programacion_data','role'));
     }
 
     public function complementarservicio($id_servicio)

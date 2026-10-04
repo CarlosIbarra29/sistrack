@@ -164,45 +164,112 @@ var Modulo = function() {
         },
     };
 
-    //agrega el elemento archivo y lista desplegable
     var addArchivo = function () {
+
         contadorDocumentos++;
         var html = '';
-        html += ([    "",
-            "<tr id='trDocumento"+contadorDocumentos+"'>",
 
-            "    <td>" +
-            "       <div class='form-group mb-0'>" +
-            "          <select class='form-control' name='id_documento["+contadorDocumentos+"]' id='id_documento"+contadorDocumentos+"' required>",
-            "              <option value=''>Selecciona un opción</option>",
-            lista,
-            "          </select>",
-            "       </div>" +
-            "    </td>",
+        html += ([
+            "",
+            "<tr id='trDocumento" + contadorDocumentos + "'>",
+
             "    <td>",
-            "       <a href='#' class='btn btn-sm btn-clean btn-hover-icon-success btn-icon hrefEliminar' data-id='"+contadorDocumentos+"' data-toggle='tooltip' data-theme='dark' title='Eliminar'>",
-            "           <i class='flaticon-delete'></i>",
-            "       </a>",
+            "        <div class='complemento-acompanante-select-wrap'>",
+            "            <select class='form-control complemento-acompanante-select' " +
+            "                    name='id_documento[" + contadorDocumentos + "]' " +
+            "                    id='id_documento" + contadorDocumentos + "' " +
+            "                    required>",
+
+            "                <option value=''>Selecciona un acompañante...</option>",
+            lista,
+
+            "            </select>",
+            "        </div>",
             "    </td>",
+
+            "    <td class='programacion-extra-option'>",
+            "        <a href='#' " +
+            "           class='complemento-eliminar-acompanante hrefEliminar' " +
+            "           data-id='" + contadorDocumentos + "' " +
+            "           data-toggle='tooltip' " +
+            "           data-theme='dark' " +
+            "           title='Eliminar'>",
+
+            "            <i class='flaticon-delete'></i>",
+            "        </a>",
+            "    </td>",
+
             "</tr>",
+            ""
+        ].join(""));
 
-            ""].join(""));
-        $("#tblDocumentos tbody").append(html); //agrega el html creado
-        //agrega validación del elemento creado
-        validador.addField('id_documento[' + contadorDocumentos + ']', tipoArchivoValidador);
-        KTApp.initTooltips(); //inicia tooltip del elemento creado
-        KTApp.initFileInput(); //inicia el elemento archivo del elemento creado
+        $("#tblDocumentos tbody").append(html);
+
+        $("#id_documento" + contadorDocumentos).select2({
+
+            width: "100%",
+
+            placeholder: "Selecciona un acompañante...",
+
+            allowClear: false,
+
+            dropdownCssClass: "complemento-acompanante-dropdown",
+
+            language: {
+
+                noResults: function () {
+                    return "No se encontraron custodios";
+                },
+
+                searching: function () {
+                    return "Buscando...";
+                }
+
+            }
+
+        });
+
+        if (validador) {
+
+            validador.addField(
+                'id_documento[' + contadorDocumentos + ']',
+                tipoArchivoValidador
+            );
+
+        }
+
+
+        KTApp.initTooltips();
+
     };
-
     //elimina un elemento
     var delArchivo = function () {
-        jQuery(document).on("click", ".hrefEliminar" , function(e) {
+
+        jQuery(document).on("click", ".hrefEliminar", function(e) {
+
             e.preventDefault();
-            var idDocumento = $(this).attr("data-id"); //indice del elemento
-            KTApp.hideTooltips(); //oculta tooltip
-            validador.removeField('id_documento[' + idDocumento + ']');
-            $('#trDocumento'+idDocumento).remove();//elimina el elemento
+            var idDocumento = $(this).attr("data-id");
+            KTApp.hideTooltips();
+
+            var $select = $("#id_documento" + idDocumento);
+            if ($select.length && $select.hasClass("select2-hidden-accessible")) {
+                $select.select2("destroy");
+            }
+
+            if (validador) {
+                try {
+                    validador.removeField('id_documento[' + idDocumento + ']');
+
+                } catch (error) {
+                    console.warn("No fue posible retirar la validación del acompañante:",error);
+                }
+
+            }
+
+            $("#trDocumento" + idDocumento).remove();
+
         });
+
     };
 
     const validarInput = {
