@@ -2054,6 +2054,83 @@ tr.programacion-row-sin-custodio td {
     background: #2d3d52;
 }
 
+.programacion-table-footer-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 18px;
+}
+
+.programacion-length-control {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #8fa2b8;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.programacion-length-control label {
+    margin: 0;
+    color: #dce4ee;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.programacion-length-control span {
+    color: #dce4ee;
+    font-size: 10px;
+}
+
+.programacion-length-select {
+    width: 64px;
+    height: 34px;
+    padding: 0 9px;
+    border: 1px solid #293b50;
+    border-radius: 7px;
+    outline: none;
+    background: #0d1722;
+    color: #ffffff;
+    font-size: 10px;
+    cursor: pointer;
+    transition:
+        border-color .18s ease,
+        box-shadow .18s ease;
+}
+
+.programacion-length-select:hover {
+    border-color: #40546b;
+}
+
+.programacion-length-select:focus {
+    border-color: #eba72f;
+    box-shadow: 0 0 0 3px rgba(235, 167, 47, .08);
+}
+
+.programacion-length-select option {
+    background: #111a24;
+    color: #ffffff;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 767.98px) {
+
+    .programacion-table-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .programacion-table-footer-actions {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+}
 
 /* ==========================================================================
    RESPONSIVE - LAPTOP
@@ -3213,6 +3290,88 @@ td {
 
 .monitoreo-action i {
     font-size: .8rem;
+}
+
+/* ============================================================
+   MONITOREO - SELECTOR CANTIDAD DE REGISTROS
+   ============================================================ */
+
+.monitoreo-table-footer-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 18px;
+}
+
+.monitoreo-length-control {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    white-space: nowrap;
+    color: #dce4ee;
+    font-size: 10px;
+}
+
+.monitoreo-length-control label {
+    margin: 0;
+    color: #dce4ee;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.monitoreo-length-control span {
+    color: #dce4ee;
+    font-size: 10px;
+}
+
+.monitoreo-length-select {
+    width: 64px;
+    height: 34px;
+    padding: 0 9px;
+    background: #0d1722;
+    color: #ffffff;
+    border: 1px solid #293b50;
+    border-radius: 7px;
+    outline: none;
+    cursor: pointer;
+    font-size: 10px;
+    transition:
+        border-color .18s ease,
+        box-shadow .18s ease;
+}
+
+.monitoreo-length-select:hover {
+    border-color: #40546b;
+}
+
+.monitoreo-length-select:focus {
+    border-color: #eba72f;
+    box-shadow: 0 0 0 3px rgba(235, 167, 47, .08);
+}
+
+.monitoreo-length-select option {
+    background: #111a24;
+    color: #ffffff;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 767.98px) {
+
+    .monitoreo-table-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .monitoreo-table-footer-actions {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
 }
 
 /* ==========================================================================

@@ -483,12 +483,12 @@ $("#send_incidencia")
 
 /* ==========================================================================
    SERVICIOS PROGRAMADOS
-   BUSCADOR POR COINCIDENCIA + PAGINACIÓN DE 20
+   BUSCADOR + PAGINACIÓN + CANTIDAD DE REGISTROS
    ========================================================================== */
 
 (function() {
 
-    var registrosPorPagina = 10;
+    var registrosPorPagina = 50;
     var paginaActual = 1;
     var filasOriginales = [];
     var filasFiltradas = [];
@@ -496,6 +496,10 @@ $("#send_incidencia")
     var buscador = document.getElementById('servicios_programados_buscar'  );
     var paginador = document.getElementById('servicios_programados_paginador');
     var info = document.getElementById('servicios_programados_info');
+
+    var selectorRegistros = document.getElementById(
+        'servicios_programados_length'
+    );
 
     if (!tabla) {
         return;
@@ -564,16 +568,34 @@ $("#send_incidencia")
             }
         );
 
-        var total =filasFiltradas.length;
-        var totalPaginas =Math.max(1,Math.ceil(total /registrosPorPagina));
+        var total = filasFiltradas.length;
+
+        var totalPaginas =
+            registrosPorPagina === 'all'
+                ? 1
+                : Math.max(
+                    1,
+                    Math.ceil(total / registrosPorPagina)
+                );
 
         if (paginaActual >totalPaginas) {
             paginaActual =totalPaginas;
         }
 
-        var inicio = (paginaActual - 1) * registrosPorPagina;
-        var fin = inicio + registrosPorPagina;
-        var filasPagina = filasFiltradas.slice( inicio, fin);
+        var inicio =
+            registrosPorPagina === 'all'
+                ? 0
+                : (paginaActual - 1) * registrosPorPagina;
+
+        var fin =
+            registrosPorPagina === 'all'
+                ? total
+                : inicio + registrosPorPagina;
+
+        var filasPagina = filasFiltradas.slice(
+            inicio,
+            fin
+        );
 
         filasPagina.forEach(
             function(fila) {
@@ -614,7 +636,7 @@ $("#send_incidencia")
 
         paginador.innerHTML = '';
 
-        if ( total <= registrosPorPagina ) {
+        if (registrosPorPagina === 'all' ||total <= registrosPorPagina) {
             return;
         }
 
@@ -730,6 +752,24 @@ $("#send_incidencia")
         buscador.addEventListener(
             'input',
             filtrar
+        );
+
+    }
+
+
+    if (selectorRegistros) {
+
+        selectorRegistros.addEventListener(
+            'change',
+            function() {
+
+                var valor = this.value;
+
+                registrosPorPagina = valor === 'all' ? 'all' : parseInt(valor, 10);
+                paginaActual = 1;
+                renderizar();
+
+            }
         );
 
     }

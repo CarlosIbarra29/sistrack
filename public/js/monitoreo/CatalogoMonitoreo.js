@@ -24,7 +24,7 @@
         filas: [],
         filtradas: [],
         paginaActual: 1,
-        registrosPorPagina: 10,
+        registrosPorPagina: 50,
 
         init: function () {
             this.tabla = document.getElementById("kdatatable_usuarios2");
@@ -45,6 +45,7 @@
             this.paginador = document.getElementById("monitoreo_paginador");
             this.totalBadge = document.getElementById("monitoreo_total");
             this.empty = document.getElementById("monitoreo_sin_resultados");
+            this.selectorRegistros = document.getElementById("monitoreo_length");
 
             this.filas = Array.prototype.slice.call(
                 this.tbody.querySelectorAll("[data-monitoreo-row]")
@@ -76,6 +77,19 @@
                 this.buscador.addEventListener("input", function () {
                     self.filtrar();
                 });
+            }
+
+            if (this.selectorRegistros) {
+
+                this.selectorRegistros.addEventListener("change", function () {
+
+                    var valor = this.value;
+                    self.registrosPorPagina = valor === "all" ? "all" : parseInt(valor, 10);
+                    self.paginaActual = 1;
+                    self.render();
+
+                });
+
             }
 
             if (this.btnLimpiar) {
@@ -188,20 +202,14 @@
             });
 
             var total = this.filtradas.length;
-            var totalPaginas = Math.max(
-                1,
-                Math.ceil(total / this.registrosPorPagina)
-            );
+            var totalPaginas = this.registrosPorPagina === "all" ? 1 : Math.max( 1, Math.ceil(total / this.registrosPorPagina));
 
             if (this.paginaActual > totalPaginas) {
                 this.paginaActual = totalPaginas;
             }
 
-            var inicio =
-                (this.paginaActual - 1) *
-                this.registrosPorPagina;
-
-            var fin = inicio + this.registrosPorPagina;
+            var inicio = this.registrosPorPagina === "all" ? 0 : (this.paginaActual - 1) * this.registrosPorPagina;
+            var fin = this.registrosPorPagina === "all" ? total : inicio + this.registrosPorPagina;
 
             var pagina = this.filtradas.slice(inicio, fin);
 
@@ -253,7 +261,7 @@
 
             this.paginador.innerHTML = "";
 
-            if (total <= this.registrosPorPagina) {
+            if ( this.registrosPorPagina === "all" || total <= this.registrosPorPagina) {
                 return;
             }
 
