@@ -774,6 +774,159 @@ $("#send_incidencia")
 
     }
 
+    /* ============================================================
+       EXPORTAR TODOS LOS SERVICIOS PROGRAMADOS A EXCEL
+       ============================================================ */
+
+    var btnExportarExcel = document.getElementById('exportar_programacion_excel');
+
+    if (btnExportarExcel) {
+
+        btnExportarExcel.addEventListener('click',
+            function() {
+
+                exportarProgramacionExcel();
+
+            }
+        );
+
+    }
+
+
+    function exportarProgramacionExcel() {
+
+        if (!filasOriginales.length) {
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Sin información',
+                text: 'No existen servicios programados para exportar.'
+            });
+
+            return;
+        }
+
+        var datos = [];
+
+        datos.push([
+            'BITÁCORA',
+            'FOLIO',
+            'FECHA Y HORA',
+            'CLIENTE',
+            'ORIGEN',
+            'DESTINO',
+            'CUSTODIO',
+            'CUSTODIO ACOMPAÑANTE',
+            'ESTATUS'
+        ]);
+
+
+        filasOriginales.forEach(
+            function(fila) {
+
+                var celdas = fila.querySelectorAll('td');
+
+                if (celdas.length < 10) {
+                    return;
+                }
+
+
+                datos.push([
+
+                    obtenerTextoCelda(celdas[0]),
+                    obtenerTextoCelda(celdas[1]),
+                    obtenerTextoCelda(celdas[2]),
+                    obtenerTextoCelda(celdas[4]),
+                    obtenerTextoCelda(celdas[5]),
+                    obtenerTextoCelda(celdas[6]),
+                    obtenerTextoCelda(celdas[7]),
+                    obtenerTextoCelda(celdas[8]),
+                    obtenerTextoCelda(celdas[9])
+
+                ]);
+
+            }
+        );
+
+
+        generarArchivoExcel(datos);
+
+    }
+
+
+    function obtenerTextoCelda(celda) {
+
+        if (!celda) {
+            return '';
+        }
+
+        return celda
+            .innerText
+            .replace(/\s+/g, ' ')
+            .trim();
+
+    }
+
+
+    function generarArchivoExcel(datos) {
+
+        var contenido = '';
+
+        datos.forEach(
+            function(fila) {
+
+                var columnas = fila.map(
+                    function(valor) {
+
+                        valor = String(valor || '');
+                        valor = valor.replace(/"/g, '""');
+                        return '"' + valor + '"';
+
+                    }
+                );
+
+                contenido += columnas.join(',') + '\r\n';
+
+            }
+        );
+
+        var BOM = '\uFEFF';
+
+        var blob = new Blob(
+            [BOM + contenido],
+            {
+                type: 'text/csv;charset=utf-8;'
+            }
+        );
+
+
+        var fecha = new Date();
+
+        var nombreArchivo =
+            'programacion_servicios_' +
+            fecha.getFullYear() +
+            '-' +
+            String(fecha.getMonth() + 1).padStart(2, '0') +
+            '-' +
+            String(fecha.getDate()).padStart(2, '0') +
+            '.csv';
+
+
+        var enlace = document.createElement('a');
+
+        enlace.href = URL.createObjectURL(blob);
+        enlace.download = nombreArchivo;
+
+        document.body.appendChild(enlace);
+
+        enlace.click();
+
+        document.body.removeChild(enlace);
+
+        URL.revokeObjectURL(enlace.href);
+
+    }
+
     renderizar();
 
 })();

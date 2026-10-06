@@ -5,7 +5,7 @@
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('js/programacion/CatalogoProgramacion.js?v=2.1.2') }}"></script>
+    <script src="{{ asset('js/programacion/CatalogoProgramacion.js?v=2.1.3') }}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <script src="{{ asset('js/programacion/AgregarProgramacionUnique.js?v=1.0.7') }}"></script>
 @endpush
@@ -39,13 +39,14 @@
                 <span>CLIENTES INACTIVOS</span>
             </a>
 
-            <button type="button"
+            <!-- <button type="button"
                     class="btn btn-outline-custom programacion-header-btn">
                 <i class="fa fa-file-excel"></i>
                 <span>IMPORTAR EXCEL</span>
-            </button>
+            </button> -->
 
             <button type="button"
+                    id="exportar_programacion_excel"
                     class="btn btn-outline-custom programacion-header-btn">
                 <i class="fa fa-download"></i>
                 <span>EXPORTAR</span>
