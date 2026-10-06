@@ -7090,7 +7090,31 @@ textarea.nuevo-servicio-input {
     border-color: rgba(235,167,47,.58);
     background: rgba(235,167,47,.10);
     color: var(--not-gold-2) !important;
-    transform: translateY(-1px);
+}
+
+.notificaciones-table td:last-child {
+    position: relative;
+}
+
+.notificaciones-table .notificaciones-action {
+    position: relative;
+    z-index: 5;
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    cursor: pointer;
+    pointer-events: auto;
+    transform: none !important;
+}
+
+.notificaciones-table .notificaciones-action:hover,
+.notificaciones-table .notificaciones-action:focus,
+.notificaciones-table .notificaciones-action:active {
+    transform: none !important;
+}
+
+.notificaciones-table .notificaciones-action i {
+    pointer-events: none;
 }
 
 .notificaciones-action i {
@@ -7683,6 +7707,55 @@ i{color: white!important;}
     .servicios-cliente-export-btn {
         width: 100%;
     }
+}
+
+/* ============================================================
+   LISTADO SERVICIOS CLIENTE - SCROLL HORIZONTAL
+   ============================================================ */
+
+.servicios-cliente-table-wrapper {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Evita que DataTables comprima todas las columnas */
+/*.servicios-cliente-table-wrapper .servicios-cliente-table {
+    width: 100% !important;
+    min-width: 1450px !important;
+}*/
+
+/* Evita que encabezados importantes se partan */
+.servicios-cliente-table-wrapper .servicios-cliente-table thead th {
+    white-space: nowrap;
+}
+
+/* Scroll acorde al diseño oscuro */
+.servicios-cliente-table-wrapper::-webkit-scrollbar {
+    height: 9px;
+}
+
+.servicios-cliente-table-wrapper::-webkit-scrollbar-track {
+    background: #0b141e;
+    border-radius: 10px;
+}
+
+.servicios-cliente-table-wrapper::-webkit-scrollbar-thumb {
+    background: #33465c;
+    border-radius: 10px;
+    border: 2px solid #0b141e;
+}
+
+.servicios-cliente-table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #eba72f;
+}
+
+/* Firefox */
+.servicios-cliente-table-wrapper {
+    scrollbar-width: thin;
+    scrollbar-color: #33465c #0b141e;
 }
 
 /* ========================================================================== 

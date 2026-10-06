@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=1.2.3') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=1.2.4') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
-  <script src="{{ asset('js/catalogos/CatalogoNotificaciones.js') }}"></script>
+  <script src="{{ asset('js/catalogos/CatalogoNotificaciones.js?v=1.2.4') }}"></script>
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
 
@@ -82,7 +82,9 @@
                                     <div class="d-flex justify-content-center gap-2">
                                         {{-- 0 = Modulo de servicios cliente --}}
                                         @if($unid->op_modulo == 0)
-                                            <a href="{{ route('notificaciones.vernotificacionservcliente', $unid->id) }}" class="notificaciones-action" title="Ver Notificación" data-toggle="tooltip" data-theme="dark" data-placement="top">
+                                            <a href="{{ route('notificaciones.vernotificacionservcliente', $unid->id) }}"
+                                               class="notificaciones-action"
+                                               title="Ver Notificación">
                                                 <i class="far fa-eye"></i>
                                             </a>
                                         @endif

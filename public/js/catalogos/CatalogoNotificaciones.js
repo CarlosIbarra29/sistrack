@@ -10,7 +10,7 @@ $("#kdatatable_notificaciones").DataTable({
     "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
     ">" +
 
-    "<'table-responsive'tr>" +
+    "<tr>" +
 
     "<'row'" +
     "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
