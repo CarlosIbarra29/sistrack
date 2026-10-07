@@ -700,7 +700,7 @@
                                                 <div class="programacion-custodio-info">
 
                                                     <span class="programacion-custodio-name programacion-custodio-name--emergente">
-                                                        {{ $unid->custodio_emergente }}
+                                                        {{ strtoupper($unid->custodio_emergente) }}
                                                     </span>
 
                                                     <span class="programacion-custodio-emergente-badge">
@@ -727,11 +727,11 @@
                                                 <div class="programacion-custodio-info">
 
                                                     <span class="programacion-custodio-name">
-                                                        {{ $unid->custodio->nombre_custodio ?? 'Sin asignar' }}
-                                                        {{ $unid->custodio->ap_paterno }}
+                                                        {{ strtoupper($unid->custodio->nombre_custodio) ?? 'Sin asignar' }}
+                                                        {{ strtoupper($unid->custodio->ap_paterno) }}
 
                                                         @if(!empty($unid->custodio->ap_materno))
-                                                            {{ $unid->custodio->ap_materno }}
+                                                            {{ strtoupper($unid->custodio->ap_materno) }}
                                                         @endif
                                                     </span>
 
@@ -768,11 +768,11 @@
                                                             </div>
                                                             <span class="programacion-acompanante-name">
 
-                                                                {{ $acompanante->custodio->nombre_custodio }}
-                                                                {{ $acompanante->custodio->ap_paterno }}
+                                                                {{ strtoupper($acompanante->custodio->nombre_custodio) }}
+                                                                {{ strtoupper($acompanante->custodio->ap_paterno) }}
 
                                                                 @if(!empty($acompanante->custodio->ap_materno))
-                                                                    {{ $acompanante->custodio->ap_materno }}
+                                                                    {{ strtoupper($acompanante->custodio->ap_materno) }}
                                                                 @endif
 
                                                             </span>

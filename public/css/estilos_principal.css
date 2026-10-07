@@ -2833,6 +2833,9 @@ select.monitoreo-input option {
 }
 
 .monitoreo-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 20;
     padding: 10px 11px;
     border: 0;
     border-bottom: 1px solid var(--mon-border-soft);
@@ -2986,7 +2989,7 @@ select.monitoreo-input option {
     display: inline-flex;
     align-items: center;
     gap: 3px;
-    color: #8998aa;
+    color: #fffffc;
     font-size: .51rem;
     font-weight: 500;
     line-height: 1.25;
@@ -4511,6 +4514,7 @@ td {
 
 .monitoreo-table-wrapper::-webkit-scrollbar,
 .monitoreo-record-table-wrapper::-webkit-scrollbar {
+    width: 5px;
     height: 6px;
 }
 
@@ -4522,18 +4526,34 @@ td {
 .monitoreo-table-wrapper::-webkit-scrollbar-thumb,
 .monitoreo-record-table-wrapper::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: #2d3d52;
+    background: #fff;
 }
 
 /*barra arriba comentar si la regresamos abajo*/
 
-.monitoreo-table-wrapper {
+/*.monitoreo-table-wrapper {
     transform: rotateX(180deg);
     overflow-x: auto;
 }
 
 .monitoreo-table-wrapper .monitoreo-table {
     transform: rotateX(180deg);
+}*/
+
+/* ==========================================================================
+   MONITOREO - SCROLL DE TABLA
+   Horizontal abajo + vertical normal
+   ========================================================================== */
+
+.monitoreo-table-wrapper {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: calc(100vh - 290px);
+    transform: none;
+    position: relative;
+    scrollbar-gutter: stable;
 }
 
 /* ==========================================================================

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=1.2.3') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=1.2.5') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
@@ -368,7 +368,7 @@
                                         <div class="monitoreo-custodio-emergente-info">
 
                                             <strong class="monitoreo-custodio-name">
-                                                {{ $unid->custodio_emergente ?: 'Custodio emergente' }}
+                                                {{ strtoupper($unid->custodio_emergente) ?: 'Custodio emergente' }}
                                             </strong>
 
                                             <small class="monitoreo-custodio-emergente-label">
@@ -390,8 +390,8 @@
 
                                         <span class="monitoreo-custodio-name">
 
-                                            {{ $unid->custodio->nombre_custodio ?? 'Sin asignar' }}
-                                            {{ $unid->custodio->ap_paterno ?? '' }}
+                                            {{ strtoupper($unid->custodio->nombre_custodio) ?? 'Sin asignar' }}
+                                            {{ strtoupper($unid->custodio->ap_paterno) ?? '' }}
 
                                             <!-- @if(!empty($unid->custodio->ap_materno))
                                                 {{ $unid->custodio->ap_materno }}
@@ -424,12 +424,12 @@
 
                                                     <span class="monitoreo-acompanante-name">
 
-                                                        {{ $acompanante->custodio->nombre_custodio }}
+                                                        {{ strtoupper($acompanante->custodio->nombre_custodio) }}
 
-                                                        {{ $acompanante->custodio->ap_paterno }}
+                                                        {{ strtoupper($acompanante->custodio->ap_paterno) }}
 
                                                         @if(!empty($acompanante->custodio->ap_materno))
-                                                            {{ $acompanante->custodio->ap_materno }}
+                                                            {{ strtoupper($acompanante->custodio->ap_materno) }}
                                                         @endif
 
                                                     </span>
