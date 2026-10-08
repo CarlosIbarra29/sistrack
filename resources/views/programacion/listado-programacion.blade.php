@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=2.1.2') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=2.1.4') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
@@ -998,7 +998,7 @@
     </div>
 
     {{-- LEYENDAS --}}
-    <div class="panel-dark programacion-legends">
+    <!-- <div class="panel-dark programacion-legends">
 
         <div class="programacion-status-legend">
 
@@ -1077,7 +1077,7 @@
 
         </div>
 
-    </div>
+    </div> -->
 
 </div>
 

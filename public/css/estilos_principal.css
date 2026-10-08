@@ -1413,7 +1413,53 @@ tr.programacion-row-sin-custodio td {
 .programacion-services-table-wrapper {
     width: 100%;
     max-width: 100%;
-    overflow-x: auto;
+    overflow-x: auto !important;
+    overflow-y: auto !important;
+    max-height: calc(100vh - 200px);
+    position: relative;
+    scrollbar-gutter: stable;
+    -webkit-overflow-scrolling: touch;
+}
+
+.programacion-services-table thead th {
+    position: sticky !important;
+    top: 0;
+    z-index: 20;
+    padding: 10px 12px !important;
+    border: 0 !important;
+    border-bottom: 1px solid var(--st-border-soft) !important;
+    background: var(--st-gold) !important;
+    color: #000000 !important;
+    font-size: .60rem !important;
+    font-weight: 700 !important;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.programacion-services-table-wrapper::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.programacion-services-table-wrapper::-webkit-scrollbar-track {
+    background: #0c131d;
+}
+
+.programacion-services-table-wrapper::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+.programacion-services-table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #d9d9d9;
+}
+
+
+/* Firefox */
+.programacion-services-table-wrapper {
+    scrollbar-width: thin;
+    scrollbar-color: #ffffff #0c131d;
 }
 
 .programacion-services-table {
