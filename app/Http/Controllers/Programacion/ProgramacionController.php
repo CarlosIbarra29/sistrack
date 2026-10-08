@@ -62,6 +62,7 @@ class ProgramacionController extends Controller
         ->leftJoin('programacion_estatus as pe','pe.id','=','programacion.programacion_estatus_id')
         ->leftJoin('cliente as cli','cli.id','=','programacion.cliente_id')
         ->where('programacion.siaf_status', 1)
+        ->whereNotIn('programacion.programacion_estatus_id', [6, 7])
         ->orderByDesc('programacion.estatus_custodio')
         ->orderBy('programacion.fecha_servicio', 'asc')
         ->get();
