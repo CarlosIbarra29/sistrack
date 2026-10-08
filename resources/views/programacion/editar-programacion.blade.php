@@ -5,7 +5,7 @@
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('js/programacion/EditarProgramacionNew.js?v=1.0.2') }}"></script>
+    <script src="{{ asset('js/programacion/EditarProgramacionNew.js?v=1.0.4') }}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
 
@@ -71,7 +71,8 @@
 
             <input type="hidden" name="id_programacion" value="{{ $id_programacion }}">
             <input type="hidden" id="documentoEliminarPath" value="{{ route('programacion.eliminarcustodioprogramacion') }}">
-            <input type="hidden" id="tipoArchivo" value='{{ $cadenaTipoDocumento }}'>
+            <!-- <input type="hidden" id="tipoArchivo" value="{{ e($cadenaTipoDocumento) }}">-->
+             <script type="application/json" id="tipoArchivo">@json($cadenaTipoDocumento)</script>
 
             <div class="programacion-form-grid">
 

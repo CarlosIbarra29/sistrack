@@ -113,23 +113,56 @@ var Modulo = function() {
 
     var construyeElementosLista = function() {
 
-        var tipoArchivo = $("#tipoArchivo").val();
-        var colCustodios = tipoArchivo ? JSON.parse(tipoArchivo) : {};
-        var opcion = "";
+        var elementoTipoArchivo = document.getElementById("tipoArchivo");
 
-        $.each(colCustodios,
-            function(i, item) {
+        if (!elementoTipoArchivo) {
+            console.error("No se encontró el elemento #tipoArchivo");
+            return "";
+        }
 
-                if (String(i) !== "153") {
+        var contenido = elementoTipoArchivo.textContent.trim();
 
-                    opcion +="<option value='" + i + "'>" + item + "</option>";
+        if (!contenido) {
+            return "";
+        }
+
+        var tipoArchivo;
+
+        try {
+
+            // Primera conversión:
+            // recuperamos la cadena que Laravel serializó con @json
+            tipoArchivo = JSON.parse(contenido);
+
+            // Segunda conversión:
+            // convertimos la cadena JSON original de custodios en objeto
+            var colCustodios = JSON.parse(tipoArchivo);
+
+            var opcion = "";
+
+            $.each(
+                colCustodios,
+                function(i, item) {
+
+                    if (String(i) !== "153") {
+
+                        opcion += "<option value='" + i + "'>" + item + "</option>";
+
+                    }
 
                 }
+            );
 
-            }
-        );
+            return opcion;
 
-        return opcion;
+        } catch (error) {
+
+            console.error("Error al procesar la lista de custodios:", error);
+            console.error("Contenido recibido:", contenido);
+
+            return "";
+
+        }
 
     };
 
