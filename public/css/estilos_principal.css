@@ -1415,7 +1415,7 @@ tr.programacion-row-sin-custodio td {
     max-width: 100%;
     overflow-x: auto !important;
     overflow-y: auto !important;
-    max-height: calc(100vh - 200px);
+    max-height: calc(100vh - 220px);
     position: relative;
     scrollbar-gutter: stable;
     -webkit-overflow-scrolling: touch;
