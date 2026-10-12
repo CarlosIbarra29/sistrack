@@ -2,6 +2,7 @@
 var Modulo = function() {
 
     var lista = ''; //lista de elementos
+    var listacli = '';
     var contadorDocumentos=0; //indice contador de elementos
     var validador; //validador del formulario
 
@@ -56,12 +57,20 @@ var Modulo = function() {
 
 
         lista = construyeElementosLista();
+        listacli = construyeElementosListaCliente();
         //botón agregar otro archivo
         $( ".hrefAgregarOtro" ).on( "click", function(event) {
             event.preventDefault();
             addArchivo();
         });
         delArchivo();
+
+        $( ".hrefAgregarOtroCliente" ).on( "click", function(event) {
+            event.preventDefault();
+            addCliente();
+        });
+        delCliente();
+
 
     };
 
@@ -125,6 +134,67 @@ var Modulo = function() {
     };
 
 
+    var initSwalEliminarCliente = function() {
+        $(".hrefEliminarCliente").click(function(e) {
+
+            e.preventDefault();
+            var id = $(this).attr('data-id');
+            var documento = $(this).attr('data-documento');
+            var block = $('#submit_contrato_edit');
+
+            Swal.fire({
+                title: "¿Desea eliminar al cliente?.",
+                text: documento,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Eliminar cliente",
+                cancelButtonText: "Cerrar",
+                reverseButtons: true,
+                confirmButtonColor: "#73ab17",
+                cancelButtonColor: "#cc0c73",
+            }).then(function(result) {
+                if (result.value) {
+                    $.ajax({
+                        type: 'POST',
+                        url: $('#documentoEliminarCliente').val(),
+                        data: {
+                            id: id,
+                            _token: $("[name='_token']").val()
+                        },
+                        beforeSend: function() {
+                            KTApp.block(block, {
+                                state: 'primary',
+                                message: 'Espere por favor...'
+                            });
+                        }
+                    }).done(function(data) {
+                        KTApp.unblock(block);
+                        if (data.estatus){
+                            $('#trDocumentoCli'+id).remove();//elimina el elemento html
+                            toastr.options =
+                                {
+                                    "closeButton" : true,
+                                    "progressBar" : true
+                                }
+                            toastr.success("El Cliente se elimino correctamente.");
+
+                        }else{
+                            toastr.options =
+                                {
+                                    "closeButton" : true,
+                                    "progressBar" : true
+                                }
+                            toastr.error("No es posible eliminar al cliente, por favor intente más tarde.");
+                        }
+                    });
+                }
+            });
+        });
+    };
+
+
+
+
 
     //construye  elementos de la lista
     var construyeElementosLista = function () {
@@ -138,6 +208,21 @@ var Modulo = function() {
 
         return opcion;
     };
+
+
+    //construye  elementos de la lista
+    var construyeElementosListaCliente = function () {
+        var tipoArchivo = $("#tipoCliente").val();
+        var colTipoArchivo = JSON.parse(tipoArchivo);
+        var opcion ="";
+
+        $.each(colTipoArchivo, function(i, item) {
+            opcion += "<option value='"+i+"' >"+item+"</option>";
+        });
+
+        return opcion;
+    };
+
 
     //validador de elementos agregados para archivo
     const archivoValidador = {
@@ -213,6 +298,47 @@ var Modulo = function() {
         });
     };
 
+// Seleccionar clientes a un usuario
+    //agrega el elemento archivo y lista desplegable
+    var addCliente = function () {
+        contadorDocumentos++;
+        var html = '';
+        html += ([    "",
+            "<tr id='trDocumento"+contadorDocumentos+"'>",
+            "    <td>" +
+            "       <div class='form-group mb-0'>" +
+            "          <select class='form-control' name='id_cliente["+contadorDocumentos+"]' id='id_cliente"+contadorDocumentos+"' required>",
+            "              <option value=''>Selecciona un opción</option>",
+            listacli,
+            "          </select>",
+            "       </div>" +
+            "    </td>",
+            "    <td>",
+            "       <a href='#' class='btn btn-sm btn-clean btn-hover-icon-success btn-icon hrefEliminarCli' data-id='"+contadorDocumentos+"' data-toggle='tooltip' data-theme='dark' title='Eliminar'>",
+            "           <i class='flaticon-delete'></i>",
+            "       </a>",
+            "    </td>",
+            "</tr>",
+
+            ""].join(""));
+        $("#tblClientes tbody").append(html); //agrega el html creado
+        //agrega validación del elemento creado
+        validador.addField('id_cliente[' + contadorDocumentos + ']', tipoArchivoValidador);
+        KTApp.initTooltips(); //inicia tooltip del elemento creado
+        KTApp.initFileInput(); //inicia el elemento archivo del elemento creado
+    };
+
+    //elimina un elemento
+    var delCliente = function () {
+        jQuery(document).on("click", ".hrefEliminarCli" , function(e) {
+            e.preventDefault();
+            var idDocumento = $(this).attr("data-id"); //indice del elemento
+            KTApp.hideTooltips(); //oculta tooltip
+            //elimina la validación del elemento
+            validador.removeField('id_cliente[' + idDocumento + ']');
+            $('#trDocumento'+idDocumento).remove();//elimina el elemento
+        });
+    };
 
 
 
@@ -229,6 +355,7 @@ var Modulo = function() {
             validacion();
             eventosEspeciales();
             initSwalEliminarDdocumento();
+            initSwalEliminarCliente();
         },
 
     };

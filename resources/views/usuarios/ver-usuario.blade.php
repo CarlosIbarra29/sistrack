@@ -24,6 +24,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2">Documentación</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3">Clientes</a>
+                            </li>
                         </ul>
 
                         <div class="tab-content mt-5" id="myTabContent">
@@ -102,6 +105,32 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+
+
+                            </div>
+
+
+                            <div class="tab-pane fade mt-10" id="kt_tab_pane_3" role="tabpanel" aria-labelledby="kt_tab_pane_3">
+                                {{-- <input type='hidden' id='tipoCliente' value='{{ $cadenaTipoCliente }}'> --}}
+                                <div class="row form-group" >
+                                    <div class="col-lg-12" id="tblArchivos">
+                                        <table class='table table-bordered table-hover' id='tblClientes'>
+                                            <thead>
+                                            <tr>
+                                                <th>Cliente</th>
+                                                {{-- <th>Opción</th> --}}
+                                            </tr>
+                                            </thead>
+                                            <tbody id='tbodyDocumentos'>
+                                                @foreach($clienteusuario as $documento)
+                                                    <tr id="trDocumentoCli{{ $documento->id }}">
+                                                        <td>{{ $documento->cliente->razon_social }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
 
 
                             </div>

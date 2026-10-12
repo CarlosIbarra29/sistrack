@@ -25,6 +25,8 @@ use App\Models\TipoUsuario;
 use App\Models\Usuarios\DocumentacionUsuario; 
 use App\Models\Usuarios\UsuarioDocRegistro; 
 use App\Models\Usuarios\UsuarioFolio;
+use App\Models\Cliente\Cliente;
+use App\Models\Cliente\ClienteUsuario;
 
 class UsuarioController extends Controller
 {
@@ -225,13 +227,21 @@ class UsuarioController extends Controller
         }
         $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
 
+        $clientes = Cliente::where('siaf_status', 1)->get();
 
-        return view('usuarios.agregar-usuario', compact('rol', 'areas', 'tipos_usuario', 'cadenaTipoDocumento'));
+        $cadenaTipoCliente= "";
+        foreach($clientes as $cli){
+            $cadenaTipoCliente .= '"'.$cli->id.'":"'.$cli->razon_social.'",';
+        }
+        $cadenaTipoCliente = '{'.rtrim($cadenaTipoCliente, ',').'}';
+
+
+        return view('usuarios.agregar-usuario', compact('rol', 'areas', 'tipos_usuario', 'cadenaTipoDocumento', 'cadenaTipoCliente'));
     }
 
     public function guardarusuario(Request $request)
     {
-        // dd($request);
+
         $data = [
             'num_list' => $this->folio->getFolioUsuario(),
             'name' => $request->name_user,
@@ -270,8 +280,26 @@ class UsuarioController extends Controller
                     'iduserCreated' =>auth()->user()->id,
                     'iduserUpdated' =>auth()->user()->id
                 ];
-                // dd($data);
+
                 UsuarioDocRegistro::insert($data);
+            }
+        }
+
+        //Cliente Usuario
+        $colIdCliente = $request->id_cliente;
+        if($request->id_cliente){
+            foreach($request->id_cliente as $indice => $cliente)
+            {
+                $data = [
+                    'users_id' => $id_user,
+                    'cliente_id' =>$cliente,
+                    'created_at' =>date('Y-m-d H:i:s'),
+                    'updated_at' =>date('Y-m-d H:i:s'),
+                    'iduserCreated' =>auth()->user()->id,
+                    'iduserUpdated' =>auth()->user()->id
+                ];
+
+                ClienteUsuario::insert($data);
             }
         }
 
@@ -303,7 +331,18 @@ class UsuarioController extends Controller
         $documentos = UsuarioDocRegistro::where('users_id',$usuario)->get();
         // dd($documentos);
 
-    	return view('usuarios.editar-usuario', compact('rol', 'usuario', 'userinfo', 'areas', 'tipos_usuario', 'cadenaTipoDocumento', 'documentos'));   	
+        $clientes = Cliente::where('siaf_status', 1)->get();
+
+        $cadenaTipoCliente= "";
+        foreach($clientes as $cli){
+            $cadenaTipoCliente .= '"'.$cli->id.'":"'.$cli->razon_social.'",';
+        }
+        $cadenaTipoCliente = '{'.rtrim($cadenaTipoCliente, ',').'}';
+
+        $clienteusuario = ClienteUsuario::where('users_id',$usuario)->get();
+
+
+    	return view('usuarios.editar-usuario', compact('rol', 'usuario', 'userinfo', 'areas', 'tipos_usuario', 'cadenaTipoDocumento', 'documentos', 'cadenaTipoCliente', 'clienteusuario'));   	
     }
 
     public function modificarusuario(Request $request)
@@ -355,6 +394,25 @@ class UsuarioController extends Controller
                 UsuarioDocRegistro::insert($data);
             }
         }
+
+        //Cliente Usuario
+        $colIdCliente = $request->id_cliente;
+        if($request->id_cliente){
+            foreach($request->id_cliente as $indice => $cliente)
+            {
+                $data = [
+                    'users_id' => $request->id,
+                    'cliente_id' =>$cliente,
+                    'created_at' =>date('Y-m-d H:i:s'),
+                    'updated_at' =>date('Y-m-d H:i:s'),
+                    'iduserCreated' =>auth()->user()->id,
+                    'iduserUpdated' =>auth()->user()->id
+                ];
+
+                ClienteUsuario::insert($data);
+            }
+        }
+
 
         session()->flash('success', 'El usuario se modifico correctamente');
     	if (in_array("7", Session::get('permisos'))){
@@ -422,6 +480,21 @@ class UsuarioController extends Controller
         ]);
     }
 
+    public function eliminarclienteuser(Request $request)
+    {
+        $doc = ClienteUsuario::findOrFail($request->id);
+        $estatus = true;
+        if ($doc){
+            ClienteUsuario::where('id', $request->id)->delete();
+        }else{
+            $estatus = false;
+        }
+
+        return response()->json([
+            'estatus' => $estatus,
+        ]);        
+    }
+
 
     public function desacticarusuario(Request $request)
     {
@@ -467,8 +540,9 @@ class UsuarioController extends Controller
         $rol = Role::orderBy('id', 'asc')->get();
         $userinfo = User::where('id', $usuario)->get();
         $documentos = UsuarioDocRegistro::where('users_id',$usuario)->get();
+        $clienteusuario = ClienteUsuario::where('users_id',$usuario)->get();
 
-        return view('usuarios.ver-usuario', compact('rol', 'usuario', 'userinfo', 'documentos'));   
+        return view('usuarios.ver-usuario', compact('rol', 'usuario', 'userinfo', 'documentos', 'clienteusuario'));   
     }
 
 // C R U D    R O L E S

@@ -30,6 +30,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2">Documentación</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3">Clientes</a>
+                            </li>
                         </ul>
 
 
@@ -130,6 +133,34 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                            <div class="tab-pane fade mt-10" id="kt_tab_pane_3" role="tabpanel" aria-labelledby="kt_tab_pane_3">
+                                <input type='hidden' id='tipoCliente' value='{{ $cadenaTipoCliente }}'>
+                                <div class="row form-group" >
+                                    <div class="col-lg-12" id="tblArchivos">
+                                        <table class='table table-bordered table-hover' id='tblClientes'>
+                                            <thead>
+                                            <tr>
+                                                <th>Cliente</th>
+                                                <th>Opción</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id='tbodyDocumentos'>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-lg-12">
+                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtroCliente" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                            <i class="flaticon2-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
 
                         </div>
 

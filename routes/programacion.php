@@ -30,6 +30,12 @@
 	Route::get('/editar-servicio-cliente/{id}', [App\Http\Controllers\Programacion\ProgramacionClienteController::class, 'editarservicio'])->name('procli.editarservicio');
 	Route::post('/editar-atendida', [App\Http\Controllers\Programacion\ProgramacionClienteController::class, 'editaratendida'])->name('procli.editaratendida');
 
+
+	//PROGRAMACION PARA CLIENTES
+	
+	// name('procliadm.nprogramacioncliente')  USA ESTE NAME PARA LA RUTA (nO SE QUE CONTROLADOR USARAS PERO TE DEJE EL NAME YA)
+
+
 	//GUARDAR PROGRAMACION DESDE MISMA PAGINA
 	Route::post('/guardar-programacionnew', [App\Http\Controllers\Programacion\ProgramacionController::class, 'guardarprogramacionnew'])->name('programacion.guardarprogramacionnew'); 
 

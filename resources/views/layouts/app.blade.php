@@ -139,6 +139,15 @@
                             </a>
                         </li>
 
+                        {{-- Vista clientes Carlos .l.  --}}
+                        <li id="menuProgramacionCliente" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                            <a href=" " class="menu-link menu-toggle"> 
+                                <i class="flaticon-notepad menu-icon"></i>
+                                <span class="menu-text">Programación</span>
+                            </a>
+                        </li>
+
+
                     @else
                         <li id="menuHome" class="menu-item menu-item-active" aria-haspopup="true">
                             <a href="{{ route('tablero.show') }}" class="menu-link">

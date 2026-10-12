@@ -16,6 +16,7 @@
 		Route::get('/error-permiso', [App\Http\Controllers\UsuarioController::class, 'errorpermiso'])->name('user.errorpermiso');
 		Route::post('/activar-usuario', [App\Http\Controllers\UsuarioController::class, 'activarusuario'])->name('user.activarusuario');
 		Route::post('/eliminar-documento-usuario', [App\Http\Controllers\UsuarioController::class, 'eliminardocumentouser'])->name('user.eliminardocumentouser');
+		Route::post('/eliminar-cliente-usuario', [App\Http\Controllers\UsuarioController::class, 'eliminarclienteuser'])->name('user.eliminarclienteuser');
 
 	// Listado de Roles
 		Route::get('/catalogo-roles', [App\Http\Controllers\UsuarioController::class, 'catalogoroles'])->name('rol.catalogoroles')->middleware('permission:role-list');

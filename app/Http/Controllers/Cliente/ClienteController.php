@@ -19,6 +19,7 @@ use App\Models\Cliente\TipoDocumentoC;
 use App\Models\Cliente\DocumentoCliente;
 use App\Models\Cliente\TipoContactoCliente;
 use App\Models\Cliente\ClienteFolio;
+use App\Models\Cliente\ClienteUsuario;
 
 use App\Models\User;
 use App\Models\Rol;
@@ -170,6 +171,7 @@ class ClienteController extends Controller
         }
         $cadenatipocliente = '{'.rtrim($cadenatipocliente, ',').'}';
 
+        // $usuarios = Cliente::where('siaf_status', 1)->get();
 
         return view('cliente.agregar-cliente', compact('data','cadenaTipoDocumento', 'cadenatipocliente'));
     }

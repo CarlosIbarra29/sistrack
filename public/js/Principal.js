@@ -203,6 +203,28 @@ var Principal = (function () {
         }
 
 
+        //activar menu de ProgramacionClientes
+        function activemenuProgramacionCliente() {
+            $("#menProgramacionCliente").addClass("menu-item-active");
+            $("#menProgramacionCliente").addClass("menu-item-open");
+        }
+
+        //rutas para el menu de clientes
+        if (routeName.includes("procli")) {
+            activemenuProgramacionCliente();
+
+            switch (routeName) {
+                case "procliadm.nprogramacioncliente":
+
+                    break;
+
+
+
+            }
+        }
+
+
+
         //activar menu de Notificaciones
         function activeMenuNotificacionese() {
             $("#menuNotificaciones").addClass("menu-item-active");
