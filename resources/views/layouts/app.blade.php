@@ -158,7 +158,11 @@
                                 <i class="flaticon2-checking  menu-icon"></i>
                                 <span class="menu-text">
                                     Notificaciones  
-                                    <span class="label font-weight-bold label-outline-warning label-inline mr-2"> {{ $pendientes }}</span>
+                                    @if($pendientes != 0)
+                                        <span class="label font-weight-bold label-outline-warning label-inline mr-2">
+                                            {{ $pendientes }}
+                                        </span>
+                                    @endif
                                 </span>
                                 <!--<i class="menu-arrow"></i>-->
                             </a>

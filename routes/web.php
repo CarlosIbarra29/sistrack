@@ -39,6 +39,4 @@ Route::post('/evidencia-bitacora', [App\Http\Controllers\Tablero\TableroControll
 Route::post('/viaje-cambiostatus', [App\Http\Controllers\Tablero\TableroController::class, 'viajecambiostatus'])->name('tablero.viajecambiostatus');
 
 
-
-
 require __DIR__.'/auth.php';
