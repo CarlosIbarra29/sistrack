@@ -89,7 +89,7 @@ class MonitoreoController extends Controller
             ->leftJoin('programacion_estadias as pd','pd.id','=','pel.estadia_id')
             ->leftJoin('estatus_itinerario as ei','ei.id','=','pd.estatus_itinerario')
             ->where('programacion.siaf_status', 1)
-            ->where('programacion.programacion_estatus_id', '<>', 7)
+            ->whereNotIn('programacion.programacion_estatus_id', [6, 7])
             ->orderByDesc('programacion.estatus_custodio')
             ->orderBy('programacion.fecha_servicio', 'asc')
             ->get();
@@ -130,7 +130,7 @@ class MonitoreoController extends Controller
             ->where('programacion.siaf_status', 1)
 
             // Únicamente finalizados
-            ->where('programacion.programacion_estatus_id', 7)
+            ->whereIn('programacion.programacion_estatus_id', [6, 7])
 
             ->orderBy('programacion.fecha_servicio', 'desc')
             ->get();

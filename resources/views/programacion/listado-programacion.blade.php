@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=2.1.3') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=2.1.4') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('js/programacion/CatalogoProgramacion.js?v=1.3.8') }}"></script>
+    <script src="{{ asset('js/programacion/CatalogoProgramacion.js?v=2.1.3') }}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <script src="{{ asset('js/programacion/AgregarProgramacionUnique.js?v=1.0.7') }}"></script>
 @endpush
@@ -39,13 +39,14 @@
                 <span>CLIENTES INACTIVOS</span>
             </a>
 
-            <button type="button"
+            <!-- <button type="button"
                     class="btn btn-outline-custom programacion-header-btn">
                 <i class="fa fa-file-excel"></i>
                 <span>IMPORTAR EXCEL</span>
-            </button>
+            </button> -->
 
             <button type="button"
+                    id="exportar_programacion_excel"
                     class="btn btn-outline-custom programacion-header-btn">
                 <i class="fa fa-download"></i>
                 <span>EXPORTAR</span>
@@ -699,7 +700,7 @@
                                                 <div class="programacion-custodio-info">
 
                                                     <span class="programacion-custodio-name programacion-custodio-name--emergente">
-                                                        {{ $unid->custodio_emergente }}
+                                                        {{ strtoupper($unid->custodio_emergente) }}
                                                     </span>
 
                                                     <span class="programacion-custodio-emergente-badge">
@@ -726,7 +727,12 @@
                                                 <div class="programacion-custodio-info">
 
                                                     <span class="programacion-custodio-name">
-                                                        {{ $unid->custodio->nombre_custodio ?? 'Sin asignar' }}
+                                                        {{ strtoupper($unid->custodio->nombre_custodio) ?? 'Sin asignar' }}
+                                                        {{ strtoupper($unid->custodio->ap_paterno) }}
+
+                                                        @if(!empty($unid->custodio->ap_materno))
+                                                            {{ strtoupper($unid->custodio->ap_materno) }}
+                                                        @endif
                                                     </span>
 
                                                 </div>
@@ -762,11 +768,11 @@
                                                             </div>
                                                             <span class="programacion-acompanante-name">
 
-                                                                {{ $acompanante->custodio->nombre_custodio }}
-                                                                {{ $acompanante->custodio->ap_paterno }}
+                                                                {{ strtoupper($acompanante->custodio->nombre_custodio) }}
+                                                                {{ strtoupper($acompanante->custodio->ap_paterno) }}
 
                                                                 @if(!empty($acompanante->custodio->ap_materno))
-                                                                    {{ $acompanante->custodio->ap_materno }}
+                                                                    {{ strtoupper($acompanante->custodio->ap_materno) }}
                                                                 @endif
 
                                                             </span>
@@ -827,8 +833,33 @@
                          class="programacion-table-info">
                     </div>
 
-                    <div id="servicios_programados_paginador"
-                         class="programacion-pagination">
+                    <div class="programacion-table-footer-actions">
+
+                        <div class="programacion-length-control">
+
+                            <label for="servicios_programados_length">
+                                Mostrar
+                            </label>
+
+                            <select id="servicios_programados_length"
+                                    class="programacion-length-select">
+
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50" selected>50</option>
+                                <option value="100">100</option>
+                                <option value="all">Todos</option>
+
+                            </select>
+
+                            <span>registros</span>
+
+                        </div>
+
+                        <div id="servicios_programados_paginador"
+                             class="programacion-pagination">
+                        </div>
+
                     </div>
 
                 </div>
@@ -967,7 +998,7 @@
     </div>
 
     {{-- LEYENDAS --}}
-    <div class="panel-dark programacion-legends">
+    <!-- <div class="panel-dark programacion-legends">
 
         <div class="programacion-status-legend">
 
@@ -1046,7 +1077,7 @@
 
         </div>
 
-    </div>
+    </div> -->
 
 </div>
 

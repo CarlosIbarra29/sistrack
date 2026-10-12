@@ -1,9 +1,7 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=2.1.0') }}"
-          rel="stylesheet"
-          type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=2.1.1') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
@@ -18,9 +16,6 @@
 
 <div class="nuevo-servicio-page">
 
-    {{-- =========================================================
-        ENCABEZADO
-    ========================================================== --}}
     <header class="nuevo-servicio-header">
 
         <div class="nuevo-servicio-heading">

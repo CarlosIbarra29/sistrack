@@ -483,12 +483,12 @@ $("#send_incidencia")
 
 /* ==========================================================================
    SERVICIOS PROGRAMADOS
-   BUSCADOR POR COINCIDENCIA + PAGINACIÓN DE 20
+   BUSCADOR + PAGINACIÓN + CANTIDAD DE REGISTROS
    ========================================================================== */
 
 (function() {
 
-    var registrosPorPagina = 10;
+    var registrosPorPagina = 50;
     var paginaActual = 1;
     var filasOriginales = [];
     var filasFiltradas = [];
@@ -496,6 +496,10 @@ $("#send_incidencia")
     var buscador = document.getElementById('servicios_programados_buscar'  );
     var paginador = document.getElementById('servicios_programados_paginador');
     var info = document.getElementById('servicios_programados_info');
+
+    var selectorRegistros = document.getElementById(
+        'servicios_programados_length'
+    );
 
     if (!tabla) {
         return;
@@ -564,16 +568,34 @@ $("#send_incidencia")
             }
         );
 
-        var total =filasFiltradas.length;
-        var totalPaginas =Math.max(1,Math.ceil(total /registrosPorPagina));
+        var total = filasFiltradas.length;
+
+        var totalPaginas =
+            registrosPorPagina === 'all'
+                ? 1
+                : Math.max(
+                    1,
+                    Math.ceil(total / registrosPorPagina)
+                );
 
         if (paginaActual >totalPaginas) {
             paginaActual =totalPaginas;
         }
 
-        var inicio = (paginaActual - 1) * registrosPorPagina;
-        var fin = inicio + registrosPorPagina;
-        var filasPagina = filasFiltradas.slice( inicio, fin);
+        var inicio =
+            registrosPorPagina === 'all'
+                ? 0
+                : (paginaActual - 1) * registrosPorPagina;
+
+        var fin =
+            registrosPorPagina === 'all'
+                ? total
+                : inicio + registrosPorPagina;
+
+        var filasPagina = filasFiltradas.slice(
+            inicio,
+            fin
+        );
 
         filasPagina.forEach(
             function(fila) {
@@ -614,7 +636,7 @@ $("#send_incidencia")
 
         paginador.innerHTML = '';
 
-        if ( total <= registrosPorPagina ) {
+        if (registrosPorPagina === 'all' ||total <= registrosPorPagina) {
             return;
         }
 
@@ -731,6 +753,177 @@ $("#send_incidencia")
             'input',
             filtrar
         );
+
+    }
+
+
+    if (selectorRegistros) {
+
+        selectorRegistros.addEventListener(
+            'change',
+            function() {
+
+                var valor = this.value;
+
+                registrosPorPagina = valor === 'all' ? 'all' : parseInt(valor, 10);
+                paginaActual = 1;
+                renderizar();
+
+            }
+        );
+
+    }
+
+    /* ============================================================
+       EXPORTAR TODOS LOS SERVICIOS PROGRAMADOS A EXCEL
+       ============================================================ */
+
+    var btnExportarExcel = document.getElementById('exportar_programacion_excel');
+
+    if (btnExportarExcel) {
+
+        btnExportarExcel.addEventListener('click',
+            function() {
+
+                exportarProgramacionExcel();
+
+            }
+        );
+
+    }
+
+
+    function exportarProgramacionExcel() {
+
+        if (!filasOriginales.length) {
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Sin información',
+                text: 'No existen servicios programados para exportar.'
+            });
+
+            return;
+        }
+
+        var datos = [];
+
+        datos.push([
+            'BITÁCORA',
+            'FOLIO',
+            'FECHA Y HORA',
+            'CLIENTE',
+            'ORIGEN',
+            'DESTINO',
+            'CUSTODIO',
+            'CUSTODIO ACOMPAÑANTE',
+            'ESTATUS'
+        ]);
+
+
+        filasOriginales.forEach(
+            function(fila) {
+
+                var celdas = fila.querySelectorAll('td');
+
+                if (celdas.length < 10) {
+                    return;
+                }
+
+
+                datos.push([
+
+                    obtenerTextoCelda(celdas[0]),
+                    obtenerTextoCelda(celdas[1]),
+                    obtenerTextoCelda(celdas[2]),
+                    obtenerTextoCelda(celdas[4]),
+                    obtenerTextoCelda(celdas[5]),
+                    obtenerTextoCelda(celdas[6]),
+                    obtenerTextoCelda(celdas[7]),
+                    obtenerTextoCelda(celdas[8]),
+                    obtenerTextoCelda(celdas[9])
+
+                ]);
+
+            }
+        );
+
+
+        generarArchivoExcel(datos);
+
+    }
+
+
+    function obtenerTextoCelda(celda) {
+
+        if (!celda) {
+            return '';
+        }
+
+        return celda
+            .innerText
+            .replace(/\s+/g, ' ')
+            .trim();
+
+    }
+
+
+    function generarArchivoExcel(datos) {
+
+        var contenido = '';
+
+        datos.forEach(
+            function(fila) {
+
+                var columnas = fila.map(
+                    function(valor) {
+
+                        valor = String(valor || '');
+                        valor = valor.replace(/"/g, '""');
+                        return '"' + valor + '"';
+
+                    }
+                );
+
+                contenido += columnas.join(',') + '\r\n';
+
+            }
+        );
+
+        var BOM = '\uFEFF';
+
+        var blob = new Blob(
+            [BOM + contenido],
+            {
+                type: 'text/csv;charset=utf-8;'
+            }
+        );
+
+
+        var fecha = new Date();
+
+        var nombreArchivo =
+            'programacion_servicios_' +
+            fecha.getFullYear() +
+            '-' +
+            String(fecha.getMonth() + 1).padStart(2, '0') +
+            '-' +
+            String(fecha.getDate()).padStart(2, '0') +
+            '.csv';
+
+
+        var enlace = document.createElement('a');
+
+        enlace.href = URL.createObjectURL(blob);
+        enlace.download = nombreArchivo;
+
+        document.body.appendChild(enlace);
+
+        enlace.click();
+
+        document.body.removeChild(enlace);
+
+        URL.revokeObjectURL(enlace.href);
 
     }
 

@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=1.2.2') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=1.2.5') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js?v=2.0.4') }}"></script>
+    <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js?v=2.0.5') }}"></script>
 @endpush
 
 @section('title')
@@ -368,7 +368,7 @@
                                         <div class="monitoreo-custodio-emergente-info">
 
                                             <strong class="monitoreo-custodio-name">
-                                                {{ $unid->custodio_emergente ?: 'Custodio emergente' }}
+                                                {{ strtoupper($unid->custodio_emergente) ?: 'Custodio emergente' }}
                                             </strong>
 
                                             <small class="monitoreo-custodio-emergente-label">
@@ -390,8 +390,12 @@
 
                                         <span class="monitoreo-custodio-name">
 
-                                            {{ $unid->custodio->nombre_custodio ?? 'Sin asignar' }}
-                                            {{ $unid->custodio->ap_paterno ?? '' }}
+                                            {{ strtoupper($unid->custodio->nombre_custodio) ?? 'Sin asignar' }}
+                                            {{ strtoupper($unid->custodio->ap_paterno) ?? '' }}
+
+                                            <!-- @if(!empty($unid->custodio->ap_materno))
+                                                {{ $unid->custodio->ap_materno }}
+                                            @endif -->
 
                                         </span>
 
@@ -420,12 +424,12 @@
 
                                                     <span class="monitoreo-acompanante-name">
 
-                                                        {{ $acompanante->custodio->nombre_custodio }}
+                                                        {{ strtoupper($acompanante->custodio->nombre_custodio) }}
 
-                                                        {{ $acompanante->custodio->ap_paterno }}
+                                                        {{ strtoupper($acompanante->custodio->ap_paterno) }}
 
                                                         @if(!empty($acompanante->custodio->ap_materno))
-                                                            {{ $acompanante->custodio->ap_materno }}
+                                                            {{ strtoupper($acompanante->custodio->ap_materno) }}
                                                         @endif
 
                                                     </span>
@@ -575,13 +579,40 @@
         </div>
 
         <div class="monitoreo-table-footer">
+
             <div id="monitoreo_info"
                  class="monitoreo-table-info">
             </div>
 
-            <div id="monitoreo_paginador"
-                 class="monitoreo-pagination">
+            <div class="monitoreo-table-footer-actions">
+
+                <div class="monitoreo-length-control">
+
+                    <label for="monitoreo_length">
+                        Mostrar
+                    </label>
+
+                    <select id="monitoreo_length"
+                            class="monitoreo-length-select">
+
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50" selected>50</option>
+                        <option value="100">100</option>
+                        <option value="all">Todos</option>
+
+                    </select>
+
+                    <span>registros</span>
+
+                </div>
+
+                <div id="monitoreo_paginador"
+                     class="monitoreo-pagination">
+                </div>
+
             </div>
+
         </div>
 
     </section>

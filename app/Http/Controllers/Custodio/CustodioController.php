@@ -531,7 +531,7 @@ class CustodioController extends Controller
 
     public function updatecustodio(Request $request)
     {
-        dd($request);
+        // dd($request);
         $data = [
             // 'users_custodios' => $request->users_custodios,
             'tipo_custodio' => $request->tipo_custodio,
