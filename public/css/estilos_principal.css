@@ -10454,16 +10454,21 @@ i{color: white!important;}
     font-size: .72rem;
     white-space: nowrap;
 }
-
-/* 5. TABLA: CADA COLUMNA TIENE ESPACIO PARA LEERSE */
+ 
 .cliente-monitor-page .cliente-monitor-table-wrap {
+    position: relative;
     width: 100%;
     max-width: 100%;
+    max-height: calc(100vh - 200px);
+    min-height: 200px;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
     scrollbar-width: thin;
     scrollbar-color: #526478 #0e1925;
+    -webkit-overflow-scrolling: touch;
 }
+
 .cliente-monitor-page .cliente-monitor-table {
     width: 100%;
     min-width: 1730px;
@@ -10471,7 +10476,13 @@ i{color: white!important;}
     border-collapse: collapse;
     table-layout: auto;
 }
-.cliente-monitor-page .cliente-monitor-table th {
+
+
+
+.cliente-monitor-page .cliente-monitor-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 20;
     padding: 14px 13px;
     background: var(--cm-gold);
     color: #151515;
@@ -10479,7 +10490,10 @@ i{color: white!important;}
     font-weight: 700;
     text-align: left;
     white-space: nowrap;
+    border-bottom: 1px solid #d9951d;
+    background-clip: padding-box;
 }
+
 .cliente-monitor-page .cliente-monitor-table td {
     padding: 15px 13px;
     border-bottom: 1px solid var(--cm-border);
@@ -10488,14 +10502,41 @@ i{color: white!important;}
     line-height: 1.5;
     vertical-align: middle;
 }
+
+/* =============================================================
+   SCROLL DE TABLA - MONITOREO CLIENTE
+   ============================================================= */
+
+.cliente-monitor-page .cliente-monitor-table-wrap::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.cliente-monitor-page .cliente-monitor-table-wrap::-webkit-scrollbar-track {
+    background: #0e1925;
+}
+
+.cliente-monitor-page .cliente-monitor-table-wrap::-webkit-scrollbar-thumb {
+    background: #526478;
+    border-radius: 10px;
+}
+
+.cliente-monitor-page .cliente-monitor-table-wrap::-webkit-scrollbar-thumb:hover {
+    background: #eba72f;
+}
+
+.cliente-monitor-page .cliente-monitor-table-wrap::-webkit-scrollbar-corner {
+    background: #0e1925;
+}
+
 .cliente-monitor-page .cliente-monitor-table tbody tr:hover { background: #172534; }
 .cliente-monitor-page .cliente-monitor-table tbody tr:last-child td { border-bottom: 0; }
 .cliente-monitor-page .cliente-monitor-table th:nth-child(8),
-.cliente-monitor-page .cliente-monitor-table td:nth-child(8) { min-width: 250px; width: 270px; }
+.cliente-monitor-page .cliente-monitor-table td:nth-child(8) { min-width: 200px; width: 200px; }
 .cliente-monitor-page .cliente-monitor-table th:nth-child(9),
 .cliente-monitor-page .cliente-monitor-table td:nth-child(9) { min-width: 175px; width: 190px; }
 .cliente-monitor-page .cliente-monitor-table th:nth-child(10),
-.cliente-monitor-page .cliente-monitor-table td:nth-child(10) { min-width: 245px; width: 260px; }
+.cliente-monitor-page .cliente-monitor-table td:nth-child(10) { min-width: 200px; width: 200px; }
 .cliente-monitor-page .cliente-monitor-table th:nth-child(11),
 .cliente-monitor-page .cliente-monitor-table td:nth-child(11) { min-width: 85px; text-align: center; }
 
