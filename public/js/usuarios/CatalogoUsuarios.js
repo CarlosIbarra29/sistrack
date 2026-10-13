@@ -80,16 +80,24 @@ jQuery(function ($) {
             // RFC: coincidencia parcial
             tabla.column(2).search(rfc.trim(), false, true);
 
-            // Rol: coincidencia exacta
+            // Rol: coincidencia exacta permitiendo espacios
+            var rolRegex = rol
+                ? "^\\s*" + $.fn.dataTable.util.escapeRegex(rol.trim()) + "\\s*$"
+                : "";
+
             tabla.column(5).search(
-                rol ? "^" + $.fn.dataTable.util.escapeRegex(rol) + "$" : "",
+                rolRegex,
                 true,
                 false
             );
 
-            // Estatus: coincidencia exacta
+            // Estatus: coincidencia exacta permitiendo espacios
+            var estatusRegex = estatus
+                ? "^\\s*" + $.fn.dataTable.util.escapeRegex(estatus.trim()) + "\\s*$"
+                : "";
+
             tabla.column(6).search(
-                estatus ? "^" + $.fn.dataTable.util.escapeRegex(estatus) + "$" : "",
+                estatusRegex,
                 true,
                 false
             );
