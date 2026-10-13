@@ -33,8 +33,10 @@
 
 	//PROGRAMACION PARA CLIENTES
 	
-	// name('procliadm.nprogramacioncliente')  USA ESTE NAME PARA LA RUTA (nO SE QUE CONTROLADOR USARAS PERO TE DEJE EL NAME YA)
+	// LISTA DE MONITOREO PARA CLIENTES - SOLO CONSULTA
+	Route::get('/lista-monitoreo-cliente',[App\Http\Controllers\Programacion\ProgramacionClienteController::class,'listadoMonitoreoCliente'])->name('procliadm.nprogramacioncliente');
 
+	Route::get('/ver-monitoreo-cliente/{id}', [App\Http\Controllers\Programacion\ProgramacionClienteController::class, 'verMonitoreoCliente'])->name('procliadm.vermonitoreocliente');
 
 	//GUARDAR PROGRAMACION DESDE MISMA PAGINA
 	Route::post('/guardar-programacionnew', [App\Http\Controllers\Programacion\ProgramacionController::class, 'guardarprogramacionnew'])->name('programacion.guardarprogramacionnew'); 

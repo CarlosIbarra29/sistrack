@@ -1,29 +1,31 @@
 @extends('layouts.app')
 @push('scripts')
-	<script src="{{ asset('js/usuarios/AgregarUsuario.js') }}"></script>
+    <script src="{{ asset('js/usuarios/AgregarUsuario.js') }}"></script>
 @endpush
+
+@push('styles')
+    <link href="{{ asset('css/estilos_principal.css?v=2.1.9') }}" rel="stylesheet" type="text/css"/>
+@endpush
+
 @section('title')
     Agregar usuario
 @endsection
 @section('content')
 
     <!--begin::Card-->
-    <div class="row">
-        <div class="col-lg-12">
-            <!--begin::Card-->
-            <div class="card card-custom gutter-b">
-                <div class="card-header">
-                    <h3 class="card-title">Agregar usuario</h3>
-                    <div class="card-toolbar">
-                        <a href="{{ route('user.catalogousuarios') }}" class="btn btn-sm btn-clean btn-hover-icon-success btn-icon" data-toggle="tooltip" data-theme="dark" title="Salir" ><i class="flaticon2-reply "></i></a>
-                    </div>  
-                </div>
+    <div class="usuario-alta-page">
+        <div class="usuario-alta-heading">
+            <div><span class="usuario-alta-eyebrow">ADMINISTRACIÓN DE PLATAFORMA</span><h1>Agregar usuario</h1><p>Registra la información, documentación y clientes asociados al usuario.</p></div>
+            <a href="{{ route('user.catalogousuarios') }}" class="usuario-alta-back"><i class="la la-arrow-left"></i> Regresar</a>
+        </div>
+        <div class="usuario-alta-card">
+                <div class="usuario-alta-card-heading"><span class="usuario-alta-step">NUEVO REGISTRO</span><strong>DATOS DEL USUARIO</strong></div>
                 <!--begin::Form-->
                 <form action="{{ route('user.guardarusuario') }}" method="post" id="submit_user" enctype="multipart/form-data">
                     @csrf
-                    <div class="card-body">
+                    <div class="usuario-alta-body">
 
-                        <ul class="nav nav-tabs nav-tabs-line">
+                        <ul class="nav nav-tabs nav-tabs-line usuario-alta-tabs">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1">Información del usuario</a>
                             </li>
@@ -37,8 +39,8 @@
 
 
 
-                        <div class="tab-content mt-5" id="myTabContent">
-                            <div class="tab-pane fade show active mt-10" id="kt_tab_pane_1" role="tabpanel" aria-labelledby="kt_tab_pane_1">
+                        <div class="tab-content usuario-alta-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel" aria-labelledby="kt_tab_pane_1">
                                 <div class="form-group row">
                                     <div class="col-lg-6">
                                         <label>Nombre del usuario</label>
@@ -107,7 +109,7 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane fade mt-10" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
+                            <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
                                 <input type='hidden' id='tipoArchivo' value='{{ $cadenaTipoDocumento }}'>
                                 <div class="row form-group" >
                                     <div class="col-lg-12" id="tblArchivos">
@@ -127,7 +129,7 @@
 
                                 <div class="row form-group">
                                     <div class="col-lg-12">
-                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtro usuario-alta-add" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
                                             <i class="flaticon2-plus"></i>
                                         </a>
                                     </div>
@@ -135,7 +137,7 @@
                             </div>
 
 
-                            <div class="tab-pane fade mt-10" id="kt_tab_pane_3" role="tabpanel" aria-labelledby="kt_tab_pane_3">
+                            <div class="tab-pane fade" id="kt_tab_pane_3" role="tabpanel" aria-labelledby="kt_tab_pane_3">
                                 <input type='hidden' id='tipoCliente' value='{{ $cadenaTipoCliente }}'>
                                 <div class="row form-group" >
                                     <div class="col-lg-12" id="tblArchivos">
@@ -154,7 +156,7 @@
 
                                 <div class="row form-group">
                                     <div class="col-lg-12">
-                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtroCliente" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                        <a href="#" class="btn btn-icon btn-outline-success btn-circle btn-sm mr-2 hrefAgregarOtroCliente usuario-alta-add" data-toggle="tooltip" data-theme="dark" title="Agregar cliente">
                                             <i class="flaticon2-plus"></i>
                                         </a>
                                     </div>
@@ -166,22 +168,18 @@
 
 
                     </div>
-                    <div class="card-footer">
+                    <div class="usuario-alta-footer">
                         <div class="row">
                             <div class="col-lg-6">
-                                <button type="button"  id="btnGuardar" class="btn btn-primary mr-2">Guardar</button>
-                                <a href="{{ route('user.catalogousuarios') }}"  class="btn btn-secondary">Cancelar</a>
+                                <button type="button" id="btnGuardar" class="btn usuario-alta-save"><i class="la la-save"></i> Guardar usuario</button>
+                                <a href="{{ route('user.catalogousuarios') }}"  class="btn usuario-alta-cancel">Cancelar</a>
                             </div>
                         </div>
                     </div>
                 </form>
                 <!--end::Form-->
             </div>
-            <!--end::Card-->
         </div>
-    </div>
     <!--end::Card-->
-
-
 
 @endsection

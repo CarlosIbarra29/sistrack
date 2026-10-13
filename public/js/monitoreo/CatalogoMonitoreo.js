@@ -776,6 +776,27 @@
         }
     );
 
+    // Validaciones por cada servicio del listado
+    $("[data-monitoreo-row]").each(function () {
+
+        var fila = this;
+        var celdaFecha = fila.querySelector(
+            "[data-fecha-servicio]"
+        );
+
+        if (!celdaFecha) return;
+
+        var fechaServicio = document.createElement("input");
+        fechaServicio.value =
+            celdaFecha.dataset.fechaServicio || "";
+
+        window.SistrackFechas.configurar(
+            fila,
+            fechaServicio
+        );
+
+    });
+
     // ======================================================================
     // ACTUALIZACIÓN DE FECHAS OPERATIVAS
     // ======================================================================
@@ -822,9 +843,24 @@
                     _token: getCsrfToken()
                 },
 
-                success: function () {
+                success: function (response) {
 
-                    $input.data("valor-anterior",valor);
+                    if (!response || response.success !== true) {
+
+                        $input.val(valorAnterior);
+
+                        Swal.fire({
+                            title: "No fue posible actualizar",
+                            text: response && response.message
+                                ? response.message
+                                : "El servidor no confirmó el guardado.",
+                            icon: "warning"
+                        });
+
+                        return;
+                    }
+
+                    $input.data("valor-anterior", valor);
 
                     Swal.fire({
                         title: "Fecha actualizada",
@@ -837,8 +873,34 @@
                 error: function (xhr) {
 
                     $input.val(valorAnterior);
-                    console.error(xhr);
-                    Swal.fire("No fue posible actualizar","La fecha no pudo ser guardada.","error");
+
+                    var mensaje = "La fecha no pudo ser guardada.";
+
+                    if (xhr.responseJSON) {
+
+                        if (xhr.responseJSON.message) {
+                            mensaje = xhr.responseJSON.message;
+                        }
+
+                        if (xhr.responseJSON.errors) {
+                            var errores = Object.values(
+                                xhr.responseJSON.errors
+                            ).flat();
+
+                            if (errores.length) {
+                                mensaje = errores.join("\n");
+                            }
+                        }
+                    }
+
+                    Swal.fire({
+                        title: "Fecha incorrecta",
+                        text: mensaje,
+                        icon: "warning",
+                        confirmButtonText: "Entendido"
+                    });
+
+                    console.error("Error al guardar fecha:", xhr);
                 },
 
 

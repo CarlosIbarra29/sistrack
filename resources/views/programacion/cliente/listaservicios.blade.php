@@ -83,8 +83,8 @@
                 <thead>
                     <tr>
                         <th>Id</th>
-                        <th>DIRECCIÓN ORIGEN</th>
-                        <th>DIRECCIÓN DESTINO</th>
+                        <th>ORIGEN</th>
+                        <th>DESTINO</th>
                         <th>FECHA Y HORA DEL SERVICIO</th>
                         <th>ARMADA</th>
                         <th>LÍNEA DE TRANSPORTE</th>

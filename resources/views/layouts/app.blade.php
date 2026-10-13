@@ -135,15 +135,15 @@
                         <li id="menuServiciosCliente" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                             <a href="{{ route('procli.listaservicios') }}" class="menu-link menu-toggle">
                                 <i class="flaticon-notepad menu-icon"></i>
-                                <span class="menu-text">Servicios cliente</span>
+                                <span class="menu-text">Solicitar Servicio</span>
                             </a>
                         </li>
 
                         {{-- Vista clientes Carlos .l.  --}}
                         <li id="menuProgramacionCliente" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                            <a href=" " class="menu-link menu-toggle"> 
+                            <a href="{{ route('procliadm.nprogramacioncliente') }}" class="menu-link menu-toggle"> 
                                 <i class="flaticon-notepad menu-icon"></i>
-                                <span class="menu-text">Programación</span>
+                                <span class="menu-text">Lista servicios</span>
                             </a>
                         </li>
 

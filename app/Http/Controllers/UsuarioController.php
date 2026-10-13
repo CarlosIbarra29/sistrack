@@ -41,18 +41,30 @@ class UsuarioController extends Controller
         return view('usuarios.error-permiso'); 
     }
 
-    public function catalogousuarios()
+     public function catalogousuarios()
     {
-		$usuario = User::select('users.id', 'users.name', 'users.email', 'users.id_status_delete', 
-            'rol.name as name_role', 'users.role', 'users.rfc', 'users.telefono', 'users.ubicacion', 'users.num_list')
-            ->leftjoin("roles as rol","rol.id","users.role")
-            ->where('users.id_status_delete', 1)
+        // Usuarios activos e inactivos
+        $usuario = User::select('users.id','users.name','users.email','users.id_status_delete','rol.name as name_role','users.role','users.rfc','users.telefono','users.ubicacion','users.num_list')
+            ->leftJoin('roles as rol','rol.id','=','users.role')
+            ->whereIn('users.id_status_delete', [1, 2])
+            ->orderBy('users.id', 'desc')
             ->get();
-        // dd($usuario);
-		$rol = Role::where('status_delete', 0)->get();
-        $user = User::where('id', auth()->user()->id)->first();
 
-    	return view('usuarios.catalogo-usuarios', compact('usuario', 'rol'));
+        // Catálogo de roles
+        $rol = Role::where('status_delete', 0)->get();
+
+        // Contadores reales
+        $totalUsuarios = $usuario->count();
+
+        $activosUsuarios = $usuario
+            ->where('id_status_delete', 1)
+            ->count();
+
+        $inactivosUsuarios = $usuario
+            ->where('id_status_delete', 2)
+            ->count();
+
+        return view('usuarios.catalogo-usuarios',compact('usuario','rol','totalUsuarios','activosUsuarios','inactivosUsuarios'));
     }
 
     public function usuariosdatatable(Request $request)
@@ -231,7 +243,8 @@ class UsuarioController extends Controller
 
         $cadenaTipoCliente= "";
         foreach($clientes as $cli){
-            $cadenaTipoCliente .= '"'.$cli->id.'":"'.$cli->razon_social.'",';
+            $cadenaTipoCliente .= '"'.$cli->id.'":"'.$cli->razon_social.' - '.$cli->nombre_cliente.'",';
+
         }
         $cadenaTipoCliente = '{'.rtrim($cadenaTipoCliente, ',').'}';
 
@@ -335,7 +348,7 @@ class UsuarioController extends Controller
 
         $cadenaTipoCliente= "";
         foreach($clientes as $cli){
-            $cadenaTipoCliente .= '"'.$cli->id.'":"'.$cli->razon_social.'",';
+            $cadenaTipoCliente .= '"'.$cli->id.'":"'.$cli->razon_social.' - '.$cli->nombre_cliente.'",';
         }
         $cadenaTipoCliente = '{'.rtrim($cadenaTipoCliente, ',').'}';
 
@@ -498,7 +511,7 @@ class UsuarioController extends Controller
 
     public function desacticarusuario(Request $request)
     {
-        dd($request);
+        // dd($request);
         $data = [
             'id_status_delete' => 2,
             'motivo_desactivar' => $request->motivo,
@@ -532,7 +545,7 @@ class UsuarioController extends Controller
     	User::where('id', $request->id)->update($data);
 
         session()->flash('success', 'La usuario se activo correctamente');
-    	return redirect()->route('user.usuariosinactivos'); 	
+    	return redirect()->route('user.catalogousuarios'); 	
     }
 
     public function verUsuario($usuario)

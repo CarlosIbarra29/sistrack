@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=2.1.4') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=2.1.6') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
     <script src="{{ asset('js/programacion/CatalogoProgramacion.js?v=2.1.3') }}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <script src="{{ asset('js/programacion/AgregarProgramacionUnique.js?v=1.0.7') }}"></script>
+    <script src="{{ asset('js/programacion/AgregarProgramacionUnique.js?v=1.0.8') }}"></script>
 @endpush
 
 @section('title')
@@ -36,7 +36,7 @@
             <a href="{{ route('programacion.programacioninactivas') }}"
                class="btn btn-outline-custom programacion-header-btn">
                 <i class="far fa-trash-alt"></i>
-                <span>CLIENTES INACTIVOS</span>
+                <span>REG. ELIMINADOS</span>
             </a>
 
             <!-- <button type="button"
@@ -145,7 +145,7 @@
                                                class="form-control app-input"
                                                name="fecha_hora"
                                                id="fecha_hora"
-                                               required>
+                                               >
                                     </div>
 
                                     <div class="form-group programacion-field-new-client"
@@ -631,7 +631,21 @@
                                     </td>
 
                                     <td class="programacion-table-time">
-                                        {{ date('d/m/Y h:i A', strtotime($unid->fecha_servicio)) }}
+
+                                        @if(!empty($unid->fecha_servicio) &&
+                                            $unid->fecha_servicio !== '0000-00-00 00:00:00')
+
+                                            {{ date('d/m/Y h:i A', strtotime($unid->fecha_servicio)) }}
+
+                                        @else
+
+                                            <span class="programacion-sin-horario">
+                                                <i class="la la-clock-o"></i>
+                                                SIN HORARIO
+                                            </span>
+
+                                        @endif
+
                                     </td>
 
                                     <td class="text-center">
@@ -796,8 +810,11 @@
                                     </td>
 
                                     <td>
-                                        <span class="badge-status status-programado">
+                                        <span class="badge-status status-programado
+                                            {{ mb_strtolower(trim($unid->estatus_programacion ?? ''), 'UTF-8') === 'en ruta' ? 'status-en-ruta' : '' }}">
+
                                             {{ $unid->estatus_programacion }}
+
                                         </span>
                                     </td>
 
@@ -812,6 +829,12 @@
                                                 <i class="la la-edit"></i>
 
                                             </a>
+
+                                            <button class="btn btn-clean btn-icon programacion-row-action--edit" onClick="deleteprogramacion('{{$unid->id}}', '{{$unid->id }}')" data-theme="dark" data-toggle="tooltip" data-placement="top">
+                                                <span class="svg-icon svg-icon-md">
+                                                    <i class="la la-trash"></i>
+                                                </span>
+                                            </button>
 
                                         </div>
 

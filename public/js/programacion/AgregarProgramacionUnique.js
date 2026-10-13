@@ -304,6 +304,30 @@ var Modulo = function() {
         actualizarNuevoCliente();
     };
 
+    // ======================================================
+    // PRESELECCIONAR SIN CUSTODIO AL ELEGIR ESTATUS PENDIENTE
+    // ======================================================
+
+    var initCustodioPorEstatus = function() {
+
+        var ID_ESTATUS_PENDIENTE = "11";
+        var ID_SIN_CUSTODIO = "153";
+
+        $("#programacion_id").on("change", function() {
+
+            var estatusId = $(this).val();
+
+            if (estatusId === ID_ESTATUS_PENDIENTE) {
+
+                $("#custodio_id")
+                    .val(ID_SIN_CUSTODIO)
+                    .trigger("change");
+            }
+
+        });
+
+    };
+
    // SIN CUSTODIO
 
     var initSinCustodio = function() {
@@ -395,6 +419,7 @@ var Modulo = function() {
             eventosEspeciales();
             initNuevoCliente();
             initSinCustodio();
+            initCustodioPorEstatus();
         },
 
     };

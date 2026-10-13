@@ -42,7 +42,7 @@
     <link href="{{ asset('theme/assets/css/themes/layout/aside/dark.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- css LOGIN -->
-    <link href="{{ asset('css/login_sistrack.css?v=1.0.4') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/login_sistrack.css?v=1.0.5') }}" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -171,12 +171,25 @@
                                     </span>
 
                                     <input
-                                        class="form-control h-auto py-5 px-6 rounded-lg sistrack-login-input"
+                                        id="sistrack-password"
+                                        class="form-control h-auto py-5 px-6 rounded-lg sistrack-login-input sistrack-password-input"
                                         type="password"
                                         name="password"
                                         autocomplete="off"
                                         placeholder="Ingresa tu contraseña"
                                         required />
+
+                                    <button
+                                        type="button"
+                                        id="sistrack-toggle-password"
+                                        class="sistrack-password-toggle"
+                                        aria-label="Mostrar contraseña"
+                                        aria-pressed="false"
+                                        title="Mostrar contraseña">
+
+                                        <i class="la la-eye"></i>
+
+                                    </button>
 
                                 </div>
 
@@ -624,6 +637,43 @@
 <script src="{{ asset('theme/assets/js/scripts.bundle.js') }}"></script>
 
 <script src="{{ asset('theme/assets/js/pages/custom/login/login-general.js') }}"></script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const passwordInput = document.getElementById('sistrack-password');
+    const toggleButton = document.getElementById('sistrack-toggle-password');
+
+    if (!passwordInput || !toggleButton) return;
+
+    toggleButton.addEventListener('click', function () {
+
+        const isVisible = passwordInput.type === 'password';
+
+        passwordInput.type = isVisible ? 'text' : 'password';
+
+        toggleButton.innerHTML = isVisible
+            ? '<i class="la la-eye-slash"></i>'
+            : '<i class="la la-eye"></i>';
+
+        toggleButton.classList.toggle('is-visible', isVisible);
+
+        toggleButton.setAttribute(
+            'aria-label',
+            isVisible ? 'Ocultar contraseña' : 'Mostrar contraseña'
+        );
+
+        toggleButton.setAttribute('aria-pressed', String(isVisible));
+
+        toggleButton.title = isVisible
+            ? 'Ocultar contraseña'
+            : 'Mostrar contraseña';
+
+    });
+
+});
+</script>
 
 </body>
 

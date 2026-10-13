@@ -89,7 +89,7 @@ class MonitoreoController extends Controller
             ->leftJoin('programacion_estadias as pd','pd.id','=','pel.estadia_id')
             ->leftJoin('estatus_itinerario as ei','ei.id','=','pd.estatus_itinerario')
             ->where('programacion.siaf_status', 1)
-            ->whereNotIn('programacion.programacion_estatus_id', [6, 7])
+            ->whereNotIn('programacion.programacion_estatus_id', [6, 7,10])
             ->orderByDesc('programacion.estatus_custodio')
             ->orderBy('programacion.fecha_servicio', 'asc')
             ->get();
@@ -130,7 +130,7 @@ class MonitoreoController extends Controller
             ->where('programacion.siaf_status', 1)
 
             // Únicamente finalizados
-            ->whereIn('programacion.programacion_estatus_id', [6, 7])
+            ->whereIn('programacion.programacion_estatus_id', [6, 7,10])
 
             ->orderBy('programacion.fecha_servicio', 'desc')
             ->get();
@@ -294,6 +294,69 @@ class MonitoreoController extends Controller
         );
     }
 
+
+    
+    private function validarFechasOperativas($fechaServicio, array $fechas)
+    {
+        $campos = [
+            'fechahora_llegada_custodio' => 'Llegada punto Origen',
+            'fechahora_inicio_trayecto' => 'Inicio de servicio',
+            'fechahora_llegado_destino' => 'Arribo punto de destino',
+            'fechahora_finalizacion' => 'Finalización de servicio'
+        ];
+
+        $hayFechas = false;
+
+        foreach ($campos as $campo => $nombre) {
+            if (!empty($fechas[$campo])) {
+                $hayFechas = true;
+                break;
+            }
+        }
+
+        if (
+            (!$fechaServicio ||
+            strtotime((string) $fechaServicio) <= 0)
+            && $hayFechas
+        ) {
+            return 'No puedes registrar fechas operativas porque el servicio está SIN HORARIO.';
+        }
+
+        $fechaAnterior = null;
+        $nombreAnterior = null;
+
+        foreach ($campos as $campo => $nombre) {
+
+            $valor = $fechas[$campo] ?? null;
+
+            if (empty($valor)) {
+                continue;
+            }
+
+            try {
+                $fechaActual = Carbon::parse($valor);
+            } catch (\Exception $e) {
+                return 'La fecha de ' . $nombre . ' no es válida.';
+            }
+
+            if (
+                $fechaAnterior !== null &&
+                $fechaActual->lt($fechaAnterior)
+            ) {
+                return $nombre .
+                    ' no puede ser anterior a ' .
+                    $nombreAnterior . '.';
+            }
+
+            $fechaAnterior = $fechaActual;
+            $nombreAnterior = $nombre;
+        }
+
+        return null;
+    }
+
+
+
     public function guardarestadia(Request $request)
     {
         $request->validate([
@@ -328,6 +391,31 @@ class MonitoreoController extends Controller
             'acompanantes_ids' => 'nullable|array',
             'acompanantes_ids.*' => 'nullable|integer'
         ]);
+
+        $programacionActual = Programacion::findOrFail(
+            $request->id_programacion
+        );
+
+        $fechaServicio = $request->filled('fecha_servicio')
+            ? $request->fecha_servicio
+            : $programacionActual->fecha_servicio;
+
+        $camposFechas = [
+            'fechahora_llegada_custodio',
+            'fechahora_inicio_trayecto',
+            'fechahora_llegado_destino',
+            'fechahora_finalizacion'
+        ];
+
+        $fechasOperativas = $request->only($camposFechas);
+
+        $errorFechas = $this->validarFechasOperativas($fechaServicio, $fechasOperativas);
+
+        if ($errorFechas) {
+            return back()
+                ->withErrors(['fechas_operativas' => $errorFechas])
+                ->withInput();
+        }
 
         DB::beginTransaction();
 
@@ -502,14 +590,53 @@ class MonitoreoController extends Controller
                 }
             }
 
+            /* =====================================================
+               CONSERVAR FECHAS OPERATIVAS SIN TRANSPORTE
+               ===================================================== */
 
-            $queryEliminar = EstadiasProgramacion::where('programacion_id',$request->id_programacion);
+            if (empty($idsConservados)) {
 
-            if (!empty($idsConservados)) {
-                $queryEliminar->whereNotIn('id',$idsConservados);
+                // Buscar si ya existe una estadía para el servicio
+                $estadiaExistente = EstadiasProgramacion::where(
+                    'programacion_id',
+                    $request->id_programacion
+                )->orderBy('id')->first();
+
+                if ($estadiaExistente) {
+
+                    // Actualizar las fechas sin eliminar el registro
+                    EstadiasProgramacion::where(
+                        'id',
+                        $estadiaExistente->id
+                    )->update($dataOperativa);
+
+                } else {
+
+                    // Crear registro de estadía aunque no haya transporte
+                    $dataNuevaEstadia = array_merge(
+                        $dataOperativa,
+                        [
+                            'programacion_id' => $request->id_programacion,
+                            'created_at' => date('Y-m-d H:i:s'),
+                            'iduserCreated' => auth()->user()->id
+                        ]
+                    );
+
+                    EstadiasProgramacion::insert($dataNuevaEstadia);
+                }
+
+            } else {
+
+                // Con transportes: conservar únicamente los registros
+                // correspondientes a los transportes enviados
+                EstadiasProgramacion::where(
+                    'programacion_id',
+                    $request->id_programacion
+                )
+                ->whereNotIn('id', $idsConservados)
+                ->delete();
             }
 
-            $queryEliminar->delete();
 
             if ((int) $request->op_estadias === 0) {
                 $mensaje = 'La información del servicio se agregó correctamente';
@@ -521,7 +648,7 @@ class MonitoreoController extends Controller
 
             session()->flash('success',$mensaje);
 
-            if ((int) $request->programacion_estatus_id === 7) {
+            if ((int) $request->programacion_estatus_id === 7 || (int) $request->programacion_estatus_id === 6 || (int) $request->programacion_estatus_id === 10) {
 
                 return redirect()->route('monitoreo.listamonitoreofinalizado');
             }
@@ -656,7 +783,7 @@ class MonitoreoController extends Controller
         Programacion::where('id', $request->id_programacion)->update($data);
 
         session()->flash('success', 'El estatus de la programación se modifico correctamente');
-        if ((int) $request->estatus_id === 7) {
+        if ((int) $request->estatus_id === 7 || (int) $request->estatus_id === 6 || (int) $request->estatus_id === 10) {
             return redirect()->route('monitoreo.listamonitoreofinalizado');
         }
         return redirect()->route('monitoreo.listamonitoreo'); 
@@ -683,6 +810,42 @@ class MonitoreoController extends Controller
             'fechahora_llegado_destino',
             'fechahora_finalizacion'
         ];
+
+        $request->validate(['id_programacion' => 'required|integer|exists:programacion,id',
+                            'valor' => 'nullable|date'
+        ]);
+
+        $programacionActual = Programacion::findOrFail(
+            $request->id_programacion
+        );
+
+        $estadiaActual = EstadiasProgramacion::where(
+            'programacion_id',
+            $request->id_programacion
+        )->orderBy('id')->first();
+
+        $fechasOperativas = [];
+
+        foreach ($camposPermitidos as $campo) {
+            $fechasOperativas[$campo] = $estadiaActual
+                ? $estadiaActual->{$campo}
+                : null;
+        }
+
+        $fechasOperativas[$request->campo] =
+            $request->filled('valor') ? $request->valor : null;
+
+        $errorFechas = $this->validarFechasOperativas(
+            $programacionActual->fecha_servicio,
+            $fechasOperativas
+        );
+
+        if ($errorFechas) {
+            return response()->json([
+                'success' => false,
+                'message' => $errorFechas
+            ], 422);
+        }
 
         if (!in_array($request->campo, $camposPermitidos)) {
 

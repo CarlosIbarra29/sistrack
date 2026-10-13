@@ -25,6 +25,7 @@ use App\Models\Programacion\MonitoreoIncidencias;
 use App\Models\Programacion\ProgramacionObservacion;
 use App\Models\Programacion\Programacioncliente;
 use App\Models\Notificaciones\Notificaciones;
+use App\Models\Cliente\ClienteUsuario;
 
 use App\Models\User;
 use App\Models\Rol;
@@ -302,5 +303,116 @@ class ProgramacionClienteController extends Controller
         session()->flash('success', 'La programación se modifico correctamente');
         return redirect()->route('procli.listaservicios');
     }
+
+    public function listadoMonitoreoCliente()
+    {
+        // Usuario autenticado
+        $usuarioId = auth()->id();
+
+        // Clientes asignados al usuario
+        $clientesAsignados = ClienteUsuario::query()
+            ->where('users_id', $usuarioId)
+            ->pluck('cliente_id')
+            ->unique()
+            ->values();
+
+        // Todos los estatus, incluidos los finalizados
+        $estatus_programacion = EstatusProgramacion::query()
+            ->whereIn(
+                'id',
+                Programacion::query()
+                    ->whereIn('cliente_id', $clientesAsignados)
+                    ->where('siaf_status', 1)
+                    ->select('programacion_estatus_id')
+                    ->distinct()
+            )
+            ->orderBy('id')
+            ->get();
+
+        // Servicios correspondientes a los clientes asignados
+        $monitoreo = Programacion::query()
+            ->select(
+                'programacion.id',
+                'programacion.folio_interno',
+                'programacion.cliente_id',
+                'programacion.tipo_servicio',
+                'programacion.armado_servicio',
+                'programacion.custodio_id',
+                'programacion.custodio_emergente',
+                'programacion.programacion_estatus_id',
+                'programacion.fecha_servicio',
+                'programacion.dom_origen',
+                'programacion.dom_destino',
+                'pe.estatus_programacion',
+                'cli.nombre_cliente',
+                'cli.razon_social'
+            )
+            ->with(['custodio','acompanantesProgramacion.custodio'])
+            ->leftJoin( 'programacion_estatus as pe', 'pe.id', '=', 'programacion.programacion_estatus_id')
+            ->leftJoin( 'cliente as cli', 'cli.id', '=', 'programacion.cliente_id')
+            ->whereIn('programacion.cliente_id', $clientesAsignados)
+            ->where('programacion.siaf_status', 1)
+            ->orderBy('programacion.fecha_servicio', 'desc')
+            ->get();
+
+        return view( 'programacion.cliente.listado-monitoreo-cliente', compact('monitoreo', 'estatus_programacion'));
+    }
+
+    public function verMonitoreoCliente($id)
+    {
+        $programacion = Programacion::query()
+            ->whereKey($id)
+            ->where('siaf_status', 1)
+            ->whereIn('cliente_id', ClienteUsuario::query()
+                ->where('users_id', auth()->id())
+                ->select('cliente_id'))
+            ->firstOrFail();
+
+        $id_programacion = $programacion->id;
+
+        $cliente = Cliente::where('id', $programacion->cliente_id)->get();
+        $tarifario = Tarifario::where('id', $programacion->tarifario_id)->get();
+        $custodio = Custodio::where('id', $programacion->custodio_id)->get();
+
+        $acompanantes_pro = AcompanantesProgramacion::query()
+            ->with('custodio')
+            ->where('programacion_id', $id_programacion)
+            ->get();
+
+        $transportes = EstadiasProgramacion::query()
+            ->where('programacion_id', $id_programacion)
+            ->orderBy('id')
+            ->get();
+
+        $estadias_info = $transportes->first();
+        $puntualidad_info = null;
+
+        if ($estadias_info && !empty($estadias_info->estatus_itinerario)) {
+            $puntualidad_info = \App\Models\Programacion\Estatusitinerario::where(
+                'id', $estadias_info->estatus_itinerario
+            )->first();
+        }
+
+        $estatus_programacion = EstatusProgramacion::where('id', $programacion->programacion_estatus_id)->get();
+        $incidencias = MonitoreoIncidencias::where( 'programacion_id', $id_programacion)->get();
+        $observaciones = ProgramacionObservacion::where('programacion_id', $id_programacion)->get();
+
+        return view('programacion.cliente.info-proestatus-cliente', compact(
+            'cliente',
+            'tarifario',
+            'custodio',
+            'programacion',
+            'acompanantes_pro',
+            'id_programacion',
+            'estatus_programacion',
+            'incidencias',
+            'observaciones',
+            'transportes',
+            'estadias_info',
+            'puntualidad_info'
+        ));
+    }
+
+
 
 }

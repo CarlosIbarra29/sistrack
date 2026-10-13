@@ -5,23 +5,58 @@ var ModuloEstadias = function () {
     var form = null;
     var guardando = false;
 
+    var validadorFechasOperativas = null;
+
+    var inicializarFechasOperativas = function () {
+
+        var formulario = document.getElementById(
+            "submit_estadia"
+        );
+
+        var fechaServicio = document.getElementById(
+            "fecha_servicio"
+        );
+
+        if (!formulario || !fechaServicio) return;
+
+        validadorFechasOperativas =
+            window.SistrackFechas.configurar(
+                formulario,
+                fechaServicio
+            );
+
+    };
+
+    
     var inicializarGuardado = function () {
 
         form = document.getElementById('submit_estadia');
-
         var btnGuardar = document.getElementById('btnGuardar');
 
-        if (!form || !btnGuardar) {
-            return;
-        }
+        if (!form || !btnGuardar) return;
 
         btnGuardar.addEventListener('click', function (e) {
 
             e.preventDefault();
 
-            if (guardando) {
-                return;
+            if (guardando) return;
+
+            if (validadorFechasOperativas) {
+
+                var error = validadorFechasOperativas.validar();
+
+                if (error) {
+                    Swal.fire({
+                        title: 'Fechas incorrectas',
+                        text: error,
+                        icon: 'warning',
+                        confirmButtonText: 'Entendido'
+                    });
+                    return;
+                }
             }
+
+            if (!form.reportValidity()) return;
 
             guardando = true;
 
@@ -32,15 +67,14 @@ var ModuloEstadias = function () {
                 true
             );
 
-            toastr.success(
-                'Guardando información, por favor espere...'
+            toastr.info(
+                'Enviando información, por favor espere...'
             );
 
             form.submit();
-
         });
-
     };
+
 
 
     var inicializarAcompanantes = function () {
@@ -297,6 +331,7 @@ var ModuloEstadias = function () {
 
         init: function () {
 
+            inicializarFechasOperativas();
             inicializarGuardado();
             inicializarAcompanantes();
             inicializarTransportes();

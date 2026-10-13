@@ -1,12 +1,13 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=1.2.5') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=1.2.6') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js?v=2.0.5') }}"></script>
+    <script src="{{ asset('js/monitoreo/ValidacionFechasOperativas.js?v=1.0.0') }}"></script>
+    <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js?v=3.0.1') }}"></script>
 @endpush
 
 @section('title')
@@ -311,8 +312,23 @@
                                 {{ $unid->nombre_cliente }}
                             </td>
 
-                            <td class="monitoreo-date">
-                                {{ date('d/m/Y h:i A', strtotime($unid->fecha_servicio)) }}
+                            <td class="monitoreo-date" data-fecha-servicio="{{ $unid->fecha_servicio && strtotime($unid->fecha_servicio) > 0
+                            ? date('Y-m-d\TH:i', strtotime($unid->fecha_servicio))
+                            : '' }}">
+
+                                @if($unid->fecha_servicio &&
+                                    strtotime($unid->fecha_servicio) > 0)
+
+                                    {{ date('d/m/Y h:i A', strtotime($unid->fecha_servicio)) }}
+
+                                @else
+
+                                    <span class="monitoreo-sin-horario">
+                                        <i class="la la-clock-o"></i>
+                                        SIN HORARIO
+                                    </span>
+
+                                @endif
                             </td>
 
                              <td>

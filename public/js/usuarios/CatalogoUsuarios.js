@@ -1,315 +1,255 @@
-// "use strict";
-// var Tabla = function() {
 
-//     $.fn.dataTable.Api.register('column().title()', function() {
-//         return $(this.header()).text().trim();
-//     });
+"use strict";
 
-//     var initTable1 = function() {
-//         // begin first table
-//         var table = $('#kdatatable_usuarios').DataTable({
-//             responsive: true,
-//             // Pagination settings
-//             dom: `<'row'<'col-sm-12'tr>>
-//                     <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-//             // read more: https://datatables.net/examples/basic_init/dom.html
+/* ==========================================================
+   SISTRACK - CATÁLOGO DE USUARIOS
+   ========================================================== */
 
-//             lengthMenu: [5, 10, 25, 50],
+jQuery(function ($) {
 
-//             pageLength: 10,
+    var $tabla = $("#kdatatable_usuarios_dos");
 
-//             order: [[ 0, "desc" ]], //ordenamiento default
-//             language: {
-//                 'lengthMenu': 'Display _MENU_',
-//                 "url": $('#datatable_i18n').val()
-//             },
+    if ($tabla.length && $.fn.DataTable) {
 
-//             processing: true,
-//             serverSide: true,
-//             ajax: {
-//                 url:$('#usuariosdatatable').val(),
-//                 type:"POST",
-//                 headers: {
-//                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//                 },
-//                 data: {
-//                     columnsDef: [
-//                         'id', 'nombre', 'rfc', 'telefono','email', 'role', 'permisos' ,'acciones'],
-//                 },
+        // Evitar inicializaciones duplicadas
+        if ($.fn.DataTable.isDataTable($tabla[0])) {
+            $tabla.DataTable().destroy();
+        }
 
-//             },
-//             columns: [
-//                 { data: 'id' },
-//                 { data: 'name' },
-//                 { data: 'rfc' },
-//                 { data: 'telefono' },
-//                 { data: 'email' },
-//                 { data: 'role' },
-//                 {data: 'acciones', responsivePriority: -1},
-//             ],
+        var idioma = $("#datatable_i18n").val();
 
-//             columnDefs: [
-//                 {
-//                     // const array = [full.permisos];
-//                     width: '110px',
-//                     targets: -1,
-//                     title: 'Acciones',
-//                     orderable: false,
-//                     {
-//                 data: null,
-//                 render: function (data, type, full, meta) {
-//                 let botones = '';
+        var configuracion = {
+            autoWidth: false,
+            responsive: false,
+            pageLength: 50,
 
-//                 // Botón para Editar
-//                 if (full.permisos.includes(7)) {
-//                     botones += `
-//                         <a href="/usuario/editar-usuario/${full.id}" class="btn btn-sm btn-outline-success btn-icon mr-2" title="Editar usuario" data-toggle="tooltip">
-//                             <i class="flaticon-edit"></i>
-//                         </a>
-//                     `;
-//                 }
+            lengthMenu: [
+                [10, 20, 50, 100, -1],
+                [10, 20, 50, 100, "Todos"]
+            ],
 
-//                 // Botón para Eliminar / Desactivar
-//                 if (full.permisos.includes(8)) {
-//                     botones += `
-//                         <button class="btn btn-sm btn-outline-danger btn-icon mr-2" onclick="deleteuser('${full.name}', ${full.id})" title="Desactivar usuario" data-toggle="modal" data-target="#model_delete_user">
-//                             <i class="flaticon-delete"></i>
-//                         </button>
-//                     `;
-//                 }
+            order: [[0, "desc"]],
 
-//                 // Botón para Ver usuario
-//                 if (full.permisos.includes(5)) {
-//                     botones += `
-//                         <a href="/usuario/ver-usuario/${full.id}" class="btn btn-sm btn-outline-info btn-icon mr-2" title="Ver usuario" data-toggle="tooltip">
-//                             <i class="flaticon-eye"></i>
-//                         </a>
-//                     `;
-//                 }
+            dom:
+                "<'usuarios-table-controls'li>" +
+                "<'usuarios-table-body't>" +
+                "<'usuarios-table-footer'p>",
 
-//                 // Si no tiene permisos
-//                 return botones || '-';
-//             }
-//         }
+            language: {
+                lengthMenu: "Mostrar _MENU_ registros",
+                zeroRecords: "No se encontraron usuarios",
+                emptyTable: "No hay usuarios registrados",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ usuarios",
+                infoEmpty: "Sin registros",
+                infoFiltered: "(filtrados de _MAX_ usuarios)",
+                paginate: {
+                    previous: "Anterior",
+                    next: "Siguiente"
+                }
+            },
 
-//                         // if (full.permisos.includes(7)  && full.permisos.includes(5)){
-//                         //    return `
-//                         //         <a href="/usuario/ver-usuario/`+full.id+`" class="btn btn-sm btn-outline-success btn-icon mr-2" title="Ver usuario" data-theme="dark" data-toggle="tooltip" data-placement="top">
-//                         //             <span class="svg-icon svg-icon-md">
-//                         //                 <i class="flaticon-eye"></i>
-//                         //             </span>
-//                         //         </a>
-//                         //         <a href="/usuario/editar-usuario/`+full.id+`" class="btn btn-sm btn-outline-success btn-icon mr-2" title="Editar usuario" data-theme="dark" data-toggle="tooltip" data-placement="top">
-//                         //             <span class="svg-icon svg-icon-md">
-//                         //                 <i class="flaticon-edit"></i>
-//                         //             </span>
-//                         //         </a>
-//                         //     `;
-//                         // }
-//                         // if (full.permisos.includes(8)  && full.permisos.includes(5)){
-//                         //    return `
-//                         //         <a href="/usuario/ver-usuario/`+full.id+`" class="btn btn-sm btn-outline-success btn-icon mr-2" title="Ver usuario" data-theme="dark" data-toggle="tooltip" data-placement="top">
-//                         //             <span class="svg-icon svg-icon-md">
-//                         //                 <i class="flaticon-eye"></i>
-//                         //             </span>
-//                         //         </a>
-//                         //         <button class="btn btn-clean btn-sm btn-icon btn-outline-success mt-1" onClick="deleteuser(`+ full.nombre +`,`+full.id+`)" data-toggle="modal" data-target="#model_delete_user" data-toggle="tooltip" data-theme="dark" title="Desactivar usuario">
-//                         //             <span class="svg-icon svg-icon-md">
-//                         //                 <i class="flaticon-delete"></i>
-//                         //             </span>
-//                         //          </button>
-//                         //     `;
-//                         // }
-//                         if (full.permisos.includes(8)  && full.permisos.includes(5)){
-//                            return `
-//                                 <a href="/usuario/ver-usuario/`+full.id+`" class="btn btn-sm btn-outline-success btn-icon mr-2" title="Ver usuario" data-theme="dark" data-toggle="tooltip" data-placement="top">
-//                                     <span class="svg-icon svg-icon-md">
-//                                         <i class="flaticon-eye"></i>
-//                                     </span>
-//                                 </a>
-//                             `;
-//                         }
+            columnDefs: [
+                {
+                    targets: 7,
+                    orderable: false,
+                    searchable: false
+                }
+            ]
+        };
 
-//                     },
-//                 }
+        if (idioma) {
+            configuracion.language.url = idioma;
+        }
 
-//             ],
+        var tabla = $tabla.DataTable(configuracion);
 
-//             buttons: [
-//                 {extend: "excel", className: "invisible"},
-//                 {extend: "pdf", className: "invisible"},
-//                 {extend: "csv", className: "invisible"},
-//                 {extend: "print", className: "invisible"},
+        /* ==================================================
+           BUSCADOR Y FILTROS
+           ================================================== */
 
-//             ],
+        function aplicarFiltros() {
 
-//             "drawCallback": function(settings, json) {
-//                 KTApp.initTooltips();
-//             }
+            var busqueda = $("#global_search_input").val() || "";
+            var rfc = $("#usuarios_rfc").val() || "";
+            var rol = $("#usuarios_rol").val() || "";
+            var estatus = $("#usuarios_estatus").val() || "";
 
+            // Búsqueda general por coincidencias
+            tabla.search(busqueda.trim(), false, true);
 
-//         }).on( 'init.dt', function () {
-//         });
+            // RFC: coincidencia parcial
+            tabla.column(2).search(rfc.trim(), false, true);
 
-//         $('#export-excel').on('click', function () {
-//             table.button(0).trigger();
-//         });
-//         $('#export-pdf').on('click', function () {
-//             table.button(1).trigger();
-//         });
-//         $('#export-csv').on('click', function () {
-//             table.button(2).trigger();
-//         });
-//         $('#export-print').on('click', function () {
-//             table.button(3).trigger();
-//         });
+            // Rol: coincidencia exacta
+            tabla.column(5).search(
+                rol ? "^" + $.fn.dataTable.util.escapeRegex(rol) + "$" : "",
+                true,
+                false
+            );
 
-//         var filter = function() {
-//             var val = $.fn.dataTable.util.escapeRegex($(this).val());
-//             table.column($(this).data('col-index')).search(val ? val : '', false, false).draw();
-//         };
+            // Estatus: coincidencia exacta
+            tabla.column(6).search(
+                estatus ? "^" + $.fn.dataTable.util.escapeRegex(estatus) + "$" : "",
+                true,
+                false
+            );
 
-//         $('#kt_search').on('click', function(e) {
-//             e.preventDefault();
-//             var params = {};
-//             $('.datatable-input').each(function() {
-//                 var i = $(this).data('col-index');
-//                 if (params[i]) {
-//                     params[i] += '|' + $(this).val();
-//                 }
-//                 else {
-//                     params[i] = $(this).val();
-//                 }
-//             });
-//             $.each(params, function(i, val) {
-//                 table.column(i).search(val ? val : '', false, false);
-//             });
-//             table.table().draw();
-//         });
+            tabla.draw();
+        }
 
-//         $('#kt_reset').on('click', function(e) {
-//             e.preventDefault();
-//             $('.datatable-input').each(function() {
-//                 $(this).val('');
-//                 table.column($(this).data('col-index')).search('', false, false);
-//             });
-//             table.table().draw();
-//         });
+        $("#global_search_input, #usuarios_rfc").on(
+            "input",
+            aplicarFiltros
+        );
 
-//     };
+        $("#usuarios_rol, #usuarios_estatus").on(
+            "change",
+            aplicarFiltros
+        );
 
-//     return {
+        $("#kt_search").on("click", aplicarFiltros);
 
-//         //main function to initiate the module
-//         init: function() {
-//             initTable1();
-//         },
-
-//     };
-
-// }();
-
-// jQuery(document).ready(function() {
-//     Tabla.init();
-// });
-
-
-function deleteuser(nombre, id) {
-    alert(id);
-    document.getElementById("id_user_desc").value = id;
-    document.getElementById("name_user").value = nombre;
-}
-
-$("#send_desactivar").click(function(){
-    var desactivar_add = document.getElementById("desactivar_add").value;
-    if(desactivar_add == ""){
-        Swal.fire("Para continuar debes agregar el motivo por el cual desactivas al usuario");
-    }else{
-        Swal.fire({
-            position: "top-center",
-            icon: "success",
-            title: "Espere un momento, la información esta siendo procesada",
-            showConfirmButton: false
+        $("#usuarios_filtros").on("submit", function (e) {
+            e.preventDefault();
+            aplicarFiltros();
         });
-        document.getElementById("submit_desactivar").submit();
+
+        /* ==================================================
+           LIMPIAR FILTROS
+           ================================================== */
+
+        $("#kt_reset").on("click", function () {
+
+            var formulario = document.getElementById(
+                "usuarios_filtros"
+            );
+
+            if (formulario) {
+                formulario.reset();
+            }
+
+            tabla.search("");
+            tabla.columns().search("");
+            tabla.draw();
+
+        });
     }
+
+    /* ======================================================
+       DESACTIVAR USUARIO
+       ====================================================== */
+
+    $(document).on("click", ".usuarios-desactivar", function () {
+
+        var id = $(this).data("id");
+        var nombre = $(this).data("nombre");
+
+        $("#id_user_desc").val(id);
+        $("#name_user").val(nombre);
+        $("#desactivar_add").val("");
+
+    });
+
+    $("#send_desactivar").on("click", function () {
+
+        var formulario = document.getElementById(
+            "submit_desactivar"
+        );
+
+        if (!formulario) return;
+
+        if (!formulario.reportValidity()) return;
+
+        Swal.fire({
+            title: "Procesando solicitud",
+            text: "Por favor espera...",
+            icon: "info",
+            showConfirmButton: false,
+            allowOutsideClick: false
+        });
+
+        formulario.submit();
+    });
+
+    /* ======================================================
+       TABLA DE USUARIOS INACTIVOS
+       ====================================================== */
+
+    var $tablaInactivos = $("#kdatatable_user_inactivo");
+
+    if ($tablaInactivos.length && $.fn.DataTable) {
+
+        if (!$.fn.DataTable.isDataTable($tablaInactivos[0])) {
+
+            $tablaInactivos.DataTable({
+                pageLength: 50,
+
+                lengthMenu: [
+                    [10, 20, 50, 100, -1],
+                    [10, 20, 50, 100, "Todos"]
+                ],
+
+                language: {
+                    lengthMenu: "Mostrar _MENU_ registros",
+                    zeroRecords: "No se encontraron usuarios",
+                    info: "Mostrando _START_ a _END_ de _TOTAL_",
+                    paginate: {
+                        previous: "Anterior",
+                        next: "Siguiente"
+                    }
+                }
+            });
+        }
+    }
+
+    /* ======================================================
+       ACTIVAR USUARIO
+       ====================================================== */
+
+    $(document).on("click", ".activar-user", function () {
+
+        var id = $(this).data("id");
+        var nombre = $(this).data("nombre");
+
+        Swal.fire({
+            title: "¿Activar usuario?",
+            text: "Se activará el usuario " + nombre,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí, activar",
+            cancelButtonText: "Cancelar",
+            reverseButtons: true
+
+        }).then(function (result) {
+
+            if (!result.isConfirmed && !result.value) {
+                return;
+            }
+
+            var formulario = document.getElementById(
+                "user_act_form"
+            );
+
+            if (!formulario) return;
+
+            $("#id_user_act").val(id);
+
+            Swal.fire({
+                title: "Procesando solicitud",
+                text: "Por favor espera...",
+                icon: "info",
+                showConfirmButton: false
+            });
+
+            formulario.submit();
+        });
+    });
+
 });
 
+function deleteDocumentacion(tipo_documento, id) {
 
-  $("#kdatatable_user_inactivo").DataTable({
-      language: {
-          'lengthMenu': 'Display _MENU_',
-          "url": $('#datatable_i18n').val()
-      },
+    jQuery("#id_documento_eliminar").val(id);
+    jQuery("#tipo_documento_nombre").val(tipo_documento);
 
-      "dom":
-      "<'row'" +
-      "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
-      "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
-      ">" +
-
-      "<'table-responsive'tr>" +
-
-      "<'row'" +
-      "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
-      "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
-      ">"
-  });
-
-  $(".activar-user").click(function() {
-    var id = $(this).data('id');
-    var nombre = $(this).data('nombre');
-
-    Swal.fire({
-      title: "Estas seguro de activar el registro "+nombre,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Si, Activarlo!",
-      cancelButtonText: "No, Cancelar!",
-      reverseButtons: true
-    }).then(function(result) {
-      if (result.value) {
-        document.getElementById("id_user_act").value = id;
-        Swal.fire({
-          position: "top-center",
-          icon: "success",
-          title: "Espere un momento, la información esta siendo procesada",
-          showConfirmButton: false
-        });
-        document.getElementById("user_act_form").submit();
-      } else if (result.dismiss === "cancel") {
-          Swal.fire(
-            "Cancelada",
-            "La acción fue cancelada",
-            "error"
-          )
-      }
-    });
-  });
-
-  function deleteDocumentacion(tipo_documento, id) {
-    $('#id_documento_eliminar').val(id);
-    $('#tipo_documento_nombre').val(tipo_documento);
 }
-
-
-      $("#kdatatable_usuarios_dos").DataTable({
-        language: {
-            'lengthMenu': 'Display _MENU_',
-            "url": $('#datatable_i18n').val()
-        },
-        "aaSorting": [[ 0, "desc" ]],
-
-        "dom":
-        "<'row'" +
-        "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
-        "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
-        ">" +
-
-        "<'table-responsive'tr>" +
-
-        "<'row'" +
-        "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
-        "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
-        ">"
-    });

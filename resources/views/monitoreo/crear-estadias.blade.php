@@ -5,7 +5,8 @@
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('js/monitoreo/AgregarEstadias.js?v=2.0.4') }}"></script>
+    <script src="{{ asset('js/monitoreo/ValidacionFechasOperativas.js?v=1.0.0') }}"></script>
+    <script src="{{ asset('js/monitoreo/AgregarEstadias.js?v=2.0.6') }}"></script>
 @endpush
 
 @section('title')
@@ -13,6 +14,19 @@
 @endsection
 
 @section('content')
+
+@if($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                title: 'No fue posible guardar',
+                text: @json($errors->first()),
+                icon: 'error',
+                confirmButtonText: 'Entendido'
+            });
+        });
+    </script>
+@endif
 
 @php
     $fechaServicio = $programacion->fecha_servicio
@@ -62,7 +76,7 @@
 
         </div>
 
-        <a href="{{(int) $programacion->programacion_estatus_id === 7
+        <a href="{{(int) $programacion->programacion_estatus_id === 7 || (int) $programacion->programacion_estatus_id === 6 || (int) $programacion->programacion_estatus_id === 10
         ? route('monitoreo.listamonitoreofinalizado')
         : route('monitoreo.listamonitoreo')}}" class="transport-btn transport-btn--secondary">
             <i class="flaticon2-back"></i>

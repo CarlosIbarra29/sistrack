@@ -106,7 +106,7 @@
                                        class="form-control app-input"
                                        name="fecha_hora"
                                        id="fecha_hora"
-                                       value="{{ \Carbon\Carbon::parse($programacion->fecha_servicio)->format('Y-m-d\\TH:i') }}"
+                                       value="{{ $programacion->fecha_servicio ? \Carbon\Carbon::parse($programacion->fecha_servicio)->format('Y-m-d\TH:i') : '' }}"
                                        required>
                             </div>
 

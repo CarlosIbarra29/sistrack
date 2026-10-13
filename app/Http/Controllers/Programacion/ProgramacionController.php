@@ -62,7 +62,7 @@ class ProgramacionController extends Controller
         ->leftJoin('programacion_estatus as pe','pe.id','=','programacion.programacion_estatus_id')
         ->leftJoin('cliente as cli','cli.id','=','programacion.cliente_id')
         ->where('programacion.siaf_status', 1)
-        ->whereNotIn('programacion.programacion_estatus_id', [6, 7])
+        ->whereNotIn('programacion.programacion_estatus_id', [6, 7, 10])
         ->orderByDesc('programacion.estatus_custodio')
         ->orderBy('programacion.fecha_servicio', 'asc')
         ->get();
@@ -324,7 +324,7 @@ class ProgramacionController extends Controller
         $request->validate([
             'cliente_id' => 'required',
             'nuevo_cliente_razon_social' => 'required_if:cliente_id,0|max:255',
-            'fecha_hora' => 'required',
+            'fecha_hora' => 'nullable|date',
             'custodio_id' => 'required',
             'custodio_emergente' => 'required_if:custodio_id,154|nullable|string|max:255',
             'programacion_id' => 'required',
@@ -390,7 +390,7 @@ class ProgramacionController extends Controller
                 // 'tarifario_id' => 1,
                 'programacion_estatus_id' =>$request->programacion_id,
                 'tipo_servicio' =>$request->tipo_servicio,
-                'fecha_servicio' =>$request->fecha_hora,
+                'fecha_servicio' => $request->filled('fecha_hora') ? Carbon::parse($request->fecha_hora)->format('Y-m-d H:i:s') : null,
                 'acompanantes' =>$sinCustodio ? 1 : $request->op_custodios,
                 'dom_origen' =>$request->dom_origen,
                 'dom_destino' =>$request->dom_destino,

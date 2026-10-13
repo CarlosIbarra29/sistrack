@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=2.0.3') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=2.0.4') }}" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet"
           href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -85,7 +85,7 @@
             </p>
         </div>
 
-        <a href="{{ (int) $programacion->programacion_estatus_id === 7
+        <a href="{{ (int) $programacion->programacion_estatus_id === 7 || (int) $programacion->programacion_estatus_id === 6 || (int) $programacion->programacion_estatus_id === 10
                 ? route('monitoreo.listamonitoreofinalizado')
                 : route('monitoreo.listamonitoreo')}}"
            class="monitoreo-btn monitoreo-btn--secondary">
@@ -174,7 +174,19 @@
                         <span>Fecha y hora</span>
 
                         <strong>
-                            {{ date('d/m/Y H:i', strtotime($programacion->fecha_servicio)) }}
+                            @if($programacion->fecha_servicio &&
+                                strtotime($programacion->fecha_servicio) > 0)
+
+                                {{ date('d/m/Y H:i', strtotime($programacion->fecha_servicio)) }}
+
+                            @else
+
+                                <span class="monitoreo-sin-horario">
+                                    <i class="la la-clock-o"></i>
+                                    SIN HORARIO
+                                </span>
+
+                            @endif
                         </strong>
                     </div>
 
@@ -345,7 +357,17 @@
                         <span>Programado para</span>
 
                         <strong>
-                            {{ date('d/m/Y', strtotime($programacion->fecha_servicio)) }}
+
+                            @if($programacion->fecha_servicio && strtotime($programacion->fecha_servicio) > 0)
+
+                                {{ date('d/m/Y', strtotime($programacion->fecha_servicio)) }}
+
+                            @else
+
+                                Por Asignar
+
+                            @endif
+                            
                         </strong>
                     </div>
 
@@ -353,7 +375,17 @@
                         <span>Hora</span>
 
                         <strong>
-                            {{ date('H:i', strtotime($programacion->fecha_servicio)) }}
+
+                            @if($programacion->fecha_servicio && strtotime($programacion->fecha_servicio) > 0)
+
+                                {{ date('H:i', strtotime($programacion->fecha_servicio)) }}
+
+                            @else
+
+                                Por Asignar
+
+                            @endif
+
                         </strong>
                     </div>
 
