@@ -113,7 +113,7 @@
                                     <div class="cliente-monitor-person">
                                         <span class="cliente-monitor-person-avatar"><i class="la la-user"></i></span>
                                         <span class="cliente-monitor-person-content">
-                                            <span class="cliente-monitor-person-name" title="{{ $nombreCustodio }}">{{ $nombreCustodio }}</span>
+                                            <span class="cliente-monitor-person-name" title="{{ $nombreCustodio }}">{{ strtoupper($nombreCustodio) }}</span>
                                             <span class="cliente-monitor-person-role">{{ (int) $unid->custodio_id === 154 ? 'Custodio emergente' : 'Custodio principal' }}</span>
                                         </span>
                                     </div>
@@ -164,7 +164,7 @@
                                             <div class="cliente-monitor-person cliente-monitor-person--companion">
                                                 <span class="cliente-monitor-person-avatar"><i class="la la-user"></i></span>
                                                 <span class="cliente-monitor-person-content">
-                                                    <span class="cliente-monitor-person-name" title="{{ $nombreAcompanante }}">{{ $nombreAcompanante }}</span>
+                                                    <span class="cliente-monitor-person-name" title="{{ $nombreAcompanante }}">{{ strtoupper($nombreAcompanante) }}</span>
                                                     <span class="cliente-monitor-person-role">Acompañante {{ $loop->iteration }}</span>
                                                 </span>
                                             </div>
