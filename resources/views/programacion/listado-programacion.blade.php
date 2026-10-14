@@ -5,7 +5,7 @@
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('js/programacion/CatalogoProgramacion.js?v=2.1.3') }}"></script>
+    <script src="{{ asset('js/programacion/CatalogoProgramacion.js?v=2.1.4') }}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <script src="{{ asset('js/programacion/AgregarProgramacionUnique.js?v=1.0.8') }}"></script>
 @endpush

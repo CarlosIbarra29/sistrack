@@ -4,7 +4,7 @@
 @endpush
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=2.1.10') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('css/estilos_principal.css?v=3.1.1') }}" rel="stylesheet" type="text/css"/>
 @endpush
 
 @section('title')

@@ -868,53 +868,102 @@ $("#send_incidencia")
     }
 
 
+    
     function generarArchivoExcel(datos) {
+
+        /* =========================================================
+           1. ESCAPAR CARACTERES ESPECIALES
+           ========================================================= */
+
+        function escaparHTML(valor) {
+
+            return String(valor == null ? '' : valor)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+
+        }
+
+
+        /* =========================================================
+           2. CONSTRUIR TABLA PARA EXCEL
+           ========================================================= */
 
         var contenido = '';
 
-        datos.forEach(
-            function(fila) {
+        contenido += '<html>';
+        contenido += '<head>';
+        contenido += '<meta charset="UTF-8">';
 
-                var columnas = fila.map(
-                    function(valor) {
+        contenido += '<style>';
+        contenido += 'table { border-collapse: collapse; }';
+        contenido += 'th, td { border: 1px solid #cccccc; padding: 8px; }';
+        contenido += 'th { background: #eba72f; color: #111111; font-weight: bold; }';
+        contenido += '</style>';
 
-                        valor = String(valor || '');
-                        valor = valor.replace(/"/g, '""');
-                        return '"' + valor + '"';
+        contenido += '</head>';
+        contenido += '<body>';
+        contenido += '<table>';
 
-                    }
-                );
+        datos.forEach(function(fila, indice) {
 
-                contenido += columnas.join(',') + '\r\n';
+            contenido += '<tr>';
 
-            }
-        );
+            fila.forEach(function(valor) {
 
-        var BOM = '\uFEFF';
+                var etiqueta = indice === 0 ? 'th' : 'td';
+
+                contenido += '<' + etiqueta + ' style="mso-number-format:\\@;">';
+                contenido += escaparHTML(valor);
+                contenido += '</' + etiqueta + '>';
+
+            });
+
+            contenido += '</tr>';
+
+        });
+
+        contenido += '</table>';
+        contenido += '</body>';
+        contenido += '</html>';
+
+
+        /* =========================================================
+           3. CREAR ARCHIVO XLS
+           ========================================================= */
 
         var blob = new Blob(
-            [BOM + contenido],
+            ['\uFEFF' + contenido],
             {
-                type: 'text/csv;charset=utf-8;'
+                type: 'application/vnd.ms-excel;charset=utf-8;'
             }
         );
 
+
+        /* =========================================================
+           4. NOMBRE DEL ARCHIVO
+           ========================================================= */
 
         var fecha = new Date();
 
         var nombreArchivo =
             'programacion_servicios_' +
-            fecha.getFullYear() +
-            '-' +
-            String(fecha.getMonth() + 1).padStart(2, '0') +
-            '-' +
+            fecha.getFullYear() + '-' +
+            String(fecha.getMonth() + 1).padStart(2, '0') + '-' +
             String(fecha.getDate()).padStart(2, '0') +
-            '.csv';
+            '.xls';
 
+
+        /* =========================================================
+           5. DESCARGAR ARCHIVO
+           ========================================================= */
 
         var enlace = document.createElement('a');
+        var url = URL.createObjectURL(blob);
 
-        enlace.href = URL.createObjectURL(blob);
+        enlace.href = url;
         enlace.download = nombreArchivo;
 
         document.body.appendChild(enlace);
@@ -923,9 +972,12 @@ $("#send_incidencia")
 
         document.body.removeChild(enlace);
 
-        URL.revokeObjectURL(enlace.href);
+        setTimeout(function() {
+            URL.revokeObjectURL(url);
+        }, 1000);
 
     }
+
 
     renderizar();
 
