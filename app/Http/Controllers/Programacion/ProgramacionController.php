@@ -525,7 +525,7 @@ class ProgramacionController extends Controller
                 'custodio_id' => $request->custodio_id,
                 'estatus_custodio' => $estatusCustodio,
                 'tipo_servicio' => $request->tipo_servicio,
-                'fecha_servicio' => $request->fecha_hora,
+                'fecha_servicio' => $request->filled('fecha_hora') ? Carbon::parse($request->fecha_hora)->format('Y-m-d H:i:s') : null,
                 'acompanantes' => $sinCustodio ? 1 : $request->op_custodios,
                 'dom_origen' => $request->dom_origen,
                 'dom_destino' => $request->dom_destino,
