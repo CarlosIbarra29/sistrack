@@ -107,7 +107,7 @@
                                        name="fecha_hora"
                                        id="fecha_hora"
                                        value="{{ $programacion->fecha_servicio ? \Carbon\Carbon::parse($programacion->fecha_servicio)->format('Y-m-d\TH:i') : '' }}"
-                                       required>
+                                       >
                             </div>
 
                             <div class="form-group programacion-field-folio">
