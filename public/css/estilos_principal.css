@@ -10806,3 +10806,58 @@ i{color: white!important;}
         gap: 12px;
     }
 }
+
+/*SElect con buscadores en usuarios*/
+
+.usuario-alta-page #tblClientes .select2-container {
+    width: 100% !important;
+    max-width: 100%;
+    font-family: 'Poppins', sans-serif;
+}
+
+.usuario-alta-page #tblClientes
+.select2-container .select2-selection--single {
+    display: flex;
+    align-items: center;
+    height: 43px !important;
+    min-height: 43px !important;
+    border: 1px solid #263547 !important;
+    border-radius: 8px !important;
+    background: #0f1924 !important;
+    box-shadow: none !important;
+}
+
+/* Nombre de la empresa seleccionada */
+.usuario-alta-page #tblClientes
+.select2-container .select2-selection__rendered {
+    width: 100%;
+
+    padding-left: 12px !important;
+    padding-right: 32px !important;
+
+    color: #e7edf6 !important;
+    font-size: 12px !important;
+    line-height: 41px !important;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.usuario-alta-page #tblClientes
+.select2-container .select2-selection__placeholder {
+    color: #8595aa !important;
+}
+
+.usuario-alta-page #tblClientes
+.select2-container .select2-selection__arrow {
+    top: 8px !important;
+    right: 7px !important;
+}
+
+.usuario-alta-page #tblClientes
+.select2-container--focus .select2-selection--single,
+.usuario-alta-page #tblClientes
+.select2-container--open .select2-selection--single {
+    border-color: #eba72f !important;
+    box-shadow: 0 0 0 3px rgba(235, 167, 47, .09) !important;
+}

@@ -5,7 +5,7 @@
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('js/usuarios/CatalogoUsuarios.js?v=2.0.1') }}"></script>
+    <script src="{{ asset('js/usuarios/CatalogoUsuarios.js?v=2.0.2') }}"></script>
 @endpush
 
 @section('title', 'Inventario de Usuarios')

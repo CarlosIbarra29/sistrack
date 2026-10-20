@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('scripts')
-    <script src="{{ asset('js/usuarios/AgregarUsuario.js') }}"></script>
+    <script src="{{ asset('js/usuarios/AgregarUsuario.js?v=1.2.2') }}"></script>
 @endpush
 
 @push('styles')

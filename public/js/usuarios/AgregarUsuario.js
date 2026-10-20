@@ -175,8 +175,33 @@ var Modulo = function() {
         });
     };
 
-// Seleccionar clientes a un usuario
-    //agrega el elemento archivo y lista desplegable
+    var inicializarBuscadorCliente = function (id) {
+
+        var $select = $('#id_cliente' + id);
+
+        if (!$select.length || !$.fn.select2) {
+            return;
+        }
+
+        $select.select2({
+            width: '100%',
+            placeholder: 'Busca y selecciona una empresa',
+            allowClear: true,
+            minimumResultsForSearch: 0,
+            dropdownParent: $('body'),
+            language: {
+                noResults: function () {
+                    return 'No se encontraron empresas';
+                },
+                searching: function () {
+                    return 'Buscando...';
+                }
+            }
+        });
+
+    };
+
+
     var addCliente = function () {
         contadorDocumentos++;
         var html = '';
@@ -201,6 +226,7 @@ var Modulo = function() {
         $("#tblClientes tbody").append(html); //agrega el html creado
         //agrega validación del elemento creado
         validador.addField('id_cliente[' + contadorDocumentos + ']', tipoArchivoValidador);
+        inicializarBuscadorCliente(contadorDocumentos);
         KTApp.initTooltips(); //inicia tooltip del elemento creado
         KTApp.initFileInput(); //inicia el elemento archivo del elemento creado
     };
@@ -212,6 +238,10 @@ var Modulo = function() {
             var idDocumento = $(this).attr("data-id"); //indice del elemento
             KTApp.hideTooltips(); //oculta tooltip
             //elimina la validación del elemento
+            var $clienteSelect = $('#id_cliente' + idDocumento);
+            if ($clienteSelect.hasClass('select2-hidden-accessible')) {
+                $clienteSelect.select2('destroy');
+            }
             validador.removeField('id_cliente[' + idDocumento + ']');
             $('#trDocumento'+idDocumento).remove();//elimina el elemento
         });
