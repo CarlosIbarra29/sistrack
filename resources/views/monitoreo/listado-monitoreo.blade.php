@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=1.2.6') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=1.2.8') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <script src="{{ asset('js/monitoreo/ValidacionFechasOperativas.js?v=1.0.0') }}"></script>
-    <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js?v=3.0.1') }}"></script>
+    <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js?v=3.0.2') }}"></script>
 @endpush
 
 @section('title')
@@ -273,16 +273,17 @@
                                 <div class="monitoreo-status-wrapper">
 
                                     <span
-                                        class="monitoreo-status-dot
-                                            @if((int) $unid->programacion_estatus_id === 1)
-                                                monitoreo-status-dot--gris
-                                            @elseif((int) $unid->programacion_estatus_id === 3)
-                                                monitoreo-status-dot--verde
-                                            @elseif((int) $unid->programacion_estatus_id === 10)
-                                                monitoreo-status-dot--rojo
-                                            @else
-                                                monitoreo-status-dot--amarillo
-                                            @endif"
+                                        class="monitoreo-status-dot monitoreo-status-dot--{{
+                                            [
+                                                1  => 'amarillo',
+                                                2  => 'rojo',
+                                                3  => 'verde',
+                                                4  => 'gris',
+                                                6  => 'rosa',
+                                                7  => 'azul',
+                                                10 => 'rosa',
+                                            ][(int) $unid->programacion_estatus_id] ?? 'naranja'
+                                        }}"
                                         data-role="estatus-semaforo">
                                     </span>
 

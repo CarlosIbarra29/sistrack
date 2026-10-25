@@ -5,7 +5,7 @@
 @endsection
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=1.2.3') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=1.2.4') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
@@ -230,7 +230,19 @@
 
                                 <div class="monitoreo-status-wrapper">
 
-                                    <span class="monitoreo-status-dot monitoreo-status-dot--verde"></span>
+                                    <span
+                                        class="monitoreo-status-dot monitoreo-status-dot--{{
+                                            [
+                                                1  => 'amarillo',
+                                                2  => 'rojo',
+                                                3  => 'verde',
+                                                4  => 'gris',
+                                                6  => 'rosa',
+                                                7  => 'azul',
+                                                10 => 'rosa',
+                                            ][(int) $unid->programacion_estatus_id] ?? 'naranja'
+                                        }}">
+                                    </span>
 
                                     <span class="monitoreo-readonly-value">
                                         {{ $unid->estatus_programacion ?: 'Finalizado' }}

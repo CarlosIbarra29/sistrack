@@ -1,6 +1,10 @@
 @extends('layouts.app')
+@push('styles')
+    <link href="{{ asset('css/inventario-custodios.css?v=7.1.1') }}" rel="stylesheet">
+@endpush
+
 @push('scripts')
-    <script src="{{ asset('js/custodios/AgregarCustodio.js') }}"></script>
+    <script src="{{ asset('js/custodios/AgregarCustodio.js?v=1.0.3') }}"></script>
     <script src="{{ asset('js/perfil/Informacion.js') }}" type="text/javascript"></script>
 @endpush
 
@@ -11,13 +15,13 @@
 @section('content')
 
 
-<div class="container-fluid">
+<div class="container-fluid custodio-form-page">
     <form action="{{ route('custodio.guardarcustodio') }}" method="post" id="submit_cliente" enctype="multipart/form-data">
     @csrf
     <!-- ENCABEZADO -->
     <div class="row mb-6">
         <div class="col-lg-12">
-            <div class="d-flex justify-content-between align-items-center cont-title-forms rounded shadow-sm px-6 py-5 border-left border-warning" style="border-left-width:5px !important;">
+            <div class="d-flex justify-content-between align-items-center cont-title-forms rounded shadow-sm px-6 py-5 border-left border-warning custodio-form-header">
                 <div>
                     <h2 class="mb-1 font-weight-bold title-forms text-white">ALTA DE CUSTODIO</h2>
                     <span class="text-muted">Registra la información general y administrativa del nuevo custodio</span>
@@ -37,9 +41,11 @@
         <input type='hidden' id='tipoArchivo' value='{{ $cadenaTipoDocumento }}'>
         <input type='hidden' id='tipoArchivov' value='{{ $cadenaTipoDocumento }}'>
 
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="card card-custom shadow-sm border-0">
+        <div class="row custodio-form-main">
+            <div class="col-12">
+                <div class="card card-custom shadow-sm border-0 custodio-form-shell">
+                    <div class="card-body px-10 py-8">
+                <div class="card card-custom shadow-sm border-0 custodio-profile-card">
                     <div class="card-body px-10 py-8">
                         <div class="row ">
                             <div class="col-lg-12 text-center">
@@ -51,7 +57,7 @@
                             <div class="form-group row text-center">
                                 <div class="col-lg-12 col-xl-6 ">
                                     <div class="image-input image-input-outline" id="kt_profile_avatar">
-                                        <div class="image-input-wrapper"style=" background-color: #f3f3f3;">
+                                        <div class="image-input-wrapper">
                                         </div>
                                                             
                                             <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Cambiar foto de custodio">
@@ -71,21 +77,21 @@
 
                         <div class="row">
                             <div class="col-lg-12 text-center">
-                                <span class="label label-lg font-weight-bold label-inline" style="background-color: #54ff29; color:white; font-weight: bold">ACTIVO</span>
+                                <span class="label label-lg font-weight-bold label-inline custodio-profile-status">ACTIVO</span>
                             </div>
 
                             <div class="row ">
                                 <div class="col-lg-12 text-center">
-                                    <span style="font-size: 12px; color: white;">Sin número de empleado</span><br>
-                                    <span style="font-size: 10px; color: white;">Nuevo Registro</span>
+                                    <span class="custodio-profile-caption">Sin número de empleado</span><br>
+                                    <span class="custodio-profile-subcaption">Nuevo Registro</span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row mt-4">
                             <div class="col-lg-12">
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 75%; background-color: #FFA800; font-size: 14px;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
+                                <div class="progress custodio-profile-progress">
+                                    <div class="progress-bar" role="progressbar"  aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
                                 </div>
                             </div>
                         </div>        
@@ -109,11 +115,7 @@
 
                     </div>
                 </div>
-            </div>   
-            <div class="col-lg-9">
-                <div class="card card-custom shadow-sm border-0">
-                    <div class="card-body px-10 py-8">
-                        <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-warning mb-8">
+                        <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-warning mb-8 custodio-form-tabs">
                             <li class="nav-item">
                                 <a class="nav-link active font-weight-bold" data-toggle="tab" href="#kt_tab_pane_1">
                                     Información básica
@@ -362,7 +364,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <label class="font-weight-bold">Tipo de servicio</label>
+                                        <label class="font-weight-bold">Tipo de GPS</label>
                                         <div class="radio-inline mt-2">
                                             <label class="radio">
                                                 <input type="radio" checked name="tipo_gps" value="0">
@@ -733,9 +735,16 @@
                             {{-- Control de confianza --}}
 
 
-                            <div class="tab-pane fade mt-10" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
+                            <div class="tab-pane fade mt-10 custodio-documents-section" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
+                                <div class="custodio-documents-heading">
+                                    <div class="custodio-documents-title">
+                                        <span class="custodio-documents-symbol"><i class="la la-file-alt"></i></span>
+                                        <div><h3>Expediente documental</h3><p>Consulta, adjunta y administra los documentos personales del custodio.</p></div>
+                                    </div>
+                                </div>
                                 <div class="row form-group" >
                                     <div class="col-lg-12" id="tblArchivos">
+                                        <div class="custodio-documents-table-wrap">
                                         <table class='table table-bordered table-responsive' id='tblDocumentos'>
                                             <thead>
                                             <tr>
@@ -748,13 +757,14 @@
                                             <tbody id='tbodyDocumentos'>
                                             </tbody>
                                         </table>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="row form-group">
                                     <div class="col-lg-12">
-                                        <a href="#" class="btn btn-icon btn-outline-warning btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
-                                            <i class="flaticon2-plus"></i>
+                                        <a href="#" class="hrefAgregarOtro custodio-documents-add" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                            <i class="flaticon2-plus"></i> Agregar documento
                                         </a>
                                     </div>
                                 </div>
@@ -768,18 +778,30 @@
             </div>     
         </div>
 
-        <div class="row mt-2">
+        <div class="row mt-2 custodio-assets-row">
             <div class="col-lg-6">
 
-                <div class="card card-custom shadow-sm border-0">
+                <div class="card card-custom shadow-sm border-0 custodio-asset-card custodio-asset-vehicle">
                     <div class="card-header">
                         <h3 class="card-title text-white">Vehículo asignado</h3>
 
                     </div>
                     <div class="card-body px-10 py-8">
-                        
-                        <div class="form-group row">
-                            <span class="text-white">Para registrar el Vehículo es necesario registrar al custodio primero.</span>
+                        <div class="custodio-asset-pending">
+                            <div class="custodio-asset-pending-icon">
+                                <i class="la la-car"></i>
+                            </div>
+
+                            <div class="custodio-asset-pending-content">
+                                <span class="custodio-asset-pending-tag">
+                                    PENDIENTE DE REGISTRO
+                                </span>
+                                <strong>Asigna un vehículo a este custodio</strong>
+                                <p>
+                                    Primero guarda el expediente del custodio.
+                                    Después podrás registrar su vehículo.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -788,16 +810,28 @@
 
             <div class="col-lg-6">
 
-                <div class="card card-custom shadow-sm border-0">
+                <div class="card card-custom shadow-sm border-0 custodio-asset-card custodio-asset-weapon">
                     <div class="card-header">
                         <h3 class="card-title text-white">Datos del Arma</h3>
 
                     </div>
                     <div class="card-body px-10 py-8">
-                        <div class="form-group row">
-                            <span class="text-white">Para registrar el arma es necesario registrar al custodio primero.</span>
-                        </div>
+                        <div class="custodio-asset-pending">
+                            <div class="custodio-asset-pending-icon">
+                                <i class="la la-shield-alt"></i>
+                            </div>
 
+                            <div class="custodio-asset-pending-content">
+                                <span class="custodio-asset-pending-tag">
+                                    PENDIENTE DE REGISTRO
+                                </span>
+                                <strong>Registra el equipo asignado</strong>
+                                <p>
+                                    Primero guarda el expediente del custodio.
+                                    Después podrás registrar los datos del arma.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -805,10 +839,10 @@
 
         </div>
 
-        <div class="row mt-2">
+        <div class="row mt-2 custodio-notes-row">
             <div class="col-lg-12">
 
-                <div class="card card-custom shadow-sm border-0">
+                <div class="card card-custom shadow-sm border-0 custodio-notes-card">
                     <div class="card-body px-10 py-8">
                     
                         <div class="form-group">

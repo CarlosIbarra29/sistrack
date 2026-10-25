@@ -491,7 +491,7 @@ class ProgramacionController extends Controller
 
         $request->validate([
             'cliente_id' => 'required',
-            'fecha_hora' => 'required',
+            'fecha_hora' => 'nullable|date',
             'custodio_id' => 'required',
             'custodio_emergente' => 'required_if:custodio_id,154|nullable|string|max:255',
             'tipo_servicio' => 'required',
@@ -542,7 +542,9 @@ class ProgramacionController extends Controller
                 'iduserUpdated' =>auth()->user()->id,
             ];
 
-            Programacion::where('id', $request->id_programacion)->update($data);
+            $programacion = Programacion::findOrFail($request->id_programacion);
+
+            $programacion->update($data);
 
             if ($sinCustodio || (int) $request->op_custodios === 1) {
 

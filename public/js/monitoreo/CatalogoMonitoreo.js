@@ -589,32 +589,39 @@
     function actualizarSemaforoEstatus($select) {
 
         var estatus = parseInt($select.val(), 10);
-        var $dot = $select.closest(".monitoreo-status-wrapper").find('[data-role="estatus-semaforo"]');
 
+        var $dot = $select
+            .closest(".monitoreo-status-wrapper")
+            .find('[data-role="estatus-semaforo"]');
+
+        var coloresEstatus = {
+            1: "amarillo", // Programado
+            2: "rojo",     // En Cliente
+            3: "verde",    // En ruta
+            4: "gris",     // Pernocta
+            6: "rosa",     // Posicionamiento en falso
+            7: "azul",     // Finalizado
+            10: "rosa"     // Cancelado
+        };
+
+        // Los demás estatus serán naranja.
+        var color = coloresEstatus[estatus] || "naranja";
+
+        // Eliminar únicamente las clases de colores anteriores.
         $dot.removeClass(
-            "monitoreo-status-dot--gris " +
-            "monitoreo-status-dot--verde " +
+            "monitoreo-status-dot--amarillo " +
             "monitoreo-status-dot--rojo " +
-            "monitoreo-status-dot--amarillo"
+            "monitoreo-status-dot--verde " +
+            "monitoreo-status-dot--gris " +
+            "monitoreo-status-dot--rosa " +
+            "monitoreo-status-dot--azul " +
+            "monitoreo-status-dot--naranja"
         );
 
-        if (estatus === 1) {
-
-            $dot.addClass("monitoreo-status-dot--gris");
-
-        } else if (estatus === 3) {
-
-            $dot.addClass("monitoreo-status-dot--verde");
-
-        } else if (estatus === 10) {
-
-            $dot.addClass("monitoreo-status-dot--rojo");
-
-        } else {
-
-            $dot.addClass("monitoreo-status-dot--amarillo");
-        }
+        // Aplicar el color correspondiente.
+        $dot.addClass("monitoreo-status-dot--" + color);
     }
+
 
 
     $(document).on(
@@ -705,7 +712,7 @@
                         var fila = $select
                             .closest("[data-monitoreo-row]")[0];
 
-                        if (parseInt(estatusNuevo, 10) === 7) {
+                        if ([6, 7, 10].includes(parseInt(estatusNuevo, 10))) {
 
                             if (fila) {
 
@@ -743,9 +750,9 @@
 
                         Swal.fire({
                             title: "Actualizado",
-                            text: parseInt(estatusNuevo, 10) === 7
-                                ? "El servicio fue enviado a Servicios Finalizados."
-                                : "El estatus se actualizó correctamente.",
+                            text: [6, 7, 10].includes(parseInt(estatusNuevo, 10))
+                            ? "El servicio fue enviado a Servicios Finalizados."
+                            : "El estatus se actualizó correctamente.",
                             icon: "success",
                             timer: 1600,
                             showConfirmButton: false

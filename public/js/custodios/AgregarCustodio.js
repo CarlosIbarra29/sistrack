@@ -232,6 +232,8 @@ var Modulo = function() {
         });
         
         
+        iniciarCatalogoDocumentos();
+
         lista = construyeElementosLista();
         lista_vehiculos = construyeavancevehiculosLista();
         //botón agregar otro archivo
@@ -247,21 +249,155 @@ var Modulo = function() {
         });
         delArchivoVehiculo();
 
+        $(document).on("change","#tblDocumentos select[name^='id_documento[']",
+            function () {
+                actualizarVigenciaDocumento(this);
+                refrescarTiposDocumentos();
+            }
+        );
 
+
+    };
+
+    // Catálogo de documentos disponibles.
+    var catalogoDocumentos = {};
+
+    // Cargar el catálogo que envía Laravel.
+    var iniciarCatalogoDocumentos = function () {
+        catalogoDocumentos = JSON.parse($("#tipoArchivo").val() || "{}");
+    };
+
+    // Actualizar las opciones disponibles en cada selector.
+    var refrescarTiposDocumentos = function () {
+
+        var $selectores = $("#tblDocumentos select[name^='id_documento[']");
+        var seleccionados = {};
+
+        // Obtener los tipos que ya se eligieron en otras filas.
+        $selectores.each(function () {
+            var valor = String($(this).val() || "");
+
+            if (valor) {
+                seleccionados[valor] = true;
+            }
+        });
+
+        // Reconstruir las opciones de cada selector.
+        $selectores.each(function () {
+
+            var $select = $(this);
+            var actual = String($select.val() || "");
+
+            $select.empty();
+
+            $select.append(
+                $("<option>", {
+                    value: "",
+                    text: "Selecciona una opción"
+                })
+            );
+
+            $.each(catalogoDocumentos, function (id, documento) {
+
+                id = String(id);
+
+                // No mostrar lo que otra fila ya seleccionó.
+                if (seleccionados[id] && id !== actual) {
+                    return;
+                }
+
+                $select.append(
+                    $("<option>", {
+                        value: id,
+                        text: documento.nombre
+                    }).attr("data-vigencia", documento.vigencia)
+                );
+            });
+
+            // Conservar la selección actual.
+            $select.val(actual);
+        });
+    };
+
+    // Comprobar si todavía queda algún tipo sin seleccionar.
+    var hayDocumentosDisponibles = function () {
+
+        var seleccionados = {};
+
+        $("#tblDocumentos select[name^='id_documento[']").each(function () {
+            var id = String($(this).val() || "");
+
+            if (id) {
+                seleccionados[id] = true;
+            }
+        });
+
+        return Object.keys(catalogoDocumentos).some(function (id) {
+            return !seleccionados[id];
+        });
     };
 
     //construye  elementos de la lista
     var construyeElementosLista = function () {
         var tipoArchivo = $("#tipoArchivo").val();
         var colTipoArchivo = JSON.parse(tipoArchivo);
-        var opcion ="";
+        var opcion = "";
 
-        $.each(colTipoArchivo, function(i, item) {
-            opcion += "<option value='"+i+"' >"+item+"</option>";
+        $.each(colTipoArchivo, function (id, item) {
+            opcion +=
+                "<option value='" + id + "' data-vigencia='" +
+                item.vigencia + "'>" +
+                $("<div>").text(item.nombre).html() +
+                "</option>";
         });
 
         return opcion;
     };
+
+    //Mostrar vigencia
+    var actualizarVigenciaDocumento = function (select) {
+        var $select = $(select);
+        var $fila = $select.closest("tr");
+        var $opcion = $select.find("option:selected");
+        var $fecha = $fila.find("input[name^='vigencia[']");
+        var $contenedor = $fecha.closest("td");
+
+        var idDocumento = $select.attr("id").replace("id_documento", "");
+        var requiereVigencia = String($opcion.attr("data-vigencia")) === "1";
+
+        var nombreCampo = "vigencia[" + idDocumento + "]";
+
+        // Quitar la validación anterior, si existe.
+        try {
+            validador.removeField(nombreCampo);
+        } catch (error) {
+            // El campo aún no estaba registrado.
+        }
+
+        if (requiereVigencia) {
+            $contenedor.show();
+            $fecha.prop("disabled", false);
+            $fecha.prop("required", true);
+
+            validador.addField(nombreCampo, {
+                validators: {
+                    notEmpty: {
+                        message: "Selecciona la fecha de vigencia"
+                    },
+                    date: {
+                        format: "YYYY-MM-DD",
+                        message: "Selecciona una fecha válida"
+                    }
+                }
+            });
+        } else {
+            $fecha.val("");
+            $fecha.prop("required", false);
+            $fecha.prop("disabled", true);
+            $contenedor.hide();
+        }
+    };
+
 
     //construye elementos de avances financiero
     var construyeavancevehiculosLista =function(){
@@ -301,7 +437,16 @@ var Modulo = function() {
 
     //agrega el elemento archivo y lista desplegable
     var addArchivo = function () {
+
+        if (!hayDocumentosDisponibles()) {
+            toastr.warning("Ya seleccionaste todos los tipos de documentos disponibles.");
+            return;
+        }
+
         contadorDocumentos++;
+        while (document.getElementById("trDocumento" + contadorDocumentos)) {
+            contadorDocumentos++;
+        }
         var html = '';
         html += ([    "",
             "<tr id='trDocumento"+contadorDocumentos+"'>",
@@ -335,27 +480,55 @@ var Modulo = function() {
 
             ""].join(""));
         $("#tblDocumentos tbody").append(html); //agrega el html creado
+        actualizarVigenciaDocumento($("#id_documento" + contadorDocumentos)[0]);
+        refrescarTiposDocumentos();
         //agrega validación del elemento creado
         validador.addField('archivo[' + contadorDocumentos + ']', archivoValidador);
         validador.addField('id_documento[' + contadorDocumentos + ']', tipoArchivoValidador);
-        validador.addField('vigencia[' + contadorDocumentos + ']', archivoValidador);
         KTApp.initTooltips(); //inicia tooltip del elemento creado
         KTApp.initFileInput(); //inicia el elemento archivo del elemento creado
     };
 
     //elimina un elemento
+    
     var delArchivo = function () {
-        jQuery(document).on("click", ".hrefEliminar" , function(e) {
+
+        $(document).on("click", ".hrefEliminar", function(e) {
             e.preventDefault();
-            var idDocumento = $(this).attr("data-id"); //indice del elemento
-            KTApp.hideTooltips(); //oculta tooltip
-            //elimina la validación del elemento
-            validador.removeField('archivo[' + idDocumento + ']');
-            validador.removeField('id_documento[' + idDocumento + ']');
-            validador.removeField('vigencia[' + idDocumento + ']');
-            $('#trDocumento'+idDocumento).remove();//elimina el elemento
+
+            var $boton = $(this);
+            var $fila = $boton.closest("tr");
+            var idDocumento = $boton.attr("data-id");
+
+            // Primero quitamos visualmente la fila.
+            // No hay petición AJAX porque aún no está guardada.
+            KTApp.hideTooltips();
+            $fila.remove();
+
+            // Quitamos las validaciones asociadas.
+            // La fecha puede no estar registrada en FormValidation.
+            [
+                "archivo[" + idDocumento + "]",
+                "id_documento[" + idDocumento + "]",
+                "vigencia[" + idDocumento + "]"
+            ].forEach(function(nombreCampo) {
+
+                try {
+                    validador.removeField(nombreCampo);
+                } catch (error) {
+                    // El campo no tenía validación registrada.
+                }
+
+            });
+
+            // Liberar nuevamente el tipo de documento
+            // para que pueda seleccionarse en otra fila.
+            refrescarTiposDocumentos();
+
         });
+
     };
+
 
 
 

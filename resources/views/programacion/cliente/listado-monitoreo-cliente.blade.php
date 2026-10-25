@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=2.1.15') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/estilos_principal.css?v=2.1.16') }}" rel="stylesheet" type="text/css">
 @endpush
 
 @push('scripts')
@@ -69,7 +69,18 @@
                     @foreach($monitoreo as $unid)
                         @php
                             $estadoId = (int) $unid->programacion_estatus_id;
-                            $semaforo = $estadoId === 1 ? 'gris' : ($estadoId === 3 ? 'verde' : ($estadoId === 10 ? 'rojo' : 'amarillo'));
+
+                            $coloresEstatus = [
+                                1  => 'amarillo',
+                                2  => 'rojo',
+                                3  => 'verde',
+                                4  => 'gris',
+                                6  => 'rosa',
+                                7  => 'azul',
+                                10 => 'rosa',
+                            ];
+
+                            $semaforo = $coloresEstatus[$estadoId] ?? 'naranja';
                         @endphp
                         <tr data-estado="{{ $estadoId }}">
                             <td><strong class="cliente-monitor-folio">{{ $unid->folio_interno ?? 'Sin Folio' }}</strong></td>

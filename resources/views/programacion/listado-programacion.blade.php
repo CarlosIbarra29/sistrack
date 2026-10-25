@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=2.1.6') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=2.1.7') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
@@ -810,12 +810,11 @@
                                     </td>
 
                                     <td>
-                                        <span class="badge-status status-programado
-                                            {{ mb_strtolower(trim($unid->estatus_programacion ?? ''), 'UTF-8') === 'en ruta' ? 'status-en-ruta' : '' }}">
-
+                                        
+                                        <span class="badge-status status-programado status-estatus-{{ (int) $unid->programacion_estatus_id }}">
                                             {{ $unid->estatus_programacion }}
-
                                         </span>
+
                                     </td>
 
                                     <td class="text-center">

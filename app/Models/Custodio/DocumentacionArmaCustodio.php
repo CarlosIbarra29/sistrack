@@ -28,7 +28,7 @@ class DocumentacionArmaCustodio extends Model
     /**
      * @var array
      */
-    protected $fillable = ['siaf_status', 'tipo_documento_arma', 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at'];
+    protected $fillable = ['siaf_status', 'tipo_documento_arma','vigencia', 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at'];
 
     public function siafStatus()
     {

@@ -1,6 +1,10 @@
 @extends('layouts.app')
+
+@push('styles')
+    <link href="{{ asset('css/inventario-custodios.css?v=7.1.1') }}" rel="stylesheet">
+@endpush
 @push('scripts')
-    <script src="{{ asset('js/custodios/AgregarArma.js') }}"></script>
+    <script src="{{ asset('js/custodios/AgregarArma.js?v=1.0.1') }}"></script>
 @endpush
 
 @section('title')
@@ -10,7 +14,7 @@
 @section('content')
 
 <div class="container-fluid">
-    <form action="{{ route('custodio.guardarinfoarma') }}" method="post" id="submit_vehiculo" enctype="multipart/form-data">
+    <form action="{{ route('custodio.guardarinfoarma') }}" method="post" id="submit_vehiculo" enctype="multipart/form-data" class="cu-asset-page">
         @csrf
         
         <div class="row">
@@ -20,29 +24,35 @@
                     <input type='hidden' id='tipoArchivov' value='{{ $cadenaTipoDocumento }}'>
                     <input type="hidden" name="custodio_id" value="{{ $custodio->id }}">
 
-                    <div class="card-body px-10 py-8">
+                    <div class="card-body">
                         
                         
-                        <div class="d-flex justify-content-between align-items-center mb-10 border-left border-warning" style="border-left-width:5px !important; padding-left: 20px;">
+                        <div class="d-flex justify-content-between align-items-center border-left border-warning cu-asset-header" style="border-left-width:5px !important; padding-left: 20px;">
                             <div>
                                 <h2 class="mb-1 font-weight-bold text-white">Registro del arma</h2>
-                                <span class="text-muted">Complete la información correspondiente del arma asignado al custodio</span>
+                                <span class="text-muted">Complete la información correspondiente del arma asignada al custodio</span>
                             </div>
-                            <div class="d-flex gap-3">
-                                <a href="{{ route('custodio.editarcustodio', $custodio->id) }}" class="btn btn-regresar-custom font-weight-bold">
+                            <div class="d-flex gap-3 cu-asset-actions">
+                                <a href="{{ route('custodio.editarcustodio', $custodio->id) }}" class="btn cu-asset-btn cu-asset-btn-back">
                                     Regresar
                                 </a>
-                                <button type="button" id="btnGuardar" class="btn btn-warning font-weight-bold px-8" style="background-color: #ffa800; border: none; color: #000;">
-                                    GUARDAR
+                                <button type="button" id="btnGuardar" class="btn cu-asset-btn cu-asset-btn-save">
+                                    <i class="la la-save" aria-hidden="true"></i> Guardar
                                 </button>
                             </div>
                         </div>
 
 
                         <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-warning mb-8">
-                            <li class="nav-item"><a class="nav-link active font-weight-bold" data-toggle="tab" href="#kt_tab_pane_3"><i class="flaticon2-car mr-2"></i> Datos del arma</a></li>
-                            <li class="nav-item"><a class="nav-link font-weight-bold" data-toggle="tab" href="#kt_tab_pane_4"><i class="flaticon2-document mr-2"></i> Documentos</a></li>
-                            <li class="nav-item"><a class="nav-link font-weight-bold" data-toggle="tab" href="#kt_tab_pane_5"><i class="flaticon2-image-file mr-2"></i> Fotografías</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link active font-weight-bold" data-toggle="tab" href="#kt_tab_pane_3"><i class="flaticon2-shield mr-2"></i> Datos del arma</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link font-weight-bold" data-toggle="tab" href="#kt_tab_pane_4"><i class="flaticon2-document mr-2"></i> Documentos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link font-weight-bold" data-toggle="tab" href="#kt_tab_pane_5"><i class="flaticon2-image-file mr-2"></i> Fotografías</a>
+                            </li>
                         </ul>      
 
                         
@@ -50,7 +60,7 @@
                             <div class="tab-pane fade show active" id="kt_tab_pane_3">
                                 <div class="form-group row">
                                     <div class="col-lg-6">
-                                        <label class="text-white">Fotografia</label>
+                                        <label class="text-white">Fotografía</label>
                                         <input type="file" class="form-control form-control-lg" name="fotografia" id="fotografia" required/>
                                     </div>
                                 </div>

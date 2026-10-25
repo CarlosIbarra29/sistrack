@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=2.0.4') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=2.0.5') }}" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet"
           href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -63,6 +63,22 @@
     $estatusNombre = $estatusActual
         ? $estatusActual->estatus_programacion
         : 'Sin estatus';
+
+
+    $coloresEstatus = [
+        1  => 'amarillo',
+        2  => 'rojo',
+        3  => 'verde',
+        4  => 'gris',
+        6  => 'rosa',
+        7  => 'azul',
+        10 => 'rosa',
+    ];
+
+    $colorEstatus = $coloresEstatus[
+        (int) $programacion->programacion_estatus_id
+    ] ?? 'naranja';
+
 
     $totalActividad = $incidencias->count() + $observaciones->count();
 @endphp
@@ -334,13 +350,13 @@
                     </h6>
                 </div>
 
-                <span class="monitoreo-status-indicator"></span>
+                <span class="monitoreo-status-indicator monitoreo-status-indicator--{{ $colorEstatus }}"></span>
 
             </div>
 
             <div class="monitoreo-status-body">
 
-                <div class="monitoreo-current-status">
+                <div class="monitoreo-current-status monitoreo-current-status--{{ $colorEstatus }}">
                     <span class="monitoreo-current-status__icon">
                         <i class="la la-truck"></i>
                     </span>

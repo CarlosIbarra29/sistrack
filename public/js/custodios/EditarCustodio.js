@@ -210,7 +210,7 @@ var Modulo = function() {
             allowClear: true
         });
 
-
+        iniciarCatalogoDocumentos();
         lista = construyeElementosLista();
         // lista_vehiculos = construyeavancevehiculosLista();
         //botón agregar otro archivo
@@ -227,6 +227,12 @@ var Modulo = function() {
         // delArchivoVehiculo();
 
 
+        $(document).on("change","#tblDocumentos select[name^='id_documento[']",
+            function () {
+                actualizarVigenciaDocumento(this);
+                refrescarTiposDocumentos();
+            }
+        );
 
     };
 
@@ -266,6 +272,11 @@ var Modulo = function() {
                         KTApp.unblock(block);
                         if (data.estatus){
                             $('#trDocumento'+id).remove();//elimina el elemento html
+                            if (data.tipo_documento_id) {
+                                delete documentosGuardados[String(data.tipo_documento_id)];
+                            }
+                            refrescarTiposDocumentos();
+                            
                             toastr.options =
                                 {
                                     "closeButton" : true,
@@ -288,18 +299,162 @@ var Modulo = function() {
     };
 
 
+    var catalogoDocumentos = {};
+    var documentosGuardados = {};
 
-    //construye  elementos de la lista
+    // Leer catálogo y documentos existentes.
+    var iniciarCatalogoDocumentos = function () {
+
+        catalogoDocumentos = JSON.parse($("#tipoArchivo").val() || "{}");
+        documentosGuardados = {};
+
+        $.each(catalogoDocumentos, function (id, documento) {
+
+            if (documento.guardado) {
+                documentosGuardados[String(id)] = true;
+            }
+
+        });
+    };
+
+    // Actualizar opciones disponibles.
+    var refrescarTiposDocumentos = function () {
+
+        var $selectores = $("#tblDocumentos select[name^='id_documento[']");
+        var seleccionados = {};
+
+        $selectores.each(function () {
+            var valor = String($(this).val() || "");
+            if (valor) {seleccionados[valor] = true;}
+        });
+
+        $selectores.each(function () {
+
+            var $select = $(this);
+            var actual = String($select.val() || "");
+
+            $select.empty();
+
+            $select.append(
+                $("<option>", {
+                    value: "",
+                    text: "Selecciona una opción"
+                })
+            );
+
+            $.each(catalogoDocumentos, function (id, documento) {
+
+                id = String(id);
+
+                // Excluir documentos que ya están en BD.
+                if (documentosGuardados[id]) {
+                    return;
+                }
+
+                // Excluir documentos seleccionados en otras filas.
+                if (seleccionados[id] && id !== actual) {
+                    return;
+                }
+
+                $select.append(
+                    $("<option>", {
+                        value: id,
+                        text: documento.nombre
+                    }).attr("data-vigencia", documento.vigencia)
+                );
+
+            });
+
+            $select.val(actual && !documentosGuardados[actual] ? actual : "");
+        });
+    };
+
+    // Verificar que queden tipos disponibles.
+    var hayDocumentosDisponibles = function () {
+
+        var seleccionados = {};
+
+        $("#tblDocumentos select[name^='id_documento[']").each(function () {
+
+            var id = String($(this).val() || "");
+
+            if (id) {
+                seleccionados[id] = true;
+            }
+
+        });
+
+        return Object.keys(catalogoDocumentos).some(function (id) {
+
+            return !documentosGuardados[id] && !seleccionados[id];
+
+        });
+    };
+
+    //construye  elementos de la lista 
     var construyeElementosLista = function () {
         var tipoArchivo = $("#tipoArchivo").val();
         var colTipoArchivo = JSON.parse(tipoArchivo);
-        var opcion ="";
+        var opcion = "";
 
-        $.each(colTipoArchivo, function(i, item) {
-            opcion += "<option value='"+i+"' >"+item+"</option>";
+        $.each(colTipoArchivo, function (id, item) {
+
+            if (documentosGuardados[String(id)]) {
+                return;
+            }
+
+            opcion +=
+                "<option value='" + id + "' data-vigencia='" +
+                item.vigencia + "'>" +
+                $("<div>").text(item.nombre).html() +
+                "</option>";
         });
 
         return opcion;
+    };
+
+    //Mostrar vigencia
+    var actualizarVigenciaDocumento = function (select) {
+        var $select = $(select);
+        var $fila = $select.closest("tr");
+        var $opcion = $select.find("option:selected");
+        var $fecha = $fila.find("input[name^='vigencia[']");
+        var $contenedor = $fecha.closest("td");
+
+        var idDocumento = $select.attr("id").replace("id_documento", "");
+        var requiereVigencia = String($opcion.attr("data-vigencia")) === "1";
+
+        var nombreCampo = "vigencia[" + idDocumento + "]";
+
+        // Quitar la validación anterior, si existe.
+        try {
+            validador.removeField(nombreCampo);
+        } catch (error) {
+            // El campo aún no estaba registrado.
+        }
+
+        if (requiereVigencia) {
+            $contenedor.show();
+            $fecha.prop("disabled", false);
+            $fecha.prop("required", true);
+
+            validador.addField(nombreCampo, {
+                validators: {
+                    notEmpty: {
+                        message: "Selecciona la fecha de vigencia"
+                    },
+                    date: {
+                        format: "YYYY-MM-DD",
+                        message: "Selecciona una fecha válida"
+                    }
+                }
+            });
+        } else {
+            $fecha.val("");
+            $fecha.prop("required", false);
+            $fecha.prop("disabled", true);
+            $contenedor.hide();
+        }
     };
 
     //validador de elementos agregados para archivo
@@ -329,7 +484,15 @@ var Modulo = function() {
 
     //agrega el elemento archivo y lista desplegable
     var addArchivo = function () {
+
+        if (!hayDocumentosDisponibles()) {
+            toastr.warning("Este custodio ya tiene registrados o seleccionados todos los documentos disponibles.");
+            return;
+        }
         contadorDocumentos++;
+        while (document.getElementById("trDocumento" + contadorDocumentos)) {
+            contadorDocumentos++;
+        }
         var html = '';
         html += ([    "",
             "<tr id='trDocumento"+contadorDocumentos+"'>",
@@ -362,27 +525,45 @@ var Modulo = function() {
             "</tr>",
 
             ""].join(""));
+
         $("#tblDocumentos tbody").append(html); //agrega el html creado
+        actualizarVigenciaDocumento($("#id_documento" + contadorDocumentos)[0]);
+        refrescarTiposDocumentos();
         //agrega validación del elemento creado
         validador.addField('archivo[' + contadorDocumentos + ']', archivoValidador);
         validador.addField('id_documento[' + contadorDocumentos + ']', tipoArchivoValidador);
-        validador.addField('vigencia[' + contadorDocumentos + ']', archivoValidador);
         KTApp.initTooltips(); //inicia tooltip del elemento creado
         KTApp.initFileInput(); //inicia el elemento archivo del elemento creado
     };
 
     //elimina un elemento
+    
     var delArchivo = function () {
-        jQuery(document).on("click", ".hrefEliminar" , function(e) {
+
+        $(document).on("click", ".hrefEliminar", function(e) {
             e.preventDefault();
-            var idDocumento = $(this).attr("data-id"); //indice del elemento
-            KTApp.hideTooltips(); //oculta tooltip
-            //elimina la validación del elemento
-            validador.removeField('archivo[' + idDocumento + ']');
-            validador.removeField('id_documento[' + idDocumento + ']');
-            validador.removeField('vigencia[' + idDocumento + ']');
-            $('#trDocumento'+idDocumento).remove();//elimina el elemento
+
+            var $boton = $(this);
+            var $fila = $boton.closest("tr");
+            var idDocumento = $boton.attr("data-id");
+            KTApp.hideTooltips();
+            $fila.remove();
+            [
+                "archivo[" + idDocumento + "]",
+                "id_documento[" + idDocumento + "]",
+                "vigencia[" + idDocumento + "]"
+            ].forEach(function(nombreCampo) {
+
+                try {
+                    validador.removeField(nombreCampo);
+                } catch (error) {
+                    
+                }
+
+            });
+            refrescarTiposDocumentos();
         });
+
     };
 
     var eventosEspeciales = function () {

@@ -48,7 +48,9 @@ class CustodioController extends Controller
         $data = Custodio::where('siaf_status', 1)->get();
         // dd($data);
 
-        return view('custodio.listado-custodio', compact('data'));
+        $data2 = Custodio::whereIn('siaf_status', [1, 2])->get();
+
+        return view('custodio.listado-custodio', compact('data','data2'));
 
     }
 
@@ -258,11 +260,14 @@ class CustodioController extends Controller
         $documentos = DocumentacionCustodio::where('siaf_status',1)->get();
 
         //tipo de documentos en formato json
-        $cadenaTipoDocumento = "";
-        foreach($documentos as $documento){
-            $cadenaTipoDocumento .= '"'.$documento->id.'":"'.$documento->tipo_documento.'",';
-        }
-        $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
+        $cadenaTipoDocumento = $documentos->mapWithKeys(function ($documento) {
+            return [
+                $documento->id => [
+                    'nombre' => $documento->tipo_documento,
+                    'vigencia' => (int) $documento->vigencia
+                ]
+            ];
+        })->toJson();
 
         $users_custodio = User::where('id_status_delete', 1)->where('role', 16)->get();
         $users_responsable = User::where('id_status_delete', 1)->get();
@@ -272,8 +277,71 @@ class CustodioController extends Controller
         return view('custodio.agregar-custodio', compact('data', 'cadenaTipoDocumento', 'users_custodio', 'users_responsable'));
     }
 
+    private function validarDocumentosPersonales(Request $request, $custodioId = null)
+    {
+        $archivos = $request->file('archivo', []);
+        $tipos = $request->input('id_documento', []);
+        $fechas = $request->input('vigencia', []);
+
+        $tiposRecibidos = [];
+
+        foreach ($archivos as $indice => $archivo) {
+
+            if (!$archivo || !$archivo->isValid()) {
+                continue;
+            }
+
+            $tipoId = isset($tipos[$indice]) ? (int) $tipos[$indice] : 0;
+
+            // Verificar que exista y esté activo.
+            $catalogo = DocumentacionCustodio::where('id', $tipoId)->where('siaf_status', 1)->first();
+
+            if (!$catalogo) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'id_documento' => 'Selecciona un documento activo y válido.'
+                ]);
+            }
+
+            // Evitar dos documentos del mismo tipo en la petición.
+            if (in_array($tipoId, $tiposRecibidos, true)) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'id_documento' => 'No puedes registrar dos documentos del mismo tipo.'
+                ]);
+            }
+
+            $tiposRecibidos[] = $tipoId;
+
+            // En edición, verificar los documentos que ya están guardados.
+            if ($custodioId !== null) {
+
+                $yaExiste = CustodioDocumento::where('custodio_id', $custodioId)->where('custodio_documentacion_id', $tipoId)->exists();
+
+                if ($yaExiste) {
+                    throw \Illuminate\Validation\ValidationException::withMessages([
+                        'id_documento' => 'Este custodio ya tiene registrado uno de los documentos seleccionados.'
+                    ]);
+                }
+            }
+
+            // Respetar la configuración de vigencia del catálogo.
+            if ((int) $catalogo->vigencia === 1) {
+
+                $fecha = $fechas[$indice] ?? null;
+
+                if (!$fecha ||!preg_match('/^\d{4}-\d{2}-\d{2}$/', $fecha) ||!strtotime($fecha)
+                ) {
+                    throw \Illuminate\Validation\ValidationException::withMessages([
+                        'vigencia' => 'Debes indicar una fecha válida para el documento.'
+                    ]);
+                }
+            }
+        }
+    }
+
     public function guardarcustodio(Request $request)
     {
+
+        $this->validarDocumentosPersonales($request);
 
         $data = [
             'tipo_custodio' => $request->tipo_custodio,
@@ -421,7 +489,8 @@ class CustodioController extends Controller
                     'custodio_documentacion_id' =>$colIdDocumento[$indice],
                     'documento' => $archivoNombre,
                     'mime_type' => $mimeType,
-                    'vigencia' => $colIdVigencia[$indice],
+                    // 'vigencia' => $colIdVigencia[$indice],
+                    'vigencia' => ((int) DocumentacionCustodio::where('id', $colIdDocumento[$indice])->where('siaf_status', 1)->value('vigencia') === 1)? ($colIdVigencia[$indice] ?? null): null,
                     'created_at' =>date('Y-m-d H:i:s'),
                     'updated_at' =>date('Y-m-d H:i:s'),
                     'iduserCreated' =>auth()->user()->id,
@@ -455,12 +524,28 @@ class CustodioController extends Controller
         $custodio_confianza = CustodioControlConfianza::where('custodio_id', $custodio_id)->first();
         $documento = DocumentacionCustodio::where('siaf_status',1)->get();
         //tipo de documentos en formato json
-        $cadenaTipoDocumento = "";
-        foreach($documento as $doc){
-            $cadenaTipoDocumento .= '"'.$doc->id.'":"'.$doc->tipo_documento.'",';
-        }
-        $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
+        $cadenaTipoDocumento = $documento->mapWithKeys(function ($doc) {
+            return [
+                $doc->id => [
+                    'nombre' => $doc->tipo_documento,
+                    'vigencia' => (int) $doc->vigencia
+                ]
+            ];
+        })->toJson();
+
         $documentos = CustodioDocumento::where('custodio_id',$custodio_id)->get();
+
+        // Obtener los tipos de documentos que ya tiene registrados.
+        $idsDocumentosGuardados = $documentos->pluck('custodio_documentacion_id')->map(function ($id) {return (int) $id;})->all();
+        $catalogoDocumentos = json_decode($cadenaTipoDocumento, true);
+
+        foreach ($catalogoDocumentos as $id => &$configuracion) {
+            $configuracion['guardado'] = in_array((int) $id,$idsDocumentosGuardados,true);
+        }
+
+        unset($configuracion);
+
+        $cadenaTipoDocumento = json_encode($catalogoDocumentos);
         
         if($custodio->fecha_ingreso == null){ $por_fecha_ingreso = 0; }else{ $por_fecha_ingreso = 1; } 
         if($custodio->nombre_custodio == null){ $por_nombre_custodio = 0; }else{ $por_nombre_custodio = 1; }  
@@ -531,6 +616,8 @@ class CustodioController extends Controller
 
     public function updatecustodio(Request $request)
     {
+
+        $this->validarDocumentosPersonales($request,$request->id_custodio);
         // dd($request);
         $data = [
             // 'users_custodios' => $request->users_custodios,
@@ -664,7 +751,8 @@ class CustodioController extends Controller
                     'custodio_documentacion_id' =>$colIdDocumento[$indice],
                     'documento' => $archivoNombre,
                     'mime_type' => $mimeType,
-                    'vigencia' =>$colIdVigencia[$indice],
+                    // 'vigencia' =>$colIdVigencia[$indice],
+                    'vigencia' => ((int) DocumentacionCustodio::where('id', $colIdDocumento[$indice])->where('siaf_status', 1)->value('vigencia') === 1)? ($colIdVigencia[$indice] ?? null): null,
                     'created_at' =>date('Y-m-d H:i:s'),
                     'updated_at' =>date('Y-m-d H:i:s'),
                     'iduserCreated' =>auth()->user()->id,
@@ -684,6 +772,7 @@ class CustodioController extends Controller
     public function eliminardocumentocustodio(Request $request)
     {
         $doc = CustodioDocumento::findOrFail($request->id);
+        $tipoDocumentoEliminado = (int) $doc->custodio_documentacion_id;
         $estatus = true;
         if ($doc){
             Storage::delete('custodio/'.$doc->custodio_id.'/'.$doc->documento);
@@ -694,6 +783,7 @@ class CustodioController extends Controller
 
         return response()->json([
             'estatus' => $estatus,
+            'tipo_documento_id' => $tipoDocumentoEliminado,
         ]);
     }
 
@@ -704,11 +794,14 @@ class CustodioController extends Controller
         $documentos = DocumentacionVehiculoCustodio::where('siaf_status',1)->get();
 
         //tipo de documentos en formato json
-        $cadenaTipoDocumento = "";
-        foreach($documentos as $documento){
-            $cadenaTipoDocumento .= '"'.$documento->id.'":"'.$documento->tipo_documento_vehiculo.'",';
-        }
-        $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
+        $cadenaTipoDocumento = $documentos->mapWithKeys(function ($documento) {
+            return [
+                $documento->id => [
+                    'nombre' => $documento->tipo_documento_vehiculo,
+                    'vigencia' => (int) $documento->vigencia
+                ]
+            ];
+        })->toJson();
 
         $vehiculo = CustodioVehiculo::where('custodio_id', $custodio_id)->first();
         $fotografias = FotografiaVehiculoCustodio::where('custodio_id',$custodio_id)->get();
@@ -749,7 +842,9 @@ class CustodioController extends Controller
         ];
         CustodioVehiculo::insert($data);
 
-        $colIdVigencia = $request->vigencia;
+        // $colIdVigencia = $request->vigencia;
+        $colIdVigencia = $request->input('vigencia', []);
+
         $colIdDocumento = $request->id_documento;
         if($request->hasfile('archivo')){
             $archivos = $request->file('archivo');
@@ -759,12 +854,20 @@ class CustodioController extends Controller
                 $archivoNombre = $archivo->hashName();
                 $mimeType = $archivo->getMimeType();
                 Storage::putFileAs('custodio/'.$request->custodio_id, $archivo, $archivoNombre);
+
+                $tipoDocumento = DocumentacionVehiculoCustodio::findOrFail($colIdDocumento[$indice]);
+
+                if ((int) $tipoDocumento->vigencia === 1 && empty($colIdVigencia[$indice])) {
+                    return back()->withInput()->withErrors(['vigencia' => 'El documento seleccionado requiere fecha de vigencia.']);
+                }
+
                 $data = [
                     'custodio_id' => $request->custodio_id,
                     'custodio_documentacion_vehiculo_id' =>$colIdDocumento[$indice],
                     'documento' => $archivoNombre,
                     'mime_type' => $mimeType,
-                    'vigencia' =>$colIdVigencia[$indice],
+                    // 'vigencia' =>$colIdVigencia[$indice],
+                    'vigencia' => $tipoDocumento->vigencia == 1 ? ($colIdVigencia[$indice] ?? null) : null,
                     'created_at' =>date('Y-m-d H:i:s'),
                     'updated_at' =>date('Y-m-d H:i:s'),
                     'iduserCreated' =>auth()->user()->id,
@@ -812,11 +915,14 @@ class CustodioController extends Controller
         $documentos = DocumentacionVehiculoCustodio::where('siaf_status',1)->get();
 
         //tipo de documentos en formato json
-        $cadenaTipoDocumento = "";
-        foreach($documentos as $documento){
-            $cadenaTipoDocumento .= '"'.$documento->id.'":"'.$documento->tipo_documento_vehiculo.'",';
-        }
-        $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
+        $cadenaTipoDocumento = $documentos->mapWithKeys(function ($documento) {
+            return [
+                $documento->id => [
+                    'nombre' => $documento->tipo_documento_vehiculo,
+                    'vigencia' => (int) $documento->vigencia
+                ]
+            ];
+        })->toJson();
 
         $vehiculo = CustodioVehiculo::where('custodio_id', $custodio_id)->first();
         $fotografias = FotografiaVehiculoCustodio::where('custodio_id',$custodio_id)->get();
@@ -892,7 +998,9 @@ class CustodioController extends Controller
 
         CustodioVehiculo::where('custodio_id', $request->custodio_id)->update($data);
 
-        $colIdVigencia = $request->vigencia;
+        // $colIdVigencia = $request->vigencia;
+        $colIdVigencia = $request->input('vigencia', []);
+
         $colIdDocumento = $request->id_documento;
         if($request->hasfile('archivo')){
             $archivos = $request->file('archivo');
@@ -902,12 +1010,20 @@ class CustodioController extends Controller
                 $archivoNombre = $archivo->hashName();
                 $mimeType = $archivo->getMimeType();
                 Storage::putFileAs('custodio/'.$request->custodio_id, $archivo, $archivoNombre);
+
+                $tipoDocumento = DocumentacionVehiculoCustodio::findOrFail($colIdDocumento[$indice]);
+
+                if ((int) $tipoDocumento->vigencia === 1 && empty($colIdVigencia[$indice])) {
+                    return back()->withInput()->withErrors(['vigencia' => 'El documento seleccionado requiere fecha de vigencia.']);
+                }
+
                 $data = [
                     'custodio_id' => $request->custodio_id,
                     'custodio_documentacion_vehiculo_id' =>$colIdDocumento[$indice],
                     'documento' => $archivoNombre,
                     'mime_type' => $mimeType,
-                    'vigencia' =>$colIdVigencia[$indice],
+                    // 'vigencia' =>$colIdVigencia[$indice],
+                    'vigencia' => $tipoDocumento->vigencia == 1 ? ($colIdVigencia[$indice] ?? null) : null,
                     'created_at' =>date('Y-m-d H:i:s'),
                     'updated_at' =>date('Y-m-d H:i:s'),
                     'iduserCreated' =>auth()->user()->id,
@@ -955,11 +1071,14 @@ class CustodioController extends Controller
         $documentos = DocumentacionArmaCustodio::where('siaf_status',1)->get();
 
         //tipo de documentos en formato json
-        $cadenaTipoDocumento = "";
-        foreach($documentos as $documento){
-            $cadenaTipoDocumento .= '"'.$documento->id.'":"'.$documento->registro_arma.'",';
-        }
-        $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
+        $cadenaTipoDocumento = $documentos->mapWithKeys(function ($documento) {
+            return [
+                $documento->id => [
+                    'nombre' => $documento->registro_arma,
+                    'vigencia' => (int) $documento->vigencia
+                ]
+            ];
+        })->toJson();
 
         $arma = CustodioArma::where('custodio_id', $custodio_id)->first();
         $fotografias = FotografiaArmaCustodio::where('custodio_id',$custodio_id)->get();
@@ -994,7 +1113,9 @@ class CustodioController extends Controller
         ];
         CustodioArma::insert($data);
 
-        $colIdVigencia = $request->vigencia;
+        // $colIdVigencia = $request->vigencia;
+        $colIdVigencia = $request->input('vigencia', []);
+        
         $colIdDocumento = $request->id_documento;
         if($request->hasfile('archivo')){
             $archivos = $request->file('archivo');
@@ -1004,12 +1125,20 @@ class CustodioController extends Controller
                 $archivoNombre = $archivo->hashName();
                 $mimeType = $archivo->getMimeType();
                 Storage::putFileAs('custodio/'.$request->custodio_id, $archivo, $archivoNombre);
+
+                $tipoDocumento = DocumentacionArmaCustodio::findOrFail($colIdDocumento[$indice]);
+
+                if ((int) $tipoDocumento->vigencia === 1 && empty($colIdVigencia[$indice])) {
+                    return back()->withInput()->withErrors(['vigencia' => 'El documento seleccionado requiere fecha de vigencia.']);
+                }
+
                 $data = [
                     'custodio_id' => $request->custodio_id,
                     'custodio_documentacion_arma_id' =>$colIdDocumento[$indice],
                     'documento' => $archivoNombre,
                     'mime_type' => $mimeType,
-                    'vigencia' =>$colIdVigencia[$indice],
+                    // 'vigencia' =>$colIdVigencia[$indice],
+                    'vigencia' => $tipoDocumento->vigencia == 1 ? ($colIdVigencia[$indice] ?? null) : null,
                     'created_at' =>date('Y-m-d H:i:s'),
                     'updated_at' =>date('Y-m-d H:i:s'),
                     'iduserCreated' =>auth()->user()->id,
@@ -1058,11 +1187,14 @@ class CustodioController extends Controller
         $documentos = DocumentacionArmaCustodio::where('siaf_status',1)->get();
         // dd($documentos);
         //tipo de documentos en formato json
-        $cadenaTipoDocumento = "";
-        foreach($documentos as $documento){
-            $cadenaTipoDocumento .= '"'.$documento->id.'":"'.$documento->registro_arma.'",';
-        }
-        $cadenaTipoDocumento = '{'.rtrim($cadenaTipoDocumento, ',').'}';
+        $cadenaTipoDocumento = $documentos->mapWithKeys(function ($documento) {
+            return [
+                $documento->id => [
+                    'nombre' => $documento->registro_arma,
+                    'vigencia' => (int) $documento->vigencia
+                ]
+            ];
+        })->toJson();
 
         $arma = CustodioArma::where('custodio_id', $custodio_id)->first();
         $fotografias = FotografiaArmaCustodio::where('custodio_id',$custodio_id)->get();
@@ -1087,7 +1219,8 @@ class CustodioController extends Controller
 
         CustodioArma::where('custodio_id', $request->custodio_id)->update($data);
 
-        $colIdVigencia = $request->vigencia;
+        // $colIdVigencia = $request->vigencia;
+        $colIdVigencia = $request->input('vigencia', []);
         $colIdDocumento = $request->id_documento;
         if($request->hasfile('archivo')){
             $archivos = $request->file('archivo');
@@ -1097,12 +1230,20 @@ class CustodioController extends Controller
                 $archivoNombre = $archivo->hashName();
                 $mimeType = $archivo->getMimeType();
                 Storage::putFileAs('custodio/'.$request->custodio_id, $archivo, $archivoNombre);
+
+                $tipoDocumento = DocumentacionArmaCustodio::findOrFail($colIdDocumento[$indice]);
+
+                if ((int) $tipoDocumento->vigencia === 1 && empty($colIdVigencia[$indice])) {
+                    return back()->withInput()->withErrors(['vigencia' => 'El documento seleccionado requiere fecha de vigencia.']);
+                }
+
                 $data = [
                     'custodio_id' => $request->custodio_id,
                     'custodio_documentacion_arma_id' =>$colIdDocumento[$indice],
                     'documento' => $archivoNombre,
                     'mime_type' => $mimeType,
-                    'vigencia' =>$colIdVigencia[$indice],
+                    // 'vigencia' =>$colIdVigencia[$indice],
+                    'vigencia' => $tipoDocumento->vigencia == 1 ? ($colIdVigencia[$indice] ?? null) : null,
                     'created_at' =>date('Y-m-d H:i:s'),
                     'updated_at' =>date('Y-m-d H:i:s'),
                     'iduserCreated' =>auth()->user()->id,

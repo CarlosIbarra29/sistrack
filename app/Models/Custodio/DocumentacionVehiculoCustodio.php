@@ -28,7 +28,7 @@ class DocumentacionVehiculoCustodio extends Model
     /**
      * @var array
      */
-    protected $fillable = ['siaf_status', 'tipo_documento_vehiculo', 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at'];
+    protected $fillable = ['siaf_status', 'tipo_documento_vehiculo','vigencia', 'iduserCreated', 'created_at', 'iduserUpdated', 'updated_at'];
 
     public function siafStatus()
     {

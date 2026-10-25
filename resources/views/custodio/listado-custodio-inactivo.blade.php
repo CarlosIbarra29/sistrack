@@ -1,116 +1,92 @@
 @extends('layouts.app')
 
-@section('title')
-    Catálogo de custodios inactivos
-@endsection
+@section('title', 'Custodios inactivos')
 
-@push('scripts')
-  <script src="{{ asset('js/custodios/CatalogoCustodio.js') }}"></script>
-  <meta name="csrf-token" content="{{ csrf_token() }}" />
+@push('styles')
+<link href="{{ asset('css/inventario-custodios.css?v=7.1.1') }}" rel="stylesheet" type="text/css" />
 @endpush
 
+@push('scripts')
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+<script src="{{ asset('js/custodios/InventarioCustodios.js?v=2.1.4') }}"></script>
+@endpush
 
 @section('content')
-    <div class="d-flex flex-row">
-
-    <!--begin::List-->
-    <div class="flex-row-fluid">
-        <div class="d-flex flex-column flex-grow-1">
-
-            <!--begin::Row-->
-            <div class="row">
-                <div class="col-xl-12">
-
-                <!--begin::Card-->
-                    <div class="card card-custom">
-                        <div class="card-header">
-                            <div class="card-title">
-                      <span class="card-icon">
-                        <i class="flaticon2-file text-warning"></i>
-                      </span>
-                                <h3 class="card-label">Inventario de custodios inactivos</h3>
-                            </div>
-                            <div class="card-toolbar">
-
-                                <!--begin::Button-->
-                                <a href="{{ route('custodio.listadocustodio') }}"class="btn btn-warning font-weight-bold"><i class="flaticon2-back"></i> Regresar</a>
-                                <!--end::Button-->
-
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <!--begin: Datatable-->
-                            <table class="table table-hover table-checkable" id="kdatatable_custodios_inactivos">
-                                <thead>
-                                <tr>
-                                  {{-- <th>No.</th> --}}
-                                  <th>Nombre</th>
-                                  <th>Apellido Paterno</th>
-                                  <th>Apellido Materno</th>
-                                  <th>CURP</th>
-                                  <th>RFC</th>
-                                  <th>Número Telefono</th>
-                                  <th>Correo Electónico</th>
-                                  <th class="text-center">Acciones</th>
-                                </tr>
-                                </thead>
-
-                                <tbody>
-                                  @foreach($data as $unid)
-                                    <tr>
-                                      {{-- <td>{{ $unid->id }}</td> --}}
-                                      <td>{{ $unid->nombre_custodio }}</td>
-                                      <td>{{ $unid->ap_paterno }}</td>
-                                      <td>{{ $unid->ap_materno }}</td>
-                                      <td>{{ $unid->curp }}</td>
-                                      <td>{{ $unid->rfc }}</td>
-                                      <td>{{ $unid->numero_telefono }}</td>
-                                      <td>{{ $unid->correo_electronico }}</td> 
-
-                                      <td class="text-center">
-                                        <button class="btn btn-clean btn-icon btn-outline-success mt-1 activar-custodio" data-id="{{ $unid->id }}" data-nombre="{{ $unid->nombre_custodio }}" data-toggle="tooltip" data-theme="dark" title="Activar Custodio" ><i class="flaticon2-reply "></i></button>
-                                      </td>
-                                    </tr>
-                                  @endforeach
-                                </tbody>
-
-                                <tfoot>
-                                <tr>
-                                  {{-- <th>No.</th> --}}
-                                  <th>Nombre</th>
-                                  <th>Apellido Paterno</th>
-                                  <th>Apellido Materno</th>
-                                  <th>CURP</th>
-                                  <th>RFC</th>
-                                  <th>Número Telefono</th>
-                                  <th>Correo Electónico</th>
-                                  <th class="text-center">Acciones</th>
-                                </tr>
-                                </tfoot>
-
-                            </table>
-                            <!--end: Datatable-->
-
-                            <input type="hidden" id="datatable_i18n" value="{{ asset('/js/datatables/i18n/es-mx.json') }}">
-
-                        </div>
-                    </div>
-                    <!--end::Card-->
-                    <!--end::Card-->
-                </div>
-
-            </div>
-            <!--end::Row-->
+<div class="custodios-page custodios-page-inactive">
+    <header class="custodios-header">
+    
+        <div>
+            <span class="custodios-eyebrow">ADMINISTRACIÓN DE PERSONAL</span>
+            <h1>Custodios inactivos</h1>
+            <p>Consulta el historial y reactiva custodios cuando corresponda.</p>
         </div>
-    </div>
-    <!--end::List-->
+        
+        <a href="{{ route('custodio.listadocustodio') }}" class="custodios-btn custodios-btn-outline"><i class="la la-arrow-left"></i> Regresar</a>
+    
+    </header>
+
+    <section class="custodios-panel">
+        <div class="custodios-panel-heading">
+        
+            <div>
+                <span class="custodios-eyebrow">HISTORIAL DE CUSTODIOS</span>
+                <h2>Inventario de custodios inactivos <span>{{ $data->count() }}</span></h2>
+            </div>
+            <small><i class="la la-info-circle"></i> Utiliza la acción para reactivar un custodio</small>
+
+        </div>
+        
+        <div class="custodios-table-scroll">
+            <table class="custodios-table" id="kdatatable_custodios_inactivos">
+                
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido paterno</th>
+                        <th>Apellido materno</th>
+                        <th>CURP</th>
+                        <th>RFC</th>
+                        <th>Teléfono</th>
+
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    @foreach($data as $unid)
+                        <tr>
+
+                            <td><strong class="custodios-id">CUST-{{ str_pad($unid->id, 4, '0', STR_PAD_LEFT) }}</strong></td>
+                        
+                            <td><strong>{{ $unid->nombre_custodio }}</strong></td>
+                            
+                            <td>{{ $unid->ap_paterno }}</td>
+                            
+                            <td>{{ $unid->ap_materno }}</td>
+                            
+                            <td>{{ $unid->curp ?: '—' }}</td>
+                            
+                            <td>{{ $unid->rfc ?: '—' }}</td>
+                            
+                            <td>{{ $unid->numero_telefono ?: '—' }}</td>
+                        
+                            
+                            <td>
+                                <button type="button" class="custodios-icon-btn custodios-icon-btn-activate activar-custodio" data-id="{{ $unid->id }}" data-nombre="{{ $unid->nombre_custodio }}" title="Activar custodio" aria-label="Activar custodio"><i class="la la-reply"></i></button>
+                            </td>
+                        
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </section>
 </div>
 
-  <form method="post" id="custodio_act_form" action="{{ route('custodio.activarcustodio') }}" enctype="multipart/form-data">
+
+<form method="post" id="custodio_act_form" action="{{ route('custodio.activarcustodio') }}" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="id" id="id_delete" value="">
-  </form>
-
-
-
+</form>
 @endsection

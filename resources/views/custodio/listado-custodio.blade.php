@@ -1,225 +1,148 @@
 @extends('layouts.app')
 
+@section('title', 'Inventario de Custodios')
+
+@push('styles')
+<link href="{{ asset('css/inventario-custodios.css?v=7.1.1') }}" rel="stylesheet" type="text/css" />
+@endpush
+
 @push('scripts')
-    <script src="{{ asset('js/custodios/CatalogoCustodio.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var options = {
-                series: [75.6, 14.1, 6.4],
-                chart: { type: 'donut', height: 130 },
-                colors: ['#1BC5BD', '#FFA800', '#F64E60'],
-                dataLabels: { enabled: false },
-                legend: { show: false },
-                stroke: { show: false, width: 0 },
-                plotOptions: { pie: { donut: { size: '70%' } } }
-            };
-            var chart = new ApexCharts(document.querySelector("#chart_lateral"), options);
-            chart.render();
-        });
-    </script>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+<script src="{{ asset('js/custodios/InventarioCustodios.js?v=2.1.4') }}"></script>
 @endpush
 
 @section('content')
-<div class="bg-dashboard-dark p-4">
-
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-5 gap-3">
+@php
+    $activos = $data2->where('siaf_status', 1)->count();
+    $inactivos = $data2->where('siaf_status', 2)->count();
+    $accesos = [
+        ['titulo' => 'ALTA DE CUSTODIOS', 'icono' => 'la la-user-plus', 'clase' => 'alta', 'ruta' => route('custodio.agregarcustodio'), 'activo' => true],
+        ['titulo' => 'FICHA TÉCNICA', 'icono' => 'la la-id-card', 'clase' => 'ficha', 'ruta' => '#', 'activo' => false],
+        ['titulo' => 'SEGUIMIENTO DE DOCTOS.', 'icono' => 'la la-file-text', 'clase' => 'documentos', 'ruta' => '#', 'activo' => false],
+        ['titulo' => 'IMPRESIÓN DE CREDENCIAL', 'icono' => 'la la-print', 'clase' => 'credencial', 'ruta' => '#', 'activo' => false],
+    ];
+@endphp
+<div class="custodios-page">
+    <header class="custodios-header">
         <div>
-            <h1 class="font-weight-bolder text-white m-0" style="font-size: 24px; letter-spacing: -0.5px;">Inventario de Custodios</h1>
-            <p class="text-muted font-size-sm m-0">Gestiona el alta, control y seguimiento de tus custodios en plataforma.</p>
+            <span class="custodios-eyebrow">ADMINISTRACIÓN DE PERSONAL</span>
+            <h1>Inventario de Custodios</h1>
+            <p>Gestiona el alta, control y seguimiento de tus custodios en plataforma.</p>
         </div>
-        <div class="mt-3 mt-md-0">
-            <a href="{{ route('custodio.listadocustodioinactivo') }}" class="btn btn-sm font-weight-bold text-white btn-outline-secondary" style="border-color: var(--border-color); height: 38px; display: flex; align-items: center; gap: 6px;">
-                <i class="la la-trash-alt"></i> Custodios inactivos
-            </a>
-        </div>
-    </div>
+        <a class="custodios-btn custodios-btn-outline" href="{{ route('custodio.listadocustodioinactivo') }}">
+            <i class="la la-trash-alt"></i> Custodios inactivos
+        </a>
+    </header>
 
-    <div class="row mb-6 mx-n2">
-        @php
-            $buttons = [
-                ['t' => 'ALTA DE CUSTODIOS', 'i' => 'fas fa-user-plus', 'c' => '#f6a924', 'bg' => 'rgba(246, 169, 36, 0.05)', 'r' => route('custodio.agregarcustodio')],
-                ['t' => 'FICHA TÉCNICA', 'i' => 'fas fa-id-card', 'c' => '#00c2a8', 'bg' => 'rgba(0, 194, 168, 0.05)', 'r' => '#'],
-                ['t' => 'SEGUIMIENTO DE DOCTOS.', 'i' => 'fas fa-file-signature', 'c' => '#8950fc', 'bg' => 'rgba(137, 80, 252, 0.05)', 'r' => '#'],
-                ['t' => 'IMPRESIÓN DE CREDENCIAL', 'i' => 'fas fa-print', 'c' => '#FFFFFF', 'bg' => 'rgba(255, 255, 255, 0.05)', 'r' => '#']
-            ];
-        @endphp
-        @foreach($buttons as $btn)
-        <div class="col-xl-3 col-md-6 col-12 px-2 mb-3">
-            <div class="text-center p-4 h-100 d-flex flex-column justify-content-between" style="border: 1px solid {{ $btn['c'] }}; background: {{ $btn['bg'] }}; border-radius: 4px;">
-                <div>
-                    <i class="{{ $btn['i'] }} mb-3" style="color: {{ $btn['c'] }}; font-size: 2.2rem;"></i>
-                    <div class="font-weight-bolder mb-3" style="color: {{ $btn['c'] }}; font-size: 0.75rem;">{{ $btn['t'] }}</div>
+    
+    <section class="custodios-access-grid" aria-label="Accesos de custodios">
+
+        @foreach($accesos as $acceso)
+            <article class="custodios-access custodios-access--{{ $acceso['clase'] }}">
+                <div class="custodios-access-info">
+                    <span class="custodios-access-icon">
+                        <i class="{{ $acceso['icono'] }}"></i>
+                    </span>
+                    <h2>{{ $acceso['titulo'] }}</h2>
                 </div>
-                <a href="{{ $btn['r'] }}" class="btn btn-sm btn-block p-2 font-weight-bolder d-flex justify-content-between align-items-center" style="background: {{ $btn['c'] }}; color: #000; font-size: 0.75rem;">
-                    ACCEDER <i class="fas fa-chevron-right ml-2" style="font-size: 0.6rem;"></i>
-                </a>
-            </div>
-        </div>
+                @if($acceso['activo'])
+                    <a href="{{ $acceso['ruta'] }}" class="custodios-access-link">
+                        AÑADIR
+                        <i class="la la-angle-right"></i>
+                    </a>
+                @else
+                    <span class="custodios-access-link custodios-access-link-disabled" title="Función pendiente de implementar">
+                        PRÓXIMAMENTE
+                        <i class="la la-lock"></i>
+                    </span>
+                @endif
+            </article>
         @endforeach
-    </div>
+    </section>
 
-    <div class="row">
-        <div class="col-xl-9 col-lg-8 pr-xl-2">
-            
-            <div class="text-warning font-weight-bolder font-size-xs mb-3 text-uppercase tracking-wide">Resumen de Custodios</div>
 
-            <div class="row mb-4">
-                <div class="col-xl-4 col-sm-6 mb-3">
-                    <div class="counter-box-improved">
-                        <div class="icon-wrapper" style="background-color: rgba(59, 130, 246, 0.12); color: #3b82f6;"><i class="la la-users"></i></div>
-                        <div>
-                            <span class="text-muted font-weight-bold d-block font-size-xs text-uppercase">Total Custodios</span>
-                            <span class="text-white font-weight-bolder font-size-h4 d-block">156</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-sm-6 mb-3">
-                    <div class="counter-box-improved">
-                        <div class="icon-wrapper" style="background-color: rgba(16, 185, 129, 0.12); color: #10b981;"><i class="la la-check-circle"></i></div>
-                        <div>
-                            <span class="text-muted font-weight-bold d-block font-size-xs text-uppercase">Activos</span>
-                            <span class="text-white font-weight-bolder font-size-h4 d-block">118</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-sm-6 mb-3">
-                    <div class="counter-box-improved">
-                        <div class="icon-wrapper" style="background-color: rgba(239, 68, 68, 0.12); color: #ef4444;"><i class="la la-user-times"></i></div>
-                        <div>
-                            <span class="text-muted font-weight-bold d-block font-size-xs text-uppercase">Inactivos</span>
-                            <span class="text-white font-weight-bolder font-size-h4 d-block">16</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section class="custodios-summary" aria-label="Resumen de custodios">
+        <article class="custodios-stat"><span class="custodios-stat-icon"><i class="la la-users"></i></span><div><span>Total custodios</span><strong>{{ $data2->count() }}</strong></div></article>
+        <article class="custodios-stat"><span class="custodios-stat-icon custodios-stat-icon-green"><i class="la la-check-circle"></i></span><div><span>Activos</span><strong>{{ $activos }}</strong></div></article>
+        <article class="custodios-stat"><span class="custodios-stat-icon custodios-stat-icon-red"><i class="la la-user-times"></i></span><div><span>Inactivos</span><strong>{{ $inactivos }}</strong></div></article>
+    </section>
 
-            <form class="horizontal-filter-bar mb-4 p-3 rounded" onsubmit="return false;" style="background: rgba(30, 45, 74, 0.2); border: 1px solid var(--border-color);">
-                <div class="form-row align-items-center w-100 m-0">
-                    <div class="col-12 col-md-6 col-xl-3 mb-2 mb-xl-0 px-1 position-relative">
-                        <input type="text" class="form-control input-premium-dark pl-8" placeholder="Buscar custodio..." />
-                        <i class="la la-search text-muted position-absolute" style="left: 15px; top: 12px; font-size: 13px;"></i>
-                    </div>
-                    <div class="col-6 col-md-3 col-xl-2 mb-2 mb-xl-0 px-1">
-                        <select class="form-control input-premium-dark datatable-input">
-                            <option value="">Estatus: Todos</option>
-                        </select>
-                    </div>
-                    <div class="col-6 col-md-3 col-xl-2 mb-2 mb-xl-0 px-1">
-                        <select class="form-control input-premium-dark datatable-input">
-                            <option value="">Puesto: Todos</option>
-                        </select>
-                    </div>
-                    <div class="col-12 col-md-6 col-xl-2 mb-2 mb-xl-0 px-1">
-                        <select class="form-control input-premium-dark datatable-input">
-                            <option value="">Sucursal: Todos</option>
-                        </select>
-                    </div>
-                    <div class="col-12 col-md-6 col-xl-3 d-flex gap-1 px-1 mt-2 mt-xl-0 justify-content-xl-end">
-                        <button type="button" class="btn btn-sm btn-outline-secondary text-white font-weight-bold px-3 flex-grow-1" style="height:38px; border-color: var(--border-color);"><i class="la la-filter"></i> FILTROS</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary text-muted font-weight-bold px-3 flex-grow-1" style="height:38px; border-color: var(--border-color);"><i class="la la-sync"></i> LIMPIAR</button>
-                    </div>
-                </div>
-            </form>
+    <section class="custodios-panel">
+        <div class="custodios-panel-heading"><div><span class="custodios-eyebrow">PERSONAL REGISTRADO</span><h2>Listado de custodios <span>{{ $data->count() }}</span></h2></div></div>
+        
+        <div class="custodios-filters">
 
-            <div class="text-warning font-weight-bolder font-size-xs mb-3 text-uppercase tracking-wide">Listado de Custodios</div>
-            <div class="card card-premium mb-4">
-    <div class="card-body p-0">
-        <div class="table-responsive">
-            <table class="table table-hover table-improved-dark m-0">
-                <thead>
-                    <tr>
-                        <th style="color: #38bdf8 !important;">ID</th>
-                        <th>Nombre</th>
-                        <th>Puesto</th>
-                        <th>Sucursal</th>
-                        <th>Estatus</th>
-                        <th>Documentación</th>
-                        <th class="text-center" style="width: 100px;">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody> 
+            <label class="custodios-filter-search">
+                <span>Buscar coincidencia</span>
+                <input id="custodios_buscar" type="search" placeholder="Nombre, apellidos, ID, CURP, RFC..." autocomplete="off" />
+            </label>
+
+            <label>
+                <span>Puesto</span>
+
+                <select id="custodios_puesto">
+                    <option value="">Todos los puestos</option>
+                    <option value="Custodio">Custodio</option>
+                    <option value="Armado">Armado</option>
+                    <option value="Segundo">Segundo</option>
+                </select>
+            </label>
+
+            <button
+                type="button"
+                class="custodios-btn custodios-btn-outline"
+                id="custodios_limpiar"
+            >
+                <i class="la la-undo"></i>
+                Limpiar filtros
+            </button>
+
+</div>
+
+        <div class="custodios-table-scroll">
+            <table id="tabla_inventario_custodios" class="custodios-table">
+                <thead><tr><th>ID</th><th>Nombre completo</th><th>Puesto / tipo</th><th>Base / sucursal</th><th>Estatus</th><th>Acciones</th></tr></thead>
+                <tbody>
                     @foreach($data as $unid)
-                    <tr>
-                        <td class="font-weight-bold" style="color: #38bdf8;">CUST-{{ str_pad($unid->id, 4, '0', STR_PAD_LEFT) }}</td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <div class="symbol symbol-25 symbol-circle mr-2" style="background-color: var(--bg-input); width:26px; height:26px; display:flex; align-items:center; justify-content:center; border: 1px solid var(--border-color); overflow:hidden;">
-                                    <img src="{{ asset('media/users/default.jpg') }}" alt="" style="width:100%; height:100%; object-fit:cover;">
-                                </div>
-                                <span class="font-weight-bold text-white text-nowrap">{{ $unid->nombre_custodio }} {{ $unid->ap_paterno }}</span>
-                            </div>
-                        </td>
-                        <td>{{ $unid->puesto ?? 'Escolta' }}</td>
-                        <td class="text-muted">{{ $unid->sucursal ?? 'N/A' }}</td>
-                        <td><span class="status-chip chip-active">ACTIVO</span></td>
-                        <td><span class="status-chip chip-info">COMPLETA</span></td>
-                        <td class="text-center">
-                            <div class="d-flex justify-content-center align-items-center gap-1">
-                                {{-- <a href="{{ route('custodio.vercustodio', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Ver Custodio"><i class="la la-eye font-size-lg"></i></a> --}}
-                                <a href="{{ route('custodio.editarcustodio', $unid->id) }}" class="btn btn-xs btn-icon btn-clean text-muted p-0" title="Editar custodio"><i class="la la-edit font-size-lg"></i></a>
-                                <button class="btn btn-xs btn-icon btn-clean text-muted p-0 desactivar_custodio" data-nombre="{{ $unid->nombre_custodio}}" data-id="{{ $unid->id}}" title="Desactivar custodio"><i class="la la-trash font-size-lg"></i></button>
-                            </div>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td><strong class="custodios-id">CUST-{{ str_pad($unid->id, 4, '0', STR_PAD_LEFT) }}</strong></td>
+                            <td><div class="custodios-person"><span class="custodios-avatar"><i class="la la-user"></i></span><strong>{{ trim($unid->nombre_custodio . ' ' . $unid->ap_paterno . ' ' . $unid->ap_materno) }}</strong></div></td>
+                            
+                            <td>
+                                @switch((int) $unid->tipo_custodio)
+                                    @case(1)
+                                        Custodio
+                                        @break
+
+                                    @case(2)
+                                        Armado
+                                        @break
+
+                                    @case(3)
+                                        Segundo
+                                        @break
+
+                                    @default
+                                        Sin especificar
+                                @endswitch
+                            </td>
+                            <td>{{ $unid->base ?: 'Sin especificar' }}</td>
+                            <td><span class="custodios-status {{ (int)$unid->siaf_status === 1 ? 'custodios-status-active' : 'custodios-status-inactive' }}">{{ (int)$unid->siaf_status === 1 ? 'Activo' : 'Inactivo' }}</span></td>
+                            <td><div class="custodios-actions">
+                                <a class="custodios-icon-btn" href="{{ route('custodio.editarcustodio', $unid->id) }}" title="Editar custodio" aria-label="Editar custodio"><i class="la la-edit"></i></a>
+                                @if((int)$unid->siaf_status === 1)
+                                    <button type="button" class="custodios-icon-btn custodios-icon-btn-danger desactivar_custodio" data-id="{{ $unid->id }}" data-nombre="{{ $unid->nombre_custodio }}" title="Desactivar custodio" aria-label="Desactivar custodio"><i class="la la-trash"></i></button>
+                                @else
+                                    <span class="custodios-muted">Inactivo</span>
+                                @endif
+                            </div></td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-    </div>
-    
-    
-    <div class="d-flex justify-content-between align-items-center mt-4 p-3 select-none" style="font-size: 0.8rem; color: #94a3b8; background-color: #111625; border-top: 1px solid #1e293b;">
-        <div>Mostrando registros del 1 al {{ count($data) }} de un total de {{ count($data) }} registros</div>
-        <div class="d-flex gap-1">
-            <button type="button" class="btn btn-sm btn-dark text-muted px-3 border-0" disabled style="background-color: #171e30; cursor: default;">Anterior</button>
-            <button type="button" class="btn btn-sm text-white px-3 border-0" style="background-color: #3b82f6; cursor: default;">1</button>
-            <button type="button" class="btn btn-sm btn-dark text-muted px-3 border-0" disabled style="background-color: #171e30; cursor: default;">Siguiente</button>
-        </div>
-    </div>
-</div>        </div>
-
-        <div class="col-xl-3 col-lg-4 pl-xl-2 mt-4 mt-lg-0">
-            <div class="card card-premium p-4 mb-4">
-                <span class="text-warning font-weight-bolder font-size-xs d-block mb-3 text-uppercase">Estado Documentación</span>
-                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
-                    <div class="donut-chart-segment" id="chart_lateral"></div>
-                    <div class="font-size-xs" style="line-height: 1.8;">
-                        <div style="color: #10b981; font-weight: 600;">● Completa <span class="text-white-50 font-weight-normal">118 (75.6%)</span></div>
-                        <div style="color: #f59e0b; font-weight: 600;">● Pendiente <span class="text-white-50 font-weight-normal">22 (14.1%)</span></div>
-                        <div style="color: #ef4444; font-weight: 600;">● Incompleta <span class="text-white-50 font-weight-normal">10 (6.4%)</span></div>
-                        <div style="color: #3b82f6; font-weight: 600;">● Vencida <span class="text-white-50 font-weight-normal">6 (3.9%)</span></div>
-                    </div>
-                </div>
-                <button class="btn btn-xs btn-block btn-outline-secondary font-weight-bold text-white mt-4 py-2" style="border-color: var(--border-color); font-size: 11px;">VER REPORTE COMPLETO</button>
-            </div>
-
-            <div class="card card-premium p-4 mb-4">
-                <span class="text-warning font-weight-bolder font-size-xs d-block mb-3 text-uppercase">Alertas Importantes</span>
-                <div class="d-flex flex-column gap-3">
-                    <div class="d-flex align-items-start gap-2">
-                        <i class="la la-exclamation-triangle text-danger font-size-h3 mt-1"></i>
-                        <div>
-                            <span class="text-white font-weight-bold font-size-xs d-block">6 documentos vencidos</span>
-                            <span class="text-muted font-size-xs">Requieren atención inmediata</span>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-start gap-2 mt-2">
-                        <i class="la la-clock text-warning font-size-h3 mt-1"></i>
-                        <div>
-                            <span class="text-white font-weight-bold font-size-xs d-block">22 usuarios por vencer doctos.</span>
-                            <span class="text-muted font-size-xs">Próximos 30 días</span>
-                        </div>
-                    </div>
-                </div>
-                <button class="btn btn-xs btn-block btn-outline-secondary font-weight-bold text-white mt-4 py-2" style="border-color: var(--border-color); font-size: 11px;">VER TODAS LAS ALERTAS</button>
-            </div>
-        </div>
-    </div>
+    </section>
 </div>
-
 <form method="post" id="custodio_delete_form" action="{{ route('custodio.desactivarcustodio') }}" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="id" id="id_delete" value="">

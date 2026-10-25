@@ -38,6 +38,33 @@ var Modulo = function() {
 
         $( "#btnGuardar" ).click(function( e ) {
             e.preventDefault();
+            var fechaFaltante = false;
+
+            $("#tblDocumentos tbody tr").each(function () {
+                var $select = $(this).find("select[name^='id_documento[']");
+                var $fecha = $(this).find("input[name^='vigencia[']");
+
+                if (!$select.length || !$fecha.length) {
+                    return;
+                }
+
+                var requiereVigencia =
+                    $select.find("option:selected").attr("data-vigencia") === "1";
+
+                if (requiereVigencia && !$fecha.val()) {
+                    fechaFaltante = true;
+                    $fecha.addClass("is-invalid");
+                } else {
+                    $fecha.removeClass("is-invalid");
+                }
+            });
+
+            if (fechaFaltante) {
+                toastr.warning("Selecciona la fecha de vigencia de los documentos que la requieren.");
+
+                $('a[href="#kt_tab_pane_4"]').tab("show");
+                return;
+            }
             validador.validate().then(function(status) {
                 if (status === 'Valid'){
                     var btnGuardar = document.getElementById('btnGuardar');
@@ -64,6 +91,7 @@ var Modulo = function() {
         });
 
         lista = construyeElementosLista();
+        iniciarVigenciaDocumentos();
         //botón agregar otro archivo
         $( ".hrefAgregarOtro" ).on( "click", function(event) {
             event.preventDefault();
@@ -172,6 +200,7 @@ var Modulo = function() {
                         KTApp.unblock(block);
                         if (data.estatus){
                             $('#trFotografia'+id).remove();//elimina el elemento html
+                            $('#cuGalleryPhoto'+id).remove();
                             toastr.options =
                                 {
                                     "closeButton" : true,
@@ -198,10 +227,15 @@ var Modulo = function() {
     var construyeElementosLista = function () {
         var tipoArchivo = $("#tipoArchivo").val();
         var colTipoArchivo = JSON.parse(tipoArchivo);
-        var opcion ="";
+        var opcion = "";
 
-        $.each(colTipoArchivo, function(i, item) {
-            opcion += "<option value='"+i+"' >"+item+"</option>";
+        $.each(colTipoArchivo, function (id, item) {
+            opcion += $("<option>", {
+                value: id,
+                text: item.nombre
+            })
+            .attr("data-vigencia", Number(item.vigencia) === 1 ? "1" : "0")
+            .prop("outerHTML");
         });
 
         return opcion;
@@ -228,6 +262,37 @@ var Modulo = function() {
                 message: 'Por favor introduce un valor',
             },
         },
+    };
+
+    var actualizarVigenciaDocumento = function (select) {
+        var $select = $(select);
+        var $fila = $select.closest("tr");
+        var $opcion = $select.find("option:selected");
+        var requiereVigencia = $opcion.attr("data-vigencia") === "1";
+
+        var $fecha = $fila.find("input[name^='vigencia[']");
+        var $contenedor = $fecha.closest("td");
+
+        if (requiereVigencia) {
+            $contenedor.removeClass("cu-vigencia-oculta");
+            $fecha.prop("disabled", false);
+            $fecha.prop("required", true);
+        } else {
+            $fecha.val("");
+            $fecha.prop("required", false);
+            $fecha.prop("disabled", true);
+            $contenedor.addClass("cu-vigencia-oculta");
+        }
+    };
+
+    var iniciarVigenciaDocumentos = function () {
+        $(document).on(
+            "change",
+            "#tblDocumentos select[name^='id_documento[']",
+            function () {
+                actualizarVigenciaDocumento(this);
+            }
+        );
     };
 
     //agrega el elemento archivo y lista desplegable
@@ -269,9 +334,9 @@ var Modulo = function() {
         //agrega validación del elemento creado
         validador.addField('archivo[' + contadorDocumentos + ']', archivoValidador);
         validador.addField('id_documento[' + contadorDocumentos + ']', tipoArchivoValidador);
-        validador.addField('vigencia[' + contadorDocumentos + ']', tipoArchivoValidador);
         KTApp.initTooltips(); //inicia tooltip del elemento creado
         KTApp.initFileInput(); //inicia el elemento archivo del elemento creado
+        actualizarVigenciaDocumento(document.getElementById("id_documento" + contadorDocumentos))
     };
 
     //elimina un elemento
@@ -283,7 +348,6 @@ var Modulo = function() {
             //elimina la validación del elemento
             validador.removeField('archivo[' + idDocumento + ']');
             validador.removeField('id_documento[' + idDocumento + ']');
-            validador.removeField('vigencia[' + idDocumento + ']');
             $('#trDocumento'+idDocumento).remove();//elimina el elemento
         });
     };
@@ -333,6 +397,26 @@ var Modulo = function() {
     };
 
 
+    var iniciarGaleriaFotografias = function () {
+
+        $(document).on("click", ".cu-gallery-preview", function (e) {
+            e.preventDefault();
+
+            var url = $(this).attr("data-preview-url");
+            var titulo = $(this).attr("data-preview-title");
+
+            $("#cuGaleriaModalImagen").attr("src", url);
+            $("#cuGaleriaModalTitulo").text(titulo || "Vista previa");
+
+            $("#cuGaleriaModal").modal("show");
+        });
+
+        $("#cuGaleriaModal").on("hidden.bs.modal", function () {
+            $("#cuGaleriaModalImagen").attr("src", "");
+        });
+
+    };
+
 
     var eventosEspeciales = function () {
         $('#elemento1').val();
@@ -347,6 +431,7 @@ var Modulo = function() {
             eventosEspeciales();
             initSwalEliminarDdocumento();
             initSwalEliminarFotografia();
+            iniciarGaleriaFotografias();
         },
 
     };

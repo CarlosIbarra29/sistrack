@@ -1,8 +1,12 @@
 @extends('layouts.app')
+@push('styles')
+    <link href="{{ asset('css/inventario-custodios.css?v=7.1.1') }}" rel="stylesheet">
+@endpush
+
 @push('scripts')
-    {{-- <script src="{{ asset('js/custodios/AgregarCustodio.js') }}"></script> --}}
+    {{-- <script src="{{ asset('js/custodios/AgregarCustodio.js?v=1.0.3') }}"></script> --}}
     <script src="{{ asset('js/perfil/Informacion.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/custodios/EditarCustodio.js') }}"></script>
+    <script src="{{ asset('js/custodios/EditarCustodio.js?v=1.0.3') }}"></script>
 @endpush
 
 @section('title')
@@ -13,7 +17,7 @@
 
 
 <input type="hidden" id="documentoEliminarPath" value="{{ route('custodio.eliminardocumentocustodio') }}">
-<div class="container-fluid">
+<div class="container-fluid custodio-form-page">
     <form action="{{ route('custodio.updatecustodio') }}" method="post" id="submit_cliente" enctype="multipart/form-data">
     @csrf
 
@@ -21,7 +25,7 @@
     <!-- ENCABEZADO -->
     <div class="row mb-6">
         <div class="col-lg-12">
-            <div class="d-flex justify-content-between align-items-center cont-title-forms rounded shadow-sm px-6 py-5 border-left border-warning" style="border-left-width:5px !important;">
+            <div class="d-flex justify-content-between align-items-center cont-title-forms rounded shadow-sm px-6 py-5 border-left border-warning custodio-form-header">
                 <div>
                     <h2 class="mb-1 font-weight-bold title-forms text-white">EDITAR CUSTODIO</h2>
                     <span class="text-muted">Registra la información general y administrativa del custodio</span>
@@ -41,13 +45,15 @@
         <input type='hidden' id='tipoArchivo' value='{{ $cadenaTipoDocumento }}'>
         <input type='hidden' id='tipoArchivov' value='{{ $cadenaTipoDocumento }}'>
 
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="card card-custom shadow-sm border-0">
+        <div class="row custodio-form-main">
+            <div class="col-12">
+                <div class="card card-custom shadow-sm border-0 custodio-form-shell">
+                    <div class="card-body px-10 py-8">
+                <div class="card card-custom shadow-sm border-0 custodio-profile-card">
                     <div class="card-body px-10 py-8">
                         <div class="row ">
                             <div class="col-lg-12 text-center">
-                                <span class="text-muted ">Nuevo custodio</span>
+                                <span class="text-muted ">{{ trim(implode(" ", array_filter([$custodio->nombre_custodio, $custodio->ap_paterno, $custodio->ap_materno]))) }}</span>
                             </div>
                         </div>
 
@@ -80,21 +86,21 @@
 
                         <div class="row">
                             <div class="col-lg-12 text-center">
-                                <span class="label label-lg font-weight-bold label-inline" style="background-color: #54ff29; color:white; font-weight: bold">ACTIVO</span>
+                                <span class="label label-lg font-weight-bold label-inline custodio-profile-status">ACTIVO</span>
                             </div>
 
                             <div class="row ">
                                 <div class="col-lg-12 text-center">
-                                    <span style="font-size: 12px; color: white;">Sin número de empleado</span><br>
-                                    <span style="font-size: 10px; color: white;">Nuevo Registro</span>
+                                    <span class="custodio-profile-caption">Número de empleado: #{{ $custodio->id }}</span><br>
+                                    <span class="custodio-profile-subcaption">Expediente registrado</span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row mt-4">
                             <div class="col-lg-12">
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 75%; background-color: #FFA800; font-size: 14px;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
+                                <div class="progress custodio-profile-progress">
+                                    <div class="progress-bar" role="progressbar"  aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
                                 </div>
                             </div>
                         </div>        
@@ -118,11 +124,7 @@
 
                     </div>
                 </div>
-            </div>   
-            <div class="col-lg-9">
-                <div class="card card-custom shadow-sm border-0">
-                    <div class="card-body px-10 py-8">
-                        <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-warning mb-8">
+                        <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-warning mb-8 custodio-form-tabs">
                             <li class="nav-item">
                                 <a class="nav-link active font-weight-bold" data-toggle="tab" href="#kt_tab_pane_1">
                                     Información básica
@@ -348,7 +350,7 @@
                                         <label class="text-white">Identificacion</label>
                                         <div class="radio-inline mt-2">
                                             <label class="radio">
-                                                <input type="radio" checked name="identificacion_custodio" value="0" {{ $custodio->identificacion_custodio == 0 ? 'checked' : '' }}>
+                                                <input type="radio" name="identificacion_custodio" value="0" {{ $custodio->identificacion_custodio == 0 ? 'checked' : '' }}>
                                                 <span></span> Si
                                             </label>
                                             <label class="radio">
@@ -366,20 +368,23 @@
                                         <label class="text-white">Contrato</label>
                                         <div class="radio-inline mt-2">
                                             <label class="radio">
-                                                <input type="radio" checked name="contrato_custodio" value="1" {{ $custodio->contrato_custodio == 1 ? 'checked' : '' }}>
+                                                <input type="radio" name="contrato_custodio" value="1"
+                                                    {{ $custodio->contrato_custodio == 1 ? 'checked' : '' }}>
                                                 <span></span> Si
                                             </label>
                                             <label class="radio">
-                                                <input type="radio" name="contrato_custodio" value="2" {{ $custodio->contrato_custodio == 2 ? 'checked' : '' }}>
-                                                <span></span>  No
+                                                <input type="radio" name="contrato_custodio" value="2"
+                                                    {{ $custodio->contrato_custodio == 2 ? 'checked' : '' }}>
+                                                <span></span> No
                                             </label>
                                         </div>
                                     </div>
+
                                     <div class="col-lg-4">
-                                        <label class="text-white">Tipo de servicio</label>
+                                        <label class="text-white">Tipo de GPS</label>
                                         <div class="radio-inline mt-2">
                                             <label class="radio">
-                                                <input type="radio" checked name="tipo_gps" value="0" {{ $custodio->tipo_gps == 0 ? 'checked' : '' }}>
+                                                <input type="radio"  name="tipo_gps" value="0" {{ $custodio->tipo_gps == 0 ? 'checked' : '' }}>
                                                 <span></span> GPS Fijo
                                             </label>
                                             <label class="radio">
@@ -393,7 +398,7 @@
                                         <label class="text-white">Candados</label>
                                         <div class="radio-inline mt-2">
                                             <label class="radio">
-                                                <input type="radio" checked name="candado_servicio" value="1" {{ $custodio->candado_servicio == 1 ? 'checked' : '' }}>
+                                                <input type="radio"  name="candado_servicio" value="1" {{ $custodio->candado_servicio == 1 ? 'checked' : '' }}>
                                                 <span></span> Si
                                             </label>
                                             <label class="radio">
@@ -412,11 +417,13 @@
                                         <label class="text-white">Chaleco antireflejantes</label>
                                         <div class="radio-inline mt-2">
                                             <label class="radio">
-                                                <input type="radio" checked name="chaleco_servicio" value="1" {{ $custodio->chaleco_servicio == 1 ? 'checked' : '' }}>
+                                                <input type="radio" name="chaleco_servicio" value="1"
+                                                    {{ $custodio->chaleco_servicio == 1 ? 'checked' : '' }}>
                                                 <span></span> Si
                                             </label>
                                             <label class="radio">
-                                                <input type="radio" name="chaleco_servicio" value="2" {{ $custodio->chaleco_servicio == 1 ? 'checked' : '' }}>
+                                                <input type="radio" name="chaleco_servicio" value="2"
+                                                    {{ $custodio->chaleco_servicio == 2 ? 'checked' : '' }}>
                                                 <span></span> No
                                             </label>
                                         </div>
@@ -816,8 +823,15 @@
                             {{-- Control de confianza --}}
 
 
-                            <div class="tab-pane fade mt-10" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
-                                <table class="table mb-6 table-responsive" id="tblDocumentos">
+                            <div class="tab-pane fade mt-10 custodio-documents-section" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
+                                <div class="custodio-documents-heading">
+                                    <div class="custodio-documents-title">
+                                        <span class="custodio-documents-symbol"><i class="la la-file-alt"></i></span>
+                                        <div><h3>Expediente documental</h3><p>Consulta, adjunta y administra los documentos personales del custodio.</p></div>
+                                    </div>
+                                </div>
+                                <div class="custodio-documents-table-wrap">
+                                        <table class="table mb-6 table-responsive" id="tblDocumentos">
                                     <thead>
                                     <tr>
                                         <th scope="col">Documento</th>
@@ -831,7 +845,76 @@
                                             <tr id="trDocumento{{ $documento->id }}">
                                                 <td><a href="{{ route('archivo.documentocustodio', ['id'=>$documento->id]) }}" class="link-primary" target="_blank"> {{ $documento->custodioDocumentacion->tipo_documento }}</a></td>
                                                 <td>{{ $documento->custodioDocumentacion->tipo_documento }}</td>
-                                                <td>{{ $documento->vigencia }}</td>
+
+                                                <td>
+                                                    @if($documento->custodioDocumentacion && (int) $documento->custodioDocumentacion->vigencia === 0)
+
+                                                        <div class="custodio-doc-status custodio-doc-no-expiry">
+                                                            <span class="custodio-doc-status-label">
+                                                                <i class="la la-infinity"></i>
+                                                                Sin vencimiento
+                                                            </span>
+                                                        </div>
+
+                                                    @elseif($documento->vigencia)
+
+                                                        @php
+                                                            $fechaVencimiento = \Carbon\Carbon::parse($documento->vigencia)->startOfDay();
+                                                            $hoy = \Carbon\Carbon::today();
+                                                            $diasRestantes = (int) $hoy->diffInDays($fechaVencimiento,false);
+                                                        @endphp
+
+                                                        @if($diasRestantes < 0)
+
+                                                            <div class="custodio-doc-status custodio-doc-expired">
+                                                                <strong>
+                                                                    {{ $fechaVencimiento->format('d/m/Y') }}
+                                                                </strong>
+                                                                <span class="custodio-doc-status-label">
+                                                                    <i class="la la-times-circle"></i>
+                                                                    Documento vencido
+                                                                </span>
+                                                            </div>
+
+                                                        @elseif($diasRestantes < 10)
+
+                                                            <div class="custodio-doc-status custodio-doc-warning">
+                                                                <strong>
+                                                                    {{ $fechaVencimiento->format('d/m/Y') }}
+                                                                </strong>
+                                                                <span class="custodio-doc-status-label">
+                                                                    <i class="la la-exclamation-triangle"></i>
+                                                                    Documento por vencer
+                                                                </span>
+                                                            </div>
+
+                                                        @else
+
+                                                            <div class="custodio-doc-status custodio-doc-valid">
+                                                                <strong>
+                                                                    {{ $fechaVencimiento->format('d/m/Y') }}
+                                                                </strong>
+                                                                <span class="custodio-doc-status-label">
+                                                                    <i class="la la-check-circle"></i>
+                                                                    Documento vigente
+                                                                </span>
+                                                            </div>
+
+                                                        @endif
+
+                                                    @else
+
+                                                        <div class="custodio-doc-status custodio-doc-no-expiry">
+                                                            <span class="custodio-doc-status-label">
+                                                                <i class="la la-minus-circle"></i>
+                                                                Sin fecha registrada
+                                                            </span>
+                                                        </div>
+
+                                                    @endif
+                                                </td>
+
+                                                
                                                 <td>
                                                     <a href='#' class='btn btn-clean btn-icon btn-outline-danger mt-1 hrefEliminarDocumento' data-id='{{ $documento->id }}' data-documento='{{ $documento->documento }}'  data-toggle='tooltip' data-theme='dark' title='Eliminar'>
                                                         <i class='flaticon-delete'></i>
@@ -841,11 +924,12 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                        </div>
 
                                 <div class="row form-group">
                                     <div class="col-lg-12">
-                                        <a href="#" class="btn btn-icon btn-outline-warning btn-circle btn-sm mr-2 hrefAgregarOtro" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
-                                            <i class="flaticon2-plus"></i>
+                                        <a href="#" class="hrefAgregarOtro custodio-documents-add" data-toggle="tooltip" data-theme="dark" title="Agregar archivo">
+                                            <i class="flaticon2-plus"></i> Agregar documento
                                         </a>
                                     </div>
                                 </div>
@@ -859,102 +943,159 @@
             </div>     
         </div>
 
-        <div class="row mt-2">
-            <div class="col-lg-6">
+        
+        <div class="row mt-2 custodio-assets-row">
 
-                <div class="card card-custom shadow-sm border-0">
+            {{-- VEHÍCULO ASIGNADO --}}
+            <div class="col-lg-6">
+                <div class="card card-custom custodio-asset-card custodio-asset-vehicle">
+
                     <div class="card-header">
-                        <h3 class="card-title text-white">Vehículo asignado</h3>
+                        <h3 class="card-title">Vehículo asignado</h3>
+
                         <div class="card-toolbar">
                             @if($vehiculo_custod == null)
-                                <a href="{{ route('custodio.agregarvehiculo', $custodio->id) }}" class="btn btn-outline-warning font-weight-bold">
-                                    <i class="flaticon2-plus "></i> Agregar
+                                <a href="{{ route('custodio.agregarvehiculo', $custodio->id) }}"
+                                   class="btn btn-outline-warning font-weight-bold">
+                                    <i class="flaticon2-plus"></i> Agregar
                                 </a>
                             @else
-                                <a href="{{ route('custodio.editarvehiculo', $custodio->id) }}" class="btn btn-outline-warning font-weight-bold">
+                                <a href="{{ route('custodio.editarvehiculo', $custodio->id) }}"
+                                   class="btn btn-outline-warning font-weight-bold">
                                     <i class="flaticon2-edit"></i> Editar
                                 </a>
                             @endif
                         </div>
-
                     </div>
-                    <div class="card-body px-10 py-8">
+
+                    <div class="card-body">
                         @if($vehiculo_custod == null)
-                            <div class="form-group row">
-                                <span class="text-white">Para registrar el Vehículo es necesario registrar al custodio primero.</span>
+
+                            <div class="custodio-asset-empty">
+                                <i class="la la-car"></i>
+                                <strong>Sin vehículo registrado</strong>
+                                <span>Este custodio todavía no tiene un vehículo asignado.</span>
                             </div>
+
                         @else
 
-                            <div class="row">
-                                <div class="col-lg-5" >
-                                    <img src="{{ route('archivo.documentovehiculoficha', $vehiculo_custod->id) }}" style="width: 125px;">
+                            <div class="custodio-asset-detail">
+
+                                <div class="custodio-asset-photo">
+                                    <img src="{{ route('archivo.documentovehiculoficha', $vehiculo_custod->id) }}"
+                                         alt="Fotografía del vehículo asignado">
                                 </div>
-                                <div class="col-lg-7">
-                                    <label class="text-white">Marca:</label>
-                                    <span class="text-white">{{ $vehiculo_custod->vehiculo }}</span> <br>
-                                    <label class="text-white">No. Serie:</label>
-                                    <span class="text-white">{{ $vehiculo_custod->no_serie }}</span> <br>
-                                    <label class="text-white">Placa:</label>
-                                    <span class="text-white">{{ $vehiculo_custod->placa }}</span> <br>
-                                    <label class="text-white">Año:</label>
-                                    <span class="text-white">{{ $vehiculo_custod->year_unidad }}</span> <br>
+
+                                <div class="custodio-asset-information">
+                                    <span class="custodio-asset-eyebrow">UNIDAD ASIGNADA</span>
+                                    <h4>{{ $vehiculo_custod->vehiculo ?: 'Vehículo sin marca' }}</h4>
+
+                                    <div class="custodio-asset-fields">
+                                        <div>
+                                            <span>No. de serie</span>
+                                            <strong>{{ $vehiculo_custod->no_serie ?: 'No registrado' }}</strong>
+                                        </div>
+
+                                        <div>
+                                            <span>Placas</span>
+                                            <strong>{{ $vehiculo_custod->placa ?: 'No registradas' }}</strong>
+                                        </div>
+
+                                        <div>
+                                            <span>Año</span>
+                                            <strong>{{ $vehiculo_custod->year_unidad ?: 'No registrado' }}</strong>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
 
                         @endif
                     </div>
                 </div>
+            </div>
 
-            </div> 
-
+            {{-- DATOS DEL ARMA --}}
             <div class="col-lg-6">
+                <div class="card card-custom custodio-asset-card custodio-asset-weapon">
 
-                <div class="card card-custom shadow-sm border-0">
                     <div class="card-header">
-                        <h3 class="card-title text-white">Datos del Arma</h3>
+                        <h3 class="card-title">Datos del Arma</h3>
+
                         <div class="card-toolbar">
-                            @if($arma_custod == null)
-                                <a href="{{ route('custodio.agregararma', $custodio->id) }}" class="btn btn-outline-warning font-weight-bold">
-                                    <i class="flaticon2-plus "></i> Agregar
-                                </a>
-                            @else
-                                <a href="{{ route('custodio.editararma', $custodio->id) }}" class="btn btn-outline-warning font-weight-bold">
-                                    <i class="flaticon2-edit"></i> Editar
-                                </a>
+                            @if((int) $custodio->tipo_custodio !== 3)
+                                @if($arma_custod == null)
+                                    <a href="{{ route('custodio.agregararma', $custodio->id) }}"
+                                       class="btn btn-outline-warning font-weight-bold">
+                                        <i class="flaticon2-plus"></i> Agregar
+                                    </a>
+                                @else
+                                    <a href="{{ route('custodio.editararma', $custodio->id) }}"
+                                       class="btn btn-outline-warning font-weight-bold">
+                                        <i class="flaticon2-edit"></i> Editar
+                                    </a>
+                                @endif
                             @endif
                         </div>
                     </div>
-                    <div class="card-body px-10 py-8">
-                        @if($arma_custod == null)
-                            <div class="form-group row">
-                                <span class="text-white">Para registrar el arma es necesario registrar al custodio primero.</span>
+
+                    <div class="card-body">
+
+                        @if((int) $custodio->tipo_custodio === 3)
+
+                            <div class="custodio-asset-empty custodio-asset-restricted">
+                                <i class="la la-ban"></i>
+                                <strong>Arma no permitida</strong>
+                                <span>Este tipo de custodio no puede tener arma asignada.</span>
                             </div>
+
+                        @elseif($arma_custod == null)
+
+                            <div class="custodio-asset-empty">
+                                <i class="la la-shield"></i>
+                                <strong>Sin arma registrada</strong>
+                                <span>Este custodio todavía no tiene un arma asignada.</span>
+                            </div>
+
                         @else
-                            <div class="row">
-                                <div class="col-lg-5" >
-                                    <img src="{{ route('archivo.documentoarmaficha', $arma_custod->id) }}" style="width: 145px;">
-                                </div>
-                                <div class="col-lg-7">
-                                    <label class="text-white">No. Registro:</label>
-                                    <span class="text-white">{{ $arma_custod->registro_arma }}</span> <br>
-                                    <label class="text-white">Figencia de portacion:</label>
-                                    <span class="text-white">{{ $arma_custod->vigencia_portacion }}</span> <br>
 
+                            <div class="custodio-asset-detail">
+
+                                <div class="custodio-asset-photo">
+                                    <img src="{{ route('archivo.documentoarmaficha', $arma_custod->id) }}"
+                                         alt="Fotografía del arma registrada">
                                 </div>
-                            </div>                        
+
+                                <div class="custodio-asset-information">
+                                    <span class="custodio-asset-eyebrow">EQUIPO REGISTRADO</span>
+                                    <h4>Arma asignada</h4>
+
+                                    <div class="custodio-asset-fields">
+                                        <div>
+                                            <span>No. de registro</span>
+                                            <strong>{{ $arma_custod->registro_arma ?: 'No registrado' }}</strong>
+                                        </div>
+
+                                        <div>
+                                            <span>Vigencia de portación</span>
+                                            <strong>{{ $arma_custod->vigencia_portacion ?: 'No registrada' }}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
                         @endif
-
                     </div>
                 </div>
-
-            </div> 
+            </div>
 
         </div>
 
-        <div class="row mt-2">
+        <div class="row mt-2 custodio-notes-row">
             <div class="col-lg-12">
 
-                <div class="card card-custom shadow-sm border-0">
+                <div class="card card-custom shadow-sm border-0 custodio-notes-card">
                     <div class="card-body px-10 py-8">
                     
                         <div class="form-group">
