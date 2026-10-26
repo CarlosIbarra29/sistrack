@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=2.1.7') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=2.1.8') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
@@ -593,15 +593,15 @@
                             <tr>
                                 <th>Bitacora</th>
                                 <th>Folio</th>
-                                <th>Fecha y Hora</th>
-                                <th>Obs</th>
                                 <th>Cliente</th>
+                                <th>Acciones</th>
+                                <th>Fecha y Hora</th>
                                 <th>Origen</th>
                                 <th>Destino</th>
                                 <th>Custodio</th>
                                 <th>Custodio Acompañante</th>
                                 <th>Estatus</th>
-                                <th class="text-center">Editar</th>
+                                <th class="text-center">Deshabilitar</th>
                             </tr>
                         </thead>
 
@@ -626,31 +626,25 @@
 
                                     </td>
 
-                                    <td class="programacion-table-time">
-                                        {{ $unid->folio_interno ?? 'Sin folio' }}
+                                     <td class="programacion-table-client">
+                                        {{ $unid->nombre_cliente }}
                                     </td>
 
                                     <td class="programacion-table-time">
-
-                                        @if(!empty($unid->fecha_servicio) &&
-                                            $unid->fecha_servicio !== '0000-00-00 00:00:00')
-
-                                            {{ date('d/m/Y h:i A', strtotime($unid->fecha_servicio)) }}
-
-                                        @else
-
-                                            <span class="programacion-sin-horario">
-                                                <i class="la la-clock-o"></i>
-                                                SIN HORARIO
-                                            </span>
-
-                                        @endif
-
+                                        {{ $unid->folio_interno ?? 'Sin folio' }}
                                     </td>
 
                                     <td class="text-center">
 
                                         <div class="programacion-row-actions">
+
+                                            <a href="{{ route('programacion.editarprogramacion', $unid->id) }}"
+                                               class="programacion-row-action programacion-row-action--edit"
+                                               title="Editar programación">
+
+                                                <i class="la la-edit"></i>
+
+                                            </a>
 
                                             <a href="#"
                                                class="programacion-row-action programacion-row-action--comment"
@@ -667,8 +661,24 @@
 
                                     </td>
 
-                                    <td class="programacion-table-client">
-                                        {{ $unid->nombre_cliente }}
+                                    <td class="programacion-table-time">
+
+                                        @if(!empty($unid->fecha_servicio) &&
+                                            $unid->fecha_servicio !== '0000-00-00 00:00:00')
+
+                                            {{ date('d/m/Y h:i A', strtotime($unid->fecha_servicio)) }}<br>
+                                            <!-- {{ date('d/m/Y', strtotime($unid->fecha_servicio)) }}<br>
+                                            {{ date('h:i A', strtotime($unid->fecha_servicio)) }} -->
+
+                                        @else
+
+                                            <span class="programacion-sin-horario">
+                                                <i class="la la-clock-o"></i>
+                                                SIN HORARIO
+                                            </span>
+
+                                        @endif
+
                                     </td>
 
                                     <td class="programacion-table-route" title="{{ $unid->dom_origen }}">
@@ -820,14 +830,6 @@
                                     <td class="text-center">
 
                                         <div class="programacion-row-actions">
-
-                                            <a href="{{ route('programacion.editarprogramacion', $unid->id) }}"
-                                               class="programacion-row-action programacion-row-action--edit"
-                                               title="Editar programación">
-
-                                                <i class="la la-edit"></i>
-
-                                            </a>
 
                                             <button class="btn btn-clean btn-icon programacion-row-action--edit" onClick="deleteprogramacion('{{$unid->id}}', '{{$unid->id }}')" data-theme="dark" data-toggle="tooltip" data-placement="top">
                                                 <span class="svg-icon svg-icon-md">

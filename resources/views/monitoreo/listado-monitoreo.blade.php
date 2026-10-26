@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=1.2.8') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=1.3.0') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
@@ -154,20 +154,20 @@
                             Bitácora
                         </th>
 
+                        <th class="monitoreo-col-cliente">
+                            Cliente
+                        </th>
+
                         <th class="monitoreo-col-folio">
                             Folio
                         </th>
 
                         <th class="monitoreo-col-inc">
-                            Inc.
+                            Acciones
                         </th>
 
                         <th class="monitoreo-col-estatus">
                             Estatus
-                        </th>
-
-                        <th class="monitoreo-col-cliente">
-                            Cliente
                         </th>
 
                         <th class="monitoreo-col-fecha">
@@ -218,9 +218,9 @@
                             Causa
                         </th>
 
-                        <th class="monitoreo-col-acciones text-center">
+                        <!-- <th class="monitoreo-col-acciones text-center">
                             Acciones
-                        </th>
+                        </th> -->
                     </tr>
                 </thead>
 
@@ -248,6 +248,10 @@
                                 </div>
                             </td>
 
+                            <td class="monitoreo-client">
+                                {{ $unid->nombre_cliente }}
+                            </td>
+
                             <td class="monitoreo-id">
                                 <span class="monitoreo-bitacora-number">
                                     {{ $unid->folio_interno ?? 'Sin folio' }}
@@ -256,6 +260,13 @@
 
                             <td>
                                 <div class="monitoreo-row-actions">
+
+                                    <a href="{{ route('monitoreo.moduloestadias', $unid->id) }}"
+                                       class="monitoreo-action"
+                                       title="Generales transportes">
+                                        <i class="flaticon-presentation-1"></i>
+                                    </a>
+
 
                                     <button type="button"
                                             class="monitoreo-action js-add-incidencia"
@@ -307,10 +318,6 @@
 
                                 </div>
 
-                            </td>
-
-                            <td class="monitoreo-client">
-                                {{ $unid->nombre_cliente }}
                             </td>
 
                             <td class="monitoreo-date" data-fecha-servicio="{{ $unid->fecha_servicio && strtotime($unid->fecha_servicio) > 0
@@ -563,7 +570,7 @@
 
                             </td>
 
-                            <td>
+                            <!-- <td>
                                 <div class="monitoreo-row-actions">
 
                                     <a href="{{ route('monitoreo.verprogramacionmon', $unid->id) }}"
@@ -579,7 +586,7 @@
                                     </a>
 
                                 </div>
-                            </td>
+                            </td> -->
 
                         </tr>
                     @endforeach

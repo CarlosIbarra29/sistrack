@@ -2210,6 +2210,96 @@ tr.programacion-row-sin-custodio td {
 }
 
 
+/* ==========================================================
+   PROGRAMACIÓN - PRIMERAS 4 COLUMNAS FIJAS
+========================================================== */
+
+.programacion-page .programacion-services-table {
+    --col-1: 90px;
+    --col-2: 85px;
+    --col-3: 85px;
+    --col-4: 75px;
+}
+
+.programacion-page .programacion-services-table tr > :nth-child(1) {
+    width: var(--col-1);
+    min-width: var(--col-1);
+    max-width: var(--col-1);
+}
+
+.programacion-page .programacion-services-table tr > :nth-child(2) {
+    width: var(--col-2);
+    min-width: var(--col-2);
+    max-width: var(--col-2);
+}
+
+.programacion-page .programacion-services-table tr > :nth-child(3) {
+    width: var(--col-3);
+    min-width: var(--col-3);
+    max-width: var(--col-3);
+}
+
+.programacion-page .programacion-services-table tr > :nth-child(4) {
+    width: var(--col-4);
+    min-width: var(--col-4);
+    max-width: var(--col-4);
+}
+
+/* Columnas fijas */
+
+.programacion-page .programacion-services-table tr > :nth-child(-n+4) {
+    position: sticky;
+    background: #111a24;
+}
+
+.programacion-page .programacion-services-table tr > :nth-child(1) {
+    left: 0;
+}
+
+.programacion-page .programacion-services-table tr > :nth-child(2) {
+    left: var(--col-1);
+}
+
+.programacion-page .programacion-services-table tr > :nth-child(3) {
+    left: calc(var(--col-1) + var(--col-2));
+}
+
+.programacion-page .programacion-services-table tr > :nth-child(4) {
+    left: calc(var(--col-1) + var(--col-2) + var(--col-3));
+}
+
+.programacion-page .programacion-services-table thead th:nth-child(-n+4) {
+    position: sticky !important;
+    top: 0;
+    z-index: 35;
+    background: #eba72f !important;
+}
+
+.programacion-page .programacion-services-table tbody td:nth-child(-n+4) {
+    z-index: 10;
+}
+
+.programacion-page .programacion-services-table tr > :nth-child(4) {
+    box-shadow: 1px 0 0 #3a4d65;
+}
+
+.programacion-page .programacion-services-table tbody tr:hover td:nth-child(-n+4) {
+    background: #172331;
+}
+
+.programacion-page .programacion-services-table tbody tr.programacion-row-sin-custodio td:nth-child(-n+4) {
+    background: #24231d;
+}
+
+@media print {
+    .programacion-page .programacion-services-table tr > :nth-child(-n+4) {
+        position: static !important;
+        box-shadow: none;
+    }
+}
+
+
+
 /* RESPONSIVE */
 
 @media (max-width: 767.98px) {
@@ -4716,57 +4806,108 @@ td {
 }
 
 /*Aqui se quita si no les gusta que se quede fijo la columna de bitacora*/
-/* ==========================================================================
-   SISTRACK - MONITOREO
-   PRIMERA COLUMNA FIJA (BITÁCORA)
-   ========================================================================== */
 
-/* Encabezado fijo al desplazarse horizontal y verticalmente */
-.monitoreo-page .monitoreo-table thead th:first-child {
-    position: sticky;
-    top: 0;
-    left: 0;
-    z-index: 30;
-    min-width: 105px;
-    background: #eba72f;
-    box-shadow: 2px 0 0 rgba(0, 0, 0, .12);
+/* ==========================================================
+   MONITOREO - PRIMERAS 4 COLUMNAS FIJAS
+========================================================== */
+
+.monitoreo-page .monitoreo-table {
+    --col-1: 100px;
+    --col-2: 90px;
+    --col-3: 90px;
+    --col-4: 80px;
 }
 
-/* Primera columna fija al desplazarse horizontalmente */
-.monitoreo-page .monitoreo-table tbody td:first-child {
+/* Anchos de las primeras cuatro columnas */
+
+.monitoreo-page .monitoreo-table tr > :nth-child(1) {
+    width: var(--col-1);
+    min-width: var(--col-1);
+    max-width: var(--col-1);
+}
+
+.monitoreo-page .monitoreo-table tr > :nth-child(2) {
+    width: var(--col-2);
+    min-width: var(--col-2);
+    max-width: var(--col-2);
+}
+
+.monitoreo-page .monitoreo-table tr > :nth-child(3) {
+    width: var(--col-3);
+    min-width: var(--col-3);
+    max-width: var(--col-3);
+}
+
+.monitoreo-page .monitoreo-table tr > :nth-child(4) {
+    width: var(--col-4);
+    min-width: var(--col-4);
+    max-width: var(--col-4);
+}
+
+/* Columnas fijas */
+
+.monitoreo-page .monitoreo-table tr > :nth-child(-n+4) {
     position: sticky;
-    left: 0;
-    z-index: 10;
-    min-width: 105px;
     background: #111a24;
-    box-shadow: 1px 0 0 #263547;
 }
 
-/* Mantener el color de la fila al pasar el mouse */
-.monitoreo-page .monitoreo-table tbody tr:hover td:first-child {
+.monitoreo-page .monitoreo-table tr > :nth-child(1) {
+    left: 0;
+}
+
+.monitoreo-page .monitoreo-table tr > :nth-child(2) {
+    left: var(--col-1);
+}
+
+.monitoreo-page .monitoreo-table tr > :nth-child(3) {
+    left: calc(var(--col-1) + var(--col-2));
+}
+
+.monitoreo-page .monitoreo-table tr > :nth-child(4) {
+    left: calc(var(--col-1) + var(--col-2) + var(--col-3));
+}
+
+/* Encabezados */
+
+.monitoreo-page .monitoreo-table thead th:nth-child(-n+4) {
+    top: 0;
+    z-index: 35;
+    background: #eba72f;
+}
+
+/* Celdas */
+
+.monitoreo-page .monitoreo-table tbody td:nth-child(-n+4) {
+    z-index: 10;
+}
+
+/* Separador de columnas fijas */
+
+.monitoreo-page .monitoreo-table tr > :nth-child(4) {
+    box-shadow: 1px 0 0 #3a4d65;
+}
+
+/* Hover */
+
+.monitoreo-page .monitoreo-table tbody tr:hover td:nth-child(-n+4) {
     background: #172331;
 }
 
-/* Respetar el indicador de servicios sin custodio */
-.monitoreo-page .monitoreo-table tbody tr.monitoreo-row-sin-custodio td:first-child {
+/* Servicios sin custodio */
+
+.monitoreo-page .monitoreo-table tbody tr.monitoreo-row-sin-custodio td:nth-child(-n+4) {
     background: #24231d;
 }
 
-/* Mantener visible el folio de bitácora */
-.monitoreo-page .monitoreo-table tbody td:first-child .monitoreo-folio {
-    position: relative;
-    z-index: 1;
-    white-space: nowrap;
-}
+/* Impresión */
 
-/* En impresión no necesitamos columnas fijas */
 @media print {
-    .monitoreo-page .monitoreo-table thead th:first-child,
-    .monitoreo-page .monitoreo-table tbody td:first-child {
+    .monitoreo-page .monitoreo-table tr > :nth-child(-n+4) {
         position: static;
         box-shadow: none;
     }
 }
+
 /*Aqui se quita si no les gusta que se quede fijo la columna de bitacora*/
 
 
@@ -11574,4 +11715,37 @@ i{color: white!important;}
         text-align: center;
         justify-content: center;
     }
+}
+
+
+
+   /*MÓVIL - DESACTIVAR COLUMNAS FIJAS
+   MONITOREO Y PROGRAMACIÓN*/
+
+@media (max-width: 767px) {
+
+    /* MONITOREO */
+
+    .monitoreo-page .monitoreo-table tr > :nth-child(-n+4) {
+        position: static !important;
+        left: auto !important;
+        box-shadow: none !important;
+    }
+
+    .monitoreo-page .monitoreo-table tbody td:nth-child(-n+4) {
+        z-index: auto !important;
+    }
+
+    /* PROGRAMACIÓN */
+
+    .programacion-page .programacion-services-table tr > :nth-child(-n+4) {
+        position: static !important;
+        left: auto !important;
+        box-shadow: none !important;
+    }
+
+    .programacion-page .programacion-services-table tbody td:nth-child(-n+4) {
+        z-index: auto !important;
+    }
+
 }
