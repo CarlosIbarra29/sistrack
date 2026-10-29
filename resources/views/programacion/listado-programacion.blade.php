@@ -592,8 +592,8 @@
                         <thead>
                             <tr>
                                 <th>Bitacora</th>
-                                <th>Folio</th>
                                 <th>Cliente</th>
+                                <th>Folio</th>
                                 <th>Acciones</th>
                                 <th>Fecha y Hora</th>
                                 <th>Origen</th>

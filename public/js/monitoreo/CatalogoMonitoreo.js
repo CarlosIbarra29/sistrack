@@ -355,16 +355,15 @@
             return boton;
         },
 
+                
         exportarCSV: function () {
 
             if (!this.filtradas.length) {
-
                 Swal.fire(
                     "Sin información",
                     "No hay servicios para exportar con los filtros actuales.",
                     "info"
                 );
-
                 return;
             }
 
@@ -376,112 +375,122 @@
 
             var encabezados = [];
 
+            // Exportar todas las columnas, excepto Acciones.
+            var columnas = [];
+
             Array.prototype.forEach.call(
                 tabla.querySelectorAll("thead th"),
                 function (th, index) {
 
-                    if (
-                        index ===
-                        tabla.querySelectorAll("thead th").length - 1
-                    ) {
+                    var titulo = (th.innerText || "")
+                        .replace(/\s+/g, " ")
+                        .trim();
+
+                    if (titulo.toLowerCase() === "acciones") {
                         return;
                     }
 
-                    encabezados.push(
-                        (th.innerText || "")
-                            .replace(/\s+/g, " ")
-                            .trim()
-                    );
+                    columnas.push(index);
+                    encabezados.push(titulo);
                 }
             );
 
-            var filas = [
-                encabezados
-            ];
+            var filas = [encabezados];
 
             this.filtradas.forEach(function (fila) {
 
                 var datos = [];
 
-                Array.prototype.forEach.call(
-                    fila.cells,
-                    function (celda, index) {
+                columnas.forEach(function (index) {
 
-                        /* Última columna = acciones */
-                        if (
-                            index ===
-                            fila.cells.length - 1
-                        ) {
-                            return;
-                        }
+                    var celda = fila.cells[index];
 
-                        var select =
-                            celda.querySelector(
-                                "select"
-                            );
+                    if (!celda) {
+                        datos.push("");
+                        return;
+                    }
 
-                        if (
-                            select &&
-                            select.selectedIndex >= 0
-                        ) {
+                    // Fechas operativas: obtener el valor del input.
+                    var fechaInput = celda.querySelector(
+                        'input[type="datetime-local"]'
+                    );
+
+                    if (fechaInput) {
+
+                        var fecha = fechaInput.value;
+
+                        if (fecha) {
+                            var partes = fecha.split("T");
+                            var fechaPartes = partes[0].split("-");
 
                             datos.push(
-                                select.options[
-                                    select.selectedIndex
-                                ].text.trim()
+                                fechaPartes[2] + "/" +
+                                fechaPartes[1] + "/" +
+                                fechaPartes[0] + " " +
+                                (partes[1] || "")
                             );
-
-                            return;
+                        } else {
+                            datos.push("");
                         }
 
-                        datos.push(
-                            (celda.innerText || "")
-                                .replace(/\s+/g, " ")
-                                .trim()
-                        );
+                        return;
                     }
-                );
+
+                    // Selectores de estatus y puntualidad.
+                    var select = celda.querySelector("select");
+
+                    if (select && select.selectedIndex >= 0) {
+
+                        datos.push(
+                            select.options[
+                                select.selectedIndex
+                            ].text.trim()
+                        );
+
+                        return;
+                    }
+
+                    // Resto de columnas.
+                    datos.push(
+                        (celda.innerText || "")
+                            .replace(/\s+/g, " ")
+                            .trim()
+                    );
+                });
 
                 filas.push(datos);
             });
 
             var csv = filas
                 .map(function (fila) {
-
                     return fila
                         .map(function (valor) {
-
                             return '"' +
                                 String(valor)
                                     .replace(/"/g, '""') +
                                 '"';
-
                         })
                         .join(",");
-
                 })
                 .join("\r\n");
 
             var blob = new Blob(
-                [
-                    "\uFEFF" + csv
-                ],
+                ["\uFEFF" + csv],
                 {
-                    type:
-                        "text/csv;charset=utf-8;"
+                    type: "text/csv;charset=utf-8;"
                 }
             );
 
-            var url =URL.createObjectURL( blob);
-            var link =document.createElement("a");
+            var url = URL.createObjectURL(blob);
+            var link = document.createElement("a");
 
             link.href = url;
+            link.download = "servicios_monitoreo.csv";
 
-            link.download ="servicios_monitoreo.csv";
             document.body.appendChild(link);
-
             link.click();
-            document.body.removeChild( link);
+            document.body.removeChild(link);
+
             URL.revokeObjectURL(url);
         },
     };

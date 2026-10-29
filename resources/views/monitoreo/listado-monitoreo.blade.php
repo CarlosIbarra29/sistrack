@@ -7,7 +7,7 @@
 @push('scripts')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <script src="{{ asset('js/monitoreo/ValidacionFechasOperativas.js?v=1.0.0') }}"></script>
-    <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js?v=3.0.2') }}"></script>
+    <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js?v=3.0.3') }}"></script>
 @endpush
 
 @section('title')
