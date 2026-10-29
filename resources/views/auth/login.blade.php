@@ -197,7 +197,7 @@
 
                             <div class="form-group sistrack-login-field">
 
-                                <label class="sistrack-login-label">
+{{--                                 <label class="sistrack-login-label">
                                     Verificación de seguridad
                                 </label>
 
@@ -240,7 +240,7 @@
                                         name="captcha"
                                         required>
 
-                                </div>
+                                </div> --}}
 
                             </div>
 
