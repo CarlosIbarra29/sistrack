@@ -37,18 +37,17 @@ class AuthenticatedSessionController extends Controller
 {
     try {
 
-        $credentials = $request->only(['email', 'password','captcha']);
+        $credentials = $request->only(['email', 'password']);
         $validator = Validator::make($credentials, [
             'email' => 'required',
-            'password' => 'required',
-            'captcha' => 'required|captcha'
+            'password' => 'required'
         ]);
 
         if ($validator->fails()) {
             return Redirect::back()->withInput()->withErrors($validator);
         }
 
-        unset($credentials['captcha']);
+        // unset($credentials['captcha']);
 
         $request->authenticate();
 
