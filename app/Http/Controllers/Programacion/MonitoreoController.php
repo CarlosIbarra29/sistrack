@@ -92,6 +92,7 @@ class MonitoreoController extends Controller
             ->whereNotIn('programacion.programacion_estatus_id', [6, 7,10])
             ->orderByDesc('programacion.estatus_custodio')
             ->orderBy('programacion.fecha_servicio', 'asc')
+            ->orderBy('programacion.id', 'asc')
             ->get();
 
 

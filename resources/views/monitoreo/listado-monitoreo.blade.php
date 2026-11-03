@@ -327,7 +327,9 @@
                                 @if($unid->fecha_servicio &&
                                     strtotime($unid->fecha_servicio) > 0)
 
-                                    {{ date('d/m/Y h:i A', strtotime($unid->fecha_servicio)) }}
+                                    <!-- {{ date('d/m/Y h:i A', strtotime($unid->fecha_servicio)) }} -->
+                                    {{ date('d/m/Y', strtotime($unid->fecha_servicio)) }}<br>
+                                    {{ date('h:i A', strtotime($unid->fecha_servicio)) }}
 
                                 @else
 
