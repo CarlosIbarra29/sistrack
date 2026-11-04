@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@push('styles') <link rel="stylesheet" href="{{ asset('css/clientes.css') }}">
+@push('styles') <link rel="stylesheet" href="{{ asset('css/clientes.css?v=1.1.1') }}">
 @endpush
 
 @push('scripts') <script src="{{ asset('js/cliente/EditarCliente.js') }}"></script>
@@ -12,7 +12,7 @@ Ver cliente
 
 @section('content')
 
-<div class="cliente-edit-page">
+<div class="cliente-edit-page cliente-view-page">
 
 <div class="cliente-page-header">
     <div class="cliente-page-title">
@@ -66,286 +66,73 @@ Ver cliente
 
     <div class="cliente-content">
         <div class="tab-content">
-            <div class="tab-pane fade show active"
-                 id="kt_tab_info">
-                <div class="cliente-panel">
-                    <div class="cliente-panel-header">
-                        <div>
-                            <span class="cliente-section-label">
-                                INFORMACIÓN GENERAL
-                            </span>
-                            <h3>
-                                Datos generales
-                            </h3>
+            <div class="tab-pane fade show active" id="kt_tab_info">
+                <section class="cv-identity">
+                    <div class="cv-identity-mark"><i class="flaticon2-user"></i></div>
+                    <div class="cv-identity-main">
+                        <span class="cv-eyebrow">FICHA DEL CLIENTE</span>
+                        <h3>{{ $data->nombre_cliente ?: 'Cliente sin nombre' }}</h3>
+                        <div class="cv-identity-meta">
+                            <span><i class="flaticon2-building"></i> {{ $data->razon_social ?: 'Sin razón social' }}</span>
+                            <span class="cv-group"><i class="flaticon2-group"></i> {{ $data->grupo ?: 'Sin grupo' }}</span>
                         </div>
                     </div>
+                    <div class="cv-readonly"><i class="flaticon2-information"></i> Solo consulta</div>
+                </section>
 
-
-                    <div class="cliente-panel-body">
-                        <div class="form-group row">
-                            <div class="col-lg-4">
-                                <span class="titulo-lb">
-                                    Razón social
-                                </span>
-                                <div class="form-control st-input"
-                                     style="height:auto; min-height:43px; background-color:#f8f9fa;">
-                                    {{ $data->razon_social }}
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4">
-                               <span class="titulo-lb">
-                                    Nombre comercial / Cliente
-                                </span>
-                                <div class="form-control st-input"
-                                     style="height:auto; min-height:43px; background-color:#f8f9fa;">
-                                    {{ $data->nombre_cliente }}
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4">
-                                <span class="titulo-lb">
-                                    Grupo
-                                </span>
-                                <div class="form-control st-input"
-                                     style="height:auto; min-height:43px; background-color:#f8f9fa;">
-                                    {{ $data->grupo ?: 'Sin grupo' }}
-                                </div>
-                            </div>
-                        </div>
+                <section class="cv-section">
+                    <div class="cv-section-heading">
+                        <div><span class="cv-eyebrow">CONFIGURACIÓN DEL SERVICIO</span><h3>Información técnica</h3></div>
+                        <i class="flaticon2-settings cv-heading-icon"></i>
                     </div>
-                </div>
-
-                <div class="cliente-panel">
-                   <div class="cliente-panel-header">
-                       <div>
-                            <span class="cliente-section-label">
-                                CONFIGURACIÓN DEL SERVICIO
-                            </span>
-                            <h3>
-                                Información técnica
-                            </h3>
-                        </div>
+                    <div class="cv-metrics">
+                        <div class="cv-metric"><span class="cv-metric-label">Días de crédito</span><strong>{{ $data->dias_credito !== null && $data->dias_credito !== '' ? $data->dias_credito : '—' }}</strong><small>Días</small></div>
+                        <div class="cv-metric"><span class="cv-metric-label">Costo km extraordinario</span><strong>${{ number_format($data->costo_km, 2) }}</strong><small>Por kilómetro</small></div>
+                        <div class="cv-metric"><span class="cv-metric-label">Horas de estadía armada</span><strong>${{ number_format($data->costo_estadia, 2) }}</strong><small>Tarifa registrada</small></div>
+                        <div class="cv-metric"><span class="cv-metric-label">Horas de estadía no armada</span><strong>${{ number_format($data->costo_estadia_armada, 2) }}</strong><small>Tarifa registrada</small></div>
                     </div>
-
-                    <div class="cliente-panel-body">
-                        <div class="form-group row">
-                            <div class="col-lg-3">
-                                <span class="titulo-lb">
-                                    Días de crédito
-                                </span>
-                                <div class="form-control st-input"
-                                     style="height:auto; min-height:43px; background-color:#f8f9fa;">
-                                    {{ $data->dias_credito }}
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <span class="titulo-lb">
-                                    Costo km extraordinario
-                                </span>
-
-                                <div class="form-control st-input"
-                                     style="height:auto; min-height:43px; background-color:#f8f9fa;">
-                                    ${{ number_format($data->costo_km, 2) }}
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <span class="titulo-lb">
-                                    Horas de estadía armada
-                                </span>
-                                <div class="form-control st-input"
-                                     style="height:auto; min-height:43px; background-color:#f8f9fa;">
-                                    ${{ number_format($data->costo_estadia, 2) }}
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <span class="titulo-lb">
-                                    Horas de estadía no armada
-                                </span>
-                                <div class="form-control st-input"
-                                     style="height:auto; min-height:43px; background-color:#f8f9fa;">
-                                    ${{ number_format($data->costo_estadia_armada, 2) }}
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <span class="titulo-lb">
-                                    Servicio con arma
-                                </span>
-                                <div class="form-control form-control-lg st-input"
-                                     style="height:auto; min-height:48px; background-color:#f8f9fa;">
-                                    ${{ number_format($data->servicio_arma, 2) }}
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <span class="titulo-lb">
-                                    Servicio sin arma
-                                </span>
-                                <div class="form-control form-control-lg st-input"
-                                     style="height:auto; min-height:48px; background-color:#f8f9fa;">
-                                    ${{ number_format($data->servicio_sin_arma, 2) }}
-                                </div>
-                            </div>
-                        </div>
+                    <div class="cv-service-grid">
+                        <div class="cv-service"><div class="cv-service-title"><i class="flaticon2-shield"></i> Servicio con arma</div><strong>${{ number_format($data->servicio_arma, 2) }}</strong></div>
+                        <div class="cv-service"><div class="cv-service-title"><i class="flaticon2-check-mark"></i> Servicio sin arma</div><strong>${{ number_format($data->servicio_sin_arma, 2) }}</strong></div>
                     </div>
-                </div>
+                </section>
 
-                <div class="cliente-panel">
-                    <div class="cliente-panel-header">
-                        <div>
-                            <span class="cliente-section-label">
-                                CONTACTOS
-                            </span>
-                            <h3>
-                                Contactos
-                            </h3>
-                        </div>
+                <section class="cv-section">
+                    <div class="cv-section-heading"><div><span class="cv-eyebrow">DIRECTORIO</span><h3>Contactos del cliente</h3></div><span class="cv-count">{{ count($cliente_operativo) }} contactos</span></div>
+                    <div class="cv-contact-grid">
+                        @forelse($cliente_operativo as $documento)
+                            <article class="cv-contact">
+                                <div class="cv-contact-top"><div class="cv-contact-avatar"><i class="flaticon2-user"></i></div><div class="cv-contact-title"><strong>{{ $documento->nombre_operativo ?: 'Sin nombre' }}</strong><span class="cliente-type-badge">{{ $documento->id_tipo_contacto == 1 ? 'Operativo' : 'Facturación y cobranza' }}</span></div></div>
+                                <div class="cv-contact-detail"><i class="flaticon2-email"></i><span>{{ $documento->email_operativo ?: 'Sin correo registrado' }}</span></div>
+                                <div class="cv-contact-detail"><i class="flaticon2-phone"></i><span>{{ $documento->telefono_operativo ?: 'Sin teléfono registrado' }}</span></div>
+                            </article>
+                        @empty
+                            <div class="cv-empty"><i class="flaticon2-user"></i> No hay contactos registrados.</div>
+                        @endforelse
                     </div>
+                </section>
 
-
-                    <div class="cliente-table-wrapper">
-                        <table class="table table-hover mb-0 cliente-table">
-                            <thead>
-                                <tr>
-
-                                    <th>
-                                        Tipo
-                                    </th>
-
-                                    <th>
-                                        Nombre
-                                    </th>
-
-                                    <th>
-                                        Email
-                                    </th>
-
-                                    <th>
-                                        Teléfono
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                @foreach($cliente_operativo as $documento)
-                                   <tr>
-                                        <td>
-                                            <span class="cliente-type-badge">
-                                                {{ $documento->id_tipo_contacto == 1
-                                                    ? 'Operativo'
-                                                    : 'Facturación y cobranza' }}
-                                            </span>
-                                        </td>
-
-                                        <td>
-
-                                            {{ $documento->nombre_operativo }}
-
-                                        </td>
-
-
-                                        <td>
-
-                                            {{ $documento->email_operativo }}
-
-                                        </td>
-
-
-                                        <td>
-
-                                            {{ $documento->telefono_operativo }}
-
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="cliente-panel">
-                    <div class="cliente-panel-header">
-                        <div>
-                            <span class="cliente-section-label">
-                                NOTAS
-                            </span>
-                            <h3>
-                                Observaciones
-                            </h3>
-                        </div>
-                    </div>
-
-
-                    <div class="cliente-panel-body">
-                        <div class="form-control st-input cliente-textarea"
-                             style="height:auto; min-height:90px; background-color:#f8f9fa;">
-                            {{ $data->observaciones ?? 'Sin observaciones' }}
-                        </div>
-                    </div>
-                </div>
+                <section class="cv-section">
+                    <div class="cv-section-heading"><div><span class="cv-eyebrow">NOTAS</span><h3>Observaciones</h3></div><i class="flaticon2-notepad cv-heading-icon"></i></div>
+                    <div class="cv-notes">{{ $data->observaciones ?? 'Sin observaciones' }}</div>
+                </section>
             </div>
 
-            <div class="tab-pane fade"
-                 id="kt_tab_docs">
-
-                <div class="cliente-panel">
-                    <div class="cliente-panel-header">
-                        <div>
-                            <span class="cliente-section-label">
-                                ARCHIVOS
-                            </span>
-
-                            <h3>
-                                Documentación
-                            </h3>
-                        </div>
+            <div class="tab-pane fade" id="kt_tab_docs">
+                <section class="cv-section">
+                    <div class="cv-section-heading"><div><span class="cv-eyebrow">EXPEDIENTE</span><h3>Documentación del cliente</h3></div><span class="cv-count">{{ count($documentos) }} documentos</span></div>
+                    <div class="cv-doc-grid">
+                        @forelse($documentos as $documento)
+                            <article class="cv-document">
+                                <div class="cv-document-icon"><i class="flaticon2-document"></i></div>
+                                <div class="cv-document-info"><strong>{{ $documento->clienteTipoDocumento->nombre_documento }}</strong><span>Documento del cliente</span></div>
+                                <a href="{{ route('archivo.documentoCliente', ['id' => $documento->id]) }}" target="_blank" rel="noopener noreferrer" class="cliente-document-link cv-document-open"><i class="flaticon2-file"></i> Ver documento</a>
+                            </article>
+                        @empty
+                            <div class="cv-empty"><i class="flaticon2-document"></i> No hay documentos registrados.</div>
+                        @endforelse
                     </div>
-
-
-                    <div class="cliente-table-wrapper">
-                        <table class="table table-hover mb-0 cliente-table">
-                            <thead>
-                                <tr>
-
-                                    <th>
-                                        Documento
-                                    </th>
-
-                                    <th>
-                                        Tipo
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                @foreach($documentos as $documento)
-                                    <tr>
-                                        <td>
-                                        <a href="{{ route('archivo.documentoCliente', ['id' => $documento->id]) }}"
-                                               target="_blank"
-                                               class="cliente-document-link font-weight-bold">
-
-                                                {{ $documento->clienteTipoDocumento->nombre_documento }}
-                                            </a>
-                                        </td>
-
-                                        <td>
-                                            <span class="cliente-type-badge">
-
-                                                {{ $documento->clienteTipoDocumento->nombre_documento }}
-
-                                           </span>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                </section>
             </div>
         </div>
     </div>

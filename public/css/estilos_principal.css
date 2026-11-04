@@ -629,14 +629,14 @@ tr.programacion-row-sin-custodio td {
 
 .programacion-custodio-pending-text {
     color: #f5a623;
-    font-size: .56rem;
+    font-size: 10px;
     font-weight: 700;
     white-space: nowrap;
 }
 
 .programacion-custodio-pending-label {
     color: #94784f;
-    font-size: .45rem;
+    font-size: 8px;
     font-weight: 500;
     white-space: nowrap;
 }
@@ -1471,26 +1471,13 @@ tr.programacion-row-sin-custodio td {
     color: #dce4ee;
 }
 
-.programacion-services-table thead th {
-    padding: 10px 12px !important;
-    border: 0 !important;
-    border-bottom: 1px solid var(--st-border-soft) !important;
-    background: var(--st-gold) !important;
-    color: #000000 !important;
-    font-size: .60rem !important;
-    font-weight: 700 !important;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    white-space: nowrap;
-}
-
 .programacion-services-table tbody td {
     height: 50px;
     padding: 10px 12px !important;
     border: 0 !important;
     border-bottom: 1px solid var(--st-border-soft) !important;
     color: #b9c3d0;
-    font-size: .6rem !important;
+    font-size: 10px !important;
     vertical-align: middle;
 }
 
@@ -1546,32 +1533,34 @@ tr.programacion-row-sin-custodio td {
     font-weight: 700;
 }
 
-.programacion-custodio-name {
-    max-width: 120px;
-    overflow: hidden;
-    color: #fff;
-    font-size: .56rem;
-    font-weight: 500;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
 
 /* ==========================================================================
    CUSTODIO PRINCIPAL
    ========================================================================== */
 
+.programacion-custodio-name {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    overflow: visible;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1.4;
+    white-space: normal;
+    overflow-wrap: break-word;
+    text-overflow: clip;
+}
+
+
 .programacion-custodio-info {
+    flex: 1 1 0;
     min-width: 0;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
-
-.programacion-custodio-name {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-}
 
 
 /* ==========================================================================
@@ -1636,22 +1625,25 @@ tr.programacion-row-sin-custodio td {
     font-weight: 700;
 }
 
+
 .programacion-acompanante-name {
     min-width: 0;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
+    flex: 1 1 0;
+    display: block;
     color: #dce4ee;
-    font-size: .53rem;
+    font-size: 10px;
     font-weight: 500;
-    line-height: 1.25;
+    line-height: 1.4;
+    white-space: normal;
+    overflow-wrap: break-word;
 }
+
 
 .programacion-no-acompanante {
     display: inline-flex;
     align-items: center;
     color: #59697d;
-    font-size: .52rem;
+    font-size: 10px;
     font-weight: 500;
     white-space: nowrap;
 }
@@ -1729,13 +1721,14 @@ tr.programacion-row-sin-custodio td {
     display: block;
 
     color: #fff;
-    font-size: .62rem;
+    font-size: 10px;
     font-weight: 600;
     line-height: 1.2;
 
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    overflow-wrap: break-word;
 }
 
 .programacion-custodio-emergente-badge {
@@ -1770,7 +1763,7 @@ tr.programacion-row-sin-custodio td {
     align-items: center;
     justify-content: center;
     border-radius: 5px;
-    font-size: .49rem;
+    font-size: 8.5px;
     font-weight: 700;
     line-height: 1;
 }
@@ -2822,7 +2815,7 @@ tr.programacion-row-sin-custodio td {
     display: block;
     margin: 0 0 5px;
     color: #8594a9 !important;
-    font-size: .56rem;
+    font-size: 10px;
     line-height: 1.3;
     font-weight: 500;
 }
@@ -2982,9 +2975,9 @@ select.monitoreo-input option {
     background: #0d1722 !important;
     border: 1px solid var(--mon-border) !important;
     border-radius: 5px !important;
-    color: #aab6c5 !important;
+    color: #d6dce3 !important;
     font-family: 'Poppins', sans-serif !important;
-    font-size: .60rem !important;
+    font-size: 9px !important;
     color-scheme: dark;
     box-shadow: none !important;
     transition: .18s ease;
@@ -3042,7 +3035,7 @@ select.monitoreo-input option {
     border: 0;
     border-bottom: 1px solid var(--mon-border-soft);
     color: #fff;
-    font-size: .55rem;
+    font-size: 10px;
     line-height: 1.25;
     vertical-align: middle;
 }
@@ -3101,7 +3094,7 @@ select.monitoreo-input option {
 
 .monitoreo-service-type {
     color: #dce4ee;
-    font-size: .57rem;
+    font-size: 10px;
 }
 
 /* ==========================================================================
@@ -3151,6 +3144,7 @@ select.monitoreo-input option {
     align-items: center;
     gap: 3px;
     min-width: 0;
+    font-size: 9px !important;
 }
 
 .monitoreo-acompanantes-list {
@@ -3177,7 +3171,7 @@ select.monitoreo-input option {
     align-items: center;
     gap: 3px;
     color: #fffffc;
-    font-size: .51rem;
+    font-size: 9px;
     font-weight: 500;
     line-height: 1.25;
 }
@@ -3185,7 +3179,7 @@ select.monitoreo-input option {
 
 .monitoreo-no-acompanante {
     color: #607086;
-    font-size: .53rem;
+    font-size: 9px;
 }
 
 .monitoreo-table tbody
@@ -3229,14 +3223,14 @@ td {
 
 .monitoreo-custodio-pending-text {
     color: #f5a623;
-    font-size: .55rem;
+    font-size: 9px;
     font-weight: 700;
     white-space: nowrap;
 }
 
 .monitoreo-custodio-pending-info small {
     color: #94784f;
-    font-size: .44rem;
+    font-size: 8px;
     white-space: nowrap;
 }
 
@@ -3356,7 +3350,7 @@ td {
     border-radius: 5px !important;
     color: #dce4ee !important;
     font-family: 'Poppins', sans-serif !important;
-    font-size: .55rem !important;
+    font-size: 9px !important;
     box-shadow: none !important;
     cursor: pointer;
     transition: .2s ease;
@@ -3428,7 +3422,7 @@ td {
     border-radius: 5px !important;
     color: #dce4ee !important;
     font-family: 'Poppins', sans-serif !important;
-    font-size: .52rem !important;
+    font-size: 8.5px !important;
     box-shadow: none !important;
     cursor: pointer;
     transition: .2s ease;
@@ -3452,7 +3446,7 @@ td {
 .monitoreo-causa {
     max-width: 180px;
     color: #8d9caf !important;
-    font-size: .52rem !important;
+    font-size: 9px !important;
     line-height: 1.35 !important;
 }
 
@@ -11746,6 +11740,569 @@ i{color: white!important;}
 
     .programacion-page .programacion-services-table tbody td:nth-child(-n+4) {
         z-index: auto !important;
+    }
+
+}
+
+   /*SISTRACK - INVENTARIO DE CLIENTES*/
+
+.clientes-page {
+    --cl-bg: #070c12;
+    --cl-panel: #111a24;
+    --cl-border: #263547;
+    --cl-gold: #eba72f;
+    --cl-muted: #8190a5;
+
+    min-height: 100%;
+    padding: 18px;
+    background: var(--cl-bg);
+    color: #d8e0ea;
+    font-family: 'Poppins', sans-serif;
+}
+
+.clientes-page *,
+.clientes-page *::before,
+.clientes-page *::after {
+    box-sizing: border-box;
+}
+
+.clientes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.clientes-eyebrow {
+    display: block;
+    color: #71849d;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.clientes-header h1 {
+    margin: 0 0 4px;
+    color: #fff;
+    font-size: clamp(22px, 2vw, 30px);
+    font-weight: 700;
+}
+
+.clientes-header p {
+    margin: 0;
+    color: var(--cl-muted);
+    font-size: 12px;
+}
+
+
+/* BOTONES DEL ENCABEZADO DE CLIENTES */
+
+.clientes-header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.clientes-header-actions .clientes-btn {
+    min-height: 39px;
+    padding: 9px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.clientes-header-actions .clientes-btn i {
+    font-size: 17px;
+    margin: 0;
+}
+
+
+.clientes-summary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.clientes-summary-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 82px;
+    padding: 15px 18px;
+    background: var(--cl-panel);
+    border: 1px solid var(--cl-border);
+    border-radius: 10px;
+}
+
+.clientes-summary-card > i {
+    display: grid;
+    place-items: center;
+    width: 43px;
+    height: 43px;
+    border-radius: 9px;
+    background: #1d2a3b;
+    color: var(--cl-gold);
+    font-size: 23px;
+}
+
+.clientes-summary-card small {
+    display: block;
+    color: var(--cl-muted);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .6px;
+}
+
+.clientes-summary-card strong {
+    display: block;
+    color: #fff;
+    font-size: 24px;
+    line-height: 1.3;
+}
+
+.clientes-panel {
+    margin-bottom: 18px;
+    background: var(--cl-panel);
+    border: 1px solid var(--cl-border);
+    border-radius: 11px;
+    overflow: hidden;
+}
+
+.clientes-panel-heading {
+    padding: 16px 18px 12px;
+}
+
+.clientes-panel-heading h2 {
+    margin: 0;
+    color: var(--cl-gold);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.clientes-heading-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.clientes-count {
+    display: inline-block;
+    padding: 3px 8px;
+    margin-left: 6px;
+    border-radius: 20px;
+    background: #28303a;
+    color: var(--cl-gold);
+    font-size: 11px;
+}
+
+.clientes-filters {
+    display: grid;
+    grid-template-columns:
+        minmax(220px, 2fr)
+        minmax(160px, 1fr)
+        auto
+        auto;
+    gap: 10px;
+    align-items: center;
+    padding: 0 18px 18px;
+}
+
+.clientes-search {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0;
+    padding: 0 12px;
+    background: #0f1924;
+    border: 1px solid var(--cl-border);
+    border-radius: 7px;
+}
+
+.clientes-search i {
+    color: #8295aa;
+    font-size: 19px;
+}
+
+.clientes-search input {
+    min-width: 0;
+    width: 100%;
+    height: 39px;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #fff;
+    font-size: 12px;
+}
+
+.clientes-filters select {
+    width: 100%;
+    height: 41px;
+    padding: 0 12px;
+    border: 1px solid var(--cl-border);
+    border-radius: 7px;
+    background: #0f1924;
+    color: #fff;
+    font-size: 12px;
+}
+
+.clientes-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 39px;
+    padding: 8px 13px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none !important;
+    cursor: pointer;
+}
+
+.clientes-btn-outline {
+    background: #101b27;
+    border: 1px solid #35475c;
+    color: #dce7f3;
+}
+
+.clientes-btn-outline:hover {
+    border-color: var(--cl-gold);
+    color: var(--cl-gold);
+}
+
+.clientes-btn-primary {
+    background: var(--cl-gold);
+    border: 1px solid var(--cl-gold);
+    color: #0b111a;
+}
+
+.clientes-btn-primary:hover {
+    color: #0b111a;
+    background: #f5bc54;
+}
+
+.clientes-table-scroll {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.clientes-table {
+    width: 100% !important;
+    min-width: 740px;
+    border-collapse: collapse;
+    color: #d8e0ea;
+    font-size: 12px;
+}
+
+.clientes-table thead th {
+    padding: 13px 15px;
+    background: #eba72f;
+    color: #101820;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border: 0;
+}
+
+.clientes-table tbody td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #263547;
+    vertical-align: middle;
+}
+
+.clientes-table tbody tr:nth-child(odd) {
+    background: rgba(255, 255, 255, .014);
+}
+
+.clientes-table tbody tr:hover {
+    background: rgba(235, 167, 47, .05);
+}
+
+.clientes-folio {
+    color: #f0b347;
+    font-weight: 700;
+}
+
+.clientes-person {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+}
+
+.clientes-person strong {
+    font-size: 12px;
+    font-weight: 600;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.clientes-avatar {
+    flex: 0 0 30px;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #dce5ee;
+    color: #334155;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.clientes-chip {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 6px;
+    background: #17273b;
+    color: #9ec2f5;
+    font-size: 11px;
+}
+
+.clientes-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.clientes-actions a,
+.clientes-actions button {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    background: #111d2a;
+    border: 1px solid #304258;
+    border-radius: 6px;
+    color: #d7e4f1;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.clientes-actions a:hover,
+.clientes-actions button:hover {
+    color: var(--cl-gold);
+    border-color: var(--cl-gold);
+}
+
+.clientes-actions i {
+    font-size: 17px;
+}
+
+
+.clientes-page .clientes-table-controls,
+.clientes-page .clientes-table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px 16px;
+    color: var(--cl-muted);
+    font-size: 11px;
+}
+
+/* Selector de registros */
+.clientes-page .dataTables_length label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    color: #8fa8c6;
+    font-size: 11px;
+}
+
+.clientes-page .dataTables_length select {
+    width: auto;
+    min-width: 60px;
+    height: 35px;
+    margin: 0;
+    padding: 5px 9px;
+    background: #151d27;
+    border: 1px solid #35475c;
+    border-radius: 7px;
+    color: #fff;
+    font-size: 11px;
+}
+
+/* Contador */
+.clientes-page .dataTables_info {
+    padding: 0 !important;
+    color: #8fa8c6;
+    font-size: 11px;
+}
+
+/* Barra inferior */
+.clientes-page .clientes-table-footer {
+    justify-content: flex-end;
+    min-height: 60px;
+    border-top: 1px solid #263547;
+}
+
+.clientes-page .dataTables_paginate {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+    float: none !important;
+    margin: 0 0 0 auto !important;
+    padding: 0 !important;
+}
+
+/* DataTables con Bootstrap: los botones reales son .page-link */
+.clientes-page .dataTables_paginate .pagination {
+    display: flex !important;
+    align-items: center;
+    gap: 7px;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none;
+}
+
+.clientes-page .dataTables_paginate .pagination > .page-item {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.clientes-page .dataTables_paginate .pagination > .page-item > .page-link {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-width: 35px;
+    height: 35px;
+    margin: 0 !important;
+    padding: 0 10px !important;
+    border: 1px solid #35475c !important;
+    border-radius: 7px !important;
+    background: #142131 !important;
+    color: #dce7f3 !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+}
+
+.clientes-page .dataTables_paginate .pagination > .page-item > .page-link:hover {
+    background: #1c2c40 !important;
+    border-color: #eba72f !important;
+    color: #eba72f !important;
+}
+
+.clientes-page .dataTables_paginate .pagination > .page-item.active > .page-link {
+    background: #eba72f !important;
+    border-color: #eba72f !important;
+    color: #101820 !important;
+}
+
+.clientes-page .dataTables_paginate .pagination > .page-item.disabled > .page-link {
+    background: #101923 !important;
+    border-color: #1e2b3b !important;
+    color: #526276 !important;
+    opacity: .55;
+    pointer-events: none;
+}
+
+/* DataTables sin Bootstrap: solo botones directos, no los <li> */
+.clientes-page .dataTables_paginate > .paginate_button {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-width: 35px;
+    height: 35px;
+    margin: 0 3px !important;
+    padding: 0 10px !important;
+    border: 1px solid #35475c !important;
+    border-radius: 7px !important;
+    background: #142131 !important;
+    color: #dce7f3 !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+}
+
+.clientes-page .dataTables_paginate > .paginate_button.current,
+.clientes-page .dataTables_paginate > .paginate_button.current:hover {
+    background: #eba72f !important;
+    border-color: #eba72f !important;
+    color: #101820 !important;
+}
+
+.clientes-page .dataTables_paginate > .paginate_button.disabled {
+    opacity: .5;
+    pointer-events: none;
+}
+
+/* Buscador interno oculto: se utiliza el filtro propio de la vista */
+.clientes-page .dataTables_filter {
+    display: none;
+}
+
+
+/* 11. RESPONSIVE */
+
+@media (max-width: 900px) {
+
+    .clientes-filters {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .clientes-search {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 575px) {
+
+    .clientes-page {
+        padding: 12px;
+    }
+
+    .clientes-shortcuts,
+    .clientes-summary,
+    .clientes-filters {
+        grid-template-columns: 1fr;
+    }
+
+    .clientes-search {
+        grid-column: auto;
+    }
+
+    .clientes-shortcut {
+        min-height: 55px;
+    }
+
+    .clientes-header-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .clientes-header-actions .clientes-btn {
+        flex: 1;
+    }
+
+    .clientes-page .clientes-table-controls,
+    .clientes-page .clientes-table-footer {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .clientes-page .dataTables_paginate {
+        margin-left: 0;
+        justify-content: center;
     }
 
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=1.3.0') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=3.1.1') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
@@ -419,9 +419,9 @@
                                             {{ strtoupper($unid->custodio->nombre_custodio) ?? 'Sin asignar' }}
                                             {{ strtoupper($unid->custodio->ap_paterno) ?? '' }}
 
-                                            <!-- @if(!empty($unid->custodio->ap_materno))
-                                                {{ $unid->custodio->ap_materno }}
-                                            @endif -->
+                                            @if(!empty($unid->custodio->ap_materno))
+                                                {{ strtoupper($unid->custodio->ap_materno) ?? '' }}
+                                            @endif 
 
                                         </span>
 

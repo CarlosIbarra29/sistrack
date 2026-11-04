@@ -1,275 +1,380 @@
 "use strict";
-var Tabla = function() {
 
-    $.fn.dataTable.Api.register('column().title()', function() {
-        return $(this.header()).text().trim();
-    });
+jQuery(function ($) {
 
-    var initTable1 = function() {
-        // begin first table
-        var table = $('#kdatatable_usuarios').DataTable({
-            responsive: true,
-            // Pagination settings
-            dom: `<'row'<'col-sm-12'tr>>
-                    <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-            // read more: https://datatables.net/examples/basic_init/dom.html
+    var $tabla = $("#kdatatable_usuarios2");
 
-            lengthMenu: [5, 10, 25, 50],
-
-            pageLength: 10,
-
-            order: [[ 0, "desc" ]], //ordenamiento default
-            language: {
-                'lengthMenu': 'Display _MENU_',
-                "url": $('#datatable_i18n').val()
-            },
-
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url:$('#clientedatatable').val(),
-                type:"POST",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    columnsDef: [
-                        'id', 'razon_social', 'nombre_cliente', 'grupo','permisos' ,'acciones'],
-                },
-
-            },
-            columns: [
-                { data: 'id' },
-                { data: 'razon_social' },
-                { data: 'nombre_cliente'},
-                { data: 'grupo' },
-                {data: 'acciones', responsivePriority: -1},
-            ],
-
-            columnDefs: [
-                {
-                    targets: -1,
-                    title: 'Acciones',
-                    orderable: false,
-                    render: function(data, type, full, meta) {
-    return `
-        <a href="/cliente/ver-cliente/${full.id}" 
-           class="btn btn-sm btn-warning btn-icon mr-2"
-           title="Ver cliente">
-            <i class="flaticon-eye text-white"></i>
-        </a>
-
-        <a href="/cliente/editar-cliente/${full.id}" 
-           class="btn btn-sm btn-warning btn-icon mr-2"
-           title="Editar cliente">
-            <i class="flaticon-edit text-white"></i>
-        </a>
-
-        <button class="btn btn-sm btn-warning btn-icon"
-            onClick="deletecliente(${full.id},${full.id})"
-            title="Desactivar cliente">
-            <i class="flaticon-delete text-white"></i>
-        </button>
-    `;
-}
-
-                }
-
-            ],
-
-            buttons: [
-                {extend: "excel", className: "invisible"},
-                {extend: "pdf", className: "invisible"},
-                {extend: "csv", className: "invisible"},
-                {extend: "print", className: "invisible"},
-
-            ],
-
-        }).on( 'init.dt', function () {
-            KTApp.initTooltips();
-        });
-
-        $('#export-excel').on('click', function () {
-            table.button(0).trigger();
-        });
-        $('#export-pdf').on('click', function () {
-            table.button(1).trigger();
-        });
-        $('#export-csv').on('click', function () {
-            table.button(2).trigger();
-        });
-        $('#export-print').on('click', function () {
-            table.button(3).trigger();
-        });
-
-        var filter = function() {
-            var val = $.fn.dataTable.util.escapeRegex($(this).val());
-            table.column($(this).data('col-index')).search(val ? val : '', false, false).draw();
-        };
-
-        $('#kt_search').on('click', function(e) {
-            e.preventDefault();
-            var params = {};
-            $('.datatable-input').each(function() {
-                var i = $(this).data('col-index');
-                if (params[i]) {
-                    params[i] += '|' + $(this).val();
-                }
-                else {
-                    params[i] = $(this).val();
-                }
-            });
-            $.each(params, function(i, val) {
-                table.column(i).search(val ? val : '', false, false);
-            });
-            table.table().draw();
-        });
-
-        $('#kt_reset').on('click', function(e) {
-            e.preventDefault();
-            $('.datatable-input').each(function() {
-                $(this).val('');
-                table.column($(this).data('col-index')).search('', false, false);
-            });
-            table.table().draw();
-        });
-
-    };
-
-    return {
-
-        //main function to initiate the module
-        init: function() {
-            initTable1();
-        },
-
-    };
-
-}();
-
-jQuery(document).ready(function() {
-    Tabla.init();
-});
-
-
-    function deletecliente(nombre, id) {
-        Swal.fire({
-            title: "Estas seguro de desactivar el registro "+nombre,
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Si, Desactivarlo!",
-            cancelButtonText: "No, Cancelar!",
-            reverseButtons: true
-        }).then(function(result) {
-            if (result.value) {
-                document.getElementById("id_cliente_delete").value = id;
-                Swal.fire({
-                    position: "top-center",
-                    icon: "success",
-                    title: "Espere un momento, la información esta siendo procesada",
-                    showConfirmButton: false
-                });
-                document.getElementById("cliente_delete_form").submit();
-            } else if (result.dismiss === "cancel") {
-                Swal.fire(
-                    "Cancelada",
-                    "La acción fue cancelada",
-                    "error"
-                )
-            }
-        });
-
+    if (!$tabla.length || !$.fn.DataTable) {
+        return;
     }
 
+    var inactivos = $("#cliente_act_form").length > 0;
 
+    if ($.fn.DataTable.isDataTable($tabla[0])) {
+        $tabla.DataTable().destroy();
+    }
 
-    $("#kdatatable_clientes_inactivos").DataTable({
+    /* ======================================================
+       CONFIGURACIÓN DE TABLA Y PAGINACIÓN
+       ====================================================== */
+
+    var configuracion = {
+        autoWidth: false,
+        responsive: false,
+        pageLength: 10,
+
+        lengthMenu: [
+            [10, 20, 50, 100, -1],
+            [10, 20, 50, 100, "Todos"]
+        ],
+
+        order: [[0, "asc"]],
+
+        dom:
+            "<'clientes-table-controls'li>" +
+            "<'clientes-table-body't>" +
+            "<'clientes-table-footer'p>",
+
         language: {
-            'lengthMenu': 'Display _MENU_',
-            "url": $('#datatable_i18n').val()
+            lengthMenu: "Mostrar _MENU_ registros",
+            zeroRecords: "No se encontraron clientes",
+            emptyTable: "No hay clientes registrados",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ clientes",
+            infoEmpty: "Sin registros",
+            infoFiltered: "(filtrados de _MAX_ clientes)",
+            paginate: {
+                previous: "Anterior",
+                next: "Siguiente"
+            }
         },
 
-        "dom":
-        "<'row'" +
-        "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
-        "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
-        ">" +
+        columnDefs: [{
+            targets: inactivos ? 3 : 4,
+            orderable: false,
+            searchable: false
+        }]
+    };
 
-        "<'table-responsive'tr>" +
+    var tabla = $tabla.DataTable(configuracion);
 
-        "<'row'" +
-        "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
-        "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
-        ">"
+    /* ======================================================
+       FILTROS DE CLIENTES
+       ====================================================== */
+
+    var selectorTexto = inactivos
+        ? "#clientes_inactivos_busqueda"
+        : "#clientes_busqueda";
+
+    var selectorGrupo = inactivos
+        ? "#clientes_inactivos_grupo"
+        : "#clientes_grupo";
+
+    function regexExacto(valor) {
+        return valor
+            ? "^\\s*" +
+                $.fn.dataTable.util.escapeRegex(valor.trim()) +
+                "\\s*$"
+            : "";
+    }
+
+    function aplicarFiltros() {
+
+        var texto = $(selectorTexto).val() || "";
+        var grupo = $(selectorGrupo).val() || "";
+
+        // Coincidencias en las columnas de la tabla.
+        tabla.search(texto.trim());
+
+        // Grupo exacto.
+        tabla.column(inactivos ? 2 : 3).search(
+            regexExacto(grupo),
+            true,
+            false
+        );
+
+        tabla.draw();
+    }
+
+    $(selectorTexto).on("input", aplicarFiltros);
+    $(selectorGrupo).on("change", aplicarFiltros);
+
+    $(
+        inactivos
+            ? "#clientes_inactivos_filtros"
+            : "#clientes_filtros"
+    ).on("submit", function (e) {
+
+        e.preventDefault();
+        aplicarFiltros();
     });
 
+    /* ======================================================
+       LIMPIAR FILTROS
+       ====================================================== */
 
-    $(".activar-cliente").click(function() {
-        var id = $(this).data('id');
-        var nombre = $(this).data('nombre');
+    $(
+        inactivos
+            ? "#clientes_inactivos_limpiar"
+            : "#kt_reset"
+    ).on("click", function () {
+
+        $(selectorTexto).val("");
+        $(selectorGrupo).val("");
+
+        tabla.search("");
+        tabla.columns().search("");
+        tabla.draw();
+    });
+
+    /* ======================================================
+       CONFIRMACIONES DE ACTIVACIÓN Y DESACTIVACIÓN
+       ====================================================== */
+
+    function confirmarAccion(
+        titulo,
+        nombre,
+        formulario,
+        campo,
+        id
+    ) {
 
         Swal.fire({
-            title: "Estas seguro de activar el registro "+nombre,
+            title: titulo,
+            text: nombre,
             icon: "warning",
             showCancelButton: true,
-            confirmButtonText: "Si, Activarlo!",
-            cancelButtonText: "No, Cancelar!",
+            confirmButtonText: "Sí, continuar",
+            cancelButtonText: "Cancelar",
             reverseButtons: true
-        }).then(function(result) {
-            if (result.value) {
-                document.getElementById("id_delete").value = id;
-                Swal.fire({
-                    position: "top-center",
-                    icon: "success",
-                    title: "Espere un momento, la información esta siendo procesada",
-                    showConfirmButton: false
-                });
-                document.getElementById("cliente_act_form").submit();
-            } else if (result.dismiss === "cancel") {
-                Swal.fire(
-                    "Cancelada",
-                    "La acción fue cancelada",
-                    "error"
-                )
+        }).then(function (result) {
+
+            if (!result.isConfirmed && !result.value) {
+                return;
+            }
+
+            $(campo).val(id);
+
+            Swal.fire({
+                title: "Procesando solicitud",
+                text: "Por favor espera...",
+                icon: "info",
+                showConfirmButton: false,
+                allowOutsideClick: false
+            });
+
+            var form = document.getElementById(formulario);
+
+            if (form) {
+                form.submit();
             }
         });
-        $(document).ready(function () {
-    var table = $('#kdatatable_usuarios').DataTable({
-        language: {
-            url: $('#datatable_i18n').val()
-        },
-        processing: true,
-        serverSide: true,
-        ajax: $('#clientedatatable').val(),
-        columns: [
-            { data: 'id' },
-            { data: 'razon_social' },
-            { data: 'nombre_cliente' },
-            { data: 'grupo' },
-            { data: 'acciones', orderable: false, searchable: false }
-        ]
+    }
+
+    /* ======================================================
+       DESACTIVAR CLIENTE
+       ====================================================== */
+
+    $(document).on(
+        "click",
+        ".clientes-desactivar",
+        function () {
+
+            confirmarAccion(
+                "¿Desactivar cliente?",
+                $(this).attr("data-nombre"),
+                "cliente_delete_form",
+                "#id_cliente_delete",
+                $(this).attr("data-id")
+            );
+        }
+    );
+
+    /* ======================================================
+       ACTIVAR CLIENTE
+       ====================================================== */
+
+    $(document).on(
+        "click",
+        ".activar-cliente",
+        function () {
+
+            confirmarAccion(
+                "¿Activar cliente?",
+                $(this).attr("data-nombre"),
+                "cliente_act_form",
+                "#id_delete",
+                $(this).attr("data-id")
+            );
+        }
+    );
+
+    /* ======================================================
+       EXPORTAR TODOS LOS REGISTROS FILTRADOS
+       ====================================================== */
+
+    function exportar(tipo) {
+
+        var filas = tabla.rows({
+            search: "applied",
+            order: "applied"
+        }).data().toArray();
+
+        var columnas = inactivos
+            ? ["Razón social", "Nombre cliente", "Grupo"]
+            : ["Folio", "Razón social", "Nombre cliente", "Grupo"];
+
+        var matriz = [columnas].concat(
+            filas.map(function (fila) {
+
+                var valores = [];
+
+                for (var i = 0; i < columnas.length; i++) {
+                    valores.push(
+                        $("<div>")
+                            .html(fila[i])
+                            .text()
+                            .replace(/\s+/g, " ")
+                            .trim()
+                    );
+                }
+
+                return valores;
+            })
+        );
+
+        if (tipo === "print") {
+
+            var ventana = window.open("", "_blank");
+
+            if (!ventana) return;
+
+            var escape = function (s) {
+                return $("<div>").text(s).html();
+            };
+
+            var html =
+                "<html><head><title>Clientes</title></head>" +
+                "<body><h2>Clientes</h2>" +
+                '<table border="1" cellspacing="0" cellpadding="6">';
+
+            matriz.forEach(function (fila) {
+                html += "<tr>" +
+                    fila.map(function (celda) {
+                        return "<td>" + escape(celda) + "</td>";
+                    }).join("") +
+                    "</tr>";
+            });
+
+            ventana.document.write(
+                html + "</table></body></html>"
+            );
+
+            ventana.document.close();
+            ventana.focus();
+            ventana.print();
+
+            return;
+        }
+
+        if (tipo === "excel") {
+
+            var escapeExcel = function (v) {
+                return $("<div>").text(v).html();
+            };
+
+            var tablaHtml =
+                '<html><head><meta charset="UTF-8"></head>' +
+                '<body><table border="1">' +
+                matriz.map(function (fila) {
+                    return "<tr>" +
+                        fila.map(function (v) {
+                            return "<td>" + escapeExcel(v) + "</td>";
+                        }).join("") +
+                        "</tr>";
+                }).join("") +
+                "</table></body></html>";
+
+            var excelBlob = new Blob(
+                ["\ufeff" + tablaHtml],
+                { type: "application/vnd.ms-excel" }
+            );
+
+            var excelUrl = URL.createObjectURL(excelBlob);
+            var excelLink = document.createElement("a");
+
+            excelLink.href = excelUrl;
+            excelLink.download =
+                "clientes_" +
+                new Date().toISOString().slice(0, 10) +
+                ".xls";
+
+            document.body.appendChild(excelLink);
+            excelLink.click();
+            excelLink.remove();
+
+            URL.revokeObjectURL(excelUrl);
+            return;
+        }
+
+        var csv = matriz.map(function (fila) {
+
+            return fila.map(function (valor) {
+                return '"' +
+                    String(valor).replace(/"/g, '""') +
+                    '"';
+            }).join(",");
+
+        }).join("\r\n");
+
+        var blob = new Blob(
+            ["\ufeff" + csv],
+            { type: "text/csv;charset=utf-8;" }
+        );
+
+        var url = URL.createObjectURL(blob);
+        var enlace = document.createElement("a");
+
+        enlace.href = url;
+        enlace.download =
+            "clientes_" +
+            new Date().toISOString().slice(0, 10) +
+            ".csv";
+
+        document.body.appendChild(enlace);
+        enlace.click();
+        enlace.remove();
+
+        URL.revokeObjectURL(url);
+    }
+
+    $("#export-csv").on("click", function (e) {
+        e.preventDefault();
+        exportar("csv");
     });
+
+    $("#export-print").on("click", function (e) {
+        e.preventDefault();
+        exportar("print");
+    });
+
+    $("#export-excel").on("click", function (e) {
+        e.preventDefault();
+
+        if (
+            tabla.buttons &&
+            tabla.buttons(".buttons-excel").count() > 0
+        ) {
+            tabla.button(".buttons-excel").trigger();
+        } else {
+            exportar("excel");
+        }
+    });
+
 });
-    });
-
-    $("#kdatatable_clientes").DataTable({
-        language: {
-            'lengthMenu': 'Display _MENU_',
-            "url": $('#datatable_i18n').val(),
-        },
-        "aaSorting": [[ 0, "desc" ]],
 
 
-        "dom":
-        "<'row'" +
-        "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
-        "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
-        ">" +
-
-        "<'table-responsive'tr>" +
-
-        "<'row'" +
-        "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
-        "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
-        ">"
-    });
+function deletecliente(nombre, id) {
+    jQuery(
+        '.clientes-desactivar[data-id="' + id + '"]'
+    ).trigger("click");
+}

@@ -42,9 +42,11 @@ class ClienteController extends Controller
     public function listadocliente()
     {
         $data = Cliente::where('siaf_status', 1)->get();
-        // dd($data);
+        
+         $activosClientes = Cliente::where('siaf_status', 1)->count();
+        $inactivosClientes = Cliente::where('siaf_status', 2)->count();
 
-        return view('cliente.listado-cliente', compact('data'));
+        return view('cliente.listado-cliente', compact('data', 'activosClientes', 'inactivosClientes'));
     }
 
     public function clientelistadodatatable(Request $request)

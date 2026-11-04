@@ -132,11 +132,15 @@
 
                         <th>Bitácora</th>
 
+                        <th>Cliente</th>
+
                         <th>Folio interno</th>
 
-                        <th>Estatus</th>
+                        <th class="monitoreo-col-acciones text-center">
+                            Acciones
+                        </th>
 
-                        <th>Cliente</th>
+                        <th>Estatus</th>
 
                         <th>Origen</th>
 
@@ -170,10 +174,6 @@
 
                         <th class="monitoreo-col-causa">
                             Causa
-                        </th>
-
-                        <th class="monitoreo-col-acciones text-center">
-                            Acciones
                         </th>
 
                     </tr>
@@ -210,6 +210,14 @@
 
                             <td>
 
+                                <span class="monitoreo-client">
+                                    {{ $unid->nombre_cliente ?: '-' }}
+                                </span>
+
+                            </td>
+
+                            <td>
+
                                 @if(!empty($unid->folio_interno))
 
                                     <span class="monitoreo-internal-folio">
@@ -223,6 +231,30 @@
                                     </span>
 
                                 @endif
+
+                            </td>
+
+                            <td>
+
+                                <div class="monitoreo-row-actions">
+
+                                    <!-- <a href="{{ route('monitoreo.verprogramacionmon', $unid->id) }}"
+                                       class="monitoreo-action"
+                                       title="Ver programación">
+
+                                        <i class="flaticon-eye"></i>
+
+                                    </a> -->
+
+                                    <a href="{{ route('monitoreo.moduloestadias', $unid->id) }}"
+                                       class="monitoreo-action"
+                                       title="Generales transportes">
+
+                                        <i class="flaticon-presentation-1"></i>
+
+                                    </a>
+
+                                </div>
 
                             </td>
 
@@ -249,14 +281,6 @@
                                     </span>
 
                                 </div>
-
-                            </td>
-
-                            <td>
-
-                                <span class="monitoreo-client">
-                                    {{ $unid->nombre_cliente ?: '-' }}
-                                </span>
 
                             </td>
 
@@ -353,6 +377,9 @@
 
                                             {{ $unid->custodio->nombre_custodio ?? 'Sin asignar' }}
                                             {{ $unid->custodio->ap_paterno ?? '' }}
+                                            @if(!empty($unid->custodio->ap_materno))
+                                                {{ strtoupper($unid->custodio->ap_materno) ?? '' }}
+                                            @endif 
 
                                         </span>
 
@@ -390,6 +417,9 @@
 
                                                         {{ $acompanante->custodio->nombre_custodio }}
                                                         {{ $acompanante->custodio->ap_paterno }}
+                                                        @if(!empty($acompanante->custodio->ap_materno))
+                                                            {{ strtoupper($acompanante->custodio->ap_materno) }}
+                                                        @endif
 
                                                     </span>
 
@@ -505,30 +535,6 @@
                                 @else
                                     {{ $unid->puntualidad_causa ?: '-' }}
                                 @endif
-
-                            </td>
-
-                            <td>
-
-                                <div class="monitoreo-row-actions">
-
-								    <a href="{{ route('monitoreo.verprogramacionmon', $unid->id) }}"
-								       class="monitoreo-action"
-								       title="Ver programación">
-
-								        <i class="flaticon-eye"></i>
-
-								    </a>
-
-								    <a href="{{ route('monitoreo.moduloestadias', $unid->id) }}"
-								       class="monitoreo-action"
-								       title="Generales transportes">
-
-								        <i class="flaticon-presentation-1"></i>
-
-								    </a>
-
-								</div>
 
                             </td>
 
