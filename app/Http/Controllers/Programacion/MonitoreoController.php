@@ -133,7 +133,12 @@ class MonitoreoController extends Controller
             // Únicamente finalizados
             ->whereIn('programacion.programacion_estatus_id', [6, 7,10])
 
-            ->orderBy('programacion.fecha_servicio', 'desc')
+            // Ordenar por fecha y hora de finalización, de más reciente a más antigua
+            ->orderByRaw('pd.fechahora_finalizacion IS NULL ASC')
+            ->orderBy('pd.fechahora_finalizacion', 'desc')
+
+            // Orden secundario para registros con la misma fecha
+            ->orderBy('programacion.id', 'desc')
             ->get();
 
         return view(

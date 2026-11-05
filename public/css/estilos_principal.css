@@ -2230,6 +2230,12 @@ tr.programacion-row-sin-custodio td {
     width: var(--col-3);
     min-width: var(--col-3);
     max-width: var(--col-3);
+
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    line-height: 1.5;
+    vertical-align: middle;
 }
 
 .programacion-page .programacion-services-table tr > :nth-child(4) {
