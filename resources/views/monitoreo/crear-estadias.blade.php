@@ -303,6 +303,29 @@
 
                     <div class="transport-field">
 
+                        <label class="transport-label" for="folio_interno">
+                            Folio Interno
+                            <span>*</span>
+                        </label>
+
+                        <div class="transport-input-icon">
+
+                            <i class="la la-file-invoice"></i>
+
+                            <input type="text"
+                                   class="form-control transport-input"
+                                   id="folio_interno"
+                                   name="folio_interno"
+                                   value="{{ $programacion->folio_interno }}"
+                                   placeholder="Folio Interno"
+                                   >
+
+                        </div>
+
+                    </div>
+
+                    <div class="transport-field">
+
                         <label class="transport-label" for="custodio_id">
 
                             Nombre del custodio

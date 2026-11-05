@@ -375,6 +375,7 @@ class MonitoreoController extends Controller
 
             'dom_origen' => 'nullable|string',
             'dom_destino' => 'nullable|string',
+            'folio_interno' => 'nullable|string',
 
             'armado_servicio' => 'nullable|integer',
 
@@ -488,6 +489,10 @@ class MonitoreoController extends Controller
 
             if ($request->filled('dom_destino')) {
                 $dataProgramacion['dom_destino'] =$request->dom_destino;
+            }
+
+            if ($request->filled('folio_interno')) {
+                $dataProgramacion['folio_interno'] =$request->folio_interno;
             }
 
             if ($request->filled('armado_servicio')) {
