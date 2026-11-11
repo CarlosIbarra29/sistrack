@@ -387,6 +387,13 @@
                                 </a>
                             </li>
 
+                            <li id="menuControlServicios" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="{{ route('controlserv.listcontrolservicios') }}" class="menu-link menu-toggle">
+                                    <i class="flaticon2-checking  menu-icon"></i>
+                                    <span class="menu-text">Control Servicios</span>
+                                </a>
+                            </li>
+
 
         {{-- M O N I T O R E O --}}
                             <li id="menuMonitoreo" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">

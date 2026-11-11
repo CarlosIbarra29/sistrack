@@ -53,3 +53,8 @@
 	Route::post('/update-fecha-estadias-ajax',[App\Http\Controllers\Programacion\MonitoreoController::class, 'updatefechaestadiasajax'])->name('monitoreo.updatefechaestadiasajax');
 	Route::post('/update-itinerario-ajax',[App\Http\Controllers\Programacion\MonitoreoController::class, 'updateitinerarioajax'])->name('monitoreo.updateitinerarioajax');
 	Route::post('/guardar-incidencia', [App\Http\Controllers\Programacion\MonitoreoController::class, 'guardarincidencia'])->name('monitoreo.guardarincidencia'); 
+
+	// C O N T R O L  D E  S E R V I C I O S
+
+		Route::get('/control-servicios', [App\Http\Controllers\Programacion\ControlServiciosController::class, 'listcontrolservicios'])->name('controlserv.listcontrolservicios');
+		Route::get('/editar-control-servicios/{id}', [App\Http\Controllers\Programacion\ControlServiciosController::class, 'editarcontrolservicios'])->name('controlserv.editarcontrolservicios');
