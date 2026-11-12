@@ -146,6 +146,33 @@ var Principal = (function () {
         }
 
 
+
+        //activar menu de ControlServicios
+        function activeControlServicios() {
+            $("#menuControlServicios").addClass("menu-item-active");
+            $("#menuControlServicios").addClass("menu-item-open");
+        }
+
+        //rutas para el menu de clientes
+        if (routeName.includes("controlserv")) {
+            activeControlServicios();
+
+            switch (routeName) {
+                case "controlserv.listcontrolservicios":
+                    //we add the class 'menu-item-open' to id menuListadoUsuarios
+                    $("#menuControlServicios").addClass("menu-item-open");
+                    break;
+                case "controlserv.editarcontrolservicios":
+                    //we add the class 'menu-item-open' to id menuListadoUsuarios
+                    $("#menuControlServicios").addClass("menu-item-open");
+                    break;
+                    
+
+            }
+        }
+
+
+
         //activar menu de Monitoreo
         function activeMenuMonitoreo() {
             $("#menuMonitoreo").addClass("menu-item-active");
