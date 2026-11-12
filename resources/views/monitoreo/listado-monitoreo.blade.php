@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=3.1.1') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=3.1.7') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <script src="{{ asset('js/monitoreo/ValidacionFechasOperativas.js?v=1.0.0') }}"></script>
-    <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js?v=3.0.3') }}"></script>
+    <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js?v=4.1.3') }}"></script>
 @endpush
 
 @section('title')

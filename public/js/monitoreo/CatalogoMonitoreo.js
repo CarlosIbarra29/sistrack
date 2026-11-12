@@ -1194,11 +1194,326 @@
         });
     }
 
+
+    /* ==========================================================
+       SISTRACK - ACTUALIZACIÓN INTELIGENTE DE MONITOREO
+       Consulta cada 30 segundos sin recargar la página.
+       ========================================================== */
+
+    function iniciarActualizacionInteligente() {
+
+        var INTERVALO = 10000;
+        var ESPERA_ACTIVIDAD = 4000;
+
+        var tabla = document.getElementById("kdatatable_usuarios2");
+
+        if (!tabla || !tabla.tBodies.length) {
+            return;
+        }
+
+        var consultando = false;
+        var ultimaActividad = Date.now();
+        var firmaServidor = null;
+        var actualizacionPendiente = false;
+
+        // Registrar actividad que puede indicar una edición.
+        $(document).on(
+            "keydown.monitoreoAuto input.monitoreoAuto " +
+            "change.monitoreoAuto pointerdown.monitoreoAuto",
+            function () {
+                ultimaActividad = Date.now();
+            }
+        );
+
+        function usuarioOcupado() {
+
+            if (document.hidden) {
+                return true;
+            }
+
+            // Esperar a que termine de interactuar.
+            if (Date.now() - ultimaActividad < ESPERA_ACTIVIDAD) {
+                return true;
+            }
+
+            // No interrumpir controles enfocados en la tabla.
+            var activo = document.activeElement;
+
+            if (
+                activo &&
+                tabla.contains(activo) &&
+                activo.matches("input, select, textarea")
+            ) {
+                return true;
+            }
+
+            // No actualizar durante solicitudes AJAX de guardado.
+            if ($.active > 0) {
+                return true;
+            }
+
+            // No actualizar durante cuadros de confirmación.
+            if (
+                document.querySelector(".swal2-container") ||
+                document.querySelector(".modal.show, .modal.in")
+            ) {
+                return true;
+            }
+
+            // No reemplazar controles que siguen guardando.
+            if (
+                tabla.querySelector(
+                    ".is-updating, " +
+                    'select[data-role="estatus-programacion"].is-updating, ' +
+                    'input[data-role="fecha-operativa"].is-updating'
+                )
+            ) {
+                return true;
+            }
+
+            return false;
+        }
+
+        function obtenerFirma(tbody) {
+
+            // Comparar contenido recibido del servidor.
+            // No se consideran los estilos de paginación.
+            var copia = tbody.cloneNode(true);
+
+            copia.querySelectorAll("[data-monitoreo-row]").forEach(
+                function (fila) {
+                    fila.removeAttribute("style");
+                    fila.removeAttribute("data-search-text");
+                }
+            );
+
+            return copia.innerHTML.trim();
+        }
+
+        // Registrar la firma inicial de la tabla.
+        firmaServidor = obtenerFirma(tabla.tBodies[0]);
+
+        function configurarFechasNuevas(tbody) {
+
+            if (
+                !window.SistrackFechas ||
+                typeof window.SistrackFechas.configurar !== "function"
+            ) {
+                return;
+            }
+
+            tbody.querySelectorAll("[data-monitoreo-row]").forEach(
+                function (fila) {
+
+                    var celdaFecha = fila.querySelector(
+                        "[data-fecha-servicio]"
+                    );
+
+                    if (!celdaFecha) {
+                        return;
+                    }
+
+                    var fechaServicio = document.createElement("input");
+
+                    fechaServicio.value =
+                        celdaFecha.dataset.fechaServicio || "";
+
+                    window.SistrackFechas.configurar(
+                        fila,
+                        fechaServicio
+                    );
+                }
+            );
+        }
+
+        function aplicarActualizacion(nuevoTbody, nuevaFirma) {
+
+            if (usuarioOcupado()) {
+                actualizacionPendiente = true;
+                return;
+            }
+
+            console.log("[MONITOREO] Aplicando cambios en la tabla");
+
+            var tbodyActual = tabla.tBodies[0];
+
+            // Mantener estado de la navegación.
+            var paginaAnterior = MonitoreoListado.paginaActual;
+            var registrosAnteriores = MonitoreoListado.registrosPorPagina;
+
+            var scrollVertical = window.scrollY;
+
+            var contenedorScroll = document.querySelector(
+                ".monitoreo-table-wrapper"
+            );
+
+            var scrollHorizontal = contenedorScroll
+                ? contenedorScroll.scrollLeft
+                : 0;
+
+            // Sustituir exclusivamente las filas.
+            tbodyActual.innerHTML = nuevoTbody.innerHTML;
+
+            // Volver a registrar las validaciones de fechas.
+            configurarFechasNuevas(tbodyActual);
+
+            // Reconstruir referencias utilizadas por filtros y paginación.
+            MonitoreoListado.filas = Array.prototype.slice.call(
+                tbodyActual.querySelectorAll("[data-monitoreo-row]")
+            );
+
+            MonitoreoListado.actualizarBusquedaTodas();
+
+            MonitoreoListado.registrosPorPagina = registrosAnteriores;
+            MonitoreoListado.paginaActual = paginaAnterior;
+
+            // Aplicar nuevamente los filtros actuales.
+            var servicio = MonitoreoListado.filtroServicio
+                ? MonitoreoListado.filtroServicio.value
+                : "";
+
+            var estatus = MonitoreoListado.filtroEstatus
+                ? MonitoreoListado.filtroEstatus.value
+                : "";
+
+            var termino = normalizarTexto(
+                MonitoreoListado.buscador
+                    ? MonitoreoListado.buscador.value
+                    : ""
+            );
+
+            MonitoreoListado.filtradas =
+                MonitoreoListado.filas.filter(function (fila) {
+
+                    return (
+                        (!servicio || fila.dataset.folio === servicio) &&
+                        (!estatus ||
+                            String(fila.dataset.statusId) === String(estatus)) &&
+                        (!termino ||
+                            (fila.dataset.searchText || "")
+                                .indexOf(termino) !== -1)
+                    );
+                });
+
+            MonitoreoListado.render();
+
+            // Restaurar desplazamiento.
+            if (contenedorScroll) {
+                contenedorScroll.scrollLeft = scrollHorizontal;
+            }
+
+            window.scrollTo(0, scrollVertical);
+
+            firmaServidor = nuevaFirma;
+            actualizacionPendiente = false;
+        }
+
+        function consultarCambios() {
+
+            if (consultando || usuarioOcupado()) {
+                return;
+            }
+
+            consultando = true;
+
+            console.log(
+                "[MONITOREO] Consultando cambios:",
+                new Date().toLocaleTimeString()
+            );
+
+            // Consultar la misma ruta GET del listado.
+            fetch(window.location.pathname, {
+                method: "GET",
+                credentials: "same-origin",
+                cache: "no-store",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            })
+            .then(function (response) {
+
+                if (!response.ok) {
+                    throw new Error(
+                        "Error HTTP " + response.status
+                    );
+                }
+
+                return response.text();
+            })
+            .then(function (html) {
+
+                var documento = new DOMParser().parseFromString(
+                    html,
+                    "text/html"
+                );
+
+                var tablaNueva = documento.getElementById(
+                    "kdatatable_usuarios2"
+                );
+
+                if (!tablaNueva || !tablaNueva.tBodies.length) {
+                    throw new Error(
+                        "No se encontró la tabla de monitoreo."
+                    );
+                }
+
+                var nuevoTbody = tablaNueva.tBodies[0];
+                var nuevaFirma = obtenerFirma(nuevoTbody);
+
+                if (
+                    firmaServidor !== null &&
+                    firmaServidor === nuevaFirma
+                ) {
+                    actualizacionPendiente = false;
+                    return;
+                }
+
+                aplicarActualizacion(nuevoTbody, nuevaFirma);
+            })
+            .catch(function (error) {
+
+                console.warn(
+                    "Monitoreo: no fue posible sincronizar.",
+                    error
+                );
+
+            })
+            .finally(function () {
+                consultando = false;
+            });
+        }
+
+        // Primera sincronización para establecer el estado del servidor.
+        // Las consultas siguientes solo sustituyen filas si hay cambios.
+        setInterval(consultarCambios, INTERVALO);
+
+        // Cuando el usuario vuelve a la pestaña, consultar si es seguro.
+        document.addEventListener("visibilitychange", function () {
+            if (!document.hidden) {
+                consultarCambios();
+            }
+        });
+    }
+
+
+    // $(function () {
+    //     MonitoreoListado.init();
+    //     iniciarTablaSiExiste("#kdatatable_monitoreo_activo");
+    //     iniciarTablaSiExiste("#kdatatable_incidenciass");
+    //     iniciarTablaSiExiste("#kdatatable_observaciones");
+    // });
+
     $(function () {
+
         MonitoreoListado.init();
+
         iniciarTablaSiExiste("#kdatatable_monitoreo_activo");
         iniciarTablaSiExiste("#kdatatable_incidenciass");
         iniciarTablaSiExiste("#kdatatable_observaciones");
+
+        // NUEVO: actualización automática inteligente.
+        iniciarActualizacionInteligente();
+
     });
 
 })(jQuery);

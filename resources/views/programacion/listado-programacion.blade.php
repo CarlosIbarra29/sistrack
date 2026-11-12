@@ -1,13 +1,14 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=3.1.4') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=3.1.6') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('js/programacion/CatalogoProgramacion.js?v=2.1.4') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="{{ asset('js/programacion/CatalogoProgramacion.js?v=2.1.8') }}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <script src="{{ asset('js/programacion/AgregarProgramacionUnique.js?v=1.0.8') }}"></script>
+    <script src="{{ asset('js/programacion/AgregarProgramacionUnique.js?v=4.1.9') }}"></script>
 @endpush
 
 @section('title')
@@ -188,7 +189,7 @@
                                             Tipo de servicio
                                         </label>
 
-                                        <div class="compact-radio-group">
+                                        <div class="compact-radio-group form-group">
 
                                             <label class="compact-radio-item">
                                                 <input type="radio"
@@ -490,6 +491,86 @@
                         </section>
 
                     </div>
+
+                    {{-- CREACIÓN MÚLTIPLE DE SERVICIOS --}}
+                    <div class="programacion-multiple">
+
+                        <div class="programacion-multiple-info">
+                            <div class="programacion-multiple-icon">
+                                <i class="la la-copy"></i>
+                            </div>
+
+                            <div>
+                                <h3>Creación múltiple de servicios</h3>
+                                <p>
+                                    ¿Necesitas copiar el servicio?
+                                    Genera varios registros con la misma información.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="programacion-multiple-controls">
+
+                            <div class="compact-radio-group">
+                                <label class="compact-radio-item">
+                                    <input type="radio"
+                                           name="copiar_servicio"
+                                           id="copiar_servicio_no"
+                                           value="0"
+                                           checked>
+                                    <span>
+                                        <i class="la la-times"></i> No
+                                    </span>
+                                </label>
+
+                                <label class="compact-radio-item">
+                                    <input type="radio"
+                                           name="copiar_servicio"
+                                           id="copiar_servicio_si"
+                                           value="1">
+                                    <span>
+                                        <i class="la la-check"></i> Sí
+                                    </span>
+                                </label>
+                            </div>
+
+                            <div id="programacion_multiple_cantidad"
+                             class="programacion-multiple-quantity form-group"
+                             hidden>
+
+                                <label class="app-label"
+                                       for="cantidad_servicios">
+                                    Cantidad de servicios
+                                </label>
+
+                                <input type="number"
+                                       id="cantidad_servicios"
+                                       name="cantidad_servicios"
+                                       class="form-control app-input"
+                                       min="2"
+                                       max="50"
+                                       step="1"
+                                       value="2"
+                                       disabled>
+
+                                <small>
+                                    Total de servicios a crear (mínimo 2).
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <div id="programacion_multiple_aviso"
+                             class="programacion-multiple-notice"
+                             hidden>
+                            <i class="la la-info-circle"></i>
+                            Los servicios se crearán sin folio del cliente,
+                            sin custodio asignado y sin acompañantes.
+                            Podrás completar estos datos posteriormente.
+                        </div>
+
+                    </div>
+
 
                     {{-- NOTAS + ACCIONES --}}
                     <div class="programacion-form-bottom">
@@ -893,7 +974,7 @@
         </section>
 
         {{-- COLUMNA DERECHA --}}
-        <aside class="programacion-sidebar-column">
+        <!-- <aside class="programacion-sidebar-column">
 
             {{-- DISPONIBILIDAD --}}
             <div class="panel-dark programacion-side-card">
@@ -1017,7 +1098,7 @@
 
             </div>
 
-        </aside>
+        </aside> -->
 
     </div>
 

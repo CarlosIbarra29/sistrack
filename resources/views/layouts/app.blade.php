@@ -41,6 +41,22 @@
 
 <!--begin::Body-->
 <body id="kt_body" class="header-fixed header-mobile-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+
+<script>
+(function () {
+    var KEY = 'sistrack_menu_colapsado';
+
+    if (window.innerWidth < 992) return;
+
+    try {
+        if (localStorage.getItem(KEY) === '1') {
+            document.body.classList.add('aside-minimize');
+        }
+    } catch (e) {
+        console.warn('No se pudo leer el estado del menú', e);
+    }
+})();
+</script>
 @php $routeName = Route::currentRouteName(); @endphp
 <script>
     console.log("{{ $routeName }}");
@@ -1065,6 +1081,83 @@
     @endif
 </script>
 <!--end::Page Scripts(Para mostrar los mensajes con toastr)-->
+
+<script>
+    (function () {
+        'use strict';
+
+        var KEY = 'sistrack_menu_colapsado';
+        var DESKTOP = 992;
+
+        function esEscritorio() {
+            return window.innerWidth >= DESKTOP;
+        }
+
+        function obtenerEstado() {
+            try {
+                return localStorage.getItem(KEY) === '1';
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function guardarEstado(colapsado) {
+            try {
+                localStorage.setItem(KEY, colapsado ? '1' : '0');
+            } catch (e) {
+                console.warn('No se pudo guardar el menú', e);
+            }
+        }
+
+        function aplicarEstado(colapsado) {
+            if (!esEscritorio()) return;
+
+            var body = document.body;
+            var boton = document.getElementById('kt_aside_toggle');
+
+            body.classList.toggle('aside-minimize', colapsado);
+
+            if (boton) {
+                boton.classList.toggle('active', colapsado);
+            }
+        }
+
+        function inicializar() {
+            var boton = document.getElementById('kt_aside_toggle');
+
+            if (!boton) return;
+
+            // Recuperar preferencia después de inicializar Metronic.
+            aplicarEstado(obtenerEstado());
+
+            // Guardar la preferencia al usar el botón original.
+            boton.addEventListener('click', function () {
+                if (!esEscritorio()) return;
+
+                var nuevoEstado = !obtenerEstado();
+
+                guardarEstado(nuevoEstado);
+
+                // Dejar que Metronic ejecute su comportamiento original.
+                setTimeout(function () {
+                    aplicarEstado(nuevoEstado);
+                }, 50);
+
+            }, false);
+
+            // Reaplicar al volver a la página desde la caché.
+            window.addEventListener('pageshow', function () {
+                aplicarEstado(obtenerEstado());
+            });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', inicializar);
+        } else {
+            inicializar();
+        }
+    })();
+</script>
 </body>
 <!--end::Body-->
 </html>

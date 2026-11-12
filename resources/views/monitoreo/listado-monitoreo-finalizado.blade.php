@@ -5,12 +5,12 @@
 @endsection
 
 @push('styles')
-    <link href="{{ asset('css/estilos_principal.css?v=1.2.4') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/estilos_principal.css?v=1.2.6') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js?v=3.1.1') }}"></script>
+    <script src="{{ asset('js/monitoreo/CatalogoMonitoreoFinalizado.js?v=1.1.2') }}"></script>
 @endpush
 
 
@@ -102,6 +102,34 @@
 
 		        </div>
 
+                <!-- FILTRO POR FECHA DE FINALIZACIÓN -->
+
+                <div class="monitoreo-filter-field">
+
+                    <label class="monitoreo-label"
+                           for="monitoreo_fecha_desde">
+                        Finalización desde
+                    </label>
+
+                    <input type="date"
+                           id="monitoreo_fecha_desde"
+                           class="form-control monitoreo-input">
+
+                </div>
+
+                <div class="monitoreo-filter-field">
+
+                    <label class="monitoreo-label"
+                           for="monitoreo_fecha_hasta">
+                        Finalización hasta
+                    </label>
+
+                    <input type="date"
+                           id="monitoreo_fecha_hasta"
+                           class="form-control monitoreo-input">
+
+                </div>
+
 		        <div class="monitoreo-filter-actions">
 
 		            <button type="button"
@@ -185,8 +213,11 @@
 
                     @foreach($monitoreo as $unid)
 
-                        <tr data-monitoreo-row
-                            data-status-id="{{ $unid->programacion_estatus_id }}">
+                        
+                    <tr data-monitoreo-row
+                        data-status-id="{{ $unid->programacion_estatus_id }}"
+                        data-fecha-finalizacion="{{ !empty($unid->fechahora_finalizacion) ? date('Y-m-d', strtotime($unid->fechahora_finalizacion)) : '' }}">
+
 
                             <td>
 
@@ -407,11 +438,11 @@
 
                                                 <div class="monitoreo-acompanante-item">
 
-                                                    <span class="monitoreo-acompanante-avatar">
+                                                    <!-- <span class="monitoreo-acompanante-avatar">
 
                                                         {{ substr($acompanante->custodio->nombre_custodio ?? 'C', 0, 1) }}
 
-                                                    </span>
+                                                    </span> -->
 
                                                     <span class="monitoreo-acompanante-name">
 

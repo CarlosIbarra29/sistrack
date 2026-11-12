@@ -89,7 +89,7 @@ class MonitoreoController extends Controller
             ->leftJoin('programacion_estadias as pd','pd.id','=','pel.estadia_id')
             ->leftJoin('estatus_itinerario as ei','ei.id','=','pd.estatus_itinerario')
             ->where('programacion.siaf_status', 1)
-            ->whereNotIn('programacion.programacion_estatus_id', [6, 7,10])
+            ->whereNotIn('programacion.programacion_estatus_id', [6, 7,10,13])
             ->orderByDesc('programacion.estatus_custodio')
             ->orderBy('programacion.fecha_servicio', 'asc')
             ->orderBy('programacion.id', 'asc')
@@ -131,7 +131,7 @@ class MonitoreoController extends Controller
             ->where('programacion.siaf_status', 1)
 
             // Únicamente finalizados
-            ->whereIn('programacion.programacion_estatus_id', [6, 7,10])
+            ->whereIn('programacion.programacion_estatus_id', [6, 7,10,13])
 
             // Ordenar por fecha y hora de finalización, de más reciente a más antigua
             ->orderByRaw('pd.fechahora_finalizacion IS NULL ASC')
@@ -491,8 +491,8 @@ class MonitoreoController extends Controller
                 $dataProgramacion['dom_destino'] =$request->dom_destino;
             }
 
-            if ($request->filled('folio_interno')) {
-                $dataProgramacion['folio_interno'] =$request->folio_interno;
+            if ($request->has('folio_interno')) {
+                $dataProgramacion['folio_interno'] = $request->input('folio_interno') ?: null;
             }
 
             if ($request->filled('armado_servicio')) {
@@ -659,7 +659,7 @@ class MonitoreoController extends Controller
 
             session()->flash('success',$mensaje);
 
-            if ((int) $request->programacion_estatus_id === 7 || (int) $request->programacion_estatus_id === 6 || (int) $request->programacion_estatus_id === 10) {
+            if ((int) $request->programacion_estatus_id === 7 || (int) $request->programacion_estatus_id === 6 || (int) $request->programacion_estatus_id === 10 || (int) $request->programacion_estatus_id === 13) {
 
                 return redirect()->route('monitoreo.listamonitoreofinalizado');
             }
@@ -794,7 +794,7 @@ class MonitoreoController extends Controller
         Programacion::where('id', $request->id_programacion)->update($data);
 
         session()->flash('success', 'El estatus de la programación se modifico correctamente');
-        if ((int) $request->estatus_id === 7 || (int) $request->estatus_id === 6 || (int) $request->estatus_id === 10) {
+        if ((int) $request->estatus_id === 7 || (int) $request->estatus_id === 6 || (int) $request->estatus_id === 10 || (int) $request->estatus_id === 13) {
             return redirect()->route('monitoreo.listamonitoreofinalizado');
         }
         return redirect()->route('monitoreo.listamonitoreo'); 

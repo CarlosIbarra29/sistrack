@@ -62,7 +62,7 @@ class ProgramacionController extends Controller
         ->leftJoin('programacion_estatus as pe','pe.id','=','programacion.programacion_estatus_id')
         ->leftJoin('cliente as cli','cli.id','=','programacion.cliente_id')
         ->where('programacion.siaf_status', 1)
-        ->whereNotIn('programacion.programacion_estatus_id', [6, 7, 10])
+        ->whereNotIn('programacion.programacion_estatus_id', [6, 7, 10,13])
         ->orderByDesc('programacion.estatus_custodio')
         ->orderBy('programacion.fecha_servicio', 'asc')
         ->orderBy('programacion.id', 'asc')
@@ -326,8 +326,10 @@ class ProgramacionController extends Controller
             'cliente_id' => 'required',
             'nuevo_cliente_razon_social' => 'required_if:cliente_id,0|max:255',
             'fecha_hora' => 'nullable|date',
-            'custodio_id' => 'required',
+            'custodio_id' => 'required_unless:copiar_servicio,1',
             'custodio_emergente' => 'required_if:custodio_id,154|nullable|string|max:255',
+            'copiar_servicio' => 'nullable|in:0,1',
+            'cantidad_servicios' => 'required_if:copiar_servicio,1|nullable|integer|min:2|max:50',
             'programacion_id' => 'required',
             'tipo_servicio' => 'required',
             'armado_servicio' => 'required',
@@ -344,9 +346,15 @@ class ProgramacionController extends Controller
 
             $clienteId = $request->cliente_id;
 
-            $sinCustodio = ((int) $request->custodio_id === 153);
+            $creacionMultiple = (int) $request->input('copiar_servicio', 0) === 1;
 
-            $custodioEmergente = ((int) $request->custodio_id === 154);
+            $cantidadServicios = $creacionMultiple ? (int) $request->cantidad_servicios : 1;
+
+            $custodioId = $creacionMultiple ? 153 : $request->custodio_id;
+
+            $sinCustodio = ((int) $custodioId === 153);
+
+            $custodioEmergente = ((int) $custodioId === 154);
 
             if ($sinCustodio) {
 
@@ -383,16 +391,16 @@ class ProgramacionController extends Controller
 
             $data = [
 
-                'folio' => $this->folio->getFolioProgramacion(),
+                'folio' => null,
                 'cliente_id' => $clienteId,
-                'folio_interno' => $request->filled('folio_interno') ? trim($request->folio_interno) : null,
-                'custodio_id' => $request->custodio_id,
+                'folio_interno' => $creacionMultiple ? null : ($request->filled('folio_interno') ? trim($request->folio_interno) : null),
+                'custodio_id' => $custodioId,
                 'estatus_custodio' => $estatusCustodio,
                 // 'tarifario_id' => 1,
                 'programacion_estatus_id' =>$request->programacion_id,
                 'tipo_servicio' =>$request->tipo_servicio,
                 'fecha_servicio' => $request->filled('fecha_hora') ? Carbon::parse($request->fecha_hora)->format('Y-m-d H:i:s') : null,
-                'acompanantes' =>$sinCustodio ? 1 : $request->op_custodios,
+                'acompanantes' => $creacionMultiple ? 1 : ($sinCustodio ? 1 : $request->op_custodios),
                 'dom_origen' =>$request->dom_origen,
                 'dom_destino' =>$request->dom_destino,
                 'observaciones' =>$request->observaciones,
@@ -408,30 +416,50 @@ class ProgramacionController extends Controller
             ];
             
             // Insertamos la programación.
-            $id_programacion = Programacion::insertGetId($data);
+            
+            // ======================================================
+            // CREACIÓN INDIVIDUAL O MÚLTIPLE DE SERVICIOS
+            // ======================================================
 
+            for ($numero = 1; $numero <= $cantidadServicios; $numero++) {
 
-             // ACOMPAÑANTES
-            if (!$sinCustodio &&(int) $request->op_custodios === 0 && !empty($request->id_documento)) {
+                // Cada servicio recibe su propio folio SISP.
+                $data['folio'] = $this->folio->getFolioProgramacion();
 
-                $colIdDocumento = $request->id_documento;
+                // Insertamos una programación independiente.
+                $id_programacion = Programacion::insertGetId($data);
 
-                foreach ($colIdDocumento as $indice => $custodioId) {
+                // ==================================================
+                // ACOMPAÑANTES
+                // Solo se registran en el modo individual.
+                // ==================================================
 
-                    $dataAcompanante = [
-                        'programacion_id' =>$id_programacion,
-                        'custodio_id' =>$custodioId,
-                        'created_at' =>date('Y-m-d H:i:s'),
-                        'updated_at' =>date('Y-m-d H:i:s'),
-                    ];
+                if (!$creacionMultiple && !$sinCustodio && (int) $request->op_custodios === 0 && !empty($request->id_documento)) {
 
-                    AcompanantesProgramacion::insert($dataAcompanante);
+                    $colIdDocumento = $request->id_documento;
+
+                    foreach ($colIdDocumento as $indice => $custodioIdAcompanante) {
+
+                        $dataAcompanante = [
+                            'programacion_id' => $id_programacion,
+                            'custodio_id' => $custodioIdAcompanante,
+                            'created_at' => date('Y-m-d H:i:s'),
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ];
+
+                        AcompanantesProgramacion::insert($dataAcompanante);
+                    }
                 }
             }
 
             DB::commit();
 
-            session()->flash('success','La programación se creo correctamente');
+            if ($creacionMultiple) {
+                session()->flash('success','Se crearon correctamente ' . $cantidadServicios . ' servicios.');
+            } else {
+                session()->flash('success','La programación se creó correctamente.');
+            }
+
             return redirect()->route('programacion.listadoprogramacion');
 
 

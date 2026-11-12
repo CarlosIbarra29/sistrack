@@ -810,9 +810,9 @@ $("#send_incidencia")
 
         datos.push([
             'BITÁCORA',
+            'CLIENTE',
             'FOLIO',
             'FECHA Y HORA',
-            'CLIENTE',
             'ORIGEN',
             'DESTINO',
             'CUSTODIO',
@@ -872,78 +872,56 @@ $("#send_incidencia")
     function generarArchivoExcel(datos) {
 
         /* =========================================================
-           1. ESCAPAR CARACTERES ESPECIALES
+           1. VALIDAR LIBRERÍA
            ========================================================= */
 
-        function escaparHTML(valor) {
+        if (typeof XLSX === 'undefined') {
 
-            return String(valor == null ? '' : valor)
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#39;');
-
-        }
-
-
-        /* =========================================================
-           2. CONSTRUIR TABLA PARA EXCEL
-           ========================================================= */
-
-        var contenido = '';
-
-        contenido += '<html>';
-        contenido += '<head>';
-        contenido += '<meta charset="UTF-8">';
-
-        contenido += '<style>';
-        contenido += 'table { border-collapse: collapse; }';
-        contenido += 'th, td { border: 1px solid #cccccc; padding: 8px; }';
-        contenido += 'th { background: #eba72f; color: #111111; font-weight: bold; }';
-        contenido += '</style>';
-
-        contenido += '</head>';
-        contenido += '<body>';
-        contenido += '<table>';
-
-        datos.forEach(function(fila, indice) {
-
-            contenido += '<tr>';
-
-            fila.forEach(function(valor) {
-
-                var etiqueta = indice === 0 ? 'th' : 'td';
-
-                contenido += '<' + etiqueta + ' style="mso-number-format:\\@;">';
-                contenido += escaparHTML(valor);
-                contenido += '</' + etiqueta + '>';
-
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al exportar',
+                text: 'No se pudo cargar la librería de Excel.'
             });
 
-            contenido += '</tr>';
-
-        });
-
-        contenido += '</table>';
-        contenido += '</body>';
-        contenido += '</html>';
-
+            return;
+        }
 
         /* =========================================================
-           3. CREAR ARCHIVO XLS
+           2. CREAR LIBRO Y HOJA DE EXCEL
            ========================================================= */
 
-        var blob = new Blob(
-            ['\uFEFF' + contenido],
-            {
-                type: 'application/vnd.ms-excel;charset=utf-8;'
-            }
-        );
+        var libro = XLSX.utils.book_new();
 
+        var hoja = XLSX.utils.aoa_to_sheet(datos);
 
         /* =========================================================
-           4. NOMBRE DEL ARCHIVO
+           3. CONFIGURAR ANCHO DE COLUMNAS
+           ========================================================= */
+
+        hoja['!cols'] = [
+            { wch: 18 }, // BITÁCORA
+            { wch: 25 }, // FOLIO
+            { wch: 22 }, // FECHA Y HORA
+            { wch: 35 }, // CLIENTE
+            { wch: 45 }, // ORIGEN
+            { wch: 45 }, // DESTINO
+            { wch: 35 }, // CUSTODIO
+            { wch: 35 }, // CUSTODIO ACOMPAÑANTE
+            { wch: 20 }  // ESTATUS
+        ];
+
+        /* =========================================================
+           4. AGREGAR HOJA AL LIBRO
+           ========================================================= */
+
+        XLSX.utils.book_append_sheet(
+            libro,
+            hoja,
+            'Servicios Programados'
+        );
+
+        /* =========================================================
+           5. GENERAR NOMBRE DEL ARCHIVO
            ========================================================= */
 
         var fecha = new Date();
@@ -953,31 +931,22 @@ $("#send_incidencia")
             fecha.getFullYear() + '-' +
             String(fecha.getMonth() + 1).padStart(2, '0') + '-' +
             String(fecha.getDate()).padStart(2, '0') +
-            '.xls';
-
+            '.xlsx';
 
         /* =========================================================
-           5. DESCARGAR ARCHIVO
+           6. DESCARGAR ARCHIVO XLSX
            ========================================================= */
 
-        var enlace = document.createElement('a');
-        var url = URL.createObjectURL(blob);
-
-        enlace.href = url;
-        enlace.download = nombreArchivo;
-
-        document.body.appendChild(enlace);
-
-        enlace.click();
-
-        document.body.removeChild(enlace);
-
-        setTimeout(function() {
-            URL.revokeObjectURL(url);
-        }, 1000);
+        XLSX.writeFile(
+            libro,
+            nombreArchivo,
+            {
+                bookType: 'xlsx',
+                compression: true
+            }
+        );
 
     }
-
 
     renderizar();
 

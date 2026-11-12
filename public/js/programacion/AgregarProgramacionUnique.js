@@ -37,9 +37,46 @@ var Modulo = function() {
 
         $("#btnGuardar").click(function(e) {
 
-            e.preventDefault();
             
+            e.preventDefault();
+
+            var modoMultiple = $("#copiar_servicio_si").is(":checked");
+
+            if (modoMultiple) {
+
+                var cantidad = Number($("#cantidad_servicios").val());
+
+                if (
+                    !Number.isInteger(cantidad) ||
+                    cantidad < 2 ||
+                    cantidad > 50
+                ) {
+                    toastr.warning(
+                        "La cantidad debe ser un número entero entre 2 y 50."
+                    );
+
+                    $("#cantidad_servicios").focus();
+                    return false;
+                }
+
+                $("#custodio_id").val("153").trigger("change");
+                $("#folio_interno").val("");
+
+                $("#custodio_multiple_hidden").remove();
+
+                $("<input>", {
+                    type: "hidden",
+                    id: "custodio_multiple_hidden",
+                    name: "custodio_id",
+                    value: "153"
+                }).appendTo("#submit_programacion");
+
+            } else {
+                $("#custodio_multiple_hidden").remove();
+            }
+
             var clienteId = $("#cliente_id").val();
+
 
             if (clienteId === "0") {
 
@@ -235,6 +272,10 @@ var Modulo = function() {
         }
         var idDocumento = id.replace('cliente_id', '');
         var url = $('#url_tarifario').val();
+
+        if (!url) {
+            return;
+        }
         var data = {
             id: idGrupo,
             _token: $("[name='_token']").val()
@@ -303,6 +344,107 @@ var Modulo = function() {
 
         actualizarNuevoCliente();
     };
+
+
+    /* ======================================================
+       CREACIÓN MÚLTIPLE DE SERVICIOS
+       ====================================================== */
+
+    var initCreacionMultiple = function() {
+
+        var $si = $("#copiar_servicio_si");
+        var $no = $("#copiar_servicio_no");
+        var $cantidad = $("#cantidad_servicios");
+        var $contenedor = $("#programacion_multiple_cantidad");
+        var $aviso = $("#programacion_multiple_aviso");
+
+        var $folio = $("#folio_interno");
+        var $custodio = $("#custodio_id");
+        var $acompanantesSi = $("#op_c_uno");
+        var $acompanantesNo = $("#op_c_dos");
+
+        var folioAnterior = "";
+        var custodioAnterior = "";
+        var acompanantesAnterior = "1";
+
+        function actualizarModo() {
+
+            var multiple = $si.is(":checked");
+
+            if (multiple) {
+
+                folioAnterior = $folio.val();
+                custodioAnterior = $custodio.val();
+                acompanantesAnterior =
+                    $('input[name="op_custodios"]:checked').val() || "1";
+
+                $contenedor.prop("hidden", false);
+                $aviso.prop("hidden", false);
+
+                $cantidad.prop("disabled", false)
+                         .prop("required", true)
+                         .val(2);
+
+                $folio.val("")
+                      .prop("readonly", true);
+
+                $custodio.val("153").trigger("change");
+                $custodio.prop("disabled", true);
+
+                $acompanantesNo.prop("checked", true);
+                $acompanantesSi.prop("disabled", true);
+
+                $("#div_custodios").hide();
+                $("#tbodyDocumentos").empty();
+
+                $("#contenedor_custodio_emergente").hide();
+                $("#custodio_emergente")
+                    .val("")
+                    .prop("required", false);
+
+            } else {
+
+                $contenedor.prop("hidden", true);
+                $aviso.prop("hidden", true);
+
+                $cantidad.prop("disabled", true)
+                         .prop("required", false)
+                         .val(2);
+
+                $folio.prop("readonly", false)
+                      .val(folioAnterior);
+
+                $custodio.prop("disabled", false)
+                        .val(custodioAnterior)
+                        .trigger("change");
+
+                if (acompanantesAnterior === "0" &&
+                    custodioAnterior !== "153") {
+
+                    $acompanantesSi.prop("checked", true);
+                    $("#div_custodios").show();
+
+                } else {
+
+                    $acompanantesNo.prop("checked", true);
+                    $("#div_custodios").hide();
+                }
+            }
+        }
+
+        $si.on("change", actualizarModo);
+        $no.on("change", actualizarModo);
+
+        // Impedir cambios de custodio desde otras funciones
+        $("#programacion_id").on("change", function() {
+            if ($si.is(":checked")) {
+                $custodio.val("153").trigger("change");
+            }
+        });
+
+
+    };
+
 
     // ======================================================
     // PRESELECCIONAR SIN CUSTODIO AL ELEGIR ESTATUS PENDIENTE
@@ -415,11 +557,12 @@ var Modulo = function() {
         //main function to initiate the module
         init: function() {
             initEvents();
-            validacion();
             eventosEspeciales();
             initNuevoCliente();
             initSinCustodio();
             initCustodioPorEstatus();
+            initCreacionMultiple();
+            validacion();
         },
 
     };
