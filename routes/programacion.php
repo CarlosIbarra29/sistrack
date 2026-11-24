@@ -56,5 +56,7 @@
 
 	// C O N T R O L  D E  S E R V I C I O S
 
-		Route::get('/control-servicios', [App\Http\Controllers\Programacion\ControlServiciosController::class, 'listcontrolservicios'])->name('controlserv.listcontrolservicios');
-		Route::get('/editar-control-servicios/{id}', [App\Http\Controllers\Programacion\ControlServiciosController::class, 'editarcontrolservicios'])->name('controlserv.editarcontrolservicios');
+	Route::get('/control-servicios', [App\Http\Controllers\Programacion\ControlServiciosController::class, 'listcontrolservicios'])->name('controlserv.listcontrolservicios');
+	Route::get('/editar-control-servicios/{id}', [App\Http\Controllers\Programacion\ControlServiciosController::class, 'editarcontrolservicios'])->name('controlserv.editarcontrolservicios');
+	Route::post('/guardar-control', [App\Http\Controllers\Programacion\ControlServiciosController::class, 'guardarcontrol'])->name('controlserv.guardarcontrol');
+	Route::post('/edit-control', [App\Http\Controllers\Programacion\ControlServiciosController::class, 'editcontrol'])->name('controlserv.editcontrol');
