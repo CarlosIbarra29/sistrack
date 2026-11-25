@@ -948,9 +948,284 @@ $("#send_incidencia")
 
     }
 
+    
+    /* ==========================================================
+       ACTUALIZACIÓN AUTOMÁTICA INTELIGENTE - PROGRAMACIÓN
+       ========================================================== */
+
+    function iniciarActualizacionInteligente() {
+
+        var INTERVALO = 10000;
+        var ESPERA_ACTIVIDAD = 3000;
+
+        var consultando = false;
+        var ultimaActividad = Date.now();
+        var firmaServidor = null;
+
+        var contenedorScroll = document.querySelector(
+            '.programacion-services-table-wrapper'
+        );
+
+        // Registrar actividad del usuario.
+        $(document).on(
+            'keydown.programacionAuto ' +
+            'input.programacionAuto ' +
+            'change.programacionAuto ' +
+            'pointerdown.programacionAuto',
+            function() {
+                ultimaActividad = Date.now();
+            }
+        );
+
+        function formularioEnUso() {
+
+            var formulario = document.getElementById( 'submit_programacion');
+
+            if (!formulario) {
+                return false;
+            }
+
+            // No interrumpir si el formulario está abierto
+            // y el usuario ya comenzó a capturar información.
+            var contenedor = document.getElementById( 'programacionFormCollapse');
+
+            if (!contenedor ||!contenedor.classList.contains('is-open')) {
+                return false;
+            }
+
+            var campos = formulario.querySelectorAll(
+                'input:not([type="hidden"]):not([type="submit"]), ' +
+                'select, textarea'
+            );
+
+            return Array.prototype.some.call(
+                campos,
+                function(campo) {
+
+                    if (campo.disabled) {
+                        return false;
+                    }
+
+                    if (campo.type === 'checkbox' || campo.type === 'radio') {
+                        return campo.checked;
+                    }
+
+                    return String(campo.value || '').trim() !== '';
+                }
+            );
+        }
+
+        function usuarioOcupado() {
+
+            if (document.hidden) {
+                return true;
+            }
+
+            if (Date.now() - ultimaActividad < ESPERA_ACTIVIDAD) {
+                return true;
+            }
+
+            if (formularioEnUso()) {
+                return true;
+            }
+
+            if ($.active > 0) {
+                return true;
+            }
+
+            if (document.querySelector('.swal2-container') || document.querySelector('.modal.show, .modal.in')) {
+                return true;
+            }
+
+            var activo = document.activeElement;
+
+            if ( activo && tabla.contains(activo) && activo.matches('input, select, textarea')) {
+                return true;
+            }
+
+            return false;
+        }
+
+        function obtenerFilas(tbody) {
+
+            return Array.prototype.slice.call(tbody.querySelectorAll('tr')).filter(function(fila) {
+
+                return !fila.querySelector(
+                    '.programacion-no-results'
+                );
+
+            });
+        }
+
+        function obtenerFirma(tbody) {
+
+            var copia = tbody.cloneNode(true);
+
+            var filaVacia = copia.querySelector(
+                '.programacion-no-results'
+            );
+
+            if (filaVacia) {
+                filaVacia.remove();
+            }
+
+            Array.prototype.forEach.call(
+                copia.querySelectorAll('tr'),
+                function(fila) {
+                    fila.removeAttribute('style');
+                }
+            );
+
+            return copia.innerHTML.trim();
+        }
+
+        // Estado inicial de la tabla renderizada por Laravel.
+        firmaServidor = obtenerFirma(tbody);
+
+        function aplicarActualizacion(nuevoTbody, nuevaFirma) {
+
+            if (usuarioOcupado()) {
+                return;
+            }
+
+            var paginaAnterior = paginaActual;
+            var registrosAnteriores = registrosPorPagina;
+
+            var scrollVertical = window.scrollY;
+
+            var scrollHorizontal = contenedorScroll
+                ? contenedorScroll.scrollLeft
+                : 0;
+
+            tbody.innerHTML = nuevoTbody.innerHTML;
+            filasOriginales = obtenerFilas(tbody);
+
+            // Recuperar la fila de "sin resultados".
+            tbody.appendChild(filaSinResultados);
+
+            registrosPorPagina = registrosAnteriores;
+            paginaActual = paginaAnterior;
+
+            // Respetar el buscador sin reiniciar la página.
+            var termino = normalizarTexto(
+                buscador ? buscador.value : ''
+            );
+
+            filasFiltradas = termino === ''
+                ? filasOriginales.slice()
+                : filasOriginales.filter(function(fila) {
+
+                    return normalizarTexto(
+                        fila.textContent
+                    ).indexOf(termino) !== -1;
+
+                });
+
+            renderizar();
+
+            // Restaurar desplazamientos.
+            if (contenedorScroll) {
+                contenedorScroll.scrollLeft = scrollHorizontal;
+            }
+
+            window.scrollTo(0, scrollVertical);
+
+            // Actualizar referencia del contenido recibido.
+            firmaServidor = nuevaFirma;
+
+            console.log(
+                '[PROGRAMACIÓN] Listado sincronizado correctamente'
+            );
+        }
+
+        function consultarCambios() {
+
+            if (consultando || usuarioOcupado()) {
+                return;
+            }
+
+            consultando = true;
+
+            fetch(window.location.pathname + window.location.search, {
+                method: 'GET',
+                credentials: 'same-origin',
+                cache: 'no-store',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(function(response) {
+
+                if (!response.ok) {
+                    throw new Error(
+                        'Error HTTP ' + response.status
+                    );
+                }
+
+                return response.text();
+            })
+            .then(function(html) {
+
+                var documento = new DOMParser().parseFromString(
+                    html,
+                    'text/html'
+                );
+
+                var tablaNueva = documento.getElementById(
+                    'servicios_programados_table'
+                );
+
+                if (!tablaNueva || !tablaNueva.tBodies.length) {
+                    throw new Error(
+                        'No se encontró la tabla de Programación.'
+                    );
+                }
+
+                var nuevoTbody = tablaNueva.tBodies[0];
+                var nuevaFirma = obtenerFirma(nuevoTbody);
+
+                // Si no hay modificaciones, no tocar la tabla.
+                if (firmaServidor === nuevaFirma) {
+                    return;
+                }
+
+                aplicarActualizacion(nuevoTbody, nuevaFirma);
+            })
+            .catch(function(error) {
+
+                console.warn(
+                    '[PROGRAMACIÓN] Error al sincronizar:',
+                    error
+                );
+
+            })
+            .finally(function() {
+                consultando = false;
+            });
+        }
+
+        // Consultar cada 10 segundos.
+        setInterval(consultarCambios, INTERVALO);
+
+        // Consultar al regresar a la pestaña.
+        document.addEventListener(
+            'visibilitychange',
+            function() {
+                if (!document.hidden) {
+                    consultarCambios();
+                }
+            }
+        );
+    }
+
+    // Mantener la inicialización original.
     renderizar();
 
+    // Iniciar la sincronización automática.
+    iniciarActualizacionInteligente();
+
 })();
+
 
 /* ==========================================================================
    COLAPSAR / EXPANDIR NUEVA PROGRAMACIÓN

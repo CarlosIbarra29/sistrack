@@ -6,7 +6,7 @@
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    <script src="{{ asset('js/programacion/CatalogoProgramacion.js?v=2.1.8') }}"></script>
+    <script src="{{ asset('js/programacion/CatalogoProgramacion.js?v=3.1.1') }}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <script src="{{ asset('js/programacion/AgregarProgramacionUnique.js?v=4.1.9') }}"></script>
 @endpush
