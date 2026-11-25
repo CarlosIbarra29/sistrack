@@ -70,8 +70,15 @@
                                         <div class="form-group row">
                                             <div class="col-lg-4">
                                                 <span class="titulo-lb">Estado Admon</span>
-                                                <input type="text" class="form-control form-control-lg st-input"
-                                                       name="estado_admon" id="estado_admon" required/>
+                                                <select class="form-control" id="estado_admon" name="estado_admon"   required>
+                                                    <option value="1">Selecciona una opción</option>
+                                                    <option value="1"> Sin estatus </option>
+                                                    <option value="2"> Facturar </option>
+                                                    <option value="3"> Sin costo </option>
+                                                    <option value="4"> Sin cobro a cliente </option>
+                                                    <option value="5"> Faltan datos </option>
+                                                    <option value="6"> Sin costo / Faltan datos </option>
+                                                </select>
                                             </div>
 
                                             <div class="col-lg-4">
@@ -480,8 +487,15 @@
                                         <div class="form-group row">
                                             <div class="col-lg-4">
                                                 <span class="titulo-lb">Estado Admon</span>
-                                                <input type="text" class="form-control form-control-lg st-input"
-                                                       name="estado_admon" id="estado_admon" value="{{ $contolservicios->estado_admon }}" required/>
+                                                <select class="form-control" id="estado_admon" name="estado_admon"   required>
+                                                    <option value="1">Selecciona una opción</option>
+                                                    <option value="1" @selected($contolservicios->estado_admon == 1)> Sin estatus </option>
+                                                    <option value="2" @selected($contolservicios->estado_admon == 2)> Facturar </option>
+                                                    <option value="3" @selected($contolservicios->estado_admon == 3)> Sin costo </option>
+                                                    <option value="4" @selected($contolservicios->estado_admon == 4)> Sin cobro a cliente </option>
+                                                    <option value="5" @selected($contolservicios->estado_admon == 5)> Faltan datos </option>
+                                                    <option value="6" @selected($contolservicios->estado_admon == 6)> Sin costo / Faltan datos </option>
+                                                </select>
                                             </div>
 
                                             <div class="col-lg-4">
