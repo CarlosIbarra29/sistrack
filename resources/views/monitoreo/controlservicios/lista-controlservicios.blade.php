@@ -10,7 +10,7 @@
 
 @push('scripts')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <script src="{{ asset('js/monitoreo/CatalogoMonitoreo.js?v=3.1.1') }}"></script>
+    <script src="{{ asset('js/monitoreo/CatalogoMonitoreoFinalizado.js?v=1.1.2') }}"></script>
 @endpush
 
 
@@ -93,6 +93,34 @@
 		            </div>
 
 		        </div>
+
+                <!-- FILTRO POR FECHA DE FINALIZACIÓN -->
+
+                <div class="monitoreo-filter-field">
+
+                    <label class="monitoreo-label"
+                           for="monitoreo_fecha_desde">
+                        Finalización desde
+                    </label>
+
+                    <input type="date"
+                           id="monitoreo_fecha_desde"
+                           class="form-control monitoreo-input">
+
+                </div>
+
+                <div class="monitoreo-filter-field">
+
+                    <label class="monitoreo-label"
+                           for="monitoreo_fecha_hasta">
+                        Finalización hasta
+                    </label>
+
+                    <input type="date"
+                           id="monitoreo_fecha_hasta"
+                           class="form-control monitoreo-input">
+
+                </div>
 
 		        <div class="monitoreo-filter-actions">
 
@@ -178,7 +206,8 @@
                     @foreach($monitoreo as $unid)
 
                         <tr data-monitoreo-row
-                            data-status-id="{{ $unid->programacion_estatus_id }}">
+                            data-status-id="{{ $unid->programacion_estatus_id }}"
+                            data-fecha-finalizacion="{{ !empty($unid->fechahora_finalizacion) && $unid->fechahora_finalizacion !== '0000-00-00 00:00:00' ? date('Y-m-d', strtotime($unid->fechahora_finalizacion)) : '' }}">
 
                             <td>
 
